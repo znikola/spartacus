@@ -1,73 +1,100 @@
-# An isomorphic javascript sdk for - CommerceWebservicesV2
-This project provides an isomorphic javascript package. Right now it supports:
-- node.js version 6.x.x or higher
-- browser javascript
+## An isomorphic javascript sdk for - CommerceWebservicesV2
 
-## How to Install
+This package contains an isomorphic SDK for CommerceWebservicesV2.
 
-- nodejs
+### Currently supported environments
+
+- Node.js version 6.x.x or higher
+- Browser JavaScript
+
+### How to Install
+
 ```
-npm install hybris-occ-client
-```
-- browser
-```html
-<script type="text/javascript" src="hybris-occ-client/commerceWebservicesV2Bundle.js"></script>
+npm install occ-client
 ```
 
-## How to use
+### How to use
 
-### nodejs - Authentication, client creation and getCardTypes  as an example written in TypeScript.
+#### nodejs - Authentication, client creation and getBaseStore  as an example written in TypeScript.
 
-```javascript
-import * as msRest from "ms-rest-js";
-import { CommerceWebservicesV2, CommerceWebservicesV2Models, CommerceWebservicesV2Mappers } from "hybris-occ-client";
+##### Install @azure/ms-rest-nodeauth
+
+```
+npm install @azure/ms-rest-nodeauth
+```
+
+##### Sample code
+
+```ts
+import * as msRest from "@azure/ms-rest-js";
+import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
+import { CommerceWebservicesV2, CommerceWebservicesV2Models, CommerceWebservicesV2Mappers } from "occ-client";
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
-const token = "<access_token>";
-const creds = new msRest.TokenCredentials(token);
-const client = new CommerceWebservicesV2(creds, subscriptionId);
-const baseSiteId = "testbaseSiteId";
-const fields = "BASIC";
-client.getCardTypes(baseSiteId, fields).then((result) => {
-  console.log("The result is:");
-  console.log(result);
+msRestNodeAuth.interactiveLogin().then((creds) => {
+  const client = new CommerceWebservicesV2(creds, subscriptionId);
+  const baseStoreUid = "testbaseStoreUid";
+  const baseSiteId = "testbaseSiteId";
+  const fields = "BASIC";
+  client.getBaseStore(baseStoreUid, baseSiteId, fields).then((result) => {
+    console.log("The result is:");
+    console.log(result);
+  });
 }).catch((err) => {
-  console.log('An error ocurred:');
-  console.dir(err, {depth: null, colors: true});
+  console.error(err);
 });
 ```
 
-### browser - Authentication, client creation and getCardTypes  as an example written in javascript.
+#### browser - Authentication, client creation and getBaseStore  as an example written in JavaScript.
+
+##### Install @azure/ms-rest-browserauth
+
+```
+npm install @azure/ms-rest-browserauth
+```
+
+##### Sample code
+
+See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to Azure in the browser.
 
 - index.html
 ```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>My Todos</title>
-    <script type="text/javascript" src="https://raw.githubusercontent.com/Azure/ms-rest-js/master/msRestBundle.js"></script>
-    <script type="text/javascript" src="./commerceWebservicesV2Bundle.js"></script>
+    <title>occ-client sample</title>
+    <script src="node_modules/@azure/ms-rest-js/dist/msRest.browser.js"></script>
+    <script src="node_modules/@azure/ms-rest-browserauth/dist/msAuth.js"></script>
+    <script src="node_modules/occ-client/dist/occ-client.js"></script>
     <script type="text/javascript">
-      document.write('hello world');
       const subscriptionId = "<Subscription_Id>";
-      const token = "<access_token>";
-      const creds = new msRest.TokenCredentials(token);
-      const client = new CommerceWebservicesV2(creds, subscriptionId);
-      const baseSiteId = "testbaseSiteId";
-      const fields = "BASIC";
-      client.getCardTypes(baseSiteId, fields).then((result) => {
-        console.log("The result is:");
-        console.log(result);
-      }).catch((err) => {
-        console.log('An error ocurred:');
-        console.dir(err, { depth: null, colors: true});
+      const authManager = new msAuth.AuthManager({
+        clientId: "<client id for your Azure AD app>",
+        tenant: "<optional tenant for your organization>"
+      });
+      authManager.finalizeLogin().then((res) => {
+        if (!res.isLoggedIn) {
+          // may cause redirects
+          authManager.login();
+        }
+        const client = new OccClient.CommerceWebservicesV2(res.creds, subscriptionId);
+        const baseStoreUid = "testbaseStoreUid";
+        const baseSiteId = "testbaseSiteId";
+        const fields = "BASIC";
+        client.getBaseStore(baseStoreUid, baseSiteId, fields).then((result) => {
+          console.log("The result is:");
+          console.log(result);
+        }).catch((err) => {
+          console.log("An error occurred:");
+          console.error(err);
+        });
       });
     </script>
   </head>
-  <body>
-  </body>
+  <body></body>
 </html>
 ```
 
-# Related projects
- - [Microsoft Azure SDK for Javascript](https://github.com/Azure/azure-sdk-for-js)
+## Related projects
+
+- [Microsoft Azure SDK for Javascript](https://github.com/Azure/azure-sdk-for-js)

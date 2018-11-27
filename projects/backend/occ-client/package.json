@@ -1,24 +1,54 @@
 {
   "name": "occ-client",
-  "description": "CommerceWebservicesV2 Library with typescript type definitions and works in node.js and browser javascript.",
-  "version": "0.1.1",
+  "author": "Microsoft Corporation",
+  "description": "CommerceWebservicesV2 Library with typescript type definitions for node.js and browser.",
+  "version": "0.2.0",
   "dependencies": {
-    "ms-rest-js": "~0.12.291"
+    "@azure/ms-rest-js": "^1.1.0",
+    "tslib": "^1.9.3"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "azure",
+    "typescript",
+    "browser",
+    "isomorphic"
+  ],
   "license": "MIT",
-  "main": "./dist/lib/commerceWebservicesV2.js",
-  "types": "./typings/lib/commerceWebservicesV2.d.ts",
+  "main": "./dist/occ-client.js",
+  "module": "./esm/commerceWebservicesV2.js",
+  "types": "./esm/commerceWebservicesV2.d.ts",
   "devDependencies": {
-    "ts-loader": "^2.3.7",
-    "tslib": "^1.9.2",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2",
-    "webpack": "^3.6.0",
-    "uglify-es": "^3.1.0"
+    "typescript": "^3.1.1",
+    "rollup": "^0.66.2",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "uglify-js": "^3.4.9"
   },
+  "homepage": "https://github.com/azure/azure-sdk-for-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azure/azure-sdk-for-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azure/azure-sdk-for-js/issues"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "esm/**/*.js",
+    "esm/**/*.js.map",
+    "esm/**/*.d.ts",
+    "esm/**/*.d.ts.map",
+    "lib/**/*.ts",
+    "rollup.config.js",
+    "tsconfig.json"
+  ],
   "scripts": {
-    "tsc": "tsc -p tsconfig.json",
-    "build": "npm -s run-script tsc && webpack && node node_modules/uglify-es/bin/uglifyjs --source-map -c -m -o commerceWebservicesV2Bundle.min.js commerceWebservicesV2Bundle.js"
-  }
+    "build": "tsc && rollup -c rollup.config.js && npm run minify",
+    "minify": "uglifyjs -c -m --comments --source-map \"content='./dist/occ-client.js.map'\" -o ./dist/occ-client.min.js ./dist/occ-client.js",
+    "prepack": "npm install && npm run build"
+  },
+  "sideEffects": false
 }

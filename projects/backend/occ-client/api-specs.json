@@ -5,9 +5,13 @@
     "version": "2.0",
     "title": "Commerce Webservices V2"
   },
-  "host": "backoffice.christian-spartacus1-s2-public.model-t.myhybris.cloud",
+  "host": "localhost:9002",
   "basePath": "/rest/v2",
   "tags": [
+    {
+      "name": "Countries",
+      "description": "Countries Controller"
+    },
     {
       "name": "Products",
       "description": "Products Controller"
@@ -17,8 +21,16 @@
       "description": "Promotions Controller"
     },
     {
+      "name": "Extended Carts",
+      "description": "Extended Carts Controller"
+    },
+    {
       "name": "Customer Groups",
       "description": "Customer Groups Controller"
+    },
+    {
+      "name": "Payment Details",
+      "description": "Payment Details Controller"
     },
     {
       "name": "Save Cart",
@@ -29,12 +41,24 @@
       "description": "Component Controller"
     },
     {
+      "name": "Consents",
+      "description": "Consents Controller"
+    },
+    {
+      "name": "Address",
+      "description": "Address Controller"
+    },
+    {
       "name": "Miscs",
       "description": "Miscs Controller"
     },
     {
       "name": "Users",
       "description": "Users Controller"
+    },
+    {
+      "name": "Base Stores",
+      "description": "Base Stores Controller"
     },
     {
       "name": "Catalogs",
@@ -47,6 +71,10 @@
     {
       "name": "Vouchers",
       "description": "Vouchers Controller"
+    },
+    {
+      "name": "Merchant Callback",
+      "description": "Merchant Callback Controller"
     },
     {
       "name": "Stores",
@@ -78,6 +106,77 @@
     "application/json"
   ],
   "paths": {
+    "/{baseSiteId}/basestores/{baseStoreUid}": {
+      "get": {
+        "tags": [
+          "Base Stores"
+        ],
+        "summary": "Get a base store.",
+        "description": "Returns details of a specific base store based on its identifier. The response contains detailed base store information.",
+        "operationId": "getBaseStore",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "baseStoreUid",
+            "in": "path",
+            "description": "Base store name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/BaseStore"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
     "/{baseSiteId}/cardtypes": {
       "get": {
         "tags": [
@@ -447,7 +546,7 @@
         ],
         "summary": "Get components' data by id given in body",
         "description": "Given a list of component identifiers in body, return cms component data.",
-        "operationId": "getComponentByIdList",
+        "operationId": "getComponentByIdListUsingPOST",
         "consumes": [
           "application/json"
         ],
@@ -569,7 +668,7 @@
         ],
         "summary": "Get component data",
         "description": "Given a component identifier, return cms component data.",
-        "operationId": "getComponentById",
+        "operationId": "getComponentByIdUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -661,7 +760,7 @@
         ],
         "summary": "Get page data with list of cms content slots",
         "description": "Given a page identifier, return the page data with a list of cms content slots, each of which contains a list of cms component data.",
-        "operationId": "getPageData",
+        "operationId": "getPageDataUsingGET",
         "consumes": [
           "application/json"
         ],
@@ -724,6 +823,152 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/CMSPage"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/countries": {
+      "get": {
+        "tags": [
+          "Countries"
+        ],
+        "summary": "Get a list of countries.",
+        "description": "If the value of type equals to shipping, then return shipping countries. If the value of type equals to billing, then return billing countries. If the value of type is not given, return all countries. The list is sorted alphabetically.",
+        "operationId": "getCountries",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "The type of countries.",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SHIPPING",
+              "BILLING"
+            ]
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CountryList"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/countries/{countyIsoCode}/regions": {
+      "get": {
+        "tags": [
+          "Countries"
+        ],
+        "summary": "Fetch the list of regions for the provided country.",
+        "description": "Lists all regions.",
+        "operationId": "getCountryRegions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "countyIsoCode",
+            "in": "path",
+            "description": "An ISO code for a country",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RegionList"
             }
           },
           "401": {
@@ -817,7 +1062,7 @@
         ],
         "summary": "Get all subgroups of a customergroup.",
         "description": "Returns all customer groups that are direct subgroups of a customergroup.\n\nTo try out the methods of the Customer Groups controller, you must authorize a user who belongs to the “customermanagergroup”.",
-        "operationId": "getAllCustomerGroups",
+        "operationId": "getCustomerGroups",
         "consumes": [
           "application/json"
         ],
@@ -897,7 +1142,7 @@
         ],
         "summary": "Creates a new customer group.",
         "description": "Creates a new customer group that is a direct subgroup of a customergroup.\n\nTo try out the methods of the Customer Groups controller, you must authorize a user who belongs to the “customermanagergroup”.",
-        "operationId": "createNewCustomerGroupPrim",
+        "operationId": "createCustomerGroup",
         "consumes": [
           "application/xml",
           "application/json"
@@ -1026,7 +1271,7 @@
         ],
         "summary": "Sets members for a user group.",
         "description": "Sets members for a user group. The list of existing members is overwritten with a new one.\n\nTo try out the methods of the Customer Groups controller, you must authorize a user who belongs to the “customermanagergroup”.",
-        "operationId": "setUserListForCustomerGroupPrim",
+        "operationId": "replaceUsersForCustomerGroup",
         "consumes": [
           "application/xml",
           "application/json"
@@ -1092,7 +1337,7 @@
         ],
         "summary": "Assigns user(s) to a customer group.",
         "description": "Assigns user(s) to a customer group.\n\nTo try out the methods of the Customer Groups controller, you must authorize a user who belongs to the “customermanagergroup”.",
-        "operationId": "assignUserToCustomerGroupPrim",
+        "operationId": "updateCustomerGroupWithUsers",
         "consumes": [
           "application/xml",
           "application/json"
@@ -1155,8 +1400,8 @@
         "tags": [
           "Customer Groups"
         ],
-        "summary": "Delete a user from a customer group.",
-        "description": "Removes user from a customer group.\n\nTo try out the methods of the Customer Groups controller, you must authorize a user who belongs to the “customermanagergroup”.",
+        "summary": "Deletes a user from a customer group.",
+        "description": "Deletes user from a customer group.\n\nTo try out the methods of the Customer Groups controller, you must authorize a user who belongs to the “customermanagergroup”.",
         "operationId": "removeUsersFromCustomerGroup",
         "consumes": [
           "application/json"
@@ -1217,7 +1462,7 @@
         "tags": [
           "Miscs"
         ],
-        "summary": "Get a list of supported countries.",
+        "summary": "Get a list of shipping countries.",
         "description": "Lists all supported delivery countries for the current store. The list is sorted alphabetically.",
         "operationId": "getDeliveryCountries",
         "consumes": [
@@ -1273,7 +1518,8 @@
           {
             "oauth2_client_credentials": []
           }
-        ]
+        ],
+        "deprecated": true
       }
     },
     "/{baseSiteId}/export/products": {
@@ -1283,7 +1529,7 @@
         ],
         "summary": "Get a list of product exports.",
         "description": "Used for product export. Depending on the timestamp parameter, it can return all products or only products modified after the given time.",
-        "operationId": "exportProducts",
+        "operationId": "getExportedProducts",
         "consumes": [
           "application/json"
         ],
@@ -1381,9 +1627,9 @@
         "tags": [
           "Feeds"
         ],
-        "summary": "Get a list of orders with status updates",
+        "summary": "Get a list of orders with status updates.",
         "description": "Returns the orders that have changed status. Returns only the elements from the current baseSite that have been updated after the provided timestamp.",
-        "operationId": "orderStatusFeed",
+        "operationId": "getOrderStatusFeed",
         "consumes": [
           "application/json"
         ],
@@ -1451,7 +1697,7 @@
         ],
         "summary": "Generates a token to restore a customer's forgotten password.",
         "description": "Generates a token to restore a customer's forgotten password.",
-        "operationId": "restorePassword",
+        "operationId": "doRestorePassword",
         "consumes": [
           "application/json"
         ],
@@ -1493,6 +1739,122 @@
           }
         },
         "security": [
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/integration/merchant_callback": {
+      "post": {
+        "tags": [
+          "Merchant Callback"
+        ],
+        "summary": "Verify the decision of the Merchant",
+        "description": "Verifies the decision of the merchant. \n\nNote, the “Try it out” button is not enabled for this method (always returns an error) because the Merchant Callback Controller handles parameters differently, depending on which payment provider is used. For more information about this controller, please refer to the “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.",
+        "operationId": "doHandleMerchantCallback",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/integration/users/{userId}/carts/{cartId}/payment/sop/response": {
+      "post": {
+        "tags": [
+          "Merchant Callback"
+        ],
+        "summary": "Verify the decision of the Merchant for a cart",
+        "description": "Verifies the decision of the merchant for a specified cart, and stores information of the PaymentSubscriptionResult for the cart. \n\nNote, the “Try it out” button is not enabled for this method (always returns an error) because the Merchant Callback Controller handles parameters differently, depending on which payment provider is used. For more information about this controller, please refer to the “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.",
+        "operationId": "doHandleCartMerchantCallback",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
           {
             "oauth2_client_credentials": []
           }
@@ -1568,7 +1930,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Get a order",
+        "summary": "Get a order.",
         "description": "Returns details of a specific order based on the order GUID (Globally Unique Identifier) or the order CODE. The response contains detailed order information.",
         "operationId": "getOrder",
         "consumes": [
@@ -1636,9 +1998,9 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get products added to the express update feed",
+        "summary": "Get products added to the express update feed.",
         "description": "Returns products added to the express update feed. Returns only elements updated after the provided timestamp. The queue is cleared using a defined cronjob.",
-        "operationId": "expressUpdate",
+        "operationId": "getExpressUpdateProducts",
         "consumes": [
           "application/json"
         ],
@@ -1713,7 +2075,7 @@
         ],
         "summary": "Get a list of products and additional data",
         "description": "Returns a list of products and additional data, such as available facets, available sorting, and pagination options. It can also include spelling suggestions. To make spelling suggestions work, you need to make sure that \"enableSpellCheck\" on the SearchQuery is set to \"true\" (by default, it should already be set to \"true\"). You also need to have indexed properties configured to be used for spellchecking.",
-        "operationId": "searchProducts",
+        "operationId": "getProducts",
         "consumes": [
           "application/json"
         ],
@@ -1812,9 +2174,9 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get a header with total number of products",
+        "summary": "Get a header with total number of products.",
         "description": "In the response header, the \"x-total-count\" indicates the total number of products satisfying a query.",
-        "operationId": "countSearchProducts",
+        "operationId": "countProducts",
         "consumes": [
           "application/json"
         ],
@@ -1947,9 +2309,9 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get product details",
+        "summary": "Get product details.",
         "description": "Returns details of a single product according to a product code.",
-        "operationId": "getProductByCode",
+        "operationId": "getProduct",
         "consumes": [
           "application/json"
         ],
@@ -2020,7 +2382,7 @@
         ],
         "summary": "Get a product reference",
         "description": "Returns references for a product with a given product code. Reference type specifies which references to return.",
-        "operationId": "exportProductReferences",
+        "operationId": "getProductReferences",
         "consumes": [
           "application/json"
         ],
@@ -2179,9 +2541,9 @@
         "tags": [
           "Products"
         ],
-        "summary": "Creates a new customer review as an anonymous user",
+        "summary": "Creates a new customer review as an anonymous user.",
         "description": "Creates a new customer review as an anonymous user.",
-        "operationId": "createReviewPrim",
+        "operationId": "createProductReview",
         "consumes": [
           "application/xml",
           "application/json"
@@ -2260,9 +2622,9 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get a product's stock level",
+        "summary": "Get a product's stock level.",
         "description": "Returns a product's stock levels sorted by distance from the specified location, which is provided using the free-text \"location\" parameter, or by using the longitude and latitude parameters. The following two sets of parameters are available: location (required), currentPage (optional), pageSize (optional); or longitude (required), latitude (required), currentPage (optional), pageSize(optional).",
-        "operationId": "searchProductStockByLocation",
+        "operationId": "getLocationProductStock",
         "consumes": [
           "application/json"
         ],
@@ -2370,9 +2732,9 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get header with a total number of product's stock levels",
+        "summary": "Get header with a total number of product's stock levels.",
         "description": "In the response header, the \"x-total-count\" indicates the total number of a product's stock levels. The following two sets of parameters are available: location (required); or longitude (required), and latitude (required).",
-        "operationId": "countSearchProductStockByLocation",
+        "operationId": "countProductStockByLocation",
         "consumes": [
           "application/json"
         ],
@@ -2450,7 +2812,7 @@
         ],
         "summary": "Get a product's stock level for a store",
         "description": "Returns a product's stock level for a particular store (in other words, for a particular point of sale).",
-        "operationId": "getStockData",
+        "operationId": "getStoreProductStock",
         "consumes": [
           "application/json"
         ],
@@ -2526,9 +2888,9 @@
         "tags": [
           "Promotions"
         ],
-        "summary": "Get a list of promotions",
+        "summary": "Get a list of promotions.",
         "description": "Returns promotions defined for a current base site. Requests pertaining to promotions have been developed for the previous version of promotions and vouchers and therefore some of them are currently not compatible with the new promotion engine.",
-        "operationId": "getPromotionsPrim",
+        "operationId": "getPromotions",
         "consumes": [
           "application/json"
         ],
@@ -2608,7 +2970,7 @@
         ],
         "summary": "Get a promotion based on code",
         "description": "Returns details of a single promotion specified by a promotion code. Requests pertaining to promotions have been developed for the previous version of promotions and vouchers and therefore some of them are currently not compatible with the new promotion engine.",
-        "operationId": "getPromotionByCode",
+        "operationId": "getPromotion",
         "consumes": [
           "application/json"
         ],
@@ -2676,7 +3038,7 @@
         ],
         "summary": "Get a list of store locations",
         "description": "Lists all store locations that are near the location specified in a query or based on latitude and longitude.",
-        "operationId": "locationSearch",
+        "operationId": "getStoreLocations",
         "consumes": [
           "application/json"
         ],
@@ -2803,9 +3165,9 @@
         "tags": [
           "Stores"
         ],
-        "summary": "Get a header with the number of store locations",
+        "summary": "Get a header with the number of store locations.",
         "description": "In the response header, the \"x-total-count\" indicates the number of all store locations that are near the location specified in a query, or based on latitude and longitude.",
-        "operationId": "countLocationSearch",
+        "operationId": "countStoreLocations",
         "consumes": [
           "application/json"
         ],
@@ -2892,9 +3254,9 @@
         "tags": [
           "Stores"
         ],
-        "summary": "Get a store location",
+        "summary": "Get a store location.",
         "description": "Returns store location based on its unique name.",
-        "operationId": "locationDetails",
+        "operationId": "getStoreLocation",
         "consumes": [
           "application/json"
         ],
@@ -3029,7 +3391,7 @@
         ],
         "summary": " Registers a customer",
         "description": "Registers a customer. There are two options for registering a customer. The first option requires the following parameters: login, password, firstName, lastName, titleCode. The second option converts a guest to a customer. In this case, the required parameters are: guid, password.",
-        "operationId": "registerUserPrim",
+        "operationId": "createUser",
         "consumes": [
           "application/xml",
           "application/json"
@@ -3172,7 +3534,7 @@
         ],
         "summary": "Updates customer profile",
         "description": "Updates customer profile. Attributes not provided in the request body will be defined again (set to null or default).",
-        "operationId": "putUserPrim",
+        "operationId": "replaceUser",
         "consumes": [
           "application/xml",
           "application/json"
@@ -3236,9 +3598,9 @@
         "tags": [
           "Users"
         ],
-        "summary": "Delete customer profile",
+        "summary": "Delete customer profile.",
         "description": "Removes customer profile.",
-        "operationId": "deactivateUser",
+        "operationId": "removeUser",
         "consumes": [
           "application/json"
         ],
@@ -3291,7 +3653,7 @@
         ],
         "summary": "Updates customer profile",
         "description": "Updates customer profile. Only attributes provided in the request body will be changed.",
-        "operationId": "updateUserPrim",
+        "operationId": "updateUser",
         "consumes": [
           "application/xml",
           "application/json"
@@ -3352,7 +3714,7 @@
     "/{baseSiteId}/users/{userId}/addresses": {
       "get": {
         "tags": [
-          "Users"
+          "Address"
         ],
         "summary": "Get customer's addresses",
         "description": "Returns customer's addresses.",
@@ -3421,11 +3783,11 @@
       },
       "post": {
         "tags": [
-          "Users"
+          "Address"
         ],
         "summary": "Creates a new address.",
         "description": "Creates a new address.",
-        "operationId": "createAddressPrim",
+        "operationId": "createAddress",
         "consumes": [
           "application/xml",
           "application/json"
@@ -3502,11 +3864,11 @@
     "/{baseSiteId}/users/{userId}/addresses/verification": {
       "post": {
         "tags": [
-          "Users"
+          "Address"
         ],
-        "summary": "Verifies address",
+        "summary": "Verifies address.",
         "description": "Verifies address.",
-        "operationId": "verifyAddressPrim",
+        "operationId": "validateAddress",
         "consumes": [
           "application/xml",
           "application/json"
@@ -3586,7 +3948,7 @@
     "/{baseSiteId}/users/{userId}/addresses/{addressId}": {
       "get": {
         "tags": [
-          "Users"
+          "Address"
         ],
         "summary": "Get info about address",
         "description": "Returns detailed information about address with a given id.",
@@ -3662,11 +4024,11 @@
       },
       "put": {
         "tags": [
-          "Users"
+          "Address"
         ],
         "summary": "Updates the address",
         "description": "Updates the address. Attributes not provided in the request will be defined again (set to null or default).",
-        "operationId": "putAddressPrim",
+        "operationId": "replaceAddress",
         "consumes": [
           "application/xml",
           "application/json"
@@ -3735,11 +4097,11 @@
       },
       "delete": {
         "tags": [
-          "Users"
+          "Address"
         ],
-        "summary": "Delete customer's address",
+        "summary": "Delete customer's address.",
         "description": "Removes customer's address.",
-        "operationId": "deleteAddress",
+        "operationId": "removeAddress",
         "consumes": [
           "application/json"
         ],
@@ -3795,11 +4157,11 @@
       },
       "patch": {
         "tags": [
-          "Users"
+          "Address"
         ],
         "summary": "Updates the address",
         "description": "Updates the address. Only attributes provided in the request body will be changed.",
-        "operationId": "patchAddressPrim",
+        "operationId": "updateAddress",
         "consumes": [
           "application/xml",
           "application/json"
@@ -4134,7 +4496,7 @@
         ],
         "summary": "Deletes a cart with a given cart id.",
         "description": "Deletes a cart with a given cart id.",
-        "operationId": "deleteCart",
+        "operationId": "removeCart",
         "consumes": [
           "application/json"
         ],
@@ -4196,7 +4558,7 @@
         ],
         "summary": "Creates a delivery address for the cart.",
         "description": "Creates an address and assigns it to the cart as the delivery address.",
-        "operationId": "createAndSetAddressPrim",
+        "operationId": "createCartDeliveryAddress",
         "consumes": [
           "application/xml",
           "application/json"
@@ -4282,7 +4644,7 @@
         ],
         "summary": "Sets a delivery address for the cart.",
         "description": "Sets a delivery address for the cart. The address country must be placed among the delivery countries of the current base store.",
-        "operationId": "setCartDeliveryAddress",
+        "operationId": "replaceCartDeliveryAddress",
         "consumes": [
           "application/json"
         ],
@@ -4350,8 +4712,8 @@
         "tags": [
           "Carts"
         ],
-        "summary": "Delete the delivery address from the cart.",
-        "description": "Removes the delivery address from the cart.",
+        "summary": "Deletes the delivery address from the cart.",
+        "description": "Deletes the delivery address from the cart.",
         "operationId": "removeCartDeliveryAddress",
         "consumes": [
           "application/json"
@@ -4414,7 +4776,7 @@
         ],
         "summary": "Explicitly clones a cart.",
         "description": "Explicitly clones a cart.",
-        "operationId": "cloneSaveCart",
+        "operationId": "doCartClone",
         "consumes": [
           "application/json"
         ],
@@ -4477,6 +4839,170 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SaveCartResult"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/users/{userId}/carts/{cartId}/consolidate": {
+      "get": {
+        "tags": [
+          "Extended Carts"
+        ],
+        "summary": "Get consolidated pickup options.",
+        "description": "Returns a list of stores that have all the pick-up items in stock.\n\nNote, if there are no stores that have all the pick up items in stock, or all items are already set to the same pick up location, the response returns an empty list.",
+        "operationId": "getConsolidatedPickupLocations",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PointOfServiceList"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Extended Carts"
+        ],
+        "summary": "Handles the consolidating pickup locations.",
+        "description": "Specifies one store location where all items will be picked up.\n\nNote, if any of the items are not available at the specified location, these items are removed from the cart.",
+        "operationId": "createConsolidatedPickupLocation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "storeName",
+            "in": "query",
+            "description": "The name of the store where items will be picked up",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CartModificationList"
             }
           },
           "201": {
@@ -4585,7 +5111,7 @@
         ],
         "summary": "Sets the delivery mode for a cart.",
         "description": "Sets the delivery mode with a given identifier for the cart.",
-        "operationId": "setCartDeliveryMode",
+        "operationId": "replaceCartDeliveryMode",
         "consumes": [
           "application/json"
         ],
@@ -4653,9 +5179,9 @@
         "tags": [
           "Carts"
         ],
-        "summary": "Delete the delivery mode from the cart.",
-        "description": "Removes the delivery mode from the cart.",
-        "operationId": "removeDeliveryMode",
+        "summary": "Deletes the delivery mode from the cart.",
+        "description": "Deletes the delivery mode from the cart.",
+        "operationId": "removeCartDeliveryMode",
         "consumes": [
           "application/json"
         ],
@@ -4717,7 +5243,7 @@
         ],
         "summary": "Get all delivery modes for the current store and delivery address.",
         "description": "Returns all delivery modes supported for the current base store and cart delivery address. A delivery address must be set for the cart, otherwise an empty list will be returned.",
-        "operationId": "getSupportedDeliveryModes",
+        "operationId": "getCartDeliveryModes",
         "consumes": [
           "application/json"
         ],
@@ -4795,7 +5321,7 @@
         ],
         "summary": "Assigns an email to the cart.",
         "description": "Assigns an email to the cart. This step is required to make a guest checkout.",
-        "operationId": "guestLogin",
+        "operationId": "replaceCartGuestUser",
         "consumes": [
           "application/json"
         ],
@@ -4943,7 +5469,7 @@
         ],
         "summary": "Adds a product to the cart.",
         "description": "Adds a product to the cart.",
-        "operationId": "addCartEntryPrim",
+        "operationId": "createCartEntry",
         "consumes": [
           "application/xml",
           "application/json"
@@ -5118,7 +5644,7 @@
         ],
         "summary": "Set quantity and store details of a cart entry.",
         "description": "Updates the quantity of a single cart entry and the details of the store where the cart entry will be picked up. Attributes not provided in request will be defined again (set to null or default)",
-        "operationId": "setCartEntryPrim",
+        "operationId": "replaceCartEntry",
         "consumes": [
           "application/xml",
           "application/json"
@@ -5283,7 +5809,7 @@
         ],
         "summary": "Update quantity and store details of a cart entry.",
         "description": "Updates the quantity of a single cart entry and the details of the store where the cart entry will be picked up.",
-        "operationId": "updateCartEntryPrim",
+        "operationId": "updateCartEntry",
         "consumes": [
           "application/xml",
           "application/json"
@@ -5379,7 +5905,7 @@
         ],
         "summary": "Flag a cart for deletion.",
         "description": "Flags a cart for deletion (the cart doesn't have corresponding save cart attributes anymore). The cart is not actually deleted from the database. But with the removal of the saved cart attributes, this cart will be taken care of by the cart removal job just like any other cart.",
-        "operationId": "flagForDeletion",
+        "operationId": "doUpdateFlagForDeletion",
         "consumes": [
           "application/json"
         ],
@@ -5450,6 +5976,316 @@
         ]
       }
     },
+    "/{baseSiteId}/users/{userId}/carts/{cartId}/payment/sop/request": {
+      "get": {
+        "tags": [
+          "Extended Carts"
+        ],
+        "summary": "Get information needed for create subscription",
+        "description": "Returns the necessary information for creating a subscription that contacts the payment provider directly. This information contains the payment provider URL and a list of parameters that are needed to create the subscription.",
+        "operationId": "getSopPaymentRequestDetails",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "responseUrl",
+            "in": "query",
+            "description": "The URL that the payment provider uses to return payment information. Possible values for responseUrl include the following: “orderPage_cancelResponseURL”, “orderPage_declineResponseURL”, and “orderPage_receiptResponseURL”.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "extendedMerchantCallback",
+            "in": "query",
+            "description": "Define which url should be returned",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaymentRequest"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/users/{userId}/carts/{cartId}/payment/sop/response": {
+      "get": {
+        "tags": [
+          "Extended Carts"
+        ],
+        "summary": "Get information about create subscription request results",
+        "description": "Returns information related to creating subscription request results. If there is no response from the payment provider, a \"202 Accepted\" status is returned. If the subscription is created successfully, the payment details are returned. Otherwise, an error response is returned.\n\nNote, the “Try it out” button is not enabled for this method (always returns an error) because the Extended Carts Controller handles parameters differently, depending on which payment provider is used. For more information about this controller, please refer to the “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.",
+        "operationId": "getSopPaymentResponse",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaymentDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Extended Carts"
+        ],
+        "summary": "Handles response from payment provider and create payment details",
+        "description": "Handles the response from the payment provider and creates payment details.\n\nNote, the “Try it out” button is not enabled for this method (always returns an error) because the Extended Carts Controller handles parameters differently, depending on which payment provider is used. For more information about this controller, please refer to the “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.",
+        "operationId": "doHandleSopPaymentResponse",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": true,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaymentDetails"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Extended Carts"
+        ],
+        "summary": "Deletes payment provider response related to cart.",
+        "description": "Deletes the payment provider response related to the specified cart.",
+        "operationId": "removeSopPaymentResponse",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart identifier: cart code for logged in user, cart guid for anonymous user, 'current' for the last modified cart",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
     "/{baseSiteId}/users/{userId}/carts/{cartId}/paymentdetails": {
       "post": {
         "tags": [
@@ -5457,7 +6293,7 @@
         ],
         "summary": "Defines and assigns details of a new credit card payment to the cart.",
         "description": "Defines the details of a new credit card, and assigns this payment option to the cart.",
-        "operationId": "addPaymentDetailsPrim",
+        "operationId": "createCartPaymentDetails",
         "consumes": [
           "application/xml",
           "application/json"
@@ -5543,7 +6379,7 @@
         ],
         "summary": "Sets credit card payment details for the cart.",
         "description": "Sets credit card payment details for the cart.",
-        "operationId": "setPaymentDetails",
+        "operationId": "replaceCartPaymentDetails",
         "consumes": [
           "application/json"
         ],
@@ -5615,7 +6451,7 @@
         ],
         "summary": "Get information about promotions applied on cart.",
         "description": "Returns information about the promotions applied on the cart. Requests pertaining to promotions have been developed for the previous version of promotions and vouchers, and as a result, some of them are currently not compatible with the new promotions engine.",
-        "operationId": "getPromotions",
+        "operationId": "getCartPromotions",
         "consumes": [
           "application/json"
         ],
@@ -5691,7 +6527,7 @@
         ],
         "summary": "Enables promotions based on the promotionsId of the cart.",
         "description": "Enables a promotion for the order based on the promotionId defined for the cart. Requests pertaining to promotions have been developed for the previous version of promotions and vouchers, and as a result, some of them are currently not compatible with the new promotions engine.",
-        "operationId": "applyPromotion",
+        "operationId": "doApplyCartPromotion",
         "consumes": [
           "application/json"
         ],
@@ -5758,9 +6594,9 @@
         "tags": [
           "Carts"
         ],
-        "summary": "Get information about promotions applied on cart.",
+        "summary": "Get information about promotion applied on cart.",
         "description": "Returns information about a promotion (with a specific promotionId), that has been applied on the cart. Requests pertaining to promotions have been developed for the previous version of promotions and vouchers, and as a result, some of them are currently not compatible with the new promotions engine.",
-        "operationId": "getPromotion",
+        "operationId": "getCartPromotion",
         "consumes": [
           "application/json"
         ],
@@ -5843,7 +6679,7 @@
         ],
         "summary": "Disables the promotion based on the promotionsId of the cart.",
         "description": "Disables the promotion for the order based on the promotionId defined for the cart. Requests pertaining to promotions have been developed for the previous version of promotions and vouchers, and as a result, some of them are currently not compatible with the new promotions engine.",
-        "operationId": "removePromotion",
+        "operationId": "removeCartPromotion",
         "consumes": [
           "application/json"
         ],
@@ -5909,7 +6745,7 @@
         ],
         "summary": "Restore a saved cart.",
         "description": "Restore a saved cart.",
-        "operationId": "restoreSavedCart",
+        "operationId": "doUpdateSavedCart",
         "consumes": [
           "application/json"
         ],
@@ -5987,7 +6823,7 @@
         ],
         "summary": "Explicitly saves a cart.",
         "description": "Explicitly saves a cart.",
-        "operationId": "saveCart",
+        "operationId": "doSaveCart",
         "consumes": [
           "application/json"
         ],
@@ -6157,7 +6993,7 @@
         ],
         "summary": "Get a list of vouchers applied to the cart.",
         "description": "Returns a list of vouchers applied to the cart.",
-        "operationId": "getVouchers",
+        "operationId": "getCartVouchers",
         "consumes": [
           "application/json"
         ],
@@ -6233,7 +7069,7 @@
         ],
         "summary": "Applies a voucher based on the voucherId defined for the cart.",
         "description": "Applies a voucher based on the voucherId defined for the cart.",
-        "operationId": "applyVoucherForCart",
+        "operationId": "doApplyCartVoucher",
         "consumes": [
           "application/json"
         ],
@@ -6303,9 +7139,9 @@
         "tags": [
           "Carts"
         ],
-        "summary": "Delete a voucher defined for the current cart.",
-        "description": "Removes a voucher based on the voucherId defined for the current cart.",
-        "operationId": "releaseVoucherFromCart",
+        "summary": "Deletes a voucher defined for the current cart.",
+        "description": "Deletes a voucher based on the voucherId defined for the current cart.",
+        "operationId": "removeCartVoucher",
         "consumes": [
           "application/json"
         ],
@@ -6367,6 +7203,292 @@
         ]
       }
     },
+    "/{baseSiteId}/users/{userId}/consents": {
+      "post": {
+        "tags": [
+          "Consents"
+        ],
+        "summary": "A user can give consent.",
+        "operationId": "doGiveConsent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "consentTemplateId",
+            "in": "query",
+            "description": "Consent template ID.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "consentTemplateVersion",
+            "in": "query",
+            "description": "Consent template version.",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ConsentTemplate"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/users/{userId}/consents/{consentCode}": {
+      "delete": {
+        "tags": [
+          "Consents"
+        ],
+        "summary": "Withdraw the user consent for a given consent code.",
+        "description": "If the user consent was given, the consent is withdrawn. If consent was already withdrawn then returns consent already withdrawn error. If there is no such consent then returns not found. If the current user is an anonymous user then returns access denied error.",
+        "operationId": "removeConsent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "consentCode",
+            "in": "path",
+            "description": "consentCode",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/users/{userId}/consenttemplates": {
+      "get": {
+        "tags": [
+          "Consents"
+        ],
+        "summary": "Fetch the list of consents",
+        "description": "If user has not given or withdrawn consent to any of the template, no given or withdraw date is returned.",
+        "operationId": "getConsentTemplates",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ConsentTemplateList"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
+    "/{baseSiteId}/users/{userId}/consenttemplates/{consentTemplateId}": {
+      "get": {
+        "tags": [
+          "Consents"
+        ],
+        "summary": "Fetch the consent.",
+        "description": "If user has not given or withdrawn consent to the template, no given or withdraw date is returned.",
+        "operationId": "getConsentTemplate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "consentTemplateId",
+            "in": "path",
+            "description": "Consent template id.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Response configuration. This is the list of fields that should be returned in the response body.",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "BASIC",
+              "DEFAULT",
+              "FULL"
+            ]
+          },
+          {
+            "name": "baseSiteId",
+            "in": "path",
+            "description": "Base site identifier",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ConsentTemplate"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "oauth2_Password": []
+          },
+          {
+            "oauth2_client_credentials": []
+          }
+        ]
+      }
+    },
     "/{baseSiteId}/users/{userId}/customergroups": {
       "get": {
         "tags": [
@@ -6374,7 +7496,7 @@
         ],
         "summary": "Get all customer groups of a customer.",
         "description": "Returns all customer groups of a customer.",
-        "operationId": "getAllCustomerGroupsForCustomer",
+        "operationId": "getUserCustomerGroups",
         "consumes": [
           "application/json"
         ],
@@ -6445,7 +7567,7 @@
         ],
         "summary": "Changes customer's login name.",
         "description": "Changes a customer's login name. Requires the customer's current password.",
-        "operationId": "changeLogin",
+        "operationId": "replaceUserLogin",
         "consumes": [
           "application/json"
         ],
@@ -6515,9 +7637,9 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Get order history for user",
+        "summary": "Get order history for user.",
         "description": "Returns order history data for all orders placed by a specified user for a specified base store. The response can display the results across multiple pages, if required.",
-        "operationId": "getOrdersForUser",
+        "operationId": "getUserOrderHistory",
         "consumes": [
           "application/json"
         ],
@@ -6616,9 +7738,9 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Get total number of orders",
+        "summary": "Get total number of orders.",
         "description": "In the response header, the \"x-total-count\" indicates the total number of orders placed by a specified user for a specified base store.",
-        "operationId": "getCountOrdersForUser",
+        "operationId": "countUserOrders",
         "consumes": [
           "application/json"
         ],
@@ -6676,7 +7798,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Post a order",
+        "summary": "Place a order.",
         "description": "Authorizes the cart and places the order. The response contains the new order data.",
         "operationId": "placeOrder",
         "consumes": [
@@ -6761,9 +7883,9 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Get a order",
+        "summary": "Get a order.",
         "description": "Returns specific order details based on a specific order code. The response contains detailed order information.",
-        "operationId": "getOrderForUserByCode",
+        "operationId": "getUserOrders",
         "consumes": [
           "application/json"
         ],
@@ -6841,7 +7963,7 @@
         ],
         "summary": "Changes customer's password",
         "description": "Changes customer's password.",
-        "operationId": "changePassword",
+        "operationId": "replaceUserPassword",
         "consumes": [
           "application/json"
         ],
@@ -6909,11 +8031,11 @@
     "/{baseSiteId}/users/{userId}/paymentdetails": {
       "get": {
         "tags": [
-          "Users"
+          "Payment Details"
         ],
         "summary": "Get customer's credit card payment details list.",
         "description": "Return customer's credit card payment details list.",
-        "operationId": "getPaymentInfos",
+        "operationId": "getPaymentDetailsList",
         "consumes": [
           "application/json"
         ],
@@ -6988,7 +8110,7 @@
     "/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}": {
       "get": {
         "tags": [
-          "Users"
+          "Payment Details"
         ],
         "summary": "Get customer's credit card payment details.",
         "description": "Returns a customer's credit card payment details for the specified paymentDetailsId.",
@@ -7064,11 +8186,11 @@
       },
       "put": {
         "tags": [
-          "Users"
+          "Payment Details"
         ],
         "summary": "Updates existing customer's credit card payment info.",
         "description": "Updates existing customer's credit card payment info based on the payment info ID. Attributes not given in request will be defined again (set to null or default).",
-        "operationId": "putPaymentInfoPrim",
+        "operationId": "replacePaymentDetails",
         "consumes": [
           "application/xml",
           "application/json"
@@ -7137,11 +8259,11 @@
       },
       "delete": {
         "tags": [
-          "Users"
+          "Payment Details"
         ],
-        "summary": "Delete customer's credit card payment details.",
-        "description": "Removes a customer's credit card payment details based on a specified paymentDetailsId.",
-        "operationId": "deletePaymentInfo",
+        "summary": "Deletes customer's credit card payment details.",
+        "description": "Deletes a customer's credit card payment details based on a specified paymentDetailsId.",
+        "operationId": "removePaymentDetails",
         "consumes": [
           "application/json"
         ],
@@ -7197,11 +8319,11 @@
       },
       "patch": {
         "tags": [
-          "Users"
+          "Payment Details"
         ],
         "summary": "Updates existing customer's credit card payment details.",
         "description": "Updates an existing customer's credit card payment details based on the specified paymentDetailsId. Only those attributes provided in the request will be updated.",
-        "operationId": "updatePaymentInfoPrim",
+        "operationId": "updatePaymentDetails",
         "consumes": [
           "application/xml",
           "application/json"
@@ -7271,9 +8393,9 @@
         "tags": [
           "Vouchers"
         ],
-        "summary": "Get a voucher based on code",
+        "summary": "Get a voucher based on code.",
         "description": "Returns details of a single voucher that is specified by its voucher identification code.",
-        "operationId": "getVoucherByCode",
+        "operationId": "getVoucher",
         "consumes": [
           "application/json"
         ],
@@ -7458,6 +8580,66 @@
         }
       }
     },
+    "BaseStore": {
+      "type": "object",
+      "properties": {
+        "createReturnProcessCode": {
+          "type": "string"
+        },
+        "currencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Currency"
+          }
+        },
+        "defaultCurrency": {
+          "$ref": "#/definitions/Currency"
+        },
+        "defaultDeliveryOrigin": {
+          "$ref": "#/definitions/PointOfService"
+        },
+        "defaultLanguage": {
+          "$ref": "#/definitions/Language"
+        },
+        "deliveryCountries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Country"
+          }
+        },
+        "deliveryModes": {
+          "$ref": "#/definitions/DeliveryModeList"
+        },
+        "externalTaxEnabled": {
+          "type": "boolean"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Language"
+          }
+        },
+        "maxRadiusForPosSearch": {
+          "type": "number",
+          "format": "double"
+        },
+        "name": {
+          "type": "string"
+        },
+        "paymentProvider": {
+          "type": "string"
+        },
+        "pointsOfService": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PointOfService"
+          }
+        },
+        "submitOrderProcessCode": {
+          "type": "string"
+        }
+      }
+    },
     "Breadcrumb": {
       "type": "object",
       "properties": {
@@ -7536,6 +8718,17 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Cart"
+          }
+        }
+      }
+    },
+    "CartModificationList": {
+      "type": "object",
+      "properties": {
+        "cartModifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CartModification"
           }
         }
       }
@@ -7862,6 +9055,71 @@
         },
         "uid": {
           "type": "string"
+        }
+      }
+    },
+    "ConfigurationInfo": {
+      "type": "object",
+      "properties": {
+        "configurationLabel": {
+          "type": "string"
+        },
+        "configurationValue": {
+          "type": "string"
+        },
+        "configuratorType": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "ConsentTemplateList": {
+      "type": "object",
+      "properties": {
+        "consentTemplates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConsentTemplate"
+          }
+        }
+      }
+    },
+    "ConsentTemplate": {
+      "type": "object",
+      "properties": {
+        "currentConsent": {
+          "$ref": "#/definitions/Consent"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Consent": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "consentGivenDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "consentWithdrawnDate": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -8301,6 +9559,12 @@
         "basePrice": {
           "$ref": "#/definitions/Price"
         },
+        "configurationInfos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConfigurationInfo"
+          }
+        },
         "deliveryMode": {
           "$ref": "#/definitions/DeliveryMode"
         },
@@ -8612,6 +9876,26 @@
         }
       }
     },
+    "PaymentRequest": {
+      "type": "object",
+      "properties": {
+        "mappingLabels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "postUrl": {
+          "type": "string"
+        }
+      }
+    },
     "PickupOrderEntryGroup": {
       "type": "object",
       "properties": {
@@ -8634,6 +9918,17 @@
         },
         "totalPriceWithTax": {
           "$ref": "#/definitions/Price"
+        }
+      }
+    },
+    "PointOfServiceList": {
+      "type": "object",
+      "properties": {
+        "pointOfServices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PointOfService"
+          }
         }
       }
     },
@@ -8960,6 +10255,12 @@
         "code": {
           "type": "string"
         },
+        "configurable": {
+          "type": "boolean"
+        },
+        "configuratorType": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -9020,6 +10321,12 @@
         },
         "summary": {
           "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "url": {
           "type": "string"
@@ -9173,6 +10480,17 @@
         },
         "title": {
           "type": "string"
+        }
+      }
+    },
+    "RegionList": {
+      "type": "object",
+      "properties": {
+        "regions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Region"
+          }
         }
       }
     },
@@ -9756,6 +11074,10 @@
     "error": {
       "type": "object",
       "properties": {
+        "errorCode": {
+          "type": "string",
+          "description": "Error code"
+        },
         "message": {
           "type": "string",
           "description": "Descriptive, human readable error message."
@@ -9798,6 +11120,16 @@
           "type": "integer",
           "format": "int32",
           "description": "Number of elements on this page"
+        },
+        "hasNext": {
+          "type": "boolean",
+          "example": false,
+          "description": "Indicates if there is next page"
+        },
+        "hasPrevious": {
+          "type": "boolean",
+          "example": false,
+          "description": "Indicates if there is previous page"
         },
         "page": {
           "type": "integer",

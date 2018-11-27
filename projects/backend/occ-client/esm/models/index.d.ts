@@ -1,4 +1,5 @@
-import * as msRest from "ms-rest-js";
+import { ServiceClientOptions } from "@azure/ms-rest-js";
+import * as msRest from "@azure/ms-rest-js";
 /**
  * @interface
  * An interface representing Country.
@@ -130,6 +131,10 @@ export interface AddressList {
  *
  */
 export interface ErrorModel {
+    /**
+     * @member {string} [errorCode] Error code
+     */
+    errorCode?: string;
     /**
      * @member {string} [message] Descriptive, human readable error message.
      */
@@ -319,6 +324,314 @@ export interface BaseOption {
      * @member {string} [variantType]
      */
     variantType?: string;
+}
+/**
+ * @interface
+ * An interface representing Currency.
+ */
+export interface Currency {
+    /**
+     * @member {boolean} [active]
+     */
+    active?: boolean;
+    /**
+     * @member {string} [isocode]
+     */
+    isocode?: string;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {string} [symbol]
+     */
+    symbol?: string;
+}
+/**
+ * @interface
+ * An interface representing GeoPoint.
+ */
+export interface GeoPoint {
+    /**
+     * @member {number} [latitude]
+     */
+    latitude?: number;
+    /**
+     * @member {number} [longitude]
+     */
+    longitude?: number;
+}
+/**
+ * @interface
+ * An interface representing Time.
+ */
+export interface Time {
+    /**
+     * @member {string} [formattedHour]
+     */
+    formattedHour?: string;
+    /**
+     * @member {Uint8Array} [hour]
+     */
+    hour?: Uint8Array;
+    /**
+     * @member {Uint8Array} [minute]
+     */
+    minute?: Uint8Array;
+}
+/**
+ * @interface
+ * An interface representing SpecialOpeningDay.
+ */
+export interface SpecialOpeningDay {
+    /**
+     * @member {boolean} [closed]
+     */
+    closed?: boolean;
+    /**
+     * @member {Time} [closingTime]
+     */
+    closingTime?: Time;
+    /**
+     * @member {string} [comment]
+     */
+    comment?: string;
+    /**
+     * @member {Date} [date]
+     */
+    date?: Date;
+    /**
+     * @member {string} [formattedDate]
+     */
+    formattedDate?: string;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {Time} [openingTime]
+     */
+    openingTime?: Time;
+}
+/**
+ * @interface
+ * An interface representing WeekdayOpeningDay.
+ */
+export interface WeekdayOpeningDay {
+    /**
+     * @member {boolean} [closed]
+     */
+    closed?: boolean;
+    /**
+     * @member {Time} [closingTime]
+     */
+    closingTime?: Time;
+    /**
+     * @member {Time} [openingTime]
+     */
+    openingTime?: Time;
+    /**
+     * @member {string} [weekDay]
+     */
+    weekDay?: string;
+}
+/**
+ * @interface
+ * An interface representing OpeningSchedule.
+ */
+export interface OpeningSchedule {
+    /**
+     * @member {string} [code]
+     */
+    code?: string;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {SpecialOpeningDay[]} [specialDayOpeningList]
+     */
+    specialDayOpeningList?: SpecialOpeningDay[];
+    /**
+     * @member {WeekdayOpeningDay[]} [weekDayOpeningList]
+     */
+    weekDayOpeningList?: WeekdayOpeningDay[];
+}
+/**
+ * @interface
+ * An interface representing PointOfService.
+ */
+export interface PointOfService {
+    /**
+     * @member {Address} [address]
+     */
+    address?: Address;
+    /**
+     * @member {string} [description]
+     */
+    description?: string;
+    /**
+     * @member {string} [displayName]
+     */
+    displayName?: string;
+    /**
+     * @member {number} [distanceKm]
+     */
+    distanceKm?: number;
+    /**
+     * @member {{ [propertyName: string]: string }} [features]
+     */
+    features?: {
+        [propertyName: string]: string;
+    };
+    /**
+     * @member {string} [formattedDistance]
+     */
+    formattedDistance?: string;
+    /**
+     * @member {GeoPoint} [geoPoint]
+     */
+    geoPoint?: GeoPoint;
+    /**
+     * @member {Image} [mapIcon]
+     */
+    mapIcon?: Image;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {OpeningSchedule} [openingHours]
+     */
+    openingHours?: OpeningSchedule;
+    /**
+     * @member {string} [storeContent]
+     */
+    storeContent?: string;
+    /**
+     * @member {Image[]} [storeImages]
+     */
+    storeImages?: Image[];
+    /**
+     * @member {string} [url]
+     */
+    url?: string;
+}
+/**
+ * @interface
+ * An interface representing Language.
+ */
+export interface Language {
+    /**
+     * @member {boolean} [active]
+     */
+    active?: boolean;
+    /**
+     * @member {string} [isocode]
+     */
+    isocode?: string;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {string} [nativeName]
+     */
+    nativeName?: string;
+}
+/**
+ * @interface
+ * An interface representing DeliveryMode.
+ */
+export interface DeliveryMode {
+    /**
+     * @member {string} [code]
+     */
+    code?: string;
+    /**
+     * @member {Price} [deliveryCost]
+     */
+    deliveryCost?: Price;
+    /**
+     * @member {string} [description]
+     */
+    description?: string;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+}
+/**
+ * @interface
+ * An interface representing DeliveryModeList.
+ */
+export interface DeliveryModeList {
+    /**
+     * @member {DeliveryMode[]} [deliveryModes]
+     */
+    deliveryModes?: DeliveryMode[];
+}
+/**
+ * @interface
+ * An interface representing BaseStore.
+ */
+export interface BaseStore {
+    /**
+     * @member {string} [createReturnProcessCode]
+     */
+    createReturnProcessCode?: string;
+    /**
+     * @member {Currency[]} [currencies]
+     */
+    currencies?: Currency[];
+    /**
+     * @member {Currency} [defaultCurrency]
+     */
+    defaultCurrency?: Currency;
+    /**
+     * @member {PointOfService} [defaultDeliveryOrigin]
+     */
+    defaultDeliveryOrigin?: PointOfService;
+    /**
+     * @member {Language} [defaultLanguage]
+     */
+    defaultLanguage?: Language;
+    /**
+     * @member {Country[]} [deliveryCountries]
+     */
+    deliveryCountries?: Country[];
+    /**
+     * @member {DeliveryModeList} [deliveryModes]
+     */
+    deliveryModes?: DeliveryModeList;
+    /**
+     * @member {boolean} [externalTaxEnabled]
+     */
+    externalTaxEnabled?: boolean;
+    /**
+     * @member {Language[]} [languages]
+     */
+    languages?: Language[];
+    /**
+     * @member {number} [maxRadiusForPosSearch]
+     */
+    maxRadiusForPosSearch?: number;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {string} [paymentProvider]
+     */
+    paymentProvider?: string;
+    /**
+     * @member {PointOfService[]} [pointsOfService]
+     */
+    pointsOfService?: PointOfService[];
+    /**
+     * @member {string} [submitOrderProcessCode]
+     */
+    submitOrderProcessCode?: string;
 }
 /**
  * @interface
@@ -622,28 +935,6 @@ export interface PromotionResult {
 }
 /**
  * @interface
- * An interface representing Currency.
- */
-export interface Currency {
-    /**
-     * @member {boolean} [active]
-     */
-    active?: boolean;
-    /**
-     * @member {string} [isocode]
-     */
-    isocode?: string;
-    /**
-     * @member {string} [name]
-     */
-    name?: string;
-    /**
-     * @member {string} [symbol]
-     */
-    symbol?: string;
-}
-/**
- * @interface
  * An interface representing Voucher.
  */
 export interface Voucher {
@@ -690,195 +981,25 @@ export interface Voucher {
 }
 /**
  * @interface
- * An interface representing DeliveryMode.
+ * An interface representing ConfigurationInfo.
  */
-export interface DeliveryMode {
+export interface ConfigurationInfo {
     /**
-     * @member {string} [code]
+     * @member {string} [configurationLabel]
      */
-    code?: string;
+    configurationLabel?: string;
     /**
-     * @member {Price} [deliveryCost]
+     * @member {string} [configurationValue]
      */
-    deliveryCost?: Price;
+    configurationValue?: string;
     /**
-     * @member {string} [description]
+     * @member {string} [configuratorType]
      */
-    description?: string;
+    configuratorType?: string;
     /**
-     * @member {string} [name]
+     * @member {string} [status]
      */
-    name?: string;
-}
-/**
- * @interface
- * An interface representing GeoPoint.
- */
-export interface GeoPoint {
-    /**
-     * @member {number} [latitude]
-     */
-    latitude?: number;
-    /**
-     * @member {number} [longitude]
-     */
-    longitude?: number;
-}
-/**
- * @interface
- * An interface representing Time.
- */
-export interface Time {
-    /**
-     * @member {string} [formattedHour]
-     */
-    formattedHour?: string;
-    /**
-     * @member {Uint8Array} [hour]
-     */
-    hour?: Uint8Array;
-    /**
-     * @member {Uint8Array} [minute]
-     */
-    minute?: Uint8Array;
-}
-/**
- * @interface
- * An interface representing SpecialOpeningDay.
- */
-export interface SpecialOpeningDay {
-    /**
-     * @member {boolean} [closed]
-     */
-    closed?: boolean;
-    /**
-     * @member {Time} [closingTime]
-     */
-    closingTime?: Time;
-    /**
-     * @member {string} [comment]
-     */
-    comment?: string;
-    /**
-     * @member {Date} [date]
-     */
-    date?: Date;
-    /**
-     * @member {string} [formattedDate]
-     */
-    formattedDate?: string;
-    /**
-     * @member {string} [name]
-     */
-    name?: string;
-    /**
-     * @member {Time} [openingTime]
-     */
-    openingTime?: Time;
-}
-/**
- * @interface
- * An interface representing WeekdayOpeningDay.
- */
-export interface WeekdayOpeningDay {
-    /**
-     * @member {boolean} [closed]
-     */
-    closed?: boolean;
-    /**
-     * @member {Time} [closingTime]
-     */
-    closingTime?: Time;
-    /**
-     * @member {Time} [openingTime]
-     */
-    openingTime?: Time;
-    /**
-     * @member {string} [weekDay]
-     */
-    weekDay?: string;
-}
-/**
- * @interface
- * An interface representing OpeningSchedule.
- */
-export interface OpeningSchedule {
-    /**
-     * @member {string} [code]
-     */
-    code?: string;
-    /**
-     * @member {string} [name]
-     */
-    name?: string;
-    /**
-     * @member {SpecialOpeningDay[]} [specialDayOpeningList]
-     */
-    specialDayOpeningList?: SpecialOpeningDay[];
-    /**
-     * @member {WeekdayOpeningDay[]} [weekDayOpeningList]
-     */
-    weekDayOpeningList?: WeekdayOpeningDay[];
-}
-/**
- * @interface
- * An interface representing PointOfService.
- */
-export interface PointOfService {
-    /**
-     * @member {Address} [address]
-     */
-    address?: Address;
-    /**
-     * @member {string} [description]
-     */
-    description?: string;
-    /**
-     * @member {string} [displayName]
-     */
-    displayName?: string;
-    /**
-     * @member {number} [distanceKm]
-     */
-    distanceKm?: number;
-    /**
-     * @member {{ [propertyName: string]: string }} [features]
-     */
-    features?: {
-        [propertyName: string]: string;
-    };
-    /**
-     * @member {string} [formattedDistance]
-     */
-    formattedDistance?: string;
-    /**
-     * @member {GeoPoint} [geoPoint]
-     */
-    geoPoint?: GeoPoint;
-    /**
-     * @member {Image} [mapIcon]
-     */
-    mapIcon?: Image;
-    /**
-     * @member {string} [name]
-     */
-    name?: string;
-    /**
-     * @member {OpeningSchedule} [openingHours]
-     */
-    openingHours?: OpeningSchedule;
-    /**
-     * @member {string} [storeContent]
-     */
-    storeContent?: string;
-    /**
-     * @member {Image[]} [storeImages]
-     */
-    storeImages?: Image[];
-    /**
-     * @member {string} [url]
-     */
-    url?: string;
+    status?: string;
 }
 /**
  * @interface
@@ -1039,28 +1160,6 @@ export interface ProductReference {
      * @member {Product} [target]
      */
     target?: Product;
-}
-/**
- * @interface
- * An interface representing Language.
- */
-export interface Language {
-    /**
-     * @member {boolean} [active]
-     */
-    active?: boolean;
-    /**
-     * @member {string} [isocode]
-     */
-    isocode?: string;
-    /**
-     * @member {string} [name]
-     */
-    name?: string;
-    /**
-     * @member {string} [nativeName]
-     */
-    nativeName?: string;
 }
 /**
  * @interface
@@ -1246,6 +1345,14 @@ export interface Product {
      */
     code?: string;
     /**
+     * @member {boolean} [configurable]
+     */
+    configurable?: boolean;
+    /**
+     * @member {string} [configuratorType]
+     */
+    configuratorType?: string;
+    /**
      * @member {string} [description]
      */
     description?: string;
@@ -1306,6 +1413,10 @@ export interface Product {
      */
     summary?: string;
     /**
+     * @member {string[]} [tags]
+     */
+    tags?: string[];
+    /**
      * @member {string} [url]
      */
     url?: string;
@@ -1339,6 +1450,10 @@ export interface OrderEntry {
      * @member {Price} [basePrice]
      */
     basePrice?: Price;
+    /**
+     * @member {ConfigurationInfo[]} [configurationInfos]
+     */
+    configurationInfos?: ConfigurationInfo[];
     /**
      * @member {DeliveryMode} [deliveryMode]
      */
@@ -1676,6 +1791,16 @@ export interface CartModification {
 }
 /**
  * @interface
+ * An interface representing CartModificationList.
+ */
+export interface CartModificationList {
+    /**
+     * @member {CartModification[]} [cartModifications]
+     */
+    cartModifications?: CartModification[];
+}
+/**
+ * @interface
  * An interface representing CategoryHierarchy.
  */
 export interface CategoryHierarchy {
@@ -1774,6 +1899,60 @@ export interface ComponentIDList {
 }
 /**
  * @interface
+ * An interface representing Consent.
+ */
+export interface Consent {
+    /**
+     * @member {string} [code]
+     */
+    code?: string;
+    /**
+     * @member {Date} [consentGivenDate]
+     */
+    consentGivenDate?: Date;
+    /**
+     * @member {Date} [consentWithdrawnDate]
+     */
+    consentWithdrawnDate?: Date;
+}
+/**
+ * @interface
+ * An interface representing ConsentTemplate.
+ */
+export interface ConsentTemplate {
+    /**
+     * @member {Consent} [currentConsent]
+     */
+    currentConsent?: Consent;
+    /**
+     * @member {string} [description]
+     */
+    description?: string;
+    /**
+     * @member {string} [id]
+     */
+    id?: string;
+    /**
+     * @member {string} [name]
+     */
+    name?: string;
+    /**
+     * @member {number} [version]
+     */
+    version?: number;
+}
+/**
+ * @interface
+ * An interface representing ConsentTemplateList.
+ */
+export interface ConsentTemplateList {
+    /**
+     * @member {ConsentTemplate[]} [consentTemplates]
+     */
+    consentTemplates?: ConsentTemplate[];
+}
+/**
+ * @interface
  * An interface representing ConsignmentEntry.
  */
 export interface ConsignmentEntry {
@@ -1843,16 +2022,6 @@ export interface CurrencyList {
      * @member {Currency[]} [currencies]
      */
     currencies?: Currency[];
-}
-/**
- * @interface
- * An interface representing DeliveryModeList.
- */
-export interface DeliveryModeList {
-    /**
-     * @member {DeliveryMode[]} [deliveryModes]
-     */
-    deliveryModes?: DeliveryMode[];
 }
 /**
  * @interface
@@ -1931,6 +2100,14 @@ export interface Pagination {
      * @member {number} [count] Number of elements on this page
      */
     count?: number;
+    /**
+     * @member {boolean} [hasNext] Indicates if there is next page
+     */
+    hasNext?: boolean;
+    /**
+     * @member {boolean} [hasPrevious] Indicates if there is previous page
+     */
+    hasPrevious?: boolean;
     /**
      * @member {number} [page] Current page number
      */
@@ -2276,6 +2453,38 @@ export interface PaymentDetailsList {
 }
 /**
  * @interface
+ * An interface representing PaymentRequest.
+ */
+export interface PaymentRequest {
+    /**
+     * @member {{ [propertyName: string]: string }} [mappingLabels]
+     */
+    mappingLabels?: {
+        [propertyName: string]: string;
+    };
+    /**
+     * @member {{ [propertyName: string]: string }} [parameters]
+     */
+    parameters?: {
+        [propertyName: string]: string;
+    };
+    /**
+     * @member {string} [postUrl]
+     */
+    postUrl?: string;
+}
+/**
+ * @interface
+ * An interface representing PointOfServiceList.
+ */
+export interface PointOfServiceList {
+    /**
+     * @member {PointOfService[]} [pointOfServices]
+     */
+    pointOfServices?: PointOfService[];
+}
+/**
+ * @interface
  * An interface representing PointOfServiceStock.
  */
 export interface PointOfServiceStock {
@@ -2485,6 +2694,16 @@ export interface PromotionResultList {
      * @member {PromotionResult[]} [promotions]
      */
     promotions?: PromotionResult[];
+}
+/**
+ * @interface
+ * An interface representing RegionList.
+ */
+export interface RegionList {
+    /**
+     * @member {Region[]} [regions]
+     */
+    regions?: Region[];
 }
 /**
  * @interface
@@ -2736,6 +2955,32 @@ export interface VoucherList {
 }
 /**
  * @interface
+ * An interface representing CommerceWebservicesV2Options.
+ * @extends ServiceClientOptions
+ */
+export interface CommerceWebservicesV2Options extends ServiceClientOptions {
+    /**
+     * @member {string} [baseUri]
+     */
+    baseUri?: string;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetBaseStoreOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetBaseStoreOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields;
+}
+/**
+ * @interface
  * An interface representing CommerceWebservicesV2GetCardTypesOptionalParams.
  * Optional Parameters.
  *
@@ -2743,11 +2988,11 @@ export interface VoucherList {
  */
 export interface CommerceWebservicesV2GetCardTypesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields} [fields] Response configuration. This is the list of
+     * @member {Fields1} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields;
+    fields?: Fields1;
 }
 /**
  * @interface
@@ -2758,11 +3003,11 @@ export interface CommerceWebservicesV2GetCardTypesOptionalParams extends msRest.
  */
 export interface CommerceWebservicesV2GetCatalogsOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields1} [fields] Response configuration. This is the list of
+     * @member {Fields2} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields1;
+    fields?: Fields2;
 }
 /**
  * @interface
@@ -2773,11 +3018,11 @@ export interface CommerceWebservicesV2GetCatalogsOptionalParams extends msRest.R
  */
 export interface CommerceWebservicesV2GetCatalogOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields2} [fields] Response configuration. This is the list of
+     * @member {Fields3} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields2;
+    fields?: Fields3;
 }
 /**
  * @interface
@@ -2788,11 +3033,11 @@ export interface CommerceWebservicesV2GetCatalogOptionalParams extends msRest.Re
  */
 export interface CommerceWebservicesV2GetCatalogVersionOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields3} [fields] Response configuration. This is the list of
+     * @member {Fields4} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields3;
+    fields?: Fields4;
 }
 /**
  * @interface
@@ -2803,61 +3048,20 @@ export interface CommerceWebservicesV2GetCatalogVersionOptionalParams extends ms
  */
 export interface CommerceWebservicesV2GetCategoriesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields4} [fields] Response configuration. This is the list of
+     * @member {Fields5} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields4;
-}
-/**
- * @interface
- * An interface representing CommerceWebservicesV2GetComponentByIdListOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface CommerceWebservicesV2GetComponentByIdListOptionalParams extends msRest.RequestOptionsBase {
-    /**
-     * @member {string} [catalogCode] Catalog code
-     */
-    catalogCode?: string;
-    /**
-     * @member {string} [productCode] Product code
-     */
-    productCode?: string;
-    /**
-     * @member {string} [categoryCode] Category code
-     */
-    categoryCode?: string;
-    /**
-     * @member {Fields5} [fields] Response configuration (list of fields, which
-     * should be returned in response). Possible values include: 'BASIC',
-     * 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
-     */
     fields?: Fields5;
-    /**
-     * @member {number} [currentPage] Optional pagination parameter. Default
-     * value 0. Default value: 0 .
-     */
-    currentPage?: number;
-    /**
-     * @member {number} [pageSize] Optional pagination parameter. Default value
-     * 10. Default value: 10 .
-     */
-    pageSize?: number;
-    /**
-     * @member {string} [sort] Optional sort criterion. No default value.
-     */
-    sort?: string;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetComponentByIdOptionalParams.
+ * An interface representing CommerceWebservicesV2GetComponentByIdListUsingPOSTOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetComponentByIdOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetComponentByIdListUsingPOSTOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [catalogCode] Catalog code
      */
@@ -2876,15 +3080,56 @@ export interface CommerceWebservicesV2GetComponentByIdOptionalParams extends msR
      * 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
     fields?: Fields6;
+    /**
+     * @member {number} [currentPage] Optional pagination parameter. Default
+     * value 0. Default value: 0 .
+     */
+    currentPage?: number;
+    /**
+     * @member {number} [pageSize] Optional pagination parameter. Default value
+     * 10. Default value: 10 .
+     */
+    pageSize?: number;
+    /**
+     * @member {string} [sort] Optional sort criterion. No default value.
+     */
+    sort?: string;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetPageDataOptionalParams.
+ * An interface representing CommerceWebservicesV2GetComponentByIdUsingGETOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetPageDataOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetComponentByIdUsingGETOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {string} [catalogCode] Catalog code
+     */
+    catalogCode?: string;
+    /**
+     * @member {string} [productCode] Product code
+     */
+    productCode?: string;
+    /**
+     * @member {string} [categoryCode] Category code
+     */
+    categoryCode?: string;
+    /**
+     * @member {Fields7} [fields] Response configuration (list of fields, which
+     * should be returned in response). Possible values include: 'BASIC',
+     * 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields7;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetPageDataUsingGETOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetPageDataUsingGETOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {PageType} [pageType] page type. Possible values include:
      * 'ContentPage', 'ProductPage', 'CategoryPage', 'CatalogPage'. Default
@@ -2902,11 +3147,46 @@ export interface CommerceWebservicesV2GetPageDataOptionalParams extends msRest.R
      */
     code?: string;
     /**
-     * @member {Fields7} [fields] Response configuration (list of fields, which
+     * @member {Fields8} [fields] Response configuration (list of fields, which
      * should be returned in response). Possible values include: 'BASIC',
      * 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields7;
+    fields?: Fields8;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetCountriesOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetCountriesOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Type} [type] The type of countries. Possible values include:
+     * 'SHIPPING', 'BILLING'
+     */
+    type?: Type;
+    /**
+     * @member {Fields9} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields9;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetCountryRegionsOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetCountryRegionsOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields10} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields10;
 }
 /**
  * @interface
@@ -2917,20 +3197,20 @@ export interface CommerceWebservicesV2GetPageDataOptionalParams extends msRest.R
  */
 export interface CommerceWebservicesV2GetCurrenciesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields8} [fields] Response configuration. This is the list of
+     * @member {Fields11} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields8;
+    fields?: Fields11;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetAllCustomerGroupsOptionalParams.
+ * An interface representing CommerceWebservicesV2GetCustomerGroupsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetAllCustomerGroupsOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetCustomerGroupsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {number} [currentPage] Current page number (starts with 0).
      * Default value: 0 .
@@ -2942,11 +3222,11 @@ export interface CommerceWebservicesV2GetAllCustomerGroupsOptionalParams extends
      */
     pageSize?: number;
     /**
-     * @member {Fields9} [fields] Response configuration. This is the list of
+     * @member {Fields12} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'BASIC' .
      */
-    fields?: Fields9;
+    fields?: Fields12;
 }
 /**
  * @interface
@@ -2957,11 +3237,11 @@ export interface CommerceWebservicesV2GetAllCustomerGroupsOptionalParams extends
  */
 export interface CommerceWebservicesV2GetCustomerGroupOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields10} [fields] Response configuration. This is the list of
+     * @member {Fields13} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'BASIC' .
      */
-    fields?: Fields10;
+    fields?: Fields13;
 }
 /**
  * @interface
@@ -2972,26 +3252,26 @@ export interface CommerceWebservicesV2GetCustomerGroupOptionalParams extends msR
  */
 export interface CommerceWebservicesV2GetDeliveryCountriesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields11} [fields] Response configuration. This is the list of
+     * @member {Fields14} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields11;
+    fields?: Fields14;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2ExportProductsOptionalParams.
+ * An interface representing CommerceWebservicesV2GetExportedProductsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2ExportProductsOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetExportedProductsOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields12} [fields] Response configuration. This is the list of
+     * @member {Fields15} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields12;
+    fields?: Fields15;
     /**
      * @member {number} [currentPage] The current result page requested. Default
      * value: 0 .
@@ -3021,18 +3301,18 @@ export interface CommerceWebservicesV2ExportProductsOptionalParams extends msRes
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2OrderStatusFeedOptionalParams.
+ * An interface representing CommerceWebservicesV2GetOrderStatusFeedOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2OrderStatusFeedOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetOrderStatusFeedOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields13} [fields] Response configuration. This is the list of
+     * @member {Fields16} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields13;
+    fields?: Fields16;
 }
 /**
  * @interface
@@ -3043,11 +3323,11 @@ export interface CommerceWebservicesV2OrderStatusFeedOptionalParams extends msRe
  */
 export interface CommerceWebservicesV2GetLanguagesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields14} [fields] Response configuration. This is the list of
+     * @member {Fields17} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields14;
+    fields?: Fields17;
 }
 /**
  * @interface
@@ -3058,40 +3338,40 @@ export interface CommerceWebservicesV2GetLanguagesOptionalParams extends msRest.
  */
 export interface CommerceWebservicesV2GetOrderOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields15} [fields] Response configuration. This is the list of
+     * @member {Fields18} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields15;
+    fields?: Fields18;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2ExpressUpdateOptionalParams.
+ * An interface representing CommerceWebservicesV2GetExpressUpdateProductsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2ExpressUpdateOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetExpressUpdateProductsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [catalog] Only products from this catalog are returned.
      * Format: catalogId:catalogVersion
      */
     catalog?: string;
     /**
-     * @member {Fields16} [fields] Response configuration. This is the list of
+     * @member {Fields19} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields16;
+    fields?: Fields19;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2SearchProductsOptionalParams.
+ * An interface representing CommerceWebservicesV2GetProductsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2SearchProductsOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetProductsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [query] Serialized query, free text search, facets. The
      * format of a serialized query:
@@ -3126,12 +3406,12 @@ export interface CommerceWebservicesV2SearchProductsOptionalParams extends msRes
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CountSearchProductsOptionalParams.
+ * An interface representing CommerceWebservicesV2CountProductsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CountSearchProductsOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CountProductsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [query] Serialized query, free text search, facets. The
      * format of a serialized query:
@@ -3148,46 +3428,46 @@ export interface CommerceWebservicesV2CountSearchProductsOptionalParams extends 
  */
 export interface CommerceWebservicesV2GetSuggestionsOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields17} [fields] Response configuration. This is the list of
+     * @member {Fields20} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields17;
+    fields?: Fields20;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetProductByCodeOptionalParams.
+ * An interface representing CommerceWebservicesV2GetProductOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetProductByCodeOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetProductOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields18} [fields] Response configuration. This is the list of
+     * @member {Fields21} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields18;
+    fields?: Fields21;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2ExportProductReferencesOptionalParams.
+ * An interface representing CommerceWebservicesV2GetProductReferencesOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2ExportProductReferencesOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetProductReferencesOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {number} [pageSize] Maximum size of returned results. Default
      * value: 2147483647 .
      */
     pageSize?: number;
     /**
-     * @member {Fields19} [fields] Response configuration. This is the list of
+     * @member {Fields22} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields19;
+    fields?: Fields22;
 }
 /**
  * @interface
@@ -3202,35 +3482,35 @@ export interface CommerceWebservicesV2GetProductReviewsOptionalParams extends ms
      */
     maxCount?: number;
     /**
-     * @member {Fields20} [fields] Response configuration. This is the list of
+     * @member {Fields23} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields20;
+    fields?: Fields23;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CreateReviewPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2CreateProductReviewOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CreateReviewPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CreateProductReviewOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields21} [fields] Response configuration. This is the list of
+     * @member {Fields24} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields21;
+    fields?: Fields24;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2SearchProductStockByLocationOptionalParams.
+ * An interface representing CommerceWebservicesV2GetLocationProductStockOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2SearchProductStockByLocationOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetLocationProductStockOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [location] Free-text location
      */
@@ -3254,20 +3534,20 @@ export interface CommerceWebservicesV2SearchProductStockByLocationOptionalParams
      */
     pageSize?: number;
     /**
-     * @member {Fields22} [fields] Response configuration. This is the list of
+     * @member {Fields25} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields22;
+    fields?: Fields25;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams.
+ * An interface representing CommerceWebservicesV2CountProductStockByLocationOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CountProductStockByLocationOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [location] Free-text location
      */
@@ -3283,62 +3563,62 @@ export interface CommerceWebservicesV2CountSearchProductStockByLocationOptionalP
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetStockDataOptionalParams.
+ * An interface representing CommerceWebservicesV2GetStoreProductStockOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetStockDataOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetStoreProductStockOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields23} [fields] Response configuration. This is the list of
+     * @member {Fields26} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields23;
+    fields?: Fields26;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetPromotionsPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2GetPromotionsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetPromotionsPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetPromotionsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [promotionGroup] Only promotions from this group are
      * returned
      */
     promotionGroup?: string;
     /**
-     * @member {Fields24} [fields] Response configuration. This is the list of
+     * @member {Fields27} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'BASIC' .
      */
-    fields?: Fields24;
+    fields?: Fields27;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetPromotionByCodeOptionalParams.
+ * An interface representing CommerceWebservicesV2GetPromotionOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetPromotionByCodeOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetPromotionOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields25} [fields] Response configuration. This is the list of
+     * @member {Fields28} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'BASIC' .
      */
-    fields?: Fields25;
+    fields?: Fields28;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2LocationSearchOptionalParams.
+ * An interface representing CommerceWebservicesV2GetStoreLocationsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2LocationSearchOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetStoreLocationsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [query] Location in natural language i.e. city or
      * country.
@@ -3379,20 +3659,20 @@ export interface CommerceWebservicesV2LocationSearchOptionalParams extends msRes
      */
     accuracy?: number;
     /**
-     * @member {Fields26} [fields] Response configuration. This is the list of
+     * @member {Fields29} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields26;
+    fields?: Fields29;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CountLocationSearchOptionalParams.
+ * An interface representing CommerceWebservicesV2CountStoreLocationsOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CountLocationSearchOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CountStoreLocationsOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [query] Location in natural language i.e. city or
      * country.
@@ -3420,18 +3700,18 @@ export interface CommerceWebservicesV2CountLocationSearchOptionalParams extends 
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2LocationDetailsOptionalParams.
+ * An interface representing CommerceWebservicesV2GetStoreLocationOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2LocationDetailsOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetStoreLocationOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields27} [fields] Response configuration. This is the list of
+     * @member {Fields30} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields27;
+    fields?: Fields30;
 }
 /**
  * @interface
@@ -3442,26 +3722,26 @@ export interface CommerceWebservicesV2LocationDetailsOptionalParams extends msRe
  */
 export interface CommerceWebservicesV2GetTitlesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields28} [fields] Response configuration. This is the list of
+     * @member {Fields31} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields28;
+    fields?: Fields31;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2RegisterUserPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2CreateUserOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2RegisterUserPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CreateUserOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields29} [fields] Response configuration. This is the list of
+     * @member {Fields32} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields29;
+    fields?: Fields32;
 }
 /**
  * @interface
@@ -3472,11 +3752,11 @@ export interface CommerceWebservicesV2RegisterUserPrimOptionalParams extends msR
  */
 export interface CommerceWebservicesV2GetUserOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields30} [fields] Response configuration. This is the list of
+     * @member {Fields33} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields30;
+    fields?: Fields33;
 }
 /**
  * @interface
@@ -3487,41 +3767,41 @@ export interface CommerceWebservicesV2GetUserOptionalParams extends msRest.Reque
  */
 export interface CommerceWebservicesV2GetAddressesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields31} [fields] Response configuration. This is the list of
+     * @member {Fields34} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields31;
+    fields?: Fields34;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CreateAddressPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2CreateAddressOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CreateAddressPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CreateAddressOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields32} [fields] Response configuration. This is the list of
+     * @member {Fields35} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields32;
+    fields?: Fields35;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2VerifyAddressPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2ValidateAddressOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2VerifyAddressPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2ValidateAddressOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields33} [fields] Response configuration. This is the list of
+     * @member {Fields36} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields33;
+    fields?: Fields36;
 }
 /**
  * @interface
@@ -3532,11 +3812,11 @@ export interface CommerceWebservicesV2VerifyAddressPrimOptionalParams extends ms
  */
 export interface CommerceWebservicesV2GetAddressOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields34} [fields] Response configuration. This is the list of
+     * @member {Fields37} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields34;
+    fields?: Fields37;
 }
 /**
  * @interface
@@ -3547,11 +3827,11 @@ export interface CommerceWebservicesV2GetAddressOptionalParams extends msRest.Re
  */
 export interface CommerceWebservicesV2GetCartsOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields35} [fields] Response configuration. This is the list of
+     * @member {Fields38} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields35;
+    fields?: Fields38;
     /**
      * @member {boolean} [savedCartsOnly] Optional parameter. If the parameter is
      * provided and its value is true, only saved carts are returned. Default
@@ -3592,11 +3872,11 @@ export interface CommerceWebservicesV2CreateCartOptionalParams extends msRest.Re
      */
     toMergeCartGuid?: string;
     /**
-     * @member {Fields36} [fields] Response configuration. This is the list of
+     * @member {Fields39} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields36;
+    fields?: Fields39;
 }
 /**
  * @interface
@@ -3607,35 +3887,35 @@ export interface CommerceWebservicesV2CreateCartOptionalParams extends msRest.Re
  */
 export interface CommerceWebservicesV2GetCartOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields37} [fields] Response configuration. This is the list of
+     * @member {Fields40} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields37;
+    fields?: Fields40;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2CreateCartDeliveryAddressOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CreateCartDeliveryAddressOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields38} [fields] Response configuration. This is the list of
+     * @member {Fields41} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields38;
+    fields?: Fields41;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2CloneSaveCartOptionalParams.
+ * An interface representing CommerceWebservicesV2DoCartCloneOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2CloneSaveCartOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2DoCartCloneOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [name] The name that should be applied to the cloned
      * cart.
@@ -3647,11 +3927,41 @@ export interface CommerceWebservicesV2CloneSaveCartOptionalParams extends msRest
      */
     description?: string;
     /**
-     * @member {Fields39} [fields] Response configuration. This is the list of
+     * @member {Fields42} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields39;
+    fields?: Fields42;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetConsolidatedPickupLocationsOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetConsolidatedPickupLocationsOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields43} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields43;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2CreateConsolidatedPickupLocationOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2CreateConsolidatedPickupLocationOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields44} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields44;
 }
 /**
  * @interface
@@ -3662,26 +3972,26 @@ export interface CommerceWebservicesV2CloneSaveCartOptionalParams extends msRest
  */
 export interface CommerceWebservicesV2GetCartDeliveryModeOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields40} [fields] Response configuration. This is the list of
+     * @member {Fields45} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields40;
+    fields?: Fields45;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams.
+ * An interface representing CommerceWebservicesV2GetCartDeliveryModesOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetCartDeliveryModesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields41} [fields] Response configuration. This is the list of
+     * @member {Fields46} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields41;
+    fields?: Fields46;
 }
 /**
  * @interface
@@ -3692,26 +4002,26 @@ export interface CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams ex
  */
 export interface CommerceWebservicesV2GetCartEntriesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields42} [fields] Response configuration. This is the list of
+     * @member {Fields47} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields42;
+    fields?: Fields47;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2AddCartEntryPrimOptionalParams.
+ * An interface representing CommerceWebservicesV2CreateCartEntryOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2AddCartEntryPrimOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CreateCartEntryOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields43} [fields] Response configuration. This is the list of
+     * @member {Fields48} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields43;
+    fields?: Fields48;
 }
 /**
  * @interface
@@ -3722,81 +4032,6 @@ export interface CommerceWebservicesV2AddCartEntryPrimOptionalParams extends msR
  */
 export interface CommerceWebservicesV2GetCartEntryOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields44} [fields] Response configuration. This is the list of
-     * fields that should be returned in the response body. Possible values
-     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
-     */
-    fields?: Fields44;
-}
-/**
- * @interface
- * An interface representing CommerceWebservicesV2SetCartEntryPrimOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface CommerceWebservicesV2SetCartEntryPrimOptionalParams extends msRest.RequestOptionsBase {
-    /**
-     * @member {Fields45} [fields] Response configuration. This is the list of
-     * fields that should be returned in the response body. Possible values
-     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
-     */
-    fields?: Fields45;
-}
-/**
- * @interface
- * An interface representing CommerceWebservicesV2UpdateCartEntryPrimOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface CommerceWebservicesV2UpdateCartEntryPrimOptionalParams extends msRest.RequestOptionsBase {
-    /**
-     * @member {Fields46} [fields] Response configuration. This is the list of
-     * fields that should be returned in the response body. Possible values
-     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
-     */
-    fields?: Fields46;
-}
-/**
- * @interface
- * An interface representing CommerceWebservicesV2FlagForDeletionOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface CommerceWebservicesV2FlagForDeletionOptionalParams extends msRest.RequestOptionsBase {
-    /**
-     * @member {Fields47} [fields] Response configuration. This is the list of
-     * fields that should be returned in the response body. Possible values
-     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
-     */
-    fields?: Fields47;
-}
-/**
- * @interface
- * An interface representing CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams extends msRest.RequestOptionsBase {
-    /**
-     * @member {Fields48} [fields] Response configuration. This is the list of
-     * fields that should be returned in the response body. Possible values
-     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
-     */
-    fields?: Fields48;
-}
-/**
- * @interface
- * An interface representing CommerceWebservicesV2GetPromotionsOptionalParams.
- * Optional Parameters.
- *
- * @extends RequestOptionsBase
- */
-export interface CommerceWebservicesV2GetPromotionsOptionalParams extends msRest.RequestOptionsBase {
-    /**
      * @member {Fields49} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
@@ -3805,12 +4040,12 @@ export interface CommerceWebservicesV2GetPromotionsOptionalParams extends msRest
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetPromotionOptionalParams.
+ * An interface representing CommerceWebservicesV2ReplaceCartEntryOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetPromotionOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2ReplaceCartEntryOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {Fields50} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
@@ -3820,12 +4055,12 @@ export interface CommerceWebservicesV2GetPromotionOptionalParams extends msRest.
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2RestoreSavedCartOptionalParams.
+ * An interface representing CommerceWebservicesV2UpdateCartEntryOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2RestoreSavedCartOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2UpdateCartEntryOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {Fields51} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
@@ -3835,12 +4070,122 @@ export interface CommerceWebservicesV2RestoreSavedCartOptionalParams extends msR
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2SaveCartOptionalParams.
+ * An interface representing CommerceWebservicesV2DoUpdateFlagForDeletionOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2SaveCartOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2DoUpdateFlagForDeletionOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields52} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields52;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetSopPaymentRequestDetailsOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetSopPaymentRequestDetailsOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {boolean} [extendedMerchantCallback] Define which url should be
+     * returned. Default value: false .
+     */
+    extendedMerchantCallback?: boolean;
+    /**
+     * @member {Fields53} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields53;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetSopPaymentResponseOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetSopPaymentResponseOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields54} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields54;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2CreateCartPaymentDetailsOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2CreateCartPaymentDetailsOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields55} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields55;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetCartPromotionsOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetCartPromotionsOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields56} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields56;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetCartPromotionOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetCartPromotionOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields57} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields57;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2DoUpdateSavedCartOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2DoUpdateSavedCartOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields58} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields58;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2DoSaveCartOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2DoSaveCartOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [saveCartName] The name that should be applied to the
      * saved cart.
@@ -3852,11 +4197,11 @@ export interface CommerceWebservicesV2SaveCartOptionalParams extends msRest.Requ
      */
     saveCartDescription?: string;
     /**
-     * @member {Fields52} [fields] Response configuration. This is the list of
+     * @member {Fields59} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields52;
+    fields?: Fields59;
 }
 /**
  * @interface
@@ -3867,50 +4212,80 @@ export interface CommerceWebservicesV2SaveCartOptionalParams extends msRest.Requ
  */
 export interface CommerceWebservicesV2GetSavedCartOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields53} [fields] Response configuration. This is the list of
+     * @member {Fields60} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields53;
+    fields?: Fields60;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetVouchersOptionalParams.
+ * An interface representing CommerceWebservicesV2GetCartVouchersOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetVouchersOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetCartVouchersOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields54} [fields] Response configuration. This is the list of
+     * @member {Fields61} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields54;
+    fields?: Fields61;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams.
+ * An interface representing CommerceWebservicesV2GetConsentTemplatesOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetConsentTemplatesOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields55} [fields] Response configuration. This is the list of
+     * @member {Fields62} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields55;
+    fields?: Fields62;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetOrdersForUserOptionalParams.
+ * An interface representing CommerceWebservicesV2GetConsentTemplateOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetOrdersForUserOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetConsentTemplateOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields63} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields63;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetUserCustomerGroupsOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetUserCustomerGroupsOptionalParams extends msRest.RequestOptionsBase {
+    /**
+     * @member {Fields64} [fields] Response configuration. This is the list of
+     * fields that should be returned in the response body. Possible values
+     * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
+     */
+    fields?: Fields64;
+}
+/**
+ * @interface
+ * An interface representing CommerceWebservicesV2GetUserOrderHistoryOptionalParams.
+ * Optional Parameters.
+ *
+ * @extends RequestOptionsBase
+ */
+export interface CommerceWebservicesV2GetUserOrderHistoryOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [statuses] Filters only certain order statuses. For
      * example, statuses=CANCELLED,CHECKED_VALID would only return orders with
@@ -3932,20 +4307,20 @@ export interface CommerceWebservicesV2GetOrdersForUserOptionalParams extends msR
      */
     sort?: string;
     /**
-     * @member {Fields56} [fields] Response configuration. This is the list of
+     * @member {Fields65} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields56;
+    fields?: Fields65;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetCountOrdersForUserOptionalParams.
+ * An interface representing CommerceWebservicesV2CountUserOrdersOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetCountOrdersForUserOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2CountUserOrdersOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [statuses] Filters only certain order statuses. For
      * example, statuses=CANCELLED,CHECKED_VALID would only return orders with
@@ -3966,35 +4341,35 @@ export interface CommerceWebservicesV2PlaceOrderOptionalParams extends msRest.Re
      */
     securityCode?: string;
     /**
-     * @member {Fields57} [fields] Response configuration. This is the list of
+     * @member {Fields66} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields57;
+    fields?: Fields66;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetOrderForUserByCodeOptionalParams.
+ * An interface representing CommerceWebservicesV2GetUserOrdersOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetOrderForUserByCodeOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetUserOrdersOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields58} [fields] Response configuration. This is the list of
+     * @member {Fields67} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields58;
+    fields?: Fields67;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2ChangePasswordOptionalParams.
+ * An interface representing CommerceWebservicesV2ReplaceUserPasswordOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2ChangePasswordOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2ReplaceUserPasswordOptionalParams extends msRest.RequestOptionsBase {
     /**
      * @member {string} [old] Old password. Required only for ROLE_CUSTOMERGROUP
      */
@@ -4002,18 +4377,18 @@ export interface CommerceWebservicesV2ChangePasswordOptionalParams extends msRes
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetPaymentInfosOptionalParams.
+ * An interface representing CommerceWebservicesV2GetPaymentDetailsListOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetPaymentInfosOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetPaymentDetailsListOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields59} [fields] Response configuration. This is the list of
+     * @member {Fields68} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields59;
+    fields?: Fields68;
 }
 /**
  * @interface
@@ -4024,1029 +4399,1907 @@ export interface CommerceWebservicesV2GetPaymentInfosOptionalParams extends msRe
  */
 export interface CommerceWebservicesV2GetPaymentDetailsOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields60} [fields] Response configuration. This is the list of
+     * @member {Fields69} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'DEFAULT' .
      */
-    fields?: Fields60;
+    fields?: Fields69;
 }
 /**
  * @interface
- * An interface representing CommerceWebservicesV2GetVoucherByCodeOptionalParams.
+ * An interface representing CommerceWebservicesV2GetVoucherOptionalParams.
  * Optional Parameters.
  *
  * @extends RequestOptionsBase
  */
-export interface CommerceWebservicesV2GetVoucherByCodeOptionalParams extends msRest.RequestOptionsBase {
+export interface CommerceWebservicesV2GetVoucherOptionalParams extends msRest.RequestOptionsBase {
     /**
-     * @member {Fields61} [fields] Response configuration. This is the list of
+     * @member {Fields70} [fields] Response configuration. This is the list of
      * fields that should be returned in the response body. Possible values
      * include: 'BASIC', 'DEFAULT', 'FULL'. Default value: 'BASIC' .
      */
-    fields?: Fields61;
+    fields?: Fields70;
 }
 /**
  * Defines values for PriceType.
  * Possible values include: 'BUY', 'FROM'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: PriceType = <PriceType>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum PriceType {
-    BUY = "BUY",
-    FROM = "FROM"
-}
+export declare type PriceType = 'BUY' | 'FROM';
 /**
  * Defines values for ImageType.
  * Possible values include: 'PRIMARY', 'GALLERY'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: ImageType = <ImageType>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum ImageType {
-    PRIMARY = "PRIMARY",
-    GALLERY = "GALLERY"
-}
+export declare type ImageType = 'PRIMARY' | 'GALLERY';
 /**
  * Defines values for Fields.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields = <Fields>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields1.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields1 = <Fields1>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields1 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields1 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields2.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields2 = <Fields2>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields2 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields2 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields3.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields3 = <Fields3>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields3 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields3 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields4.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields4 = <Fields4>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields4 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields4 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields5.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields5 = <Fields5>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields5 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields5 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields6.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields6 = <Fields6>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields6 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
-/**
- * Defines values for PageType.
- * Possible values include: 'ContentPage', 'ProductPage', 'CategoryPage',
- * 'CatalogPage'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: PageType = <PageType>"someUnknownValueThatWillStillBeValid";
- * @readonly
- * @enum {string}
- */
-export declare enum PageType {
-    ContentPage = "ContentPage",
-    ProductPage = "ProductPage",
-    CategoryPage = "CategoryPage",
-    CatalogPage = "CatalogPage"
-}
+export declare type Fields6 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields7.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields7 = <Fields7>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields7 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields7 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for PageType.
+ * Possible values include: 'ContentPage', 'ProductPage', 'CategoryPage', 'CatalogPage'
+ * @readonly
+ * @enum {string}
+ */
+export declare type PageType = 'ContentPage' | 'ProductPage' | 'CategoryPage' | 'CatalogPage';
 /**
  * Defines values for Fields8.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields8 = <Fields8>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields8 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields8 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Type.
+ * Possible values include: 'SHIPPING', 'BILLING'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Type = 'SHIPPING' | 'BILLING';
 /**
  * Defines values for Fields9.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields9 = <Fields9>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields9 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields9 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields10.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields10 = <Fields10>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields10 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields10 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields11.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields11 = <Fields11>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields11 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields11 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields12.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields12 = <Fields12>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields12 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields12 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields13.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields13 = <Fields13>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields13 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields13 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields14.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields14 = <Fields14>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields14 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields14 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields15.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields15 = <Fields15>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields15 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields15 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields16.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields16 = <Fields16>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields16 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
-/**
- * Defines values for SortEnum.
- * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: SortEnum = <SortEnum>"someUnknownValueThatWillStillBeValid";
- * @readonly
- * @enum {string}
- */
-export declare enum SortEnum {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields16 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields17.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields17 = <Fields17>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields17 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields17 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields18.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields18 = <Fields18>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields18 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields18 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields19.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields19 = <Fields19>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields19 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields19 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for SortEnum.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type SortEnum = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields20.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields20 = <Fields20>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields20 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields20 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields21.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields21 = <Fields21>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields21 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields21 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields22.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields22 = <Fields22>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields22 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields22 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields23.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields23 = <Fields23>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields23 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields23 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields24.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields24 = <Fields24>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields24 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields24 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields25.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields25 = <Fields25>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields25 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields25 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields26.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields26 = <Fields26>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields26 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields26 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields27.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields27 = <Fields27>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields27 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields27 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields28.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields28 = <Fields28>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields28 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields28 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields29.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields29 = <Fields29>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields29 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields29 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields30.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields30 = <Fields30>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields30 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields30 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields31.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields31 = <Fields31>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields31 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields31 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields32.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields32 = <Fields32>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields32 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields32 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields33.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields33 = <Fields33>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields33 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields33 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields34.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields34 = <Fields34>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields34 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields34 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields35.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields35 = <Fields35>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields35 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields35 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields36.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields36 = <Fields36>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields36 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields36 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields37.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields37 = <Fields37>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields37 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields37 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields38.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields38 = <Fields38>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields38 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields38 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields39.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields39 = <Fields39>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields39 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields39 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields40.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields40 = <Fields40>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields40 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields40 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields41.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields41 = <Fields41>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields41 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields41 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields42.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields42 = <Fields42>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields42 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields42 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields43.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields43 = <Fields43>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields43 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields43 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields44.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields44 = <Fields44>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields44 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields44 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields45.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields45 = <Fields45>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields45 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields45 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields46.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields46 = <Fields46>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields46 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields46 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields47.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields47 = <Fields47>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields47 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields47 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields48.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields48 = <Fields48>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields48 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields48 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields49.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields49 = <Fields49>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields49 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields49 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields50.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields50 = <Fields50>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields50 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields50 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields51.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields51 = <Fields51>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields51 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields51 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields52.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields52 = <Fields52>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields52 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields52 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields53.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields53 = <Fields53>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields53 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields53 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields54.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields54 = <Fields54>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields54 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields54 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields55.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields55 = <Fields55>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields55 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields55 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields56.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields56 = <Fields56>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields56 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields56 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields57.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields57 = <Fields57>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields57 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields57 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields58.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields58 = <Fields58>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields58 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields58 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields59.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields59 = <Fields59>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields59 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields59 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields60.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields60 = <Fields60>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields60 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields60 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
  * Defines values for Fields61.
  * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Fields61 = <Fields61>"someUnknownValueThatWillStillBeValid";
  * @readonly
  * @enum {string}
  */
-export declare enum Fields61 {
-    BASIC = "BASIC",
-    DEFAULT = "DEFAULT",
-    FULL = "FULL"
-}
+export declare type Fields61 = 'BASIC' | 'DEFAULT' | 'FULL';
 /**
- * Defines values for Type.
- * Possible values include: 'all', 'product', 'order'
- * There could be more values for this enum apart from the ones defined here.If
- * you want to set a value that is not from the known values then you can do
- * the following:
- * let param: Type = <Type>"someUnknownValueThatWillStillBeValid";
+ * Defines values for Fields62.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
  * @readonly
  * @enum {string}
  */
-export declare enum Type {
-    All = "all",
-    Product = "product",
-    Order = "order"
-}
+export declare type Fields62 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields63.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields63 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields64.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields64 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields65.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields65 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields66.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields66 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields67.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields67 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields68.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields68 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields69.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields69 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Fields70.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields70 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Defines values for Type1.
+ * Possible values include: 'all', 'product', 'order'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Type1 = 'all' | 'product' | 'order';
+/**
+ * Defines values for Fields71.
+ * Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+ * @readonly
+ * @enum {string}
+ */
+export declare type Fields71 = 'BASIC' | 'DEFAULT' | 'FULL';
+/**
+ * Contains response data for the getBaseStore operation.
+ */
+export declare type GetBaseStoreResponse = BaseStore & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: BaseStore;
+    };
+};
+/**
+ * Contains response data for the getCardTypes operation.
+ */
+export declare type GetCardTypesResponse = CardTypeList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CardTypeList;
+    };
+};
+/**
+ * Contains response data for the getCatalogs operation.
+ */
+export declare type GetCatalogsResponse = CatalogList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CatalogList;
+    };
+};
+/**
+ * Contains response data for the getCatalog operation.
+ */
+export declare type GetCatalogResponse = Catalog & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Catalog;
+    };
+};
+/**
+ * Contains response data for the getCatalogVersion operation.
+ */
+export declare type GetCatalogVersionResponse = CatalogVersion & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CatalogVersion;
+    };
+};
+/**
+ * Contains response data for the getCategories operation.
+ */
+export declare type GetCategoriesResponse = CategoryHierarchy & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CategoryHierarchy;
+    };
+};
+/**
+ * Contains response data for the getComponentByIdListUsingPOST operation.
+ */
+export declare type GetComponentByIdListUsingPOSTResponse = ListAdaptedComponents & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ListAdaptedComponents;
+    };
+};
+/**
+ * Contains response data for the getComponentByIdUsingGET operation.
+ */
+export declare type GetComponentByIdUsingGETResponse = {
+    /**
+     * The parsed response body.
+     */
+    body: any;
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: any;
+    };
+};
+/**
+ * Contains response data for the getPageDataUsingGET operation.
+ */
+export declare type GetPageDataUsingGETResponse = CMSPage & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CMSPage;
+    };
+};
+/**
+ * Contains response data for the getCountries operation.
+ */
+export declare type GetCountriesResponse = CountryList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CountryList;
+    };
+};
+/**
+ * Contains response data for the getCountryRegions operation.
+ */
+export declare type GetCountryRegionsResponse = RegionList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: RegionList;
+    };
+};
+/**
+ * Contains response data for the getCurrencies operation.
+ */
+export declare type GetCurrenciesResponse = CurrencyList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CurrencyList;
+    };
+};
+/**
+ * Contains response data for the getCustomerGroups operation.
+ */
+export declare type GetCustomerGroupsResponse = UserGroupList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: UserGroupList;
+    };
+};
+/**
+ * Contains response data for the getCustomerGroup operation.
+ */
+export declare type GetCustomerGroupResponse = UserGroup & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: UserGroup;
+    };
+};
+/**
+ * Contains response data for the getDeliveryCountries operation.
+ */
+export declare type GetDeliveryCountriesResponse = CountryList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CountryList;
+    };
+};
+/**
+ * Contains response data for the getExportedProducts operation.
+ */
+export declare type GetExportedProductsResponse = ProductList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ProductList;
+    };
+};
+/**
+ * Contains response data for the getOrderStatusFeed operation.
+ */
+export declare type GetOrderStatusFeedResponse = OrderStatusUpdateElementList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: OrderStatusUpdateElementList;
+    };
+};
+/**
+ * Contains response data for the getLanguages operation.
+ */
+export declare type GetLanguagesResponse = LanguageList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: LanguageList;
+    };
+};
+/**
+ * Contains response data for the getOrder operation.
+ */
+export declare type GetOrderResponse = Order & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Order;
+    };
+};
+/**
+ * Contains response data for the getExpressUpdateProducts operation.
+ */
+export declare type GetExpressUpdateProductsResponse = ProductExpressUpdateElementList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ProductExpressUpdateElementList;
+    };
+};
+/**
+ * Contains response data for the getProducts operation.
+ */
+export declare type GetProductsResponse = ProductSearchPage & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ProductSearchPage;
+    };
+};
+/**
+ * Contains response data for the getSuggestions operation.
+ */
+export declare type GetSuggestionsResponse = SuggestionList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: SuggestionList;
+    };
+};
+/**
+ * Contains response data for the getProduct operation.
+ */
+export declare type GetProductResponse = Product & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Product;
+    };
+};
+/**
+ * Contains response data for the getProductReferences operation.
+ */
+export declare type GetProductReferencesResponse = ProductReferenceList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ProductReferenceList;
+    };
+};
+/**
+ * Contains response data for the getProductReviews operation.
+ */
+export declare type GetProductReviewsResponse = ReviewList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ReviewList;
+    };
+};
+/**
+ * Contains response data for the createProductReview operation.
+ */
+export declare type CreateProductReviewResponse = Review & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Review;
+    };
+};
+/**
+ * Contains response data for the getLocationProductStock operation.
+ */
+export declare type GetLocationProductStockResponse = StoreFinderStockSearchPage & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: StoreFinderStockSearchPage;
+    };
+};
+/**
+ * Contains response data for the getStoreProductStock operation.
+ */
+export declare type GetStoreProductStockResponse = Stock & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Stock;
+    };
+};
+/**
+ * Contains response data for the getPromotions operation.
+ */
+export declare type GetPromotionsResponse = PromotionList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PromotionList;
+    };
+};
+/**
+ * Contains response data for the getPromotion operation.
+ */
+export declare type GetPromotionResponse = Promotion & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Promotion;
+    };
+};
+/**
+ * Contains response data for the getStoreLocations operation.
+ */
+export declare type GetStoreLocationsResponse = StoreFinderSearchPage & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: StoreFinderSearchPage;
+    };
+};
+/**
+ * Contains response data for the getStoreLocation operation.
+ */
+export declare type GetStoreLocationResponse = PointOfService & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PointOfService;
+    };
+};
+/**
+ * Contains response data for the getTitles operation.
+ */
+export declare type GetTitlesResponse = TitleList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: TitleList;
+    };
+};
+/**
+ * Contains response data for the createUser operation.
+ */
+export declare type CreateUserResponse = User & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: User;
+    };
+};
+/**
+ * Contains response data for the getUser operation.
+ */
+export declare type GetUserResponse = User & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: User;
+    };
+};
+/**
+ * Contains response data for the getAddresses operation.
+ */
+export declare type GetAddressesResponse = AddressList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: AddressList;
+    };
+};
+/**
+ * Contains response data for the createAddress operation.
+ */
+export declare type CreateAddressResponse = Address & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Address;
+    };
+};
+/**
+ * Contains response data for the validateAddress operation.
+ */
+export declare type ValidateAddressResponse = AddressValidation & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: AddressValidation;
+    };
+};
+/**
+ * Contains response data for the getAddress operation.
+ */
+export declare type GetAddressResponse = Address & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Address;
+    };
+};
+/**
+ * Contains response data for the getCarts operation.
+ */
+export declare type GetCartsResponse = CartList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CartList;
+    };
+};
+/**
+ * Contains response data for the createCart operation.
+ */
+export declare type CreateCartResponse = Cart & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Cart;
+    };
+};
+/**
+ * Contains response data for the getCart operation.
+ */
+export declare type GetCartResponse = Cart & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Cart;
+    };
+};
+/**
+ * Contains response data for the createCartDeliveryAddress operation.
+ */
+export declare type CreateCartDeliveryAddressResponse = Address & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Address;
+    };
+};
+/**
+ * Contains response data for the doCartClone operation.
+ */
+export declare type DoCartCloneResponse = SaveCartResult & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: SaveCartResult;
+    };
+};
+/**
+ * Contains response data for the getConsolidatedPickupLocations operation.
+ */
+export declare type GetConsolidatedPickupLocationsResponse = PointOfServiceList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PointOfServiceList;
+    };
+};
+/**
+ * Contains response data for the createConsolidatedPickupLocation operation.
+ */
+export declare type CreateConsolidatedPickupLocationResponse = CartModificationList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CartModificationList;
+    };
+};
+/**
+ * Contains response data for the getCartDeliveryMode operation.
+ */
+export declare type GetCartDeliveryModeResponse = DeliveryMode & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: DeliveryMode;
+    };
+};
+/**
+ * Contains response data for the getCartDeliveryModes operation.
+ */
+export declare type GetCartDeliveryModesResponse = DeliveryModeList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: DeliveryModeList;
+    };
+};
+/**
+ * Contains response data for the getCartEntries operation.
+ */
+export declare type GetCartEntriesResponse = OrderEntryList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: OrderEntryList;
+    };
+};
+/**
+ * Contains response data for the createCartEntry operation.
+ */
+export declare type CreateCartEntryResponse = CartModification & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CartModification;
+    };
+};
+/**
+ * Contains response data for the getCartEntry operation.
+ */
+export declare type GetCartEntryResponse = OrderEntry & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: OrderEntry;
+    };
+};
+/**
+ * Contains response data for the replaceCartEntry operation.
+ */
+export declare type ReplaceCartEntryResponse = CartModification & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CartModification;
+    };
+};
+/**
+ * Contains response data for the updateCartEntry operation.
+ */
+export declare type UpdateCartEntryResponse = CartModification & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: CartModification;
+    };
+};
+/**
+ * Contains response data for the doUpdateFlagForDeletion operation.
+ */
+export declare type DoUpdateFlagForDeletionResponse = SaveCartResult & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: SaveCartResult;
+    };
+};
+/**
+ * Contains response data for the getSopPaymentRequestDetails operation.
+ */
+export declare type GetSopPaymentRequestDetailsResponse = PaymentRequest & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PaymentRequest;
+    };
+};
+/**
+ * Contains response data for the getSopPaymentResponse operation.
+ */
+export declare type GetSopPaymentResponseResponse = PaymentDetails & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PaymentDetails;
+    };
+};
+/**
+ * Contains response data for the doHandleSopPaymentResponse operation.
+ */
+export declare type DoHandleSopPaymentResponseResponse = PaymentDetails & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PaymentDetails;
+    };
+};
+/**
+ * Contains response data for the createCartPaymentDetails operation.
+ */
+export declare type CreateCartPaymentDetailsResponse = PaymentDetails & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PaymentDetails;
+    };
+};
+/**
+ * Contains response data for the getCartPromotions operation.
+ */
+export declare type GetCartPromotionsResponse = PromotionResultList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PromotionResultList;
+    };
+};
+/**
+ * Contains response data for the getCartPromotion operation.
+ */
+export declare type GetCartPromotionResponse = PromotionResultList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PromotionResultList;
+    };
+};
+/**
+ * Contains response data for the doUpdateSavedCart operation.
+ */
+export declare type DoUpdateSavedCartResponse = SaveCartResult & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: SaveCartResult;
+    };
+};
+/**
+ * Contains response data for the doSaveCart operation.
+ */
+export declare type DoSaveCartResponse = SaveCartResult & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: SaveCartResult;
+    };
+};
+/**
+ * Contains response data for the getSavedCart operation.
+ */
+export declare type GetSavedCartResponse = SaveCartResult & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: SaveCartResult;
+    };
+};
+/**
+ * Contains response data for the getCartVouchers operation.
+ */
+export declare type GetCartVouchersResponse = VoucherList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: VoucherList;
+    };
+};
+/**
+ * Contains response data for the doGiveConsent operation.
+ */
+export declare type DoGiveConsentResponse = ConsentTemplate & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ConsentTemplate;
+    };
+};
+/**
+ * Contains response data for the getConsentTemplates operation.
+ */
+export declare type GetConsentTemplatesResponse = ConsentTemplateList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ConsentTemplateList;
+    };
+};
+/**
+ * Contains response data for the getConsentTemplate operation.
+ */
+export declare type GetConsentTemplateResponse = ConsentTemplate & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: ConsentTemplate;
+    };
+};
+/**
+ * Contains response data for the getUserCustomerGroups operation.
+ */
+export declare type GetUserCustomerGroupsResponse = UserGroupList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: UserGroupList;
+    };
+};
+/**
+ * Contains response data for the getUserOrderHistory operation.
+ */
+export declare type GetUserOrderHistoryResponse = OrderHistoryList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: OrderHistoryList;
+    };
+};
+/**
+ * Contains response data for the placeOrder operation.
+ */
+export declare type PlaceOrderResponse = Order & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Order;
+    };
+};
+/**
+ * Contains response data for the getUserOrders operation.
+ */
+export declare type GetUserOrdersResponse = Order & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Order;
+    };
+};
+/**
+ * Contains response data for the getPaymentDetailsList operation.
+ */
+export declare type GetPaymentDetailsListResponse = PaymentDetailsList & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PaymentDetailsList;
+    };
+};
+/**
+ * Contains response data for the getPaymentDetails operation.
+ */
+export declare type GetPaymentDetailsResponse = PaymentDetails & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: PaymentDetails;
+    };
+};
+/**
+ * Contains response data for the getVoucher operation.
+ */
+export declare type GetVoucherResponse = Voucher & {
+    /**
+     * The underlying HTTP response.
+     */
+    _response: msRest.HttpResponse & {
+        /**
+         * The response body as text (string format)
+         */
+        bodyAsText: string;
+        /**
+         * The response body as parsed JSON or XML
+         */
+        parsedBody: Voucher;
+    };
+};
+//# sourceMappingURL=index.d.ts.map

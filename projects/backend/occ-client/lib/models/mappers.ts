@@ -4,8 +4,10 @@
  * regenerated.
  */
 
+import * as msRest from "@azure/ms-rest-js";
 
-export const Country = {
+
+export const Country: msRest.CompositeMapper = {
   serializedName: "Country",
   type: {
     name: "Composite",
@@ -27,7 +29,7 @@ export const Country = {
   }
 };
 
-export const Region = {
+export const Region: msRest.CompositeMapper = {
   serializedName: "Region",
   type: {
     name: "Composite",
@@ -61,7 +63,7 @@ export const Region = {
   }
 };
 
-export const Address = {
+export const Address: msRest.CompositeMapper = {
   serializedName: "Address",
   type: {
     name: "Composite",
@@ -181,7 +183,7 @@ export const Address = {
   }
 };
 
-export const AddressList = {
+export const AddressList: msRest.CompositeMapper = {
   serializedName: "AddressList",
   type: {
     name: "Composite",
@@ -192,7 +194,6 @@ export const AddressList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "AddressElementType",
             type: {
               name: "Composite",
               className: "Address"
@@ -204,12 +205,18 @@ export const AddressList = {
   }
 };
 
-export const ErrorModel = {
+export const ErrorModel: msRest.CompositeMapper = {
   serializedName: "error",
   type: {
     name: "Composite",
     className: "ErrorModel",
     modelProperties: {
+      errorCode: {
+        serializedName: "errorCode",
+        type: {
+          name: "String"
+        }
+      },
       message: {
         serializedName: "message",
         type: {
@@ -244,7 +251,7 @@ export const ErrorModel = {
   }
 };
 
-export const ErrorList = {
+export const ErrorList: msRest.CompositeMapper = {
   serializedName: "errorList",
   type: {
     name: "Composite",
@@ -255,7 +262,6 @@ export const ErrorList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ErrorModelElementType",
             type: {
               name: "Composite",
               className: "ErrorModel"
@@ -267,7 +273,7 @@ export const ErrorList = {
   }
 };
 
-export const AddressValidation = {
+export const AddressValidation: msRest.CompositeMapper = {
   serializedName: "AddressValidation",
   type: {
     name: "Composite",
@@ -291,7 +297,6 @@ export const AddressValidation = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "AddressElementType",
             type: {
               name: "Composite",
               className: "Address"
@@ -303,7 +308,7 @@ export const AddressValidation = {
   }
 };
 
-export const Price = {
+export const Price: msRest.CompositeMapper = {
   serializedName: "Price",
   type: {
     name: "Composite",
@@ -349,7 +354,7 @@ export const Price = {
   }
 };
 
-export const Stock = {
+export const Stock: msRest.CompositeMapper = {
   serializedName: "Stock",
   type: {
     name: "Composite",
@@ -371,7 +376,7 @@ export const Stock = {
   }
 };
 
-export const Image = {
+export const Image: msRest.CompositeMapper = {
   serializedName: "Image",
   type: {
     name: "Composite",
@@ -411,7 +416,7 @@ export const Image = {
   }
 };
 
-export const VariantOptionQualifier = {
+export const VariantOptionQualifier: msRest.CompositeMapper = {
   serializedName: "VariantOptionQualifier",
   type: {
     name: "Composite",
@@ -446,7 +451,7 @@ export const VariantOptionQualifier = {
   }
 };
 
-export const VariantOption = {
+export const VariantOption: msRest.CompositeMapper = {
   serializedName: "VariantOption",
   type: {
     name: "Composite",
@@ -483,7 +488,6 @@ export const VariantOption = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VariantOptionQualifierElementType",
             type: {
               name: "Composite",
               className: "VariantOptionQualifier"
@@ -495,7 +499,7 @@ export const VariantOption = {
   }
 };
 
-export const BaseOption = {
+export const BaseOption: msRest.CompositeMapper = {
   serializedName: "BaseOption",
   type: {
     name: "Composite",
@@ -506,7 +510,6 @@ export const BaseOption = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VariantOptionElementType",
             type: {
               name: "Composite",
               className: "VariantOption"
@@ -531,7 +534,543 @@ export const BaseOption = {
   }
 };
 
-export const SearchQuery = {
+export const Currency: msRest.CompositeMapper = {
+  serializedName: "Currency",
+  type: {
+    name: "Composite",
+    className: "Currency",
+    modelProperties: {
+      active: {
+        serializedName: "active",
+        type: {
+          name: "Boolean"
+        }
+      },
+      isocode: {
+        serializedName: "isocode",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      symbol: {
+        serializedName: "symbol",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const GeoPoint: msRest.CompositeMapper = {
+  serializedName: "GeoPoint",
+  type: {
+    name: "Composite",
+    className: "GeoPoint",
+    modelProperties: {
+      latitude: {
+        serializedName: "latitude",
+        type: {
+          name: "Number"
+        }
+      },
+      longitude: {
+        serializedName: "longitude",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const Time: msRest.CompositeMapper = {
+  serializedName: "Time",
+  type: {
+    name: "Composite",
+    className: "Time",
+    modelProperties: {
+      formattedHour: {
+        serializedName: "formattedHour",
+        type: {
+          name: "String"
+        }
+      },
+      hour: {
+        serializedName: "hour",
+        type: {
+          name: "ByteArray"
+        }
+      },
+      minute: {
+        serializedName: "minute",
+        type: {
+          name: "ByteArray"
+        }
+      }
+    }
+  }
+};
+
+export const SpecialOpeningDay: msRest.CompositeMapper = {
+  serializedName: "SpecialOpeningDay",
+  type: {
+    name: "Composite",
+    className: "SpecialOpeningDay",
+    modelProperties: {
+      closed: {
+        serializedName: "closed",
+        type: {
+          name: "Boolean"
+        }
+      },
+      closingTime: {
+        serializedName: "closingTime",
+        type: {
+          name: "Composite",
+          className: "Time"
+        }
+      },
+      comment: {
+        serializedName: "comment",
+        type: {
+          name: "String"
+        }
+      },
+      date: {
+        serializedName: "date",
+        type: {
+          name: "DateTime"
+        }
+      },
+      formattedDate: {
+        serializedName: "formattedDate",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      openingTime: {
+        serializedName: "openingTime",
+        type: {
+          name: "Composite",
+          className: "Time"
+        }
+      }
+    }
+  }
+};
+
+export const WeekdayOpeningDay: msRest.CompositeMapper = {
+  serializedName: "WeekdayOpeningDay",
+  type: {
+    name: "Composite",
+    className: "WeekdayOpeningDay",
+    modelProperties: {
+      closed: {
+        serializedName: "closed",
+        type: {
+          name: "Boolean"
+        }
+      },
+      closingTime: {
+        serializedName: "closingTime",
+        type: {
+          name: "Composite",
+          className: "Time"
+        }
+      },
+      openingTime: {
+        serializedName: "openingTime",
+        type: {
+          name: "Composite",
+          className: "Time"
+        }
+      },
+      weekDay: {
+        serializedName: "weekDay",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const OpeningSchedule: msRest.CompositeMapper = {
+  serializedName: "OpeningSchedule",
+  type: {
+    name: "Composite",
+    className: "OpeningSchedule",
+    modelProperties: {
+      code: {
+        serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      specialDayOpeningList: {
+        serializedName: "specialDayOpeningList",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SpecialOpeningDay"
+            }
+          }
+        }
+      },
+      weekDayOpeningList: {
+        serializedName: "weekDayOpeningList",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "WeekdayOpeningDay"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PointOfService: msRest.CompositeMapper = {
+  serializedName: "PointOfService",
+  type: {
+    name: "Composite",
+    className: "PointOfService",
+    modelProperties: {
+      address: {
+        serializedName: "address",
+        type: {
+          name: "Composite",
+          className: "Address"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      displayName: {
+        serializedName: "displayName",
+        type: {
+          name: "String"
+        }
+      },
+      distanceKm: {
+        serializedName: "distanceKm",
+        type: {
+          name: "Number"
+        }
+      },
+      features: {
+        serializedName: "features",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      formattedDistance: {
+        serializedName: "formattedDistance",
+        type: {
+          name: "String"
+        }
+      },
+      geoPoint: {
+        serializedName: "geoPoint",
+        type: {
+          name: "Composite",
+          className: "GeoPoint"
+        }
+      },
+      mapIcon: {
+        serializedName: "mapIcon",
+        type: {
+          name: "Composite",
+          className: "Image"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      openingHours: {
+        serializedName: "openingHours",
+        type: {
+          name: "Composite",
+          className: "OpeningSchedule"
+        }
+      },
+      storeContent: {
+        serializedName: "storeContent",
+        type: {
+          name: "String"
+        }
+      },
+      storeImages: {
+        serializedName: "storeImages",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Image"
+            }
+          }
+        }
+      },
+      url: {
+        serializedName: "url",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const Language: msRest.CompositeMapper = {
+  serializedName: "Language",
+  type: {
+    name: "Composite",
+    className: "Language",
+    modelProperties: {
+      active: {
+        serializedName: "active",
+        type: {
+          name: "Boolean"
+        }
+      },
+      isocode: {
+        serializedName: "isocode",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      nativeName: {
+        serializedName: "nativeName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const DeliveryMode: msRest.CompositeMapper = {
+  serializedName: "DeliveryMode",
+  type: {
+    name: "Composite",
+    className: "DeliveryMode",
+    modelProperties: {
+      code: {
+        serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      deliveryCost: {
+        serializedName: "deliveryCost",
+        type: {
+          name: "Composite",
+          className: "Price"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const DeliveryModeList: msRest.CompositeMapper = {
+  serializedName: "DeliveryModeList",
+  type: {
+    name: "Composite",
+    className: "DeliveryModeList",
+    modelProperties: {
+      deliveryModes: {
+        serializedName: "deliveryModes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "DeliveryMode"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const BaseStore: msRest.CompositeMapper = {
+  serializedName: "BaseStore",
+  type: {
+    name: "Composite",
+    className: "BaseStore",
+    modelProperties: {
+      createReturnProcessCode: {
+        serializedName: "createReturnProcessCode",
+        type: {
+          name: "String"
+        }
+      },
+      currencies: {
+        serializedName: "currencies",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Currency"
+            }
+          }
+        }
+      },
+      defaultCurrency: {
+        serializedName: "defaultCurrency",
+        type: {
+          name: "Composite",
+          className: "Currency"
+        }
+      },
+      defaultDeliveryOrigin: {
+        serializedName: "defaultDeliveryOrigin",
+        type: {
+          name: "Composite",
+          className: "PointOfService"
+        }
+      },
+      defaultLanguage: {
+        serializedName: "defaultLanguage",
+        type: {
+          name: "Composite",
+          className: "Language"
+        }
+      },
+      deliveryCountries: {
+        serializedName: "deliveryCountries",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Country"
+            }
+          }
+        }
+      },
+      deliveryModes: {
+        serializedName: "deliveryModes",
+        type: {
+          name: "Composite",
+          className: "DeliveryModeList"
+        }
+      },
+      externalTaxEnabled: {
+        serializedName: "externalTaxEnabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      languages: {
+        serializedName: "languages",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Language"
+            }
+          }
+        }
+      },
+      maxRadiusForPosSearch: {
+        serializedName: "maxRadiusForPosSearch",
+        type: {
+          name: "Number"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      paymentProvider: {
+        serializedName: "paymentProvider",
+        type: {
+          name: "String"
+        }
+      },
+      pointsOfService: {
+        serializedName: "pointsOfService",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PointOfService"
+            }
+          }
+        }
+      },
+      submitOrderProcessCode: {
+        serializedName: "submitOrderProcessCode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SearchQuery: msRest.CompositeMapper = {
   serializedName: "SearchQuery",
   type: {
     name: "Composite",
@@ -547,7 +1086,7 @@ export const SearchQuery = {
   }
 };
 
-export const SearchState = {
+export const SearchState: msRest.CompositeMapper = {
   serializedName: "SearchState",
   type: {
     name: "Composite",
@@ -570,7 +1109,7 @@ export const SearchState = {
   }
 };
 
-export const Breadcrumb = {
+export const Breadcrumb: msRest.CompositeMapper = {
   serializedName: "Breadcrumb",
   type: {
     name: "Composite",
@@ -618,7 +1157,7 @@ export const Breadcrumb = {
   }
 };
 
-export const Component = {
+export const Component: msRest.CompositeMapper = {
   serializedName: "Component",
   type: {
     name: "Composite",
@@ -658,7 +1197,7 @@ export const Component = {
   }
 };
 
-export const ComponentList = {
+export const ComponentList: msRest.CompositeMapper = {
   serializedName: "ComponentList",
   type: {
     name: "Composite",
@@ -669,7 +1208,6 @@ export const ComponentList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ComponentElementType",
             type: {
               name: "Composite",
               className: "Component"
@@ -681,7 +1219,7 @@ export const ComponentList = {
   }
 };
 
-export const ContentSlot = {
+export const ContentSlot: msRest.CompositeMapper = {
   serializedName: "ContentSlot",
   type: {
     name: "Composite",
@@ -728,7 +1266,7 @@ export const ContentSlot = {
   }
 };
 
-export const ContentSlotList = {
+export const ContentSlotList: msRest.CompositeMapper = {
   serializedName: "ContentSlotList",
   type: {
     name: "Composite",
@@ -739,7 +1277,6 @@ export const ContentSlotList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ContentSlotElementType",
             type: {
               name: "Composite",
               className: "ContentSlot"
@@ -751,7 +1288,7 @@ export const ContentSlotList = {
   }
 };
 
-export const CMSPage = {
+export const CMSPage: msRest.CompositeMapper = {
   serializedName: "CMSPage",
   type: {
     name: "Composite",
@@ -804,7 +1341,7 @@ export const CMSPage = {
   }
 };
 
-export const CardType = {
+export const CardType: msRest.CompositeMapper = {
   serializedName: "CardType",
   type: {
     name: "Composite",
@@ -826,7 +1363,7 @@ export const CardType = {
   }
 };
 
-export const CardTypeList = {
+export const CardTypeList: msRest.CompositeMapper = {
   serializedName: "CardTypeList",
   type: {
     name: "Composite",
@@ -837,7 +1374,6 @@ export const CardTypeList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CardTypeElementType",
             type: {
               name: "Composite",
               className: "CardType"
@@ -849,7 +1385,7 @@ export const CardTypeList = {
   }
 };
 
-export const PromotionOrderEntryConsumed = {
+export const PromotionOrderEntryConsumed: msRest.CompositeMapper = {
   serializedName: "PromotionOrderEntryConsumed",
   type: {
     name: "Composite",
@@ -883,7 +1419,7 @@ export const PromotionOrderEntryConsumed = {
   }
 };
 
-export const PromotionRestriction = {
+export const PromotionRestriction: msRest.CompositeMapper = {
   serializedName: "PromotionRestriction",
   type: {
     name: "Composite",
@@ -905,7 +1441,7 @@ export const PromotionRestriction = {
   }
 };
 
-export const Promotion = {
+export const Promotion: msRest.CompositeMapper = {
   serializedName: "Promotion",
   type: {
     name: "Composite",
@@ -922,7 +1458,6 @@ export const Promotion = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "stringElementType",
             type: {
               name: "String"
             }
@@ -952,7 +1487,6 @@ export const Promotion = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "stringElementType",
             type: {
               name: "String"
             }
@@ -989,7 +1523,6 @@ export const Promotion = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionRestrictionElementType",
             type: {
               name: "Composite",
               className: "PromotionRestriction"
@@ -1013,7 +1546,7 @@ export const Promotion = {
   }
 };
 
-export const PromotionResult = {
+export const PromotionResult: msRest.CompositeMapper = {
   serializedName: "PromotionResult",
   type: {
     name: "Composite",
@@ -1024,7 +1557,6 @@ export const PromotionResult = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionOrderEntryConsumedElementType",
             type: {
               name: "Composite",
               className: "PromotionOrderEntryConsumed"
@@ -1049,41 +1581,7 @@ export const PromotionResult = {
   }
 };
 
-export const Currency = {
-  serializedName: "Currency",
-  type: {
-    name: "Composite",
-    className: "Currency",
-    modelProperties: {
-      active: {
-        serializedName: "active",
-        type: {
-          name: "Boolean"
-        }
-      },
-      isocode: {
-        serializedName: "isocode",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      symbol: {
-        serializedName: "symbol",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const Voucher = {
+export const Voucher: msRest.CompositeMapper = {
   serializedName: "Voucher",
   type: {
     name: "Composite",
@@ -1155,33 +1653,32 @@ export const Voucher = {
   }
 };
 
-export const DeliveryMode = {
-  serializedName: "DeliveryMode",
+export const ConfigurationInfo: msRest.CompositeMapper = {
+  serializedName: "ConfigurationInfo",
   type: {
     name: "Composite",
-    className: "DeliveryMode",
+    className: "ConfigurationInfo",
     modelProperties: {
-      code: {
-        serializedName: "code",
+      configurationLabel: {
+        serializedName: "configurationLabel",
         type: {
           name: "String"
         }
       },
-      deliveryCost: {
-        serializedName: "deliveryCost",
-        type: {
-          name: "Composite",
-          className: "Price"
-        }
-      },
-      description: {
-        serializedName: "description",
+      configurationValue: {
+        serializedName: "configurationValue",
         type: {
           name: "String"
         }
       },
-      name: {
-        serializedName: "name",
+      configuratorType: {
+        serializedName: "configuratorType",
+        type: {
+          name: "String"
+        }
+      },
+      status: {
+        serializedName: "status",
         type: {
           name: "String"
         }
@@ -1190,300 +1687,7 @@ export const DeliveryMode = {
   }
 };
 
-export const GeoPoint = {
-  serializedName: "GeoPoint",
-  type: {
-    name: "Composite",
-    className: "GeoPoint",
-    modelProperties: {
-      latitude: {
-        serializedName: "latitude",
-        type: {
-          name: "Number"
-        }
-      },
-      longitude: {
-        serializedName: "longitude",
-        type: {
-          name: "Number"
-        }
-      }
-    }
-  }
-};
-
-export const Time = {
-  serializedName: "Time",
-  type: {
-    name: "Composite",
-    className: "Time",
-    modelProperties: {
-      formattedHour: {
-        serializedName: "formattedHour",
-        type: {
-          name: "String"
-        }
-      },
-      hour: {
-        serializedName: "hour",
-        type: {
-          name: "ByteArray"
-        }
-      },
-      minute: {
-        serializedName: "minute",
-        type: {
-          name: "ByteArray"
-        }
-      }
-    }
-  }
-};
-
-export const SpecialOpeningDay = {
-  serializedName: "SpecialOpeningDay",
-  type: {
-    name: "Composite",
-    className: "SpecialOpeningDay",
-    modelProperties: {
-      closed: {
-        serializedName: "closed",
-        type: {
-          name: "Boolean"
-        }
-      },
-      closingTime: {
-        serializedName: "closingTime",
-        type: {
-          name: "Composite",
-          className: "Time"
-        }
-      },
-      comment: {
-        serializedName: "comment",
-        type: {
-          name: "String"
-        }
-      },
-      date: {
-        serializedName: "date",
-        type: {
-          name: "DateTime"
-        }
-      },
-      formattedDate: {
-        serializedName: "formattedDate",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      openingTime: {
-        serializedName: "openingTime",
-        type: {
-          name: "Composite",
-          className: "Time"
-        }
-      }
-    }
-  }
-};
-
-export const WeekdayOpeningDay = {
-  serializedName: "WeekdayOpeningDay",
-  type: {
-    name: "Composite",
-    className: "WeekdayOpeningDay",
-    modelProperties: {
-      closed: {
-        serializedName: "closed",
-        type: {
-          name: "Boolean"
-        }
-      },
-      closingTime: {
-        serializedName: "closingTime",
-        type: {
-          name: "Composite",
-          className: "Time"
-        }
-      },
-      openingTime: {
-        serializedName: "openingTime",
-        type: {
-          name: "Composite",
-          className: "Time"
-        }
-      },
-      weekDay: {
-        serializedName: "weekDay",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const OpeningSchedule = {
-  serializedName: "OpeningSchedule",
-  type: {
-    name: "Composite",
-    className: "OpeningSchedule",
-    modelProperties: {
-      code: {
-        serializedName: "code",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      specialDayOpeningList: {
-        serializedName: "specialDayOpeningList",
-        type: {
-          name: "Sequence",
-          element: {
-            serializedName: "SpecialOpeningDayElementType",
-            type: {
-              name: "Composite",
-              className: "SpecialOpeningDay"
-            }
-          }
-        }
-      },
-      weekDayOpeningList: {
-        serializedName: "weekDayOpeningList",
-        type: {
-          name: "Sequence",
-          element: {
-            serializedName: "WeekdayOpeningDayElementType",
-            type: {
-              name: "Composite",
-              className: "WeekdayOpeningDay"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const PointOfService = {
-  serializedName: "PointOfService",
-  type: {
-    name: "Composite",
-    className: "PointOfService",
-    modelProperties: {
-      address: {
-        serializedName: "address",
-        type: {
-          name: "Composite",
-          className: "Address"
-        }
-      },
-      description: {
-        serializedName: "description",
-        type: {
-          name: "String"
-        }
-      },
-      displayName: {
-        serializedName: "displayName",
-        type: {
-          name: "String"
-        }
-      },
-      distanceKm: {
-        serializedName: "distanceKm",
-        type: {
-          name: "Number"
-        }
-      },
-      features: {
-        serializedName: "features",
-        type: {
-          name: "Dictionary",
-          value: {
-            serializedName: "stringElementType",
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
-      formattedDistance: {
-        serializedName: "formattedDistance",
-        type: {
-          name: "String"
-        }
-      },
-      geoPoint: {
-        serializedName: "geoPoint",
-        type: {
-          name: "Composite",
-          className: "GeoPoint"
-        }
-      },
-      mapIcon: {
-        serializedName: "mapIcon",
-        type: {
-          name: "Composite",
-          className: "Image"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      openingHours: {
-        serializedName: "openingHours",
-        type: {
-          name: "Composite",
-          className: "OpeningSchedule"
-        }
-      },
-      storeContent: {
-        serializedName: "storeContent",
-        type: {
-          name: "String"
-        }
-      },
-      storeImages: {
-        serializedName: "storeImages",
-        type: {
-          name: "Sequence",
-          element: {
-            serializedName: "ImageElementType",
-            type: {
-              name: "Composite",
-              className: "Image"
-            }
-          }
-        }
-      },
-      url: {
-        serializedName: "url",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const Category = {
+export const Category: msRest.CompositeMapper = {
   serializedName: "Category",
   type: {
     name: "Composite",
@@ -1512,7 +1716,7 @@ export const Category = {
   }
 };
 
-export const FeatureUnit = {
+export const FeatureUnit: msRest.CompositeMapper = {
   serializedName: "FeatureUnit",
   type: {
     name: "Composite",
@@ -1540,7 +1744,7 @@ export const FeatureUnit = {
   }
 };
 
-export const FeatureValue = {
+export const FeatureValue: msRest.CompositeMapper = {
   serializedName: "FeatureValue",
   type: {
     name: "Composite",
@@ -1556,7 +1760,7 @@ export const FeatureValue = {
   }
 };
 
-export const Feature = {
+export const Feature: msRest.CompositeMapper = {
   serializedName: "Feature",
   type: {
     name: "Composite",
@@ -1592,7 +1796,6 @@ export const Feature = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "FeatureValueElementType",
             type: {
               name: "Composite",
               className: "FeatureValue"
@@ -1622,7 +1825,7 @@ export const Feature = {
   }
 };
 
-export const Classification = {
+export const Classification: msRest.CompositeMapper = {
   serializedName: "Classification",
   type: {
     name: "Composite",
@@ -1639,7 +1842,6 @@ export const Classification = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "FeatureElementType",
             type: {
               name: "Composite",
               className: "Feature"
@@ -1657,7 +1859,7 @@ export const Classification = {
   }
 };
 
-export const FutureStock = {
+export const FutureStock: msRest.CompositeMapper = {
   serializedName: "FutureStock",
   type: {
     name: "Composite",
@@ -1686,7 +1888,7 @@ export const FutureStock = {
   }
 };
 
-export const PriceRange = {
+export const PriceRange: msRest.CompositeMapper = {
   serializedName: "PriceRange",
   type: {
     name: "Composite",
@@ -1710,7 +1912,7 @@ export const PriceRange = {
   }
 };
 
-export const ProductReference = {
+export const ProductReference: msRest.CompositeMapper = {
   serializedName: "ProductReference",
   type: {
     name: "Composite",
@@ -1751,41 +1953,7 @@ export const ProductReference = {
   }
 };
 
-export const Language = {
-  serializedName: "Language",
-  type: {
-    name: "Composite",
-    className: "Language",
-    modelProperties: {
-      active: {
-        serializedName: "active",
-        type: {
-          name: "Boolean"
-        }
-      },
-      isocode: {
-        serializedName: "isocode",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      nativeName: {
-        serializedName: "nativeName",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const User = {
+export const User: msRest.CompositeMapper = {
   serializedName: "User",
   type: {
     name: "Composite",
@@ -1870,7 +2038,7 @@ export const User = {
   }
 };
 
-export const Review = {
+export const Review: msRest.CompositeMapper = {
   serializedName: "Review",
   type: {
     name: "Composite",
@@ -1923,7 +2091,7 @@ export const Review = {
   }
 };
 
-export const VariantCategory = {
+export const VariantCategory: msRest.CompositeMapper = {
   serializedName: "VariantCategory",
   type: {
     name: "Composite",
@@ -1951,7 +2119,7 @@ export const VariantCategory = {
   }
 };
 
-export const VariantValueCategory = {
+export const VariantValueCategory: msRest.CompositeMapper = {
   serializedName: "VariantValueCategory",
   type: {
     name: "Composite",
@@ -1974,7 +2142,6 @@ export const VariantValueCategory = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VariantCategoryElementType",
             type: {
               name: "Composite",
               className: "VariantCategory"
@@ -1986,7 +2153,7 @@ export const VariantValueCategory = {
   }
 };
 
-export const VariantMatrixElement = {
+export const VariantMatrixElement: msRest.CompositeMapper = {
   serializedName: "VariantMatrixElement",
   type: {
     name: "Composite",
@@ -1997,7 +2164,6 @@ export const VariantMatrixElement = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VariantMatrixElementElementType",
             type: {
               name: "Composite",
               className: "VariantMatrixElement"
@@ -2036,7 +2202,7 @@ export const VariantMatrixElement = {
   }
 };
 
-export const Product = {
+export const Product: msRest.CompositeMapper = {
   serializedName: "Product",
   type: {
     name: "Composite",
@@ -2059,7 +2225,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "BaseOptionElementType",
             type: {
               name: "Composite",
               className: "BaseOption"
@@ -2078,7 +2243,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CategoryElementType",
             type: {
               name: "Composite",
               className: "Category"
@@ -2091,7 +2255,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ClassificationElementType",
             type: {
               name: "Composite",
               className: "Classification"
@@ -2101,6 +2264,18 @@ export const Product = {
       },
       code: {
         serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      configurable: {
+        serializedName: "configurable",
+        type: {
+          name: "Boolean"
+        }
+      },
+      configuratorType: {
+        serializedName: "configuratorType",
         type: {
           name: "String"
         }
@@ -2116,7 +2291,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "FutureStockElementType",
             type: {
               name: "Composite",
               className: "FutureStock"
@@ -2129,7 +2303,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ImageElementType",
             type: {
               name: "Composite",
               className: "Image"
@@ -2166,7 +2339,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionElementType",
             type: {
               name: "Composite",
               className: "Promotion"
@@ -2193,7 +2365,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ProductReferenceElementType",
             type: {
               name: "Composite",
               className: "ProductReference"
@@ -2212,7 +2383,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ReviewElementType",
             type: {
               name: "Composite",
               className: "Review"
@@ -2233,6 +2403,17 @@ export const Product = {
           name: "String"
         }
       },
+      tags: {
+        serializedName: "tags",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
       url: {
         serializedName: "url",
         type: {
@@ -2244,7 +2425,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VariantMatrixElementElementType",
             type: {
               name: "Composite",
               className: "VariantMatrixElement"
@@ -2257,7 +2437,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VariantOptionElementType",
             type: {
               name: "Composite",
               className: "VariantOption"
@@ -2276,7 +2455,6 @@ export const Product = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PriceElementType",
             type: {
               name: "Composite",
               className: "Price"
@@ -2294,7 +2472,7 @@ export const Product = {
   }
 };
 
-export const OrderEntry = {
+export const OrderEntry: msRest.CompositeMapper = {
   serializedName: "OrderEntry",
   type: {
     name: "Composite",
@@ -2305,6 +2483,18 @@ export const OrderEntry = {
         type: {
           name: "Composite",
           className: "Price"
+        }
+      },
+      configurationInfos: {
+        serializedName: "configurationInfos",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ConfigurationInfo"
+            }
+          }
         }
       },
       deliveryMode: {
@@ -2357,7 +2547,7 @@ export const OrderEntry = {
   }
 };
 
-export const DeliveryOrderEntryGroup = {
+export const DeliveryOrderEntryGroup: msRest.CompositeMapper = {
   serializedName: "DeliveryOrderEntryGroup",
   type: {
     name: "Composite",
@@ -2375,7 +2565,6 @@ export const DeliveryOrderEntryGroup = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderEntryElementType",
             type: {
               name: "Composite",
               className: "OrderEntry"
@@ -2400,7 +2589,7 @@ export const DeliveryOrderEntryGroup = {
   }
 };
 
-export const PaymentDetails = {
+export const PaymentDetails: msRest.CompositeMapper = {
   serializedName: "PaymentDetails",
   type: {
     name: "Composite",
@@ -2490,7 +2679,7 @@ export const PaymentDetails = {
   }
 };
 
-export const PickupOrderEntryGroup = {
+export const PickupOrderEntryGroup: msRest.CompositeMapper = {
   serializedName: "PickupOrderEntryGroup",
   type: {
     name: "Composite",
@@ -2514,7 +2703,6 @@ export const PickupOrderEntryGroup = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderEntryElementType",
             type: {
               name: "Composite",
               className: "OrderEntry"
@@ -2539,7 +2727,7 @@ export const PickupOrderEntryGroup = {
   }
 };
 
-export const Principal = {
+export const Principal: msRest.CompositeMapper = {
   serializedName: "Principal",
   type: {
     name: "Composite",
@@ -2561,7 +2749,7 @@ export const Principal = {
   }
 };
 
-export const Cart = {
+export const Cart: msRest.CompositeMapper = {
   serializedName: "Cart",
   type: {
     name: "Composite",
@@ -2572,7 +2760,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -2585,7 +2772,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -2598,7 +2784,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VoucherElementType",
             type: {
               name: "Composite",
               className: "Voucher"
@@ -2650,7 +2835,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "DeliveryOrderEntryGroupElementType",
             type: {
               name: "Composite",
               className: "DeliveryOrderEntryGroup"
@@ -2669,7 +2853,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderEntryElementType",
             type: {
               name: "Composite",
               className: "OrderEntry"
@@ -2726,7 +2909,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PickupOrderEntryGroupElementType",
             type: {
               name: "Composite",
               className: "PickupOrderEntryGroup"
@@ -2739,7 +2921,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -2752,7 +2933,6 @@ export const Cart = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -2850,7 +3030,7 @@ export const Cart = {
   }
 };
 
-export const CartList = {
+export const CartList: msRest.CompositeMapper = {
   serializedName: "CartList",
   type: {
     name: "Composite",
@@ -2861,7 +3041,6 @@ export const CartList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CartElementType",
             type: {
               name: "Composite",
               className: "Cart"
@@ -2873,7 +3052,7 @@ export const CartList = {
   }
 };
 
-export const CartModification = {
+export const CartModification: msRest.CompositeMapper = {
   serializedName: "CartModification",
   type: {
     name: "Composite",
@@ -2920,7 +3099,29 @@ export const CartModification = {
   }
 };
 
-export const CategoryHierarchy = {
+export const CartModificationList: msRest.CompositeMapper = {
+  serializedName: "CartModificationList",
+  type: {
+    name: "Composite",
+    className: "CartModificationList",
+    modelProperties: {
+      cartModifications: {
+        serializedName: "cartModifications",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "CartModification"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const CategoryHierarchy: msRest.CompositeMapper = {
   serializedName: "CategoryHierarchy",
   type: {
     name: "Composite",
@@ -2949,7 +3150,6 @@ export const CategoryHierarchy = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CategoryHierarchyElementType",
             type: {
               name: "Composite",
               className: "CategoryHierarchy"
@@ -2967,7 +3167,7 @@ export const CategoryHierarchy = {
   }
 };
 
-export const CatalogVersion = {
+export const CatalogVersion: msRest.CompositeMapper = {
   serializedName: "CatalogVersion",
   type: {
     name: "Composite",
@@ -2978,7 +3178,6 @@ export const CatalogVersion = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CategoryHierarchyElementType",
             type: {
               name: "Composite",
               className: "CategoryHierarchy"
@@ -3014,7 +3213,7 @@ export const CatalogVersion = {
   }
 };
 
-export const Catalog = {
+export const Catalog: msRest.CompositeMapper = {
   serializedName: "Catalog",
   type: {
     name: "Composite",
@@ -3025,7 +3224,6 @@ export const Catalog = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CatalogVersionElementType",
             type: {
               name: "Composite",
               className: "CatalogVersion"
@@ -3061,7 +3259,7 @@ export const Catalog = {
   }
 };
 
-export const CatalogList = {
+export const CatalogList: msRest.CompositeMapper = {
   serializedName: "CatalogList",
   type: {
     name: "Composite",
@@ -3072,7 +3270,6 @@ export const CatalogList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CatalogElementType",
             type: {
               name: "Composite",
               className: "Catalog"
@@ -3084,7 +3281,7 @@ export const CatalogList = {
   }
 };
 
-export const ComponentIDList = {
+export const ComponentIDList: msRest.CompositeMapper = {
   serializedName: "ComponentIDList",
   type: {
     name: "Composite",
@@ -3095,7 +3292,6 @@ export const ComponentIDList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "stringElementType",
             type: {
               name: "String"
             }
@@ -3106,7 +3302,98 @@ export const ComponentIDList = {
   }
 };
 
-export const ConsignmentEntry = {
+export const Consent: msRest.CompositeMapper = {
+  serializedName: "Consent",
+  type: {
+    name: "Composite",
+    className: "Consent",
+    modelProperties: {
+      code: {
+        serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      consentGivenDate: {
+        serializedName: "consentGivenDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      consentWithdrawnDate: {
+        serializedName: "consentWithdrawnDate",
+        type: {
+          name: "DateTime"
+        }
+      }
+    }
+  }
+};
+
+export const ConsentTemplate: msRest.CompositeMapper = {
+  serializedName: "ConsentTemplate",
+  type: {
+    name: "Composite",
+    className: "ConsentTemplate",
+    modelProperties: {
+      currentConsent: {
+        serializedName: "currentConsent",
+        type: {
+          name: "Composite",
+          className: "Consent"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      version: {
+        serializedName: "version",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const ConsentTemplateList: msRest.CompositeMapper = {
+  serializedName: "ConsentTemplateList",
+  type: {
+    name: "Composite",
+    className: "ConsentTemplateList",
+    modelProperties: {
+      consentTemplates: {
+        serializedName: "consentTemplates",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ConsentTemplate"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ConsignmentEntry: msRest.CompositeMapper = {
   serializedName: "ConsignmentEntry",
   type: {
     name: "Composite",
@@ -3135,7 +3422,7 @@ export const ConsignmentEntry = {
   }
 };
 
-export const Consignment = {
+export const Consignment: msRest.CompositeMapper = {
   serializedName: "Consignment",
   type: {
     name: "Composite",
@@ -3159,7 +3446,6 @@ export const Consignment = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ConsignmentEntryElementType",
             type: {
               name: "Composite",
               className: "ConsignmentEntry"
@@ -3196,7 +3482,7 @@ export const Consignment = {
   }
 };
 
-export const CountryList = {
+export const CountryList: msRest.CompositeMapper = {
   serializedName: "CountryList",
   type: {
     name: "Composite",
@@ -3207,7 +3493,6 @@ export const CountryList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CountryElementType",
             type: {
               name: "Composite",
               className: "Country"
@@ -3219,7 +3504,7 @@ export const CountryList = {
   }
 };
 
-export const CurrencyList = {
+export const CurrencyList: msRest.CompositeMapper = {
   serializedName: "CurrencyList",
   type: {
     name: "Composite",
@@ -3230,7 +3515,6 @@ export const CurrencyList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "CurrencyElementType",
             type: {
               name: "Composite",
               className: "Currency"
@@ -3242,30 +3526,7 @@ export const CurrencyList = {
   }
 };
 
-export const DeliveryModeList = {
-  serializedName: "DeliveryModeList",
-  type: {
-    name: "Composite",
-    className: "DeliveryModeList",
-    modelProperties: {
-      deliveryModes: {
-        serializedName: "deliveryModes",
-        type: {
-          name: "Sequence",
-          element: {
-            serializedName: "DeliveryModeElementType",
-            type: {
-              name: "Composite",
-              className: "DeliveryMode"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const FacetValue = {
+export const FacetValue: msRest.CompositeMapper = {
   serializedName: "FacetValue",
   type: {
     name: "Composite",
@@ -3300,7 +3561,7 @@ export const FacetValue = {
   }
 };
 
-export const Facet = {
+export const Facet: msRest.CompositeMapper = {
   serializedName: "Facet",
   type: {
     name: "Composite",
@@ -3335,7 +3596,6 @@ export const Facet = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "FacetValueElementType",
             type: {
               name: "Composite",
               className: "FacetValue"
@@ -3348,7 +3608,6 @@ export const Facet = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "FacetValueElementType",
             type: {
               name: "Composite",
               className: "FacetValue"
@@ -3366,7 +3625,7 @@ export const Facet = {
   }
 };
 
-export const LanguageList = {
+export const LanguageList: msRest.CompositeMapper = {
   serializedName: "LanguageList",
   type: {
     name: "Composite",
@@ -3377,7 +3636,6 @@ export const LanguageList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "LanguageElementType",
             type: {
               name: "Composite",
               className: "Language"
@@ -3389,7 +3647,7 @@ export const LanguageList = {
   }
 };
 
-export const Pagination = {
+export const Pagination: msRest.CompositeMapper = {
   serializedName: "pagination",
   type: {
     name: "Composite",
@@ -3399,6 +3657,18 @@ export const Pagination = {
         serializedName: "count",
         type: {
           name: "Number"
+        }
+      },
+      hasNext: {
+        serializedName: "hasNext",
+        type: {
+          name: "Boolean"
+        }
+      },
+      hasPrevious: {
+        serializedName: "hasPrevious",
+        type: {
+          name: "Boolean"
         }
       },
       page: {
@@ -3423,7 +3693,7 @@ export const Pagination = {
   }
 };
 
-export const Sort = {
+export const Sort: msRest.CompositeMapper = {
   serializedName: "sort",
   type: {
     name: "Composite",
@@ -3445,7 +3715,7 @@ export const Sort = {
   }
 };
 
-export const ListAdaptedComponents = {
+export const ListAdaptedComponents: msRest.CompositeMapper = {
   serializedName: "ListAdaptedComponents",
   type: {
     name: "Composite",
@@ -3456,7 +3726,6 @@ export const ListAdaptedComponents = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ObjectElementType",
             type: {
               name: "Object"
             }
@@ -3475,7 +3744,6 @@ export const ListAdaptedComponents = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "SortElementType",
             type: {
               name: "Composite",
               className: "Sort"
@@ -3487,7 +3755,7 @@ export const ListAdaptedComponents = {
   }
 };
 
-export const MemberList = {
+export const MemberList: msRest.CompositeMapper = {
   serializedName: "MemberList",
   type: {
     name: "Composite",
@@ -3498,7 +3766,6 @@ export const MemberList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PrincipalElementType",
             type: {
               name: "Composite",
               className: "Principal"
@@ -3510,7 +3777,7 @@ export const MemberList = {
   }
 };
 
-export const OrderEntryList = {
+export const OrderEntryList: msRest.CompositeMapper = {
   serializedName: "OrderEntryList",
   type: {
     name: "Composite",
@@ -3521,7 +3788,6 @@ export const OrderEntryList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderEntryElementType",
             type: {
               name: "Composite",
               className: "OrderEntry"
@@ -3533,7 +3799,7 @@ export const OrderEntryList = {
   }
 };
 
-export const OrderHistory = {
+export const OrderHistory: msRest.CompositeMapper = {
   serializedName: "OrderHistory",
   type: {
     name: "Composite",
@@ -3580,7 +3846,7 @@ export const OrderHistory = {
   }
 };
 
-export const PaginationModel = {
+export const PaginationModel: msRest.CompositeMapper = {
   serializedName: "Pagination",
   type: {
     name: "Composite",
@@ -3620,7 +3886,7 @@ export const PaginationModel = {
   }
 };
 
-export const SortModel = {
+export const SortModel: msRest.CompositeMapper = {
   serializedName: "Sort",
   type: {
     name: "Composite",
@@ -3648,7 +3914,7 @@ export const SortModel = {
   }
 };
 
-export const OrderHistoryList = {
+export const OrderHistoryList: msRest.CompositeMapper = {
   serializedName: "OrderHistoryList",
   type: {
     name: "Composite",
@@ -3659,7 +3925,6 @@ export const OrderHistoryList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderHistoryElementType",
             type: {
               name: "Composite",
               className: "OrderHistory"
@@ -3679,7 +3944,6 @@ export const OrderHistoryList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "SortModelElementType",
             type: {
               name: "Composite",
               className: "SortModel"
@@ -3691,7 +3955,7 @@ export const OrderHistoryList = {
   }
 };
 
-export const OrderStatusUpdateElement = {
+export const OrderStatusUpdateElement: msRest.CompositeMapper = {
   serializedName: "OrderStatusUpdateElement",
   type: {
     name: "Composite",
@@ -3719,7 +3983,7 @@ export const OrderStatusUpdateElement = {
   }
 };
 
-export const OrderStatusUpdateElementList = {
+export const OrderStatusUpdateElementList: msRest.CompositeMapper = {
   serializedName: "OrderStatusUpdateElementList",
   type: {
     name: "Composite",
@@ -3730,7 +3994,6 @@ export const OrderStatusUpdateElementList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderStatusUpdateElementElementType",
             type: {
               name: "Composite",
               className: "OrderStatusUpdateElement"
@@ -3742,7 +4005,7 @@ export const OrderStatusUpdateElementList = {
   }
 };
 
-export const Order = {
+export const Order: msRest.CompositeMapper = {
   serializedName: "Order",
   type: {
     name: "Composite",
@@ -3753,7 +4016,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -3766,7 +4028,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -3779,7 +4040,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VoucherElementType",
             type: {
               name: "Composite",
               className: "Voucher"
@@ -3804,7 +4064,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ConsignmentElementType",
             type: {
               name: "Composite",
               className: "Consignment"
@@ -3850,7 +4109,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "DeliveryOrderEntryGroupElementType",
             type: {
               name: "Composite",
               className: "DeliveryOrderEntryGroup"
@@ -3875,7 +4133,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderEntryElementType",
             type: {
               name: "Composite",
               className: "OrderEntry"
@@ -3926,7 +4183,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PickupOrderEntryGroupElementType",
             type: {
               name: "Composite",
               className: "PickupOrderEntryGroup"
@@ -4011,7 +4267,6 @@ export const Order = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "OrderEntryElementType",
             type: {
               name: "Composite",
               className: "OrderEntry"
@@ -4030,7 +4285,7 @@ export const Order = {
   }
 };
 
-export const PaymentDetailsList = {
+export const PaymentDetailsList: msRest.CompositeMapper = {
   serializedName: "PaymentDetailsList",
   type: {
     name: "Composite",
@@ -4041,7 +4296,6 @@ export const PaymentDetailsList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PaymentDetailsElementType",
             type: {
               name: "Composite",
               className: "PaymentDetails"
@@ -4053,7 +4307,67 @@ export const PaymentDetailsList = {
   }
 };
 
-export const PointOfServiceStock = {
+export const PaymentRequest: msRest.CompositeMapper = {
+  serializedName: "PaymentRequest",
+  type: {
+    name: "Composite",
+    className: "PaymentRequest",
+    modelProperties: {
+      mappingLabels: {
+        serializedName: "mappingLabels",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      parameters: {
+        serializedName: "parameters",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      postUrl: {
+        serializedName: "postUrl",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PointOfServiceList: msRest.CompositeMapper = {
+  serializedName: "PointOfServiceList",
+  type: {
+    name: "Composite",
+    className: "PointOfServiceList",
+    modelProperties: {
+      pointOfServices: {
+        serializedName: "pointOfServices",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PointOfService"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PointOfServiceStock: msRest.CompositeMapper = {
   serializedName: "PointOfServiceStock",
   type: {
     name: "Composite",
@@ -4089,7 +4403,6 @@ export const PointOfServiceStock = {
         type: {
           name: "Dictionary",
           value: {
-            serializedName: "stringElementType",
             type: {
               name: "String"
             }
@@ -4147,7 +4460,6 @@ export const PointOfServiceStock = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ImageElementType",
             type: {
               name: "Composite",
               className: "Image"
@@ -4165,7 +4477,7 @@ export const PointOfServiceStock = {
   }
 };
 
-export const ProductExpressUpdateElement = {
+export const ProductExpressUpdateElement: msRest.CompositeMapper = {
   serializedName: "ProductExpressUpdateElement",
   type: {
     name: "Composite",
@@ -4193,7 +4505,7 @@ export const ProductExpressUpdateElement = {
   }
 };
 
-export const ProductExpressUpdateElementList = {
+export const ProductExpressUpdateElementList: msRest.CompositeMapper = {
   serializedName: "ProductExpressUpdateElementList",
   type: {
     name: "Composite",
@@ -4204,7 +4516,6 @@ export const ProductExpressUpdateElementList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ProductExpressUpdateElementElementType",
             type: {
               name: "Composite",
               className: "ProductExpressUpdateElement"
@@ -4216,7 +4527,7 @@ export const ProductExpressUpdateElementList = {
   }
 };
 
-export const ProductList = {
+export const ProductList: msRest.CompositeMapper = {
   serializedName: "ProductList",
   type: {
     name: "Composite",
@@ -4239,7 +4550,6 @@ export const ProductList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ProductElementType",
             type: {
               name: "Composite",
               className: "Product"
@@ -4269,7 +4579,7 @@ export const ProductList = {
   }
 };
 
-export const ProductReferenceList = {
+export const ProductReferenceList: msRest.CompositeMapper = {
   serializedName: "ProductReferenceList",
   type: {
     name: "Composite",
@@ -4280,7 +4590,6 @@ export const ProductReferenceList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ProductReferenceElementType",
             type: {
               name: "Composite",
               className: "ProductReference"
@@ -4292,7 +4601,7 @@ export const ProductReferenceList = {
   }
 };
 
-export const SpellingSuggestion = {
+export const SpellingSuggestion: msRest.CompositeMapper = {
   serializedName: "SpellingSuggestion",
   type: {
     name: "Composite",
@@ -4314,7 +4623,7 @@ export const SpellingSuggestion = {
   }
 };
 
-export const ProductSearchPage = {
+export const ProductSearchPage: msRest.CompositeMapper = {
   serializedName: "ProductSearchPage",
   type: {
     name: "Composite",
@@ -4325,7 +4634,6 @@ export const ProductSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "BreadcrumbElementType",
             type: {
               name: "Composite",
               className: "Breadcrumb"
@@ -4351,7 +4659,6 @@ export const ProductSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "FacetElementType",
             type: {
               name: "Composite",
               className: "Facet"
@@ -4383,7 +4690,6 @@ export const ProductSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ProductElementType",
             type: {
               name: "Composite",
               className: "Product"
@@ -4396,7 +4702,6 @@ export const ProductSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "SortModelElementType",
             type: {
               name: "Composite",
               className: "SortModel"
@@ -4415,7 +4720,7 @@ export const ProductSearchPage = {
   }
 };
 
-export const PromotionList = {
+export const PromotionList: msRest.CompositeMapper = {
   serializedName: "PromotionList",
   type: {
     name: "Composite",
@@ -4426,7 +4731,6 @@ export const PromotionList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionElementType",
             type: {
               name: "Composite",
               className: "Promotion"
@@ -4438,7 +4742,7 @@ export const PromotionList = {
   }
 };
 
-export const PromotionResultList = {
+export const PromotionResultList: msRest.CompositeMapper = {
   serializedName: "PromotionResultList",
   type: {
     name: "Composite",
@@ -4449,7 +4753,6 @@ export const PromotionResultList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PromotionResultElementType",
             type: {
               name: "Composite",
               className: "PromotionResult"
@@ -4461,7 +4764,29 @@ export const PromotionResultList = {
   }
 };
 
-export const ReviewList = {
+export const RegionList: msRest.CompositeMapper = {
+  serializedName: "RegionList",
+  type: {
+    name: "Composite",
+    className: "RegionList",
+    modelProperties: {
+      regions: {
+        serializedName: "regions",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Region"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ReviewList: msRest.CompositeMapper = {
   serializedName: "ReviewList",
   type: {
     name: "Composite",
@@ -4472,7 +4797,6 @@ export const ReviewList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "ReviewElementType",
             type: {
               name: "Composite",
               className: "Review"
@@ -4484,7 +4808,7 @@ export const ReviewList = {
   }
 };
 
-export const SaveCartResult = {
+export const SaveCartResult: msRest.CompositeMapper = {
   serializedName: "SaveCartResult",
   type: {
     name: "Composite",
@@ -4501,7 +4825,7 @@ export const SaveCartResult = {
   }
 };
 
-export const StoreFinderSearchPage = {
+export const StoreFinderSearchPage: msRest.CompositeMapper = {
   serializedName: "StoreFinderSearchPage",
   type: {
     name: "Composite",
@@ -4549,7 +4873,6 @@ export const StoreFinderSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "SortModelElementType",
             type: {
               name: "Composite",
               className: "SortModel"
@@ -4574,7 +4897,6 @@ export const StoreFinderSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PointOfServiceElementType",
             type: {
               name: "Composite",
               className: "PointOfService"
@@ -4586,7 +4908,7 @@ export const StoreFinderSearchPage = {
   }
 };
 
-export const StoreFinderStockSearchPage = {
+export const StoreFinderStockSearchPage: msRest.CompositeMapper = {
   serializedName: "StoreFinderStockSearchPage",
   type: {
     name: "Composite",
@@ -4641,7 +4963,6 @@ export const StoreFinderStockSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "SortModelElementType",
             type: {
               name: "Composite",
               className: "SortModel"
@@ -4666,7 +4987,6 @@ export const StoreFinderStockSearchPage = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PointOfServiceStockElementType",
             type: {
               name: "Composite",
               className: "PointOfServiceStock"
@@ -4678,7 +4998,7 @@ export const StoreFinderStockSearchPage = {
   }
 };
 
-export const Suggestion = {
+export const Suggestion: msRest.CompositeMapper = {
   serializedName: "Suggestion",
   type: {
     name: "Composite",
@@ -4694,7 +5014,7 @@ export const Suggestion = {
   }
 };
 
-export const SuggestionList = {
+export const SuggestionList: msRest.CompositeMapper = {
   serializedName: "SuggestionList",
   type: {
     name: "Composite",
@@ -4705,7 +5025,6 @@ export const SuggestionList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "SuggestionElementType",
             type: {
               name: "Composite",
               className: "Suggestion"
@@ -4717,7 +5036,7 @@ export const SuggestionList = {
   }
 };
 
-export const Title = {
+export const Title: msRest.CompositeMapper = {
   serializedName: "Title",
   type: {
     name: "Composite",
@@ -4739,7 +5058,7 @@ export const Title = {
   }
 };
 
-export const TitleList = {
+export const TitleList: msRest.CompositeMapper = {
   serializedName: "TitleList",
   type: {
     name: "Composite",
@@ -4750,7 +5069,6 @@ export const TitleList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "TitleElementType",
             type: {
               name: "Composite",
               className: "Title"
@@ -4762,7 +5080,7 @@ export const TitleList = {
   }
 };
 
-export const UserGroup = {
+export const UserGroup: msRest.CompositeMapper = {
   serializedName: "UserGroup",
   type: {
     name: "Composite",
@@ -4773,7 +5091,6 @@ export const UserGroup = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "PrincipalElementType",
             type: {
               name: "Composite",
               className: "Principal"
@@ -4798,7 +5115,6 @@ export const UserGroup = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "UserGroupElementType",
             type: {
               name: "Composite",
               className: "UserGroup"
@@ -4816,7 +5132,7 @@ export const UserGroup = {
   }
 };
 
-export const UserGroupList = {
+export const UserGroupList: msRest.CompositeMapper = {
   serializedName: "UserGroupList",
   type: {
     name: "Composite",
@@ -4851,7 +5167,6 @@ export const UserGroupList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "UserGroupElementType",
             type: {
               name: "Composite",
               className: "UserGroup"
@@ -4863,7 +5178,7 @@ export const UserGroupList = {
   }
 };
 
-export const UserSignUp = {
+export const UserSignUp: msRest.CompositeMapper = {
   serializedName: "UserSignUp",
   type: {
     name: "Composite",
@@ -4903,7 +5218,7 @@ export const UserSignUp = {
   }
 };
 
-export const VoucherList = {
+export const VoucherList: msRest.CompositeMapper = {
   serializedName: "VoucherList",
   type: {
     name: "Composite",
@@ -4914,1559 +5229,11 @@ export const VoucherList = {
         type: {
           name: "Sequence",
           element: {
-            serializedName: "VoucherElementType",
             type: {
               name: "Composite",
               className: "Voucher"
             }
           }
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCardTypesOptionalParams = {
-  serializedName: "GetCardTypesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCardTypesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCatalogsOptionalParams = {
-  serializedName: "GetCatalogsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCatalogsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCatalogOptionalParams = {
-  serializedName: "GetCatalogOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCatalogOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCatalogVersionOptionalParams = {
-  serializedName: "GetCatalogVersionOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCatalogVersionOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCategoriesOptionalParams = {
-  serializedName: "GetCategoriesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCategoriesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetComponentByIdListOptionalParams = {
-  serializedName: "GetComponentByIdListOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetComponentByIdListOptionalParams",
-    modelProperties: {
-      catalogCode: {
-        serializedName: "catalogCode",
-        type: {
-          name: "String"
-        }
-      },
-      productCode: {
-        serializedName: "productCode",
-        type: {
-          name: "String"
-        }
-      },
-      categoryCode: {
-        serializedName: "categoryCode",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 10,
-        type: {
-          name: "Number"
-        }
-      },
-      sort: {
-        serializedName: "sort",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetComponentByIdOptionalParams = {
-  serializedName: "GetComponentByIdOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetComponentByIdOptionalParams",
-    modelProperties: {
-      catalogCode: {
-        serializedName: "catalogCode",
-        type: {
-          name: "String"
-        }
-      },
-      productCode: {
-        serializedName: "productCode",
-        type: {
-          name: "String"
-        }
-      },
-      categoryCode: {
-        serializedName: "categoryCode",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPageDataOptionalParams = {
-  serializedName: "GetPageDataOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPageDataOptionalParams",
-    modelProperties: {
-      pageType: {
-        serializedName: "pageType",
-        defaultValue: 'ContentPage',
-        type: {
-          name: "String"
-        }
-      },
-      pageLabelOrId: {
-        serializedName: "pageLabelOrId",
-        type: {
-          name: "String"
-        }
-      },
-      code: {
-        serializedName: "code",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCurrenciesOptionalParams = {
-  serializedName: "GetCurrenciesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCurrenciesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetAllCustomerGroupsOptionalParams = {
-  serializedName: "GetAllCustomerGroupsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetAllCustomerGroupsOptionalParams",
-    modelProperties: {
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'BASIC',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCustomerGroupOptionalParams = {
-  serializedName: "GetCustomerGroupOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCustomerGroupOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'BASIC',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetDeliveryCountriesOptionalParams = {
-  serializedName: "GetDeliveryCountriesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetDeliveryCountriesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2ExportProductsOptionalParams = {
-  serializedName: "ExportProductsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2ExportProductsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      catalog: {
-        serializedName: "catalog",
-        type: {
-          name: "String"
-        }
-      },
-      version: {
-        serializedName: "version",
-        type: {
-          name: "String"
-        }
-      },
-      timestamp: {
-        serializedName: "timestamp",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2OrderStatusFeedOptionalParams = {
-  serializedName: "OrderStatusFeedOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2OrderStatusFeedOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetLanguagesOptionalParams = {
-  serializedName: "GetLanguagesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetLanguagesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetOrderOptionalParams = {
-  serializedName: "GetOrderOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetOrderOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2ExpressUpdateOptionalParams = {
-  serializedName: "ExpressUpdateOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2ExpressUpdateOptionalParams",
-    modelProperties: {
-      catalog: {
-        serializedName: "catalog",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2SearchProductsOptionalParams = {
-  serializedName: "SearchProductsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2SearchProductsOptionalParams",
-    modelProperties: {
-      query: {
-        serializedName: "query",
-        type: {
-          name: "String"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      sort: {
-        serializedName: "sort",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      },
-      searchQueryContext: {
-        serializedName: "searchQueryContext",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CountSearchProductsOptionalParams = {
-  serializedName: "CountSearchProductsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CountSearchProductsOptionalParams",
-    modelProperties: {
-      query: {
-        serializedName: "query",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetSuggestionsOptionalParams = {
-  serializedName: "GetSuggestionsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetSuggestionsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetProductByCodeOptionalParams = {
-  serializedName: "GetProductByCodeOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetProductByCodeOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2ExportProductReferencesOptionalParams = {
-  serializedName: "ExportProductReferencesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2ExportProductReferencesOptionalParams",
-    modelProperties: {
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 2147483647,
-        type: {
-          name: "Number"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetProductReviewsOptionalParams = {
-  serializedName: "GetProductReviewsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetProductReviewsOptionalParams",
-    modelProperties: {
-      maxCount: {
-        serializedName: "maxCount",
-        type: {
-          name: "Number"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CreateReviewPrimOptionalParams = {
-  serializedName: "CreateReviewPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CreateReviewPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2SearchProductStockByLocationOptionalParams = {
-  serializedName: "SearchProductStockByLocationOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2SearchProductStockByLocationOptionalParams",
-    modelProperties: {
-      location: {
-        serializedName: "location",
-        type: {
-          name: "String"
-        }
-      },
-      latitude: {
-        serializedName: "latitude",
-        type: {
-          name: "Number"
-        }
-      },
-      longitude: {
-        serializedName: "longitude",
-        type: {
-          name: "Number"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams = {
-  serializedName: "CountSearchProductStockByLocationOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams",
-    modelProperties: {
-      location: {
-        serializedName: "location",
-        type: {
-          name: "String"
-        }
-      },
-      latitude: {
-        serializedName: "latitude",
-        type: {
-          name: "Number"
-        }
-      },
-      longitude: {
-        serializedName: "longitude",
-        type: {
-          name: "Number"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetStockDataOptionalParams = {
-  serializedName: "GetStockDataOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetStockDataOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPromotionsPrimOptionalParams = {
-  serializedName: "GetPromotionsPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPromotionsPrimOptionalParams",
-    modelProperties: {
-      promotionGroup: {
-        serializedName: "promotionGroup",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'BASIC',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPromotionByCodeOptionalParams = {
-  serializedName: "GetPromotionByCodeOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPromotionByCodeOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'BASIC',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2LocationSearchOptionalParams = {
-  serializedName: "LocationSearchOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2LocationSearchOptionalParams",
-    modelProperties: {
-      query: {
-        serializedName: "query",
-        type: {
-          name: "String"
-        }
-      },
-      latitude: {
-        serializedName: "latitude",
-        type: {
-          name: "Number"
-        }
-      },
-      longitude: {
-        serializedName: "longitude",
-        type: {
-          name: "Number"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      sort: {
-        serializedName: "sort",
-        defaultValue: 'asc',
-        type: {
-          name: "String"
-        }
-      },
-      radius: {
-        serializedName: "radius",
-        defaultValue: 100000,
-        type: {
-          name: "Number"
-        }
-      },
-      accuracy: {
-        serializedName: "accuracy",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CountLocationSearchOptionalParams = {
-  serializedName: "CountLocationSearchOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CountLocationSearchOptionalParams",
-    modelProperties: {
-      query: {
-        serializedName: "query",
-        type: {
-          name: "String"
-        }
-      },
-      latitude: {
-        serializedName: "latitude",
-        type: {
-          name: "Number"
-        }
-      },
-      longitude: {
-        serializedName: "longitude",
-        type: {
-          name: "Number"
-        }
-      },
-      radius: {
-        serializedName: "radius",
-        defaultValue: 100000,
-        type: {
-          name: "Number"
-        }
-      },
-      accuracy: {
-        serializedName: "accuracy",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2LocationDetailsOptionalParams = {
-  serializedName: "LocationDetailsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2LocationDetailsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetTitlesOptionalParams = {
-  serializedName: "GetTitlesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetTitlesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2RegisterUserPrimOptionalParams = {
-  serializedName: "RegisterUserPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2RegisterUserPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetUserOptionalParams = {
-  serializedName: "GetUserOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetUserOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetAddressesOptionalParams = {
-  serializedName: "GetAddressesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetAddressesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CreateAddressPrimOptionalParams = {
-  serializedName: "CreateAddressPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CreateAddressPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2VerifyAddressPrimOptionalParams = {
-  serializedName: "VerifyAddressPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2VerifyAddressPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetAddressOptionalParams = {
-  serializedName: "GetAddressOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetAddressOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCartsOptionalParams = {
-  serializedName: "GetCartsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCartsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      },
-      savedCartsOnly: {
-        serializedName: "savedCartsOnly",
-        defaultValue: false,
-        type: {
-          name: "Boolean"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      sort: {
-        serializedName: "sort",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CreateCartOptionalParams = {
-  serializedName: "CreateCartOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CreateCartOptionalParams",
-    modelProperties: {
-      oldCartId: {
-        serializedName: "oldCartId",
-        type: {
-          name: "String"
-        }
-      },
-      toMergeCartGuid: {
-        serializedName: "toMergeCartGuid",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCartOptionalParams = {
-  serializedName: "GetCartOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCartOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams = {
-  serializedName: "CreateAndSetAddressPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2CloneSaveCartOptionalParams = {
-  serializedName: "CloneSaveCartOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2CloneSaveCartOptionalParams",
-    modelProperties: {
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      description: {
-        serializedName: "description",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCartDeliveryModeOptionalParams = {
-  serializedName: "GetCartDeliveryModeOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCartDeliveryModeOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams = {
-  serializedName: "GetSupportedDeliveryModesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCartEntriesOptionalParams = {
-  serializedName: "GetCartEntriesOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCartEntriesOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2AddCartEntryPrimOptionalParams = {
-  serializedName: "AddCartEntryPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2AddCartEntryPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCartEntryOptionalParams = {
-  serializedName: "GetCartEntryOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCartEntryOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2SetCartEntryPrimOptionalParams = {
-  serializedName: "SetCartEntryPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2SetCartEntryPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2UpdateCartEntryPrimOptionalParams = {
-  serializedName: "UpdateCartEntryPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2UpdateCartEntryPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2FlagForDeletionOptionalParams = {
-  serializedName: "FlagForDeletionOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2FlagForDeletionOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams = {
-  serializedName: "AddPaymentDetailsPrimOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPromotionsOptionalParams = {
-  serializedName: "GetPromotionsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPromotionsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPromotionOptionalParams = {
-  serializedName: "GetPromotionOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPromotionOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2RestoreSavedCartOptionalParams = {
-  serializedName: "RestoreSavedCartOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2RestoreSavedCartOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2SaveCartOptionalParams = {
-  serializedName: "SaveCartOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2SaveCartOptionalParams",
-    modelProperties: {
-      saveCartName: {
-        serializedName: "saveCartName",
-        type: {
-          name: "String"
-        }
-      },
-      saveCartDescription: {
-        serializedName: "saveCartDescription",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetSavedCartOptionalParams = {
-  serializedName: "GetSavedCartOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetSavedCartOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetVouchersOptionalParams = {
-  serializedName: "GetVouchersOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetVouchersOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams = {
-  serializedName: "GetAllCustomerGroupsForCustomerOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetOrdersForUserOptionalParams = {
-  serializedName: "GetOrdersForUserOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetOrdersForUserOptionalParams",
-    modelProperties: {
-      statuses: {
-        serializedName: "statuses",
-        type: {
-          name: "String"
-        }
-      },
-      currentPage: {
-        serializedName: "currentPage",
-        defaultValue: 0,
-        type: {
-          name: "Number"
-        }
-      },
-      pageSize: {
-        serializedName: "pageSize",
-        defaultValue: 20,
-        type: {
-          name: "Number"
-        }
-      },
-      sort: {
-        serializedName: "sort",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetCountOrdersForUserOptionalParams = {
-  serializedName: "GetCountOrdersForUserOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetCountOrdersForUserOptionalParams",
-    modelProperties: {
-      statuses: {
-        serializedName: "statuses",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2PlaceOrderOptionalParams = {
-  serializedName: "PlaceOrderOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2PlaceOrderOptionalParams",
-    modelProperties: {
-      securityCode: {
-        serializedName: "securityCode",
-        type: {
-          name: "String"
-        }
-      },
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetOrderForUserByCodeOptionalParams = {
-  serializedName: "GetOrderForUserByCodeOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetOrderForUserByCodeOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2ChangePasswordOptionalParams = {
-  serializedName: "ChangePasswordOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2ChangePasswordOptionalParams",
-    modelProperties: {
-      old: {
-        serializedName: "old",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPaymentInfosOptionalParams = {
-  serializedName: "GetPaymentInfosOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPaymentInfosOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetPaymentDetailsOptionalParams = {
-  serializedName: "GetPaymentDetailsOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetPaymentDetailsOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'DEFAULT',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const CommerceWebservicesV2GetVoucherByCodeOptionalParams = {
-  serializedName: "GetVoucherByCodeOptions",
-  type: {
-    name: "Composite",
-    className: "CommerceWebservicesV2GetVoucherByCodeOptionalParams",
-    modelProperties: {
-      fields: {
-        serializedName: "fields",
-        defaultValue: 'BASIC',
-        type: {
-          name: "String"
         }
       }
     }

@@ -4,15736 +4,7063 @@
  * regenerated.
  */
 
-import * as msRest from "ms-rest-js";
+import * as msRest from "@azure/ms-rest-js";
 import * as Models from "./models";
 import * as Mappers from "./models/mappers";
+import * as Parameters from "./models/parameters";
 import { CommerceWebservicesV2Context } from "./commerceWebservicesV2Context";
-const WebResource = msRest.WebResource;
 
 class CommerceWebservicesV2 extends CommerceWebservicesV2Context {
-  serializer = new msRest.Serializer(Mappers);
-
   /**
-   * @class
    * Initializes a new instance of the CommerceWebservicesV2 class.
-   * @constructor
-   *
-   * @param {string} [baseUri] - The base URI of the service.
-   *
-   * @param {object} [options] - The parameter options
-   *
-   * @param {Array} [options.filters] - Filters to be added to the request pipeline
-   *
-   * @param {object} [options.requestOptions] - The request options. Detailed info can be found at
-   * {@link https://github.github.io/fetch/#Request Options doc}
-   *
-   * @param {boolean} [options.noRetryPolicy] - If set to true, turn off default retry policy
-   *
+   * @param [options] The parameter options
    */
-  constructor(baseUri?: string, options?: msRest.ServiceClientOptions) {
-    super(baseUri, options);
+  constructor(options?: Models.CommerceWebservicesV2Options) {
+    super(options);
   }
-  // methods on the client.
 
   /**
-   * @summary Get a list of supported payment card types.
-   *
+   * Returns details of a specific base store based on its identifier. The response contains detailed
+   * base store information.
+   * @summary Get a base store.
+   * @param baseStoreUid Base store name
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetBaseStoreResponse>
+   */
+  getBaseStore(baseStoreUid: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetBaseStoreOptionalParams): Promise<Models.GetBaseStoreResponse>;
+  /**
+   * @param baseStoreUid Base store name
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getBaseStore(baseStoreUid: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.BaseStore>): void;
+  /**
+   * @param baseStoreUid Base store name
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getBaseStore(baseStoreUid: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetBaseStoreOptionalParams, callback: msRest.ServiceCallback<Models.BaseStore>): void;
+  getBaseStore(baseStoreUid: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetBaseStoreOptionalParams | msRest.ServiceCallback<Models.BaseStore>, callback?: msRest.ServiceCallback<Models.BaseStore>): Promise<Models.GetBaseStoreResponse> {
+    return this.sendOperationRequest(
+      {
+        baseStoreUid,
+        baseSiteId,
+        options
+      },
+      getBaseStoreOperationSpec,
+      callback) as Promise<Models.GetBaseStoreResponse>;
+  }
+
+  /**
    * Lists supported payment card types.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCardTypesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCardTypesWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCardTypesOptionalParams): Promise<msRest.HttpOperationResponse<Models.CardTypeList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/cardtypes",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CardTypeList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CardTypeList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of catalogs
-   *
-   * Returns all catalogs with versions defined for the base store.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCatalogsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCatalogsWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogsOptionalParams): Promise<msRest.HttpOperationResponse<Models.CatalogList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/catalogs",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CatalogList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CatalogList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a catalog
-   *
-   * Returns information about a catalog based on its ID, along with the versions defined for the
-   * current base store.
-   *
-   * @param {string} catalogId Catalog identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCatalogOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCatalogWithHttpOperationResponse(catalogId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogOptionalParams): Promise<msRest.HttpOperationResponse<Models.Catalog>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          catalogId,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/catalogs/{catalogId}",
-          urlParameters: [
-            {
-              parameterPath: "catalogId",
-              mapper: {
-                required: true,
-                serializedName: "catalogId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Catalog
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Catalog;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get information about catalog version
-   *
-   * Returns information about the catalog version that exists for the current base store.
-   *
-   * @param {string} catalogId Catalog identifier
-   *
-   * @param {string} catalogVersionId Catalog version identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCatalogVersionOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCatalogVersionWithHttpOperationResponse(catalogId: string, catalogVersionId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams): Promise<msRest.HttpOperationResponse<Models.CatalogVersion>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          catalogId,
-          catalogVersionId,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/catalogs/{catalogId}/{catalogVersionId}",
-          urlParameters: [
-            {
-              parameterPath: "catalogId",
-              mapper: {
-                required: true,
-                serializedName: "catalogId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "catalogVersionId",
-              mapper: {
-                required: true,
-                serializedName: "catalogVersionId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CatalogVersion
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CatalogVersion;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get information about catagory in a catalog version
-   *
-   * Returns information about a specified category that exists in a catalog version available for
-   * the current base store.
-   *
-   * @param {string} catalogId Catalog identifier
-   *
-   * @param {string} catalogVersionId Catalog version identifier
-   *
-   * @param {string} categoryId Category identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCategoriesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCategoriesWithHttpOperationResponse(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCategoriesOptionalParams): Promise<msRest.HttpOperationResponse<Models.CategoryHierarchy>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          catalogId,
-          catalogVersionId,
-          categoryId,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/catalogs/{catalogId}/{catalogVersionId}/categories/{categoryId}",
-          urlParameters: [
-            {
-              parameterPath: "catalogId",
-              mapper: {
-                required: true,
-                serializedName: "catalogId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "catalogVersionId",
-              mapper: {
-                required: true,
-                serializedName: "catalogVersionId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "categoryId",
-              mapper: {
-                required: true,
-                serializedName: "categoryId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CategoryHierarchy
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CategoryHierarchy;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get components' data by id given in body
-   *
-   * Given a list of component identifiers in body, return cms component data.
-   *
-   * @param {ComponentIDList} componentIdList List of Component identifiers
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetComponentByIdListOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getComponentByIdListWithHttpOperationResponse(componentIdList: Models.ComponentIDList, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdListOptionalParams): Promise<msRest.HttpOperationResponse<Models.ListAdaptedComponents>> {
-    let catalogCode = (options && options.catalogCode !== undefined) ? options.catalogCode : undefined;
-    let productCode = (options && options.productCode !== undefined) ? options.productCode : undefined;
-    let categoryCode = (options && options.categoryCode !== undefined) ? options.categoryCode : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 10;
-    let sort = (options && options.sort !== undefined) ? options.sort : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          componentIdList,
-          catalogCode,
-          productCode,
-          categoryCode,
-          fields,
-          currentPage,
-          pageSize,
-          sort,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/cms/components",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "catalogCode",
-              mapper: {
-                serializedName: "catalogCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "productCode",
-              mapper: {
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "categoryCode",
-              mapper: {
-                serializedName: "categoryCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 10,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "sort",
-              mapper: {
-                serializedName: "sort",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "componentIdList",
-            mapper: {
-              ...Mappers.ComponentIDList,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {
-              bodyMapper: Mappers.ListAdaptedComponents
-            },
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.ListAdaptedComponents;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get component data
-   *
-   * Given a component identifier, return cms component data.
-   *
-   * @param {string} componentId Component identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetComponentByIdOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getComponentByIdWithHttpOperationResponse(componentId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdOptionalParams): Promise<msRest.HttpOperationResponse<any>> {
-    let catalogCode = (options && options.catalogCode !== undefined) ? options.catalogCode : undefined;
-    let productCode = (options && options.productCode !== undefined) ? options.productCode : undefined;
-    let categoryCode = (options && options.categoryCode !== undefined) ? options.categoryCode : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          componentId,
-          catalogCode,
-          productCode,
-          categoryCode,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/cms/components/{componentId}",
-          urlParameters: [
-            {
-              parameterPath: "componentId",
-              mapper: {
-                required: true,
-                serializedName: "componentId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "catalogCode",
-              mapper: {
-                serializedName: "catalogCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "productCode",
-              mapper: {
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "categoryCode",
-              mapper: {
-                serializedName: "categoryCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: {
-                serializedName: "parsedResponse",
-                type: {
-                  name: "Object"
-                }
-              }
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = {
-              serializedName: "parsedResponse",
-              type: {
-                name: "Object"
-              }
-            };
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get page data with list of cms content slots
-   *
-   * Given a page identifier, return the page data with a list of cms content slots, each of which
-   * contains a list of cms component data.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetPageDataOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPageDataWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetPageDataOptionalParams): Promise<msRest.HttpOperationResponse<Models.CMSPage>> {
-    let pageType = (options && options.pageType !== undefined) ? options.pageType : 'ContentPage';
-    let pageLabelOrId = (options && options.pageLabelOrId !== undefined) ? options.pageLabelOrId : undefined;
-    let code = (options && options.code !== undefined) ? options.code : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          pageType,
-          pageLabelOrId,
-          code,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/cms/pages",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "pageType",
-              mapper: {
-                serializedName: "pageType",
-                defaultValue: 'ContentPage',
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "pageLabelOrId",
-              mapper: {
-                serializedName: "pageLabelOrId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "code",
-              mapper: {
-                serializedName: "code",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CMSPage
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CMSPage;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of available currencies.
-   *
-   * Lists all available currencies (all usable currencies for the current store). If the list of
-   * currencies for a base store is empty, a list of all currencies available in the system is
-   * returned.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCurrenciesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCurrenciesWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCurrenciesOptionalParams): Promise<msRest.HttpOperationResponse<Models.CurrencyList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/currencies",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CurrencyList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CurrencyList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get all subgroups of a customergroup.
-   *
-   * Returns all customer groups that are direct subgroups of a customergroup.
-   *
-   * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
-   * to the “customermanagergroup”.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetAllCustomerGroupsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getAllCustomerGroupsWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetAllCustomerGroupsOptionalParams): Promise<msRest.HttpOperationResponse<Models.UserGroupList>> {
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'BASIC';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          currentPage,
-          pageSize,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/customergroups",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'BASIC',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.UserGroupList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.UserGroupList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Creates a new customer group.
-   *
-   * Creates a new customer group that is a direct subgroup of a customergroup.
-   *
-   * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
-   * to the “customermanagergroup”.
-   *
-   * @param {UserGroup} userGroup User group object with id and name.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async createNewCustomerGroupPrimWithHttpOperationResponse(userGroup: Models.UserGroup, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          userGroup,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/customergroups",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "userGroup",
-            mapper: {
-              ...Mappers.UserGroup,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a specific customer group.
-   *
-   * Returns a customer group with a specific groupId.
-   *
-   * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
-   * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCustomerGroupOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCustomerGroupWithHttpOperationResponse(groupId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCustomerGroupOptionalParams): Promise<msRest.HttpOperationResponse<Models.UserGroup>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'BASIC';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          groupId,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/customergroups/{groupId}",
-          urlParameters: [
-            {
-              parameterPath: "groupId",
-              mapper: {
-                required: true,
-                serializedName: "groupId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'BASIC',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.UserGroup
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.UserGroup;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Sets members for a user group.
-   *
-   * Sets members for a user group. The list of existing members is overwritten with a new one.
-   *
-   * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
-   * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {MemberList} members List of users to set for customer group.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async setUserListForCustomerGroupPrimWithHttpOperationResponse(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          groupId,
-          members,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/customergroups/{groupId}/members",
-          urlParameters: [
-            {
-              parameterPath: "groupId",
-              mapper: {
-                required: true,
-                serializedName: "groupId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "members",
-            mapper: {
-              ...Mappers.MemberList,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Assigns user(s) to a customer group.
-   *
-   * Assigns user(s) to a customer group.
-   *
-   * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
-   * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {MemberList} members List of users to assign to customer group.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async assignUserToCustomerGroupPrimWithHttpOperationResponse(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          groupId,
-          members,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/customergroups/{groupId}/members",
-          urlParameters: [
-            {
-              parameterPath: "groupId",
-              mapper: {
-                required: true,
-                serializedName: "groupId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "members",
-            mapper: {
-              ...Mappers.MemberList,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete a user from a customer group.
-   *
-   * Removes user from a customer group.
-   *
-   * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
-   * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {string} userId User identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async removeUsersFromCustomerGroupWithHttpOperationResponse(groupId: string, userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          groupId,
-          userId,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/customergroups/{groupId}/members/{userId}",
-          urlParameters: [
-            {
-              parameterPath: "groupId",
-              mapper: {
-                required: true,
-                serializedName: "groupId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of supported countries.
-   *
-   * Lists all supported delivery countries for the current store. The list is sorted alphabetically.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetDeliveryCountriesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getDeliveryCountriesWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams): Promise<msRest.HttpOperationResponse<Models.CountryList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/deliverycountries",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CountryList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CountryList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of product exports.
-   *
-   * Used for product export. Depending on the timestamp parameter, it can return all products or
-   * only products modified after the given time.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2ExportProductsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async exportProductsWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2ExportProductsOptionalParams): Promise<msRest.HttpOperationResponse<Models.ProductList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let catalog = (options && options.catalog !== undefined) ? options.catalog : undefined;
-    let version = (options && options.version !== undefined) ? options.version : undefined;
-    let timestamp = (options && options.timestamp !== undefined) ? options.timestamp : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          currentPage,
-          pageSize,
-          catalog,
-          version,
-          timestamp,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/export/products",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "catalog",
-              mapper: {
-                serializedName: "catalog",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "version",
-              mapper: {
-                serializedName: "version",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "timestamp",
-              mapper: {
-                serializedName: "timestamp",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.ProductList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.ProductList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of orders with status updates
-   *
-   * Returns the orders that have changed status. Returns only the elements from the current baseSite
-   * that have been updated after the provided timestamp.
-   *
-   * @param {string} timestamp Only items newer than the given parameter are retrieved. This
-   * parameter should be in ISO-8601 format (for example, 2018-01-09T16:28:45+0000).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2OrderStatusFeedOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async orderStatusFeedWithHttpOperationResponse(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2OrderStatusFeedOptionalParams): Promise<msRest.HttpOperationResponse<Models.OrderStatusUpdateElementList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          timestamp,
-          baseSiteId,
-          fields
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/feeds/orders/statusfeed",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "timestamp",
-              mapper: {
-                required: true,
-                serializedName: "timestamp",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.OrderStatusUpdateElementList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.OrderStatusUpdateElementList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Generates a token to restore a customer's forgotten password.
-   *
-   * Generates a token to restore a customer's forgotten password.
-   *
-   * @param {string} userId Customer's user id. Customer user id is case insensitive.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async restorePasswordWithHttpOperationResponse(userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          userId,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/forgottenpasswordtokens",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            201: {},
-            202: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of available languages.
-   *
-   * Lists all available languages (all languages used for a particular store). If the list of
-   * languages for a base store is empty, a list of all languages available in the system will be
-   * returned.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetLanguagesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getLanguagesWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetLanguagesOptionalParams): Promise<msRest.HttpOperationResponse<Models.LanguageList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/languages",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.LanguageList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.LanguageList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a order
-   *
-   * Returns details of a specific order based on the order GUID (Globally Unique Identifier) or the
-   * order CODE. The response contains detailed order information.
-   *
-   * @param {string} code Order GUID (Globally Unique Identifier) or order CODE
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetOrderOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getOrderWithHttpOperationResponse(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetOrderOptionalParams): Promise<msRest.HttpOperationResponse<Models.Order>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          code,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/orders/{code}",
-          urlParameters: [
-            {
-              parameterPath: "code",
-              mapper: {
-                required: true,
-                serializedName: "code",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Order
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Order;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get products added to the express update feed
-   *
-   * Returns products added to the express update feed. Returns only elements updated after the
-   * provided timestamp. The queue is cleared using a defined cronjob.
-   *
-   * @param {string} timestamp Only items newer than the given parameter are retrieved from the
-   * queue. This parameter should be in ISO-8601 format.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2ExpressUpdateOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async expressUpdateWithHttpOperationResponse(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2ExpressUpdateOptionalParams): Promise<msRest.HttpOperationResponse<Models.ProductExpressUpdateElementList>> {
-    let catalog = (options && options.catalog !== undefined) ? options.catalog : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          timestamp,
-          catalog,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/expressupdate",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "timestamp",
-              mapper: {
-                required: true,
-                serializedName: "timestamp",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "catalog",
-              mapper: {
-                serializedName: "catalog",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.ProductExpressUpdateElementList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.ProductExpressUpdateElementList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of products and additional data
-   *
-   * Returns a list of products and additional data, such as available facets, available sorting, and
-   * pagination options. It can also include spelling suggestions. To make spelling suggestions work,
-   * you need to make sure that "enableSpellCheck" on the SearchQuery is set to "true" (by default,
-   * it should already be set to "true"). You also need to have indexed properties configured to be
-   * used for spellchecking.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2SearchProductsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async searchProductsWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2SearchProductsOptionalParams): Promise<msRest.HttpOperationResponse<Models.ProductSearchPage>> {
-    let query = (options && options.query !== undefined) ? options.query : undefined;
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let sort = (options && options.sort !== undefined) ? options.sort : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-    let searchQueryContext = (options && options.searchQueryContext !== undefined) ? options.searchQueryContext : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          query,
-          currentPage,
-          pageSize,
-          sort,
-          fields,
-          searchQueryContext,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/search",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "query",
-              mapper: {
-                serializedName: "query",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "sort",
-              mapper: {
-                serializedName: "sort",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "searchQueryContext",
-              mapper: {
-                serializedName: "searchQueryContext",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.ProductSearchPage
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.ProductSearchPage;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a header with total number of products
-   *
-   * In the response header, the "x-total-count" indicates the total number of products satisfying a
-   * query.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CountSearchProductsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async countSearchProductsWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2CountSearchProductsOptionalParams): Promise<msRest.HttpOperationResponse<void>> {
-    let query = (options && options.query !== undefined) ? options.query : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          query,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "HEAD",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/search",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "query",
-              mapper: {
-                serializedName: "query",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of available suggestions
-   *
-   * Returns a list of all available suggestions related to a given term and limits the results to a
-   * specific value of the max parameter.
-   *
-   * @param {string} term Specified term
-   *
-   * @param {number} max Specifies the limit of results.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetSuggestionsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getSuggestionsWithHttpOperationResponse(term: string, max: number, baseSiteId: string, options?: Models.CommerceWebservicesV2GetSuggestionsOptionalParams): Promise<msRest.HttpOperationResponse<Models.SuggestionList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          term,
-          max,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/suggestions",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "term",
-              mapper: {
-                required: true,
-                serializedName: "term",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "max",
-              mapper: {
-                required: true,
-                serializedName: "max",
-                defaultValue: 10,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.SuggestionList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.SuggestionList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get product details
-   *
-   * Returns details of a single product according to a product code.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetProductByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getProductByCodeWithHttpOperationResponse(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductByCodeOptionalParams): Promise<msRest.HttpOperationResponse<Models.Product>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          productCode,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}",
-          urlParameters: [
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Product
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Product;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a product reference
-   *
-   * Returns references for a product with a given product code. Reference type specifies which
-   * references to return.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} referenceType Reference type according to enum ProductReferenceTypeEnum
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2ExportProductReferencesOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async exportProductReferencesWithHttpOperationResponse(productCode: string, referenceType: string, baseSiteId: string, options?: Models.CommerceWebservicesV2ExportProductReferencesOptionalParams): Promise<msRest.HttpOperationResponse<Models.ProductReferenceList>> {
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 2147483647;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          productCode,
-          pageSize,
-          referenceType,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}/references",
-          urlParameters: [
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 2147483647,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "referenceType",
-              mapper: {
-                required: true,
-                serializedName: "referenceType",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.ProductReferenceList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.ProductReferenceList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get reviews for a product
-   *
-   * Returns the reviews for a product with a given product code.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetProductReviewsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getProductReviewsWithHttpOperationResponse(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductReviewsOptionalParams): Promise<msRest.HttpOperationResponse<Models.ReviewList>> {
-    let maxCount = (options && options.maxCount !== undefined) ? options.maxCount : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          productCode,
-          maxCount,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}/reviews",
-          urlParameters: [
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "maxCount",
-              mapper: {
-                serializedName: "maxCount",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.ReviewList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.ReviewList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Creates a new customer review as an anonymous user
-   *
-   * Creates a new customer review as an anonymous user.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {Review} review Object contains review details like : rating, alias, headline, comment
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CreateReviewPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async createReviewPrimWithHttpOperationResponse(productCode: string, review: Models.Review, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateReviewPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.Review>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          productCode,
-          review,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}/reviews",
-          urlParameters: [
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "review",
-            mapper: {
-              ...Mappers.Review,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            201: {
-              bodyMapper: Mappers.Review
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Review;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a product's stock level
-   *
-   * Returns a product's stock levels sorted by distance from the specified location, which is
-   * provided using the free-text "location" parameter, or by using the longitude and latitude
-   * parameters. The following two sets of parameters are available: location (required), currentPage
-   * (optional), pageSize (optional); or longitude (required), latitude (required), currentPage
-   * (optional), pageSize(optional).
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2SearchProductStockByLocationOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async searchProductStockByLocationWithHttpOperationResponse(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2SearchProductStockByLocationOptionalParams): Promise<msRest.HttpOperationResponse<Models.StoreFinderStockSearchPage>> {
-    let location = (options && options.location !== undefined) ? options.location : undefined;
-    let latitude = (options && options.latitude !== undefined) ? options.latitude : undefined;
-    let longitude = (options && options.longitude !== undefined) ? options.longitude : undefined;
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          productCode,
-          location,
-          latitude,
-          longitude,
-          currentPage,
-          pageSize,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}/stock",
-          urlParameters: [
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "location",
-              mapper: {
-                serializedName: "location",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "latitude",
-              mapper: {
-                serializedName: "latitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "longitude",
-              mapper: {
-                serializedName: "longitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.StoreFinderStockSearchPage
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.StoreFinderStockSearchPage;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get header with a total number of product's stock levels
-   *
-   * In the response header, the "x-total-count" indicates the total number of a product's stock
-   * levels. The following two sets of parameters are available: location (required); or longitude
-   * (required), and latitude (required).
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async countSearchProductStockByLocationWithHttpOperationResponse(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams): Promise<msRest.HttpOperationResponse<void>> {
-    let location = (options && options.location !== undefined) ? options.location : undefined;
-    let latitude = (options && options.latitude !== undefined) ? options.latitude : undefined;
-    let longitude = (options && options.longitude !== undefined) ? options.longitude : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          productCode,
-          location,
-          latitude,
-          longitude,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "HEAD",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}/stock",
-          urlParameters: [
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "location",
-              mapper: {
-                serializedName: "location",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "latitude",
-              mapper: {
-                serializedName: "latitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "longitude",
-              mapper: {
-                serializedName: "longitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a product's stock level for a store
-   *
-   * Returns a product's stock level for a particular store (in other words, for a particular point
-   * of sale).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} storeName Store identifier
-   *
-   * @param {CommerceWebservicesV2GetStockDataOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getStockDataWithHttpOperationResponse(baseSiteId: string, productCode: string, storeName: string, options?: Models.CommerceWebservicesV2GetStockDataOptionalParams): Promise<msRest.HttpOperationResponse<Models.Stock>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          baseSiteId,
-          productCode,
-          storeName,
-          fields
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/products/{productCode}/stock/{storeName}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "productCode",
-              mapper: {
-                required: true,
-                serializedName: "productCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "storeName",
-              mapper: {
-                required: true,
-                serializedName: "storeName",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Stock
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Stock;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of promotions
-   *
-   * Returns promotions defined for a current base site. Requests pertaining to promotions have been
-   * developed for the previous version of promotions and vouchers and therefore some of them are
-   * currently not compatible with the new promotion engine.
-   *
-   * @param {Type} type Defines what type of promotions should be returned. Values supported for that
-   * parameter are: <ul><li>all: All available promotions are returned</li><li>product: Only product
-   * promotions are returned</li><li>order: Only order promotions are returned</li></ul>. Possible
-   * values include: 'all', 'product', 'order'
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetPromotionsPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPromotionsPrimWithHttpOperationResponse(type: Models.Type, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionsPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.PromotionList>> {
-    let promotionGroup = (options && options.promotionGroup !== undefined) ? options.promotionGroup : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'BASIC';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          type,
-          promotionGroup,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/promotions",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "type",
-              mapper: {
-                required: true,
-                serializedName: "type",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "promotionGroup",
-              mapper: {
-                serializedName: "promotionGroup",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'BASIC',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.PromotionList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PromotionList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a promotion based on code
-   *
-   * Returns details of a single promotion specified by a promotion code. Requests pertaining to
-   * promotions have been developed for the previous version of promotions and vouchers and therefore
-   * some of them are currently not compatible with the new promotion engine.
-   *
-   * @param {string} code Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetPromotionByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPromotionByCodeWithHttpOperationResponse(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionByCodeOptionalParams): Promise<msRest.HttpOperationResponse<Models.Promotion>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'BASIC';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          code,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/promotions/{code}",
-          urlParameters: [
-            {
-              parameterPath: "code",
-              mapper: {
-                required: true,
-                serializedName: "code",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'BASIC',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Promotion
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Promotion;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of store locations
-   *
-   * Lists all store locations that are near the location specified in a query or based on latitude
-   * and longitude.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2LocationSearchOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async locationSearchWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2LocationSearchOptionalParams): Promise<msRest.HttpOperationResponse<Models.StoreFinderSearchPage>> {
-    let query = (options && options.query !== undefined) ? options.query : undefined;
-    let latitude = (options && options.latitude !== undefined) ? options.latitude : undefined;
-    let longitude = (options && options.longitude !== undefined) ? options.longitude : undefined;
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let sort = (options && options.sort !== undefined) ? options.sort : 'asc';
-    let radius = (options && options.radius !== undefined) ? options.radius : 100000;
-    let accuracy = (options && options.accuracy !== undefined) ? options.accuracy : 0;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          query,
-          latitude,
-          longitude,
-          currentPage,
-          pageSize,
-          sort,
-          radius,
-          accuracy,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/stores",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "query",
-              mapper: {
-                serializedName: "query",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "latitude",
-              mapper: {
-                serializedName: "latitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "longitude",
-              mapper: {
-                serializedName: "longitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "sort",
-              mapper: {
-                serializedName: "sort",
-                defaultValue: 'asc',
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "radius",
-              mapper: {
-                serializedName: "radius",
-                defaultValue: 100000,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "accuracy",
-              mapper: {
-                serializedName: "accuracy",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.StoreFinderSearchPage
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.StoreFinderSearchPage;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a header with the number of store locations
-   *
-   * In the response header, the "x-total-count" indicates the number of all store locations that are
-   * near the location specified in a query, or based on latitude and longitude.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CountLocationSearchOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async countLocationSearchWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2CountLocationSearchOptionalParams): Promise<msRest.HttpOperationResponse<void>> {
-    let query = (options && options.query !== undefined) ? options.query : undefined;
-    let latitude = (options && options.latitude !== undefined) ? options.latitude : undefined;
-    let longitude = (options && options.longitude !== undefined) ? options.longitude : undefined;
-    let radius = (options && options.radius !== undefined) ? options.radius : 100000;
-    let accuracy = (options && options.accuracy !== undefined) ? options.accuracy : 0;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          query,
-          latitude,
-          longitude,
-          radius,
-          accuracy,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "HEAD",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/stores",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "query",
-              mapper: {
-                serializedName: "query",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "latitude",
-              mapper: {
-                serializedName: "latitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "longitude",
-              mapper: {
-                serializedName: "longitude",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "radius",
-              mapper: {
-                serializedName: "radius",
-                defaultValue: 100000,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "accuracy",
-              mapper: {
-                serializedName: "accuracy",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a store location
-   *
-   * Returns store location based on its unique name.
-   *
-   * @param {string} storeId Store identifier (currently store name)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2LocationDetailsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async locationDetailsWithHttpOperationResponse(storeId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2LocationDetailsOptionalParams): Promise<msRest.HttpOperationResponse<Models.PointOfService>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          storeId,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/stores/{storeId}",
-          urlParameters: [
-            {
-              parameterPath: "storeId",
-              mapper: {
-                required: true,
-                serializedName: "storeId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.PointOfService
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PointOfService;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of all localized titles.
-   *
-   * Lists all localized titles.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetTitlesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getTitlesWithHttpOperationResponse(baseSiteId: string, options?: Models.CommerceWebservicesV2GetTitlesOptionalParams): Promise<msRest.HttpOperationResponse<Models.TitleList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/titles",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.TitleList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.TitleList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary  Registers a customer
-   *
-   * Registers a customer. There are two options for registering a customer. The first option
-   * requires the following parameters: login, password, firstName, lastName, titleCode. The second
-   * option converts a guest to a customer. In this case, the required parameters are: guid,
-   * password.
-   *
-   * @param {UserSignUp} user User's object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2RegisterUserPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async registerUserPrimWithHttpOperationResponse(user: Models.UserSignUp, baseSiteId: string, options?: Models.CommerceWebservicesV2RegisterUserPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.User>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          user,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "user",
-            mapper: {
-              ...Mappers.UserSignUp,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            201: {
-              bodyMapper: Mappers.User
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.User;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get customer profile
-   *
-   * Returns customer profile.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetUserOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getUserWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOptionalParams): Promise<msRest.HttpOperationResponse<Models.User>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.User
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.User;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Updates customer profile
-   *
-   * Updates customer profile. Attributes not provided in the request body will be defined again (set
-   * to null or default).
-   *
-   * @param {User} user User's object
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async putUserPrimWithHttpOperationResponse(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          user,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "user",
-            mapper: {
-              ...Mappers.User,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete customer profile
-   *
-   * Removes customer profile.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async deactivateUserWithHttpOperationResponse(baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Updates customer profile
-   *
-   * Updates customer profile. Only attributes provided in the request body will be changed.
-   *
-   * @param {User} user User's object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async updateUserPrimWithHttpOperationResponse(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          user,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "user",
-            mapper: {
-              ...Mappers.User,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get customer's addresses
-   *
-   * Returns customer's addresses.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetAddressesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getAddressesWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressesOptionalParams): Promise<msRest.HttpOperationResponse<Models.AddressList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.AddressList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.AddressList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Creates a new address.
-   *
-   * Creates a new address.
-   *
-   * @param {Address} address Address object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2CreateAddressPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async createAddressPrimWithHttpOperationResponse(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateAddressPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.Address>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          address,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "address",
-            mapper: {
-              ...Mappers.Address,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            201: {
-              bodyMapper: Mappers.Address
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Address;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Verifies address
-   *
-   * Verifies address.
-   *
-   * @param {Address} address Address object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2VerifyAddressPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async verifyAddressPrimWithHttpOperationResponse(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2VerifyAddressPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.AddressValidation>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          address,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses/verification",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "address",
-            mapper: {
-              ...Mappers.Address,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {
-              bodyMapper: Mappers.AddressValidation
-            },
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.AddressValidation;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get info about address
-   *
-   * Returns detailed information about address with a given id.
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetAddressOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getAddressWithHttpOperationResponse(addressId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressOptionalParams): Promise<msRest.HttpOperationResponse<Models.Address>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          addressId,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
-          urlParameters: [
-            {
-              parameterPath: "addressId",
-              mapper: {
-                required: true,
-                serializedName: "addressId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Address
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Address;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Updates the address
-   *
-   * Updates the address. Attributes not provided in the request will be defined again (set to null
-   * or default).
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {Address} address Address object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async putAddressPrimWithHttpOperationResponse(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          addressId,
-          address,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
-          urlParameters: [
-            {
-              parameterPath: "addressId",
-              mapper: {
-                required: true,
-                serializedName: "addressId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "address",
-            mapper: {
-              ...Mappers.Address,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete customer's address
-   *
-   * Removes customer's address.
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async deleteAddressWithHttpOperationResponse(addressId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          addressId,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
-          urlParameters: [
-            {
-              parameterPath: "addressId",
-              mapper: {
-                required: true,
-                serializedName: "addressId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Updates the address
-   *
-   * Updates the address. Only attributes provided in the request body will be changed.
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {Address} address Address object
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async patchAddressPrimWithHttpOperationResponse(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          addressId,
-          address,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
-          urlParameters: [
-            {
-              parameterPath: "addressId",
-              mapper: {
-                required: true,
-                serializedName: "addressId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "address",
-            mapper: {
-              ...Mappers.Address,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get all customer carts.
-   *
-   * Lists all customer carts.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetCartsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCartsWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetCartsOptionalParams): Promise<msRest.HttpOperationResponse<Models.CartList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-    let savedCartsOnly = (options && options.savedCartsOnly !== undefined) ? options.savedCartsOnly : false;
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let sort = (options && options.sort !== undefined) ? options.sort : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          savedCartsOnly,
-          currentPage,
-          pageSize,
-          sort,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "savedCartsOnly",
-              mapper: {
-                serializedName: "savedCartsOnly",
-                defaultValue: false,
-                type: {
-                  name: "Boolean"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "sort",
-              mapper: {
-                serializedName: "sort",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.CartList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CartList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Creates or restore a cart for a user.
-   *
-   * Creates a new cart or restores an anonymous cart as a user's cart (if an old Cart Id is given in
-   * the request).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2CreateCartOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async createCartWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateCartOptionalParams): Promise<msRest.HttpOperationResponse<Models.Cart>> {
-    let oldCartId = (options && options.oldCartId !== undefined) ? options.oldCartId : undefined;
-    let toMergeCartGuid = (options && options.toMergeCartGuid !== undefined) ? options.toMergeCartGuid : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          oldCartId,
-          toMergeCartGuid,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "oldCartId",
-              mapper: {
-                serializedName: "oldCartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "toMergeCartGuid",
-              mapper: {
-                serializedName: "toMergeCartGuid",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            201: {
-              bodyMapper: Mappers.Cart
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Cart;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a cart with a given identifier.
-   *
-   * Returns the cart with a given identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCartWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartOptionalParams): Promise<msRest.HttpOperationResponse<Models.Cart>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Cart
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Cart;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Deletes a cart with a given cart id.
-   *
-   * Deletes a cart with a given cart id.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async deleteCartWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Creates a delivery address for the cart.
-   *
-   * Creates an address and assigns it to the cart as the delivery address.
-   *
-   * @param {Address} address Request body parameter that contains details such as the customer's
-   * first name (firstName), the customer's last name (lastName), the customer's title (titleCode),
-   * the country (country.isocode), the first part of the address (line1), the second part of the
-   * address (line2), the town (town), the postal code (postalCode), and the region (region.isocode).
-   *
-   * The DTO is in XML or .json format.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async createAndSetAddressPrimWithHttpOperationResponse(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.Address>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          address,
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "address",
-            mapper: {
-              ...Mappers.Address,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            201: {
-              bodyMapper: Mappers.Address
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Address;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Sets a delivery address for the cart.
-   *
-   * Sets a delivery address for the cart. The address country must be placed among the delivery
-   * countries of the current base store.
-   *
-   * @param {string} addressId Address identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async setCartDeliveryAddressWithHttpOperationResponse(addressId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          addressId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "addressId",
-              mapper: {
-                required: true,
-                serializedName: "addressId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete the delivery address from the cart.
-   *
-   * Removes the delivery address from the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async removeCartDeliveryAddressWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Explicitly clones a cart.
-   *
-   * Explicitly clones a cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2CloneSaveCartOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async cloneSaveCartWithHttpOperationResponse(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CloneSaveCartOptionalParams): Promise<msRest.HttpOperationResponse<Models.SaveCartResult>> {
-    let name = (options && options.name !== undefined) ? options.name : undefined;
-    let description = (options && options.description !== undefined) ? options.description : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          cartId,
-          name,
-          description,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/clonesavedcart",
-          urlParameters: [
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "name",
-              mapper: {
-                serializedName: "name",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "description",
-              mapper: {
-                serializedName: "description",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.SaveCartResult
-            },
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.SaveCartResult;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get the delivery mode selected for the cart.
-   *
-   * Returns the delivery mode selected for the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartDeliveryModeOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCartDeliveryModeWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartDeliveryModeOptionalParams): Promise<msRest.HttpOperationResponse<Models.DeliveryMode>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.DeliveryMode
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.DeliveryMode;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Sets the delivery mode for a cart.
-   *
-   * Sets the delivery mode with a given identifier for the cart.
-   *
-   * @param {string} deliveryModeId Delivery mode identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async setCartDeliveryModeWithHttpOperationResponse(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          deliveryModeId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "deliveryModeId",
-              mapper: {
-                required: true,
-                serializedName: "deliveryModeId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete the delivery mode from the cart.
-   *
-   * Removes the delivery mode from the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async removeDeliveryModeWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get all delivery modes for the current store and delivery address.
-   *
-   * Returns all delivery modes supported for the current base store and cart delivery address. A
-   * delivery address must be set for the cart, otherwise an empty list will be returned.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getSupportedDeliveryModesWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams): Promise<msRest.HttpOperationResponse<Models.DeliveryModeList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymodes",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.DeliveryModeList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.DeliveryModeList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Assigns an email to the cart.
-   *
-   * Assigns an email to the cart. This step is required to make a guest checkout.
-   *
-   * @param {string} email Email of the guest user. It will be used during the checkout process.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async guestLoginWithHttpOperationResponse(email: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          email,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/email",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "email",
-              mapper: {
-                required: true,
-                serializedName: "email",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get cart entries.
-   *
-   * Returns cart entries.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartEntriesOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCartEntriesWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntriesOptionalParams): Promise<msRest.HttpOperationResponse<Models.OrderEntryList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.OrderEntryList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.OrderEntryList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Adds a product to the cart.
-   *
-   * Adds a product to the cart.
-   *
-   * @param {OrderEntry} entry Request body parameter that contains details such as the product code
-   * (product.code), the quantity of product (quantity), and the pickup store name
-   * (deliveryPointOfService.name).
-   *
-   * The DTO is in XML or .json format.
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2AddCartEntryPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async addCartEntryPrimWithHttpOperationResponse(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2AddCartEntryPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.CartModification>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          entry,
-          fields,
-          userId,
-          cartId,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries",
-          urlParameters: [
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "entry",
-            mapper: {
-              ...Mappers.OrderEntry,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {
-              bodyMapper: Mappers.CartModification
-            },
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CartModification;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get the details of the cart entries.
-   *
-   * Returns the details of the cart entries.
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartEntryOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCartEntryWithHttpOperationResponse(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntryOptionalParams): Promise<msRest.HttpOperationResponse<Models.OrderEntry>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          entryNumber,
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
-          urlParameters: [
-            {
-              parameterPath: "entryNumber",
-              mapper: {
-                required: true,
-                serializedName: "entryNumber",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.OrderEntry
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.OrderEntry;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Set quantity and store details of a cart entry.
-   *
-   * Updates the quantity of a single cart entry and the details of the store where the cart entry
-   * will be picked up. Attributes not provided in request will be defined again (set to null or
-   * default)
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {OrderEntry} entry Request body parameter that contains details such as the quantity of
-   * product (quantity), and the pickup store name (deliveryPointOfService.name)
-   *
-   * The DTO is in XML or .json format.
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2SetCartEntryPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async setCartEntryPrimWithHttpOperationResponse(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2SetCartEntryPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.CartModification>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          entryNumber,
-          entry,
-          fields,
-          userId,
-          cartId,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
-          urlParameters: [
-            {
-              parameterPath: "entryNumber",
-              mapper: {
-                required: true,
-                serializedName: "entryNumber",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "entry",
-            mapper: {
-              ...Mappers.OrderEntry,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {
-              bodyMapper: Mappers.CartModification
-            },
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CartModification;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Deletes cart entry.
-   *
-   * Deletes cart entry.
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async removeCartEntryWithHttpOperationResponse(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          entryNumber,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
-          urlParameters: [
-            {
-              parameterPath: "entryNumber",
-              mapper: {
-                required: true,
-                serializedName: "entryNumber",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Update quantity and store details of a cart entry.
-   *
-   * Updates the quantity of a single cart entry and the details of the store where the cart entry
-   * will be picked up.
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {OrderEntry} entry Request body parameter that contains details such as the quantity of
-   * product (quantity), and the pickup store name (deliveryPointOfService.name)
-   *
-   * The DTO is in XML or .json format.
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2UpdateCartEntryPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async updateCartEntryPrimWithHttpOperationResponse(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2UpdateCartEntryPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.CartModification>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          entryNumber,
-          entry,
-          fields,
-          userId,
-          cartId,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
-          urlParameters: [
-            {
-              parameterPath: "entryNumber",
-              mapper: {
-                required: true,
-                serializedName: "entryNumber",
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "entry",
-            mapper: {
-              ...Mappers.OrderEntry,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {
-              bodyMapper: Mappers.CartModification
-            },
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.CartModification;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Flag a cart for deletion.
-   *
-   * Flags a cart for deletion (the cart doesn't have corresponding save cart attributes anymore).
-   * The cart is not actually deleted from the database. But with the removal of the saved cart
-   * attributes, this cart will be taken care of by the cart removal job just like any other cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2FlagForDeletionOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async flagForDeletionWithHttpOperationResponse(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2FlagForDeletionOptionalParams): Promise<msRest.HttpOperationResponse<Models.SaveCartResult>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          cartId,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/flagForDeletion",
-          urlParameters: [
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.SaveCartResult
-            },
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.SaveCartResult;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Defines and assigns details of a new credit card payment to the cart.
-   *
-   * Defines the details of a new credit card, and assigns this payment option to the cart.
-   *
-   * @param {PaymentDetails} paymentDetails Request body parameter that contains details such as the
-   * name on the card (accountHolderName), the card number (cardNumber), the card type
-   * (cardType.code), the month of the expiry date (expiryMonth), the year of the expiry date
-   * (expiryYear), whether the payment details should be saved (saved), whether the payment details
-   * should be set as default (defaultPaymentInfo), and the billing address
-   * (billingAddress.firstName, billingAddress.lastName, billingAddress.titleCode,
-   * billingAddress.country.isocode, billingAddress.line1, billingAddress.line2, billingAddress.town,
-   * billingAddress.postalCode, billingAddress.region.isocode)
-   *
-   * The DTO is in XML or .json format.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async addPaymentDetailsPrimWithHttpOperationResponse(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams): Promise<msRest.HttpOperationResponse<Models.PaymentDetails>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          paymentDetails,
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/paymentdetails",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "paymentDetails",
-            mapper: {
-              ...Mappers.PaymentDetails,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            201: {
-              bodyMapper: Mappers.PaymentDetails
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PaymentDetails;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Sets credit card payment details for the cart.
-   *
-   * Sets credit card payment details for the cart.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async setPaymentDetailsWithHttpOperationResponse(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          paymentDetailsId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/paymentdetails",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "paymentDetailsId",
-              mapper: {
-                required: true,
-                serializedName: "paymentDetailsId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get information about promotions applied on cart.
-   *
-   * Returns information about the promotions applied on the cart. Requests pertaining to promotions
-   * have been developed for the previous version of promotions and vouchers, and as a result, some
-   * of them are currently not compatible with the new promotions engine.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetPromotionsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPromotionsWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetPromotionsOptionalParams): Promise<msRest.HttpOperationResponse<Models.PromotionResultList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.PromotionResultList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PromotionResultList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Enables promotions based on the promotionsId of the cart.
-   *
-   * Enables a promotion for the order based on the promotionId defined for the cart. Requests
-   * pertaining to promotions have been developed for the previous version of promotions and
-   * vouchers, and as a result, some of them are currently not compatible with the new promotions
-   * engine.
-   *
-   * @param {string} promotionId Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async applyPromotionWithHttpOperationResponse(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          promotionId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "promotionId",
-              mapper: {
-                required: true,
-                serializedName: "promotionId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get information about promotions applied on cart.
-   *
-   * Returns information about a promotion (with a specific promotionId), that has been applied on
-   * the cart. Requests pertaining to promotions have been developed for the previous version of
-   * promotions and vouchers, and as a result, some of them are currently not compatible with the new
-   * promotions engine.
-   *
-   * @param {string} promotionId Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetPromotionOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPromotionWithHttpOperationResponse(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetPromotionOptionalParams): Promise<msRest.HttpOperationResponse<Models.PromotionResultList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          promotionId,
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions/{promotionId}",
-          urlParameters: [
-            {
-              parameterPath: "promotionId",
-              mapper: {
-                required: true,
-                serializedName: "promotionId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.PromotionResultList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PromotionResultList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Disables the promotion based on the promotionsId of the cart.
-   *
-   * Disables the promotion for the order based on the promotionId defined for the cart. Requests
-   * pertaining to promotions have been developed for the previous version of promotions and
-   * vouchers, and as a result, some of them are currently not compatible with the new promotions
-   * engine.
-   *
-   * @param {string} promotionId Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async removePromotionWithHttpOperationResponse(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          promotionId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions/{promotionId}",
-          urlParameters: [
-            {
-              parameterPath: "promotionId",
-              mapper: {
-                required: true,
-                serializedName: "promotionId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Restore a saved cart.
-   *
-   * Restore a saved cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2RestoreSavedCartOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async restoreSavedCartWithHttpOperationResponse(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2RestoreSavedCartOptionalParams): Promise<msRest.HttpOperationResponse<Models.SaveCartResult>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          cartId,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/restoresavedcart",
-          urlParameters: [
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.SaveCartResult
-            },
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.SaveCartResult;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Explicitly saves a cart.
-   *
-   * Explicitly saves a cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2SaveCartOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async saveCartWithHttpOperationResponse(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2SaveCartOptionalParams): Promise<msRest.HttpOperationResponse<Models.SaveCartResult>> {
-    let saveCartName = (options && options.saveCartName !== undefined) ? options.saveCartName : undefined;
-    let saveCartDescription = (options && options.saveCartDescription !== undefined) ? options.saveCartDescription : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          cartId,
-          saveCartName,
-          saveCartDescription,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/save",
-          urlParameters: [
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "saveCartName",
-              mapper: {
-                serializedName: "saveCartName",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "saveCartDescription",
-              mapper: {
-                serializedName: "saveCartDescription",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.SaveCartResult
-            },
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.SaveCartResult;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a saved cart.
-   *
-   * Returns a saved cart for an authenticated user. The cart is identified using the "cartId"
-   * parameter.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetSavedCartOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getSavedCartWithHttpOperationResponse(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetSavedCartOptionalParams): Promise<msRest.HttpOperationResponse<Models.SaveCartResult>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          cartId,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/savedcart",
-          urlParameters: [
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.SaveCartResult
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.SaveCartResult;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a list of vouchers applied to the cart.
-   *
-   * Returns a list of vouchers applied to the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetVouchersOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getVouchersWithHttpOperationResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetVouchersOptionalParams): Promise<msRest.HttpOperationResponse<Models.VoucherList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/vouchers",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.VoucherList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.VoucherList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Applies a voucher based on the voucherId defined for the cart.
-   *
-   * Applies a voucher based on the voucherId defined for the cart.
-   *
-   * @param {string} voucherId Voucher identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async applyVoucherForCartWithHttpOperationResponse(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          voucherId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/vouchers",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "voucherId",
-              mapper: {
-                required: true,
-                serializedName: "voucherId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete a voucher defined for the current cart.
-   *
-   * Removes a voucher based on the voucherId defined for the current cart.
-   *
-   * @param {string} voucherId Voucher identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async releaseVoucherFromCartWithHttpOperationResponse(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          voucherId,
-          baseSiteId,
-          userId,
-          cartId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/vouchers/{voucherId}",
-          urlParameters: [
-            {
-              parameterPath: "voucherId",
-              mapper: {
-                required: true,
-                serializedName: "voucherId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get all customer groups of a customer.
-   *
-   * Returns all customer groups of a customer.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getAllCustomerGroupsForCustomerWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams): Promise<msRest.HttpOperationResponse<Models.UserGroupList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/customergroups",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.UserGroupList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.UserGroupList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Changes customer's login name.
-   *
-   * Changes a customer's login name. Requires the customer's current password.
-   *
-   * @param {string} newLogin Customer's new login name. Customer login is case insensitive.
-   *
-   * @param {string} password Customer's current password.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async changeLoginWithHttpOperationResponse(newLogin: string, password: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          newLogin,
-          password,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/login",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "newLogin",
-              mapper: {
-                required: true,
-                serializedName: "newLogin",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "password",
-              mapper: {
-                required: true,
-                serializedName: "password",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get order history for user
-   *
-   * Returns order history data for all orders placed by a specified user for a specified base store.
-   * The response can display the results across multiple pages, if required.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetOrdersForUserOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getOrdersForUserWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetOrdersForUserOptionalParams): Promise<msRest.HttpOperationResponse<Models.OrderHistoryList>> {
-    let statuses = (options && options.statuses !== undefined) ? options.statuses : undefined;
-    let currentPage = (options && options.currentPage !== undefined) ? options.currentPage : 0;
-    let pageSize = (options && options.pageSize !== undefined) ? options.pageSize : 20;
-    let sort = (options && options.sort !== undefined) ? options.sort : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          statuses,
-          currentPage,
-          pageSize,
-          sort,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/orders",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "statuses",
-              mapper: {
-                serializedName: "statuses",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "currentPage",
-              mapper: {
-                serializedName: "currentPage",
-                defaultValue: 0,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "pageSize",
-              mapper: {
-                serializedName: "pageSize",
-                defaultValue: 20,
-                type: {
-                  name: "Number"
-                }
-              }
-            },
-            {
-              parameterPath: "sort",
-              mapper: {
-                serializedName: "sort",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.OrderHistoryList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.OrderHistoryList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get total number of orders
-   *
-   * In the response header, the "x-total-count" indicates the total number of orders placed by a
-   * specified user for a specified base store.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetCountOrdersForUserOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getCountOrdersForUserWithHttpOperationResponse(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetCountOrdersForUserOptionalParams): Promise<msRest.HttpOperationResponse<void>> {
-    let statuses = (options && options.statuses !== undefined) ? options.statuses : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          statuses,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "HEAD",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/orders",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "statuses",
-              mapper: {
-                serializedName: "statuses",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Post a order
-   *
-   * Authorizes the cart and places the order. The response contains the new order data.
-   *
-   * @param {string} cartId Cart code for logged in user, cart GUID for guest checkout
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2PlaceOrderOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async placeOrderWithHttpOperationResponse(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2PlaceOrderOptionalParams): Promise<msRest.HttpOperationResponse<Models.Order>> {
-    let securityCode = (options && options.securityCode !== undefined) ? options.securityCode : undefined;
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          cartId,
-          securityCode,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "POST",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/orders",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "cartId",
-              mapper: {
-                required: true,
-                serializedName: "cartId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "securityCode",
-              mapper: {
-                serializedName: "securityCode",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            201: {
-              bodyMapper: Mappers.Order
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 201) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Order;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a order
-   *
-   * Returns specific order details based on a specific order code. The response contains detailed
-   * order information.
-   *
-   * @param {string} code Order GUID (Globally Unique Identifier) or order CODE
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetOrderForUserByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getOrderForUserByCodeWithHttpOperationResponse(code: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetOrderForUserByCodeOptionalParams): Promise<msRest.HttpOperationResponse<Models.Order>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          code,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/orders/{code}",
-          urlParameters: [
-            {
-              parameterPath: "code",
-              mapper: {
-                required: true,
-                serializedName: "code",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Order
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Order;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Changes customer's password
-   *
-   * Changes customer's password.
-   *
-   * @param {string} newParameter New password.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2ChangePasswordOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async changePasswordWithHttpOperationResponse(newParameter: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2ChangePasswordOptionalParams): Promise<msRest.HttpOperationResponse<void>> {
-    let old = (options && options.old !== undefined) ? options.old : undefined;
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          old,
-          newParameter,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/password",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "old",
-              mapper: {
-                serializedName: "old",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "newParameter",
-              mapper: {
-                required: true,
-                serializedName: "new",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            201: {},
-            202: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get customer's credit card payment details list.
-   *
-   * Return customer's credit card payment details list.
-   *
-   * @param {boolean} saved Type of payment details.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetPaymentInfosOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPaymentInfosWithHttpOperationResponse(saved: boolean, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentInfosOptionalParams): Promise<msRest.HttpOperationResponse<Models.PaymentDetailsList>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          saved,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails",
-          urlParameters: [
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "saved",
-              mapper: {
-                required: true,
-                serializedName: "saved",
-                defaultValue: false,
-                type: {
-                  name: "Boolean"
-                }
-              }
-            },
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.PaymentDetailsList
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PaymentDetailsList;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get customer's credit card payment details.
-   *
-   * Returns a customer's credit card payment details for the specified paymentDetailsId.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetPaymentDetailsOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getPaymentDetailsWithHttpOperationResponse(paymentDetailsId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentDetailsOptionalParams): Promise<msRest.HttpOperationResponse<Models.PaymentDetails>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'DEFAULT';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          paymentDetailsId,
-          fields,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
-          urlParameters: [
-            {
-              parameterPath: "paymentDetailsId",
-              mapper: {
-                required: true,
-                serializedName: "paymentDetailsId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'DEFAULT',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.PaymentDetails
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.PaymentDetails;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Updates existing customer's credit card payment info.
-   *
-   * Updates existing customer's credit card payment info based on the payment info ID. Attributes
-   * not given in request will be defined again (set to null or default).
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {PaymentDetails} paymentDetails Payment details object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async putPaymentInfoPrimWithHttpOperationResponse(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          paymentDetailsId,
-          paymentDetails,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PUT",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
-          urlParameters: [
-            {
-              parameterPath: "paymentDetailsId",
-              mapper: {
-                required: true,
-                serializedName: "paymentDetailsId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "paymentDetails",
-            mapper: {
-              ...Mappers.PaymentDetails,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            201: {},
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Delete customer's credit card payment details.
-   *
-   * Removes a customer's credit card payment details based on a specified paymentDetailsId.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async deletePaymentInfoWithHttpOperationResponse(paymentDetailsId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          paymentDetailsId,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "DELETE",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
-          urlParameters: [
-            {
-              parameterPath: "paymentDetailsId",
-              mapper: {
-                required: true,
-                serializedName: "paymentDetailsId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Updates existing customer's credit card payment details.
-   *
-   * Updates an existing customer's credit card payment details based on the specified
-   * paymentDetailsId. Only those attributes provided in the request will be updated.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {PaymentDetails} paymentDetails Payment details object
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async updatePaymentInfoPrimWithHttpOperationResponse(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.HttpOperationResponse<void>> {
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          paymentDetailsId,
-          paymentDetails,
-          baseSiteId,
-          userId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "PATCH",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
-          urlParameters: [
-            {
-              parameterPath: "paymentDetailsId",
-              mapper: {
-                required: true,
-                serializedName: "paymentDetailsId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "userId",
-              mapper: {
-                required: true,
-                serializedName: "userId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          requestBody: {
-            parameterPath: "paymentDetails",
-            mapper: {
-              ...Mappers.PaymentDetails,
-              required: true
-            }
-          },
-          contentType: "application/json; charset=utf-8",
-          responses: {
-            200: {},
-            204: {},
-            401: {},
-            403: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-  // methods on the client.
-
-  /**
-   * @summary Get a voucher based on code
-   *
-   * Returns details of a single voucher that is specified by its voucher identification code.
-   *
-   * @param {string} code Voucher identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetVoucherByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @returns {Promise} A promise is returned
-   *
-   * @resolve {HttpOperationResponse} The deserialized result object.
-   *
-   * @reject {Error|ServiceError} The error object.
-   */
-  async getVoucherByCodeWithHttpOperationResponse(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetVoucherByCodeOptionalParams): Promise<msRest.HttpOperationResponse<Models.Voucher>> {
-    let fields = (options && options.fields !== undefined) ? options.fields : 'BASIC';
-
-    // Create HTTP transport objects
-    const httpRequest = new WebResource();
-    let operationRes: msRest.HttpOperationResponse;
-    try {
-      const operationArguments: msRest.OperationArguments = msRest.createOperationArguments(
-        {
-          code,
-          fields,
-          baseSiteId
-        },
-        options);
-      operationRes = await this.sendOperationRequest(
-        httpRequest,
-        operationArguments,
-        {
-          httpMethod: "GET",
-          baseUrl: this.baseUri,
-          path: "rest/v2/{baseSiteId}/vouchers/{code}",
-          urlParameters: [
-            {
-              parameterPath: "code",
-              mapper: {
-                required: true,
-                serializedName: "code",
-                type: {
-                  name: "String"
-                }
-              }
-            },
-            {
-              parameterPath: "baseSiteId",
-              mapper: {
-                required: true,
-                serializedName: "baseSiteId",
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          queryParameters: [
-            {
-              parameterPath: "fields",
-              mapper: {
-                serializedName: "fields",
-                defaultValue: 'BASIC',
-                type: {
-                  name: "String"
-                }
-              }
-            }
-          ],
-          responses: {
-            200: {
-              bodyMapper: Mappers.Voucher
-            },
-            401: {},
-            403: {},
-            404: {},
-            default: {}
-          },
-          serializer: this.serializer
-        });
-      // Deserialize Response
-      let statusCode = operationRes.status;
-      if (statusCode === 200) {
-        let parsedResponse = operationRes.parsedBody as { [key: string]: any };
-        try {
-          if (parsedResponse != undefined) {
-            const resultMapper = Mappers.Voucher;
-            operationRes.parsedBody = this.serializer.deserialize(resultMapper, parsedResponse, 'operationRes.parsedBody');
-          }
-        } catch (error) {
-          let deserializationError = new msRest.RestError(`Error ${error} occurred in deserializing the responseBody - ${operationRes.bodyAsText}`);
-          deserializationError.request = msRest.stripRequest(httpRequest);
-          deserializationError.response = msRest.stripResponse(operationRes);
-          return Promise.reject(deserializationError);
-        }
-      }
-    } catch (err) {
-      return Promise.reject(err);
-    }
-    return Promise.resolve(operationRes);
-  }
-
-  /**
    * @summary Get a list of supported payment card types.
-   *
-   * Lists supported payment card types.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCardTypesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CardTypeList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CardTypeList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCardTypesResponse>
    */
-  getCardTypes(baseSiteId: string): Promise<Models.CardTypeList>;
-  getCardTypes(baseSiteId: string, options: Models.CommerceWebservicesV2GetCardTypesOptionalParams): Promise<Models.CardTypeList>;
+  getCardTypes(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCardTypesOptionalParams): Promise<Models.GetCardTypesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getCardTypes(baseSiteId: string, callback: msRest.ServiceCallback<Models.CardTypeList>): void;
-  getCardTypes(baseSiteId: string, options: Models.CommerceWebservicesV2GetCardTypesOptionalParams, callback: msRest.ServiceCallback<Models.CardTypeList>): void;
-  getCardTypes(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCardTypesOptionalParams, callback?: msRest.ServiceCallback<Models.CardTypeList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CardTypeList>;
-    if (!callback) {
-      return this.getCardTypesWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CardTypeList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCardTypesWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CardTypeList;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
   /**
-   * @summary Get a list of catalogs
-   *
-   * Returns all catalogs with versions defined for the base store.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCatalogsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CatalogList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CatalogList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
    */
-  getCatalogs(baseSiteId: string): Promise<Models.CatalogList>;
-  getCatalogs(baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogsOptionalParams): Promise<Models.CatalogList>;
-  getCatalogs(baseSiteId: string, callback: msRest.ServiceCallback<Models.CatalogList>): void;
-  getCatalogs(baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogsOptionalParams, callback: msRest.ServiceCallback<Models.CatalogList>): void;
-  getCatalogs(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogsOptionalParams, callback?: msRest.ServiceCallback<Models.CatalogList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CatalogList>;
-    if (!callback) {
-      return this.getCatalogsWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CatalogList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCatalogsWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CatalogList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCardTypes(baseSiteId: string, options: Models.CommerceWebservicesV2GetCardTypesOptionalParams, callback: msRest.ServiceCallback<Models.CardTypeList>): void;
+  getCardTypes(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCardTypesOptionalParams | msRest.ServiceCallback<Models.CardTypeList>, callback?: msRest.ServiceCallback<Models.CardTypeList>): Promise<Models.GetCardTypesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getCardTypesOperationSpec,
+      callback) as Promise<Models.GetCardTypesResponse>;
   }
 
   /**
-   * @summary Get a catalog
-   *
+   * Returns all catalogs with versions defined for the base store.
+   * @summary Get a list of catalogs
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCatalogsResponse>
+   */
+  getCatalogs(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogsOptionalParams): Promise<Models.GetCatalogsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getCatalogs(baseSiteId: string, callback: msRest.ServiceCallback<Models.CatalogList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCatalogs(baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogsOptionalParams, callback: msRest.ServiceCallback<Models.CatalogList>): void;
+  getCatalogs(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogsOptionalParams | msRest.ServiceCallback<Models.CatalogList>, callback?: msRest.ServiceCallback<Models.CatalogList>): Promise<Models.GetCatalogsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getCatalogsOperationSpec,
+      callback) as Promise<Models.GetCatalogsResponse>;
+  }
+
+  /**
    * Returns information about a catalog based on its ID, along with the versions defined for the
    * current base store.
-   *
-   * @param {string} catalogId Catalog identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCatalogOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Catalog} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Catalog} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a catalog
+   * @param catalogId Catalog identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCatalogResponse>
    */
-  getCatalog(catalogId: string, baseSiteId: string): Promise<Models.Catalog>;
-  getCatalog(catalogId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogOptionalParams): Promise<Models.Catalog>;
+  getCatalog(catalogId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogOptionalParams): Promise<Models.GetCatalogResponse>;
+  /**
+   * @param catalogId Catalog identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getCatalog(catalogId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Catalog>): void;
-  getCatalog(catalogId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogOptionalParams, callback: msRest.ServiceCallback<Models.Catalog>): void;
-  getCatalog(catalogId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogOptionalParams, callback?: msRest.ServiceCallback<Models.Catalog>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Catalog>;
-    if (!callback) {
-      return this.getCatalogWithHttpOperationResponse(catalogId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Catalog);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCatalogWithHttpOperationResponse(catalogId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Catalog;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
   /**
-   * @summary Get information about catalog version
-   *
-   * Returns information about the catalog version that exists for the current base store.
-   *
-   * @param {string} catalogId Catalog identifier
-   *
-   * @param {string} catalogVersionId Catalog version identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCatalogVersionOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CatalogVersion} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CatalogVersion} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param catalogId Catalog identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
    */
-  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string): Promise<Models.CatalogVersion>;
-  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams): Promise<Models.CatalogVersion>;
-  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CatalogVersion>): void;
-  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams, callback: msRest.ServiceCallback<Models.CatalogVersion>): void;
-  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams, callback?: msRest.ServiceCallback<Models.CatalogVersion>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CatalogVersion>;
-    if (!callback) {
-      return this.getCatalogVersionWithHttpOperationResponse(catalogId, catalogVersionId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CatalogVersion);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCatalogVersionWithHttpOperationResponse(catalogId, catalogVersionId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CatalogVersion;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCatalog(catalogId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogOptionalParams, callback: msRest.ServiceCallback<Models.Catalog>): void;
+  getCatalog(catalogId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogOptionalParams | msRest.ServiceCallback<Models.Catalog>, callback?: msRest.ServiceCallback<Models.Catalog>): Promise<Models.GetCatalogResponse> {
+    return this.sendOperationRequest(
+      {
+        catalogId,
+        baseSiteId,
+        options
+      },
+      getCatalogOperationSpec,
+      callback) as Promise<Models.GetCatalogResponse>;
   }
 
   /**
-   * @summary Get information about catagory in a catalog version
-   *
+   * Returns information about the catalog version that exists for the current base store.
+   * @summary Get information about catalog version
+   * @param catalogId Catalog identifier
+   * @param catalogVersionId Catalog version identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCatalogVersionResponse>
+   */
+  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams): Promise<Models.GetCatalogVersionResponse>;
+  /**
+   * @param catalogId Catalog identifier
+   * @param catalogVersionId Catalog version identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CatalogVersion>): void;
+  /**
+   * @param catalogId Catalog identifier
+   * @param catalogVersionId Catalog version identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams, callback: msRest.ServiceCallback<Models.CatalogVersion>): void;
+  getCatalogVersion(catalogId: string, catalogVersionId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCatalogVersionOptionalParams | msRest.ServiceCallback<Models.CatalogVersion>, callback?: msRest.ServiceCallback<Models.CatalogVersion>): Promise<Models.GetCatalogVersionResponse> {
+    return this.sendOperationRequest(
+      {
+        catalogId,
+        catalogVersionId,
+        baseSiteId,
+        options
+      },
+      getCatalogVersionOperationSpec,
+      callback) as Promise<Models.GetCatalogVersionResponse>;
+  }
+
+  /**
    * Returns information about a specified category that exists in a catalog version available for
    * the current base store.
-   *
-   * @param {string} catalogId Catalog identifier
-   *
-   * @param {string} catalogVersionId Catalog version identifier
-   *
-   * @param {string} categoryId Category identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCategoriesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CategoryHierarchy} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CategoryHierarchy} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get information about catagory in a catalog version
+   * @param catalogId Catalog identifier
+   * @param catalogVersionId Catalog version identifier
+   * @param categoryId Category identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCategoriesResponse>
    */
-  getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string): Promise<Models.CategoryHierarchy>;
-  getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCategoriesOptionalParams): Promise<Models.CategoryHierarchy>;
+  getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCategoriesOptionalParams): Promise<Models.GetCategoriesResponse>;
+  /**
+   * @param catalogId Catalog identifier
+   * @param catalogVersionId Catalog version identifier
+   * @param categoryId Category identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CategoryHierarchy>): void;
+  /**
+   * @param catalogId Catalog identifier
+   * @param catalogVersionId Catalog version identifier
+   * @param categoryId Category identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCategoriesOptionalParams, callback: msRest.ServiceCallback<Models.CategoryHierarchy>): void;
-  getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCategoriesOptionalParams, callback?: msRest.ServiceCallback<Models.CategoryHierarchy>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CategoryHierarchy>;
-    if (!callback) {
-      return this.getCategoriesWithHttpOperationResponse(catalogId, catalogVersionId, categoryId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CategoryHierarchy);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCategoriesWithHttpOperationResponse(catalogId, catalogVersionId, categoryId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CategoryHierarchy;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCategories(catalogId: string, catalogVersionId: string, categoryId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCategoriesOptionalParams | msRest.ServiceCallback<Models.CategoryHierarchy>, callback?: msRest.ServiceCallback<Models.CategoryHierarchy>): Promise<Models.GetCategoriesResponse> {
+    return this.sendOperationRequest(
+      {
+        catalogId,
+        catalogVersionId,
+        categoryId,
+        baseSiteId,
+        options
+      },
+      getCategoriesOperationSpec,
+      callback) as Promise<Models.GetCategoriesResponse>;
   }
 
   /**
-   * @summary Get components' data by id given in body
-   *
    * Given a list of component identifiers in body, return cms component data.
-   *
-   * @param {ComponentIDList} componentIdList List of Component identifiers
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetComponentByIdListOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.ListAdaptedComponents} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.ListAdaptedComponents} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get components' data by id given in body
+   * @param componentIdList List of Component identifiers
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetComponentByIdListUsingPOSTResponse>
    */
-  getComponentByIdList(componentIdList: Models.ComponentIDList, baseSiteId: string): Promise<Models.ListAdaptedComponents>;
-  getComponentByIdList(componentIdList: Models.ComponentIDList, baseSiteId: string, options: Models.CommerceWebservicesV2GetComponentByIdListOptionalParams): Promise<Models.ListAdaptedComponents>;
-  getComponentByIdList(componentIdList: Models.ComponentIDList, baseSiteId: string, callback: msRest.ServiceCallback<Models.ListAdaptedComponents>): void;
-  getComponentByIdList(componentIdList: Models.ComponentIDList, baseSiteId: string, options: Models.CommerceWebservicesV2GetComponentByIdListOptionalParams, callback: msRest.ServiceCallback<Models.ListAdaptedComponents>): void;
-  getComponentByIdList(componentIdList: Models.ComponentIDList, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdListOptionalParams, callback?: msRest.ServiceCallback<Models.ListAdaptedComponents>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.ListAdaptedComponents>;
-    if (!callback) {
-      return this.getComponentByIdListWithHttpOperationResponse(componentIdList, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.ListAdaptedComponents);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getComponentByIdListWithHttpOperationResponse(componentIdList, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.ListAdaptedComponents;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getComponentByIdListUsingPOST(componentIdList: Models.ComponentIDList, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdListUsingPOSTOptionalParams): Promise<Models.GetComponentByIdListUsingPOSTResponse>;
+  /**
+   * @param componentIdList List of Component identifiers
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getComponentByIdListUsingPOST(componentIdList: Models.ComponentIDList, baseSiteId: string, callback: msRest.ServiceCallback<Models.ListAdaptedComponents>): void;
+  /**
+   * @param componentIdList List of Component identifiers
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getComponentByIdListUsingPOST(componentIdList: Models.ComponentIDList, baseSiteId: string, options: Models.CommerceWebservicesV2GetComponentByIdListUsingPOSTOptionalParams, callback: msRest.ServiceCallback<Models.ListAdaptedComponents>): void;
+  getComponentByIdListUsingPOST(componentIdList: Models.ComponentIDList, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdListUsingPOSTOptionalParams | msRest.ServiceCallback<Models.ListAdaptedComponents>, callback?: msRest.ServiceCallback<Models.ListAdaptedComponents>): Promise<Models.GetComponentByIdListUsingPOSTResponse> {
+    return this.sendOperationRequest(
+      {
+        componentIdList,
+        baseSiteId,
+        options
+      },
+      getComponentByIdListUsingPOSTOperationSpec,
+      callback) as Promise<Models.GetComponentByIdListUsingPOSTResponse>;
   }
 
   /**
-   * @summary Get component data
-   *
    * Given a component identifier, return cms component data.
-   *
-   * @param {string} componentId Component identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetComponentByIdOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {any} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get component data
+   * @param componentId Component identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetComponentByIdUsingGETResponse>
    */
-  getComponentById(componentId: string, baseSiteId: string): Promise<any>;
-  getComponentById(componentId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetComponentByIdOptionalParams): Promise<any>;
-  getComponentById(componentId: string, baseSiteId: string, callback: msRest.ServiceCallback<any>): void;
-  getComponentById(componentId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetComponentByIdOptionalParams, callback: msRest.ServiceCallback<any>): void;
-  getComponentById(componentId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdOptionalParams, callback?: msRest.ServiceCallback<any>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<any>;
-    if (!callback) {
-      return this.getComponentByIdWithHttpOperationResponse(componentId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as any);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getComponentByIdWithHttpOperationResponse(componentId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as any;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getComponentByIdUsingGET(componentId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdUsingGETOptionalParams): Promise<Models.GetComponentByIdUsingGETResponse>;
+  /**
+   * @param componentId Component identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getComponentByIdUsingGET(componentId: string, baseSiteId: string, callback: msRest.ServiceCallback<any>): void;
+  /**
+   * @param componentId Component identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getComponentByIdUsingGET(componentId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetComponentByIdUsingGETOptionalParams, callback: msRest.ServiceCallback<any>): void;
+  getComponentByIdUsingGET(componentId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetComponentByIdUsingGETOptionalParams | msRest.ServiceCallback<any>, callback?: msRest.ServiceCallback<any>): Promise<Models.GetComponentByIdUsingGETResponse> {
+    return this.sendOperationRequest(
+      {
+        componentId,
+        baseSiteId,
+        options
+      },
+      getComponentByIdUsingGETOperationSpec,
+      callback) as Promise<Models.GetComponentByIdUsingGETResponse>;
   }
 
   /**
-   * @summary Get page data with list of cms content slots
-   *
    * Given a page identifier, return the page data with a list of cms content slots, each of which
    * contains a list of cms component data.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetPageDataOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CMSPage} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CMSPage} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get page data with list of cms content slots
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetPageDataUsingGETResponse>
    */
-  getPageData(baseSiteId: string): Promise<Models.CMSPage>;
-  getPageData(baseSiteId: string, options: Models.CommerceWebservicesV2GetPageDataOptionalParams): Promise<Models.CMSPage>;
-  getPageData(baseSiteId: string, callback: msRest.ServiceCallback<Models.CMSPage>): void;
-  getPageData(baseSiteId: string, options: Models.CommerceWebservicesV2GetPageDataOptionalParams, callback: msRest.ServiceCallback<Models.CMSPage>): void;
-  getPageData(baseSiteId: string, options?: Models.CommerceWebservicesV2GetPageDataOptionalParams, callback?: msRest.ServiceCallback<Models.CMSPage>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CMSPage>;
-    if (!callback) {
-      return this.getPageDataWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CMSPage);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPageDataWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CMSPage;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getPageDataUsingGET(baseSiteId: string, options?: Models.CommerceWebservicesV2GetPageDataUsingGETOptionalParams): Promise<Models.GetPageDataUsingGETResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getPageDataUsingGET(baseSiteId: string, callback: msRest.ServiceCallback<Models.CMSPage>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getPageDataUsingGET(baseSiteId: string, options: Models.CommerceWebservicesV2GetPageDataUsingGETOptionalParams, callback: msRest.ServiceCallback<Models.CMSPage>): void;
+  getPageDataUsingGET(baseSiteId: string, options?: Models.CommerceWebservicesV2GetPageDataUsingGETOptionalParams | msRest.ServiceCallback<Models.CMSPage>, callback?: msRest.ServiceCallback<Models.CMSPage>): Promise<Models.GetPageDataUsingGETResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getPageDataUsingGETOperationSpec,
+      callback) as Promise<Models.GetPageDataUsingGETResponse>;
   }
 
   /**
-   * @summary Get a list of available currencies.
-   *
+   * If the value of type equals to shipping, then return shipping countries. If the value of type
+   * equals to billing, then return billing countries. If the value of type is not given, return all
+   * countries. The list is sorted alphabetically.
+   * @summary Get a list of countries.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCountriesResponse>
+   */
+  getCountries(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCountriesOptionalParams): Promise<Models.GetCountriesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getCountries(baseSiteId: string, callback: msRest.ServiceCallback<Models.CountryList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCountries(baseSiteId: string, options: Models.CommerceWebservicesV2GetCountriesOptionalParams, callback: msRest.ServiceCallback<Models.CountryList>): void;
+  getCountries(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCountriesOptionalParams | msRest.ServiceCallback<Models.CountryList>, callback?: msRest.ServiceCallback<Models.CountryList>): Promise<Models.GetCountriesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getCountriesOperationSpec,
+      callback) as Promise<Models.GetCountriesResponse>;
+  }
+
+  /**
+   * Lists all regions.
+   * @summary Fetch the list of regions for the provided country.
+   * @param countyIsoCode An ISO code for a country
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCountryRegionsResponse>
+   */
+  getCountryRegions(countyIsoCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCountryRegionsOptionalParams): Promise<Models.GetCountryRegionsResponse>;
+  /**
+   * @param countyIsoCode An ISO code for a country
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getCountryRegions(countyIsoCode: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.RegionList>): void;
+  /**
+   * @param countyIsoCode An ISO code for a country
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCountryRegions(countyIsoCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCountryRegionsOptionalParams, callback: msRest.ServiceCallback<Models.RegionList>): void;
+  getCountryRegions(countyIsoCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCountryRegionsOptionalParams | msRest.ServiceCallback<Models.RegionList>, callback?: msRest.ServiceCallback<Models.RegionList>): Promise<Models.GetCountryRegionsResponse> {
+    return this.sendOperationRequest(
+      {
+        countyIsoCode,
+        baseSiteId,
+        options
+      },
+      getCountryRegionsOperationSpec,
+      callback) as Promise<Models.GetCountryRegionsResponse>;
+  }
+
+  /**
    * Lists all available currencies (all usable currencies for the current store). If the list of
    * currencies for a base store is empty, a list of all currencies available in the system is
    * returned.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCurrenciesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CurrencyList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CurrencyList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of available currencies.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCurrenciesResponse>
    */
-  getCurrencies(baseSiteId: string): Promise<Models.CurrencyList>;
-  getCurrencies(baseSiteId: string, options: Models.CommerceWebservicesV2GetCurrenciesOptionalParams): Promise<Models.CurrencyList>;
+  getCurrencies(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCurrenciesOptionalParams): Promise<Models.GetCurrenciesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getCurrencies(baseSiteId: string, callback: msRest.ServiceCallback<Models.CurrencyList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCurrencies(baseSiteId: string, options: Models.CommerceWebservicesV2GetCurrenciesOptionalParams, callback: msRest.ServiceCallback<Models.CurrencyList>): void;
-  getCurrencies(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCurrenciesOptionalParams, callback?: msRest.ServiceCallback<Models.CurrencyList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CurrencyList>;
-    if (!callback) {
-      return this.getCurrenciesWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CurrencyList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCurrenciesWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CurrencyList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCurrencies(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCurrenciesOptionalParams | msRest.ServiceCallback<Models.CurrencyList>, callback?: msRest.ServiceCallback<Models.CurrencyList>): Promise<Models.GetCurrenciesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getCurrenciesOperationSpec,
+      callback) as Promise<Models.GetCurrenciesResponse>;
   }
 
   /**
-   * @summary Get all subgroups of a customergroup.
-   *
    * Returns all customer groups that are direct subgroups of a customergroup.
    *
    * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
    * to the “customermanagergroup”.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetAllCustomerGroupsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.UserGroupList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.UserGroupList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get all subgroups of a customergroup.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCustomerGroupsResponse>
    */
-  getAllCustomerGroups(baseSiteId: string): Promise<Models.UserGroupList>;
-  getAllCustomerGroups(baseSiteId: string, options: Models.CommerceWebservicesV2GetAllCustomerGroupsOptionalParams): Promise<Models.UserGroupList>;
-  getAllCustomerGroups(baseSiteId: string, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
-  getAllCustomerGroups(baseSiteId: string, options: Models.CommerceWebservicesV2GetAllCustomerGroupsOptionalParams, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
-  getAllCustomerGroups(baseSiteId: string, options?: Models.CommerceWebservicesV2GetAllCustomerGroupsOptionalParams, callback?: msRest.ServiceCallback<Models.UserGroupList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.UserGroupList>;
-    if (!callback) {
-      return this.getAllCustomerGroupsWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.UserGroupList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getAllCustomerGroupsWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.UserGroupList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCustomerGroups(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCustomerGroupsOptionalParams): Promise<Models.GetCustomerGroupsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getCustomerGroups(baseSiteId: string, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCustomerGroups(baseSiteId: string, options: Models.CommerceWebservicesV2GetCustomerGroupsOptionalParams, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
+  getCustomerGroups(baseSiteId: string, options?: Models.CommerceWebservicesV2GetCustomerGroupsOptionalParams | msRest.ServiceCallback<Models.UserGroupList>, callback?: msRest.ServiceCallback<Models.UserGroupList>): Promise<Models.GetCustomerGroupsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getCustomerGroupsOperationSpec,
+      callback) as Promise<Models.GetCustomerGroupsResponse>;
   }
 
   /**
-   * @summary Creates a new customer group.
-   *
    * Creates a new customer group that is a direct subgroup of a customergroup.
    *
    * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
    * to the “customermanagergroup”.
-   *
-   * @param {UserGroup} userGroup User group object with id and name.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Creates a new customer group.
+   * @param userGroup User group object with id and name.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  createNewCustomerGroupPrim(userGroup: Models.UserGroup, baseSiteId: string): Promise<void>;
-  createNewCustomerGroupPrim(userGroup: Models.UserGroup, baseSiteId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  createNewCustomerGroupPrim(userGroup: Models.UserGroup, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  createNewCustomerGroupPrim(userGroup: Models.UserGroup, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  createNewCustomerGroupPrim(userGroup: Models.UserGroup, baseSiteId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.createNewCustomerGroupPrimWithHttpOperationResponse(userGroup, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.createNewCustomerGroupPrimWithHttpOperationResponse(userGroup, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createCustomerGroup(userGroup: Models.UserGroup, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param userGroup User group object with id and name.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  createCustomerGroup(userGroup: Models.UserGroup, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param userGroup User group object with id and name.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createCustomerGroup(userGroup: Models.UserGroup, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  createCustomerGroup(userGroup: Models.UserGroup, baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        userGroup,
+        baseSiteId,
+        options
+      },
+      createCustomerGroupOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a specific customer group.
-   *
    * Returns a customer group with a specific groupId.
    *
    * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
    * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetCustomerGroupOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.UserGroup} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.UserGroup} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a specific customer group.
+   * @param groupId Group identifier.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCustomerGroupResponse>
    */
-  getCustomerGroup(groupId: string, baseSiteId: string): Promise<Models.UserGroup>;
-  getCustomerGroup(groupId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCustomerGroupOptionalParams): Promise<Models.UserGroup>;
+  getCustomerGroup(groupId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCustomerGroupOptionalParams): Promise<Models.GetCustomerGroupResponse>;
+  /**
+   * @param groupId Group identifier.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getCustomerGroup(groupId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.UserGroup>): void;
+  /**
+   * @param groupId Group identifier.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCustomerGroup(groupId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetCustomerGroupOptionalParams, callback: msRest.ServiceCallback<Models.UserGroup>): void;
-  getCustomerGroup(groupId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCustomerGroupOptionalParams, callback?: msRest.ServiceCallback<Models.UserGroup>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.UserGroup>;
-    if (!callback) {
-      return this.getCustomerGroupWithHttpOperationResponse(groupId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.UserGroup);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCustomerGroupWithHttpOperationResponse(groupId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.UserGroup;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCustomerGroup(groupId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetCustomerGroupOptionalParams | msRest.ServiceCallback<Models.UserGroup>, callback?: msRest.ServiceCallback<Models.UserGroup>): Promise<Models.GetCustomerGroupResponse> {
+    return this.sendOperationRequest(
+      {
+        groupId,
+        baseSiteId,
+        options
+      },
+      getCustomerGroupOperationSpec,
+      callback) as Promise<Models.GetCustomerGroupResponse>;
   }
 
   /**
-   * @summary Sets members for a user group.
-   *
    * Sets members for a user group. The list of existing members is overwritten with a new one.
    *
    * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
    * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {MemberList} members List of users to set for customer group.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Sets members for a user group.
+   * @param groupId Group identifier.
+   * @param members List of users to set for customer group.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  setUserListForCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string): Promise<void>;
-  setUserListForCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  setUserListForCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  setUserListForCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  setUserListForCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.setUserListForCustomerGroupPrimWithHttpOperationResponse(groupId, members, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.setUserListForCustomerGroupPrimWithHttpOperationResponse(groupId, members, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceUsersForCustomerGroup(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param groupId Group identifier.
+   * @param members List of users to set for customer group.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  replaceUsersForCustomerGroup(groupId: string, members: Models.MemberList, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param groupId Group identifier.
+   * @param members List of users to set for customer group.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceUsersForCustomerGroup(groupId: string, members: Models.MemberList, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceUsersForCustomerGroup(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        groupId,
+        members,
+        baseSiteId,
+        options
+      },
+      replaceUsersForCustomerGroupOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Assigns user(s) to a customer group.
-   *
    * Assigns user(s) to a customer group.
    *
    * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
    * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {MemberList} members List of users to assign to customer group.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Assigns user(s) to a customer group.
+   * @param groupId Group identifier.
+   * @param members List of users to assign to customer group.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  assignUserToCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string): Promise<void>;
-  assignUserToCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  assignUserToCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  assignUserToCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  assignUserToCustomerGroupPrim(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.assignUserToCustomerGroupPrimWithHttpOperationResponse(groupId, members, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.assignUserToCustomerGroupPrimWithHttpOperationResponse(groupId, members, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  updateCustomerGroupWithUsers(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param groupId Group identifier.
+   * @param members List of users to assign to customer group.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  updateCustomerGroupWithUsers(groupId: string, members: Models.MemberList, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param groupId Group identifier.
+   * @param members List of users to assign to customer group.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updateCustomerGroupWithUsers(groupId: string, members: Models.MemberList, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  updateCustomerGroupWithUsers(groupId: string, members: Models.MemberList, baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        groupId,
+        members,
+        baseSiteId,
+        options
+      },
+      updateCustomerGroupWithUsersOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Delete a user from a customer group.
-   *
-   * Removes user from a customer group.
+   * Deletes user from a customer group.
    *
    * To try out the methods of the Customer Groups controller, you must authorize a user who belongs
    * to the “customermanagergroup”.
-   *
-   * @param {string} groupId Group identifier.
-   *
-   * @param {string} userId User identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Deletes a user from a customer group.
+   * @param groupId Group identifier.
+   * @param userId User identifier.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string): Promise<void>;
-  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, options: msRest.RequestOptionsBase): Promise<void>;
+  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param groupId Group identifier.
+   * @param userId User identifier.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.removeUsersFromCustomerGroupWithHttpOperationResponse(groupId, userId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.removeUsersFromCustomerGroupWithHttpOperationResponse(groupId, userId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
   /**
-   * @summary Get a list of supported countries.
-   *
-   * Lists all supported delivery countries for the current store. The list is sorted alphabetically.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetDeliveryCountriesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CountryList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CountryList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param groupId Group identifier.
+   * @param userId User identifier.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
    */
-  getDeliveryCountries(baseSiteId: string): Promise<Models.CountryList>;
-  getDeliveryCountries(baseSiteId: string, options: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams): Promise<Models.CountryList>;
-  getDeliveryCountries(baseSiteId: string, callback: msRest.ServiceCallback<Models.CountryList>): void;
-  getDeliveryCountries(baseSiteId: string, options: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams, callback: msRest.ServiceCallback<Models.CountryList>): void;
-  getDeliveryCountries(baseSiteId: string, options?: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams, callback?: msRest.ServiceCallback<Models.CountryList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CountryList>;
-    if (!callback) {
-      return this.getDeliveryCountriesWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CountryList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getDeliveryCountriesWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CountryList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeUsersFromCustomerGroup(groupId: string, userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        groupId,
+        userId,
+        baseSiteId,
+        options
+      },
+      removeUsersFromCustomerGroupOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a list of product exports.
-   *
+   * Lists all supported delivery countries for the current store. The list is sorted alphabetically.
+   * @summary Get a list of shipping countries.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @deprecated This operation is deprecated. Please do not use it any longer.
+   * @returns Promise<Models.GetDeliveryCountriesResponse>
+   */
+  getDeliveryCountries(baseSiteId: string, options?: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams): Promise<Models.GetDeliveryCountriesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   * @deprecated This operation is deprecated. Please do not use it any longer.
+   */
+  getDeliveryCountries(baseSiteId: string, callback: msRest.ServiceCallback<Models.CountryList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   * @deprecated This operation is deprecated. Please do not use it any longer.
+   */
+  getDeliveryCountries(baseSiteId: string, options: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams, callback: msRest.ServiceCallback<Models.CountryList>): void;
+  getDeliveryCountries(baseSiteId: string, options?: Models.CommerceWebservicesV2GetDeliveryCountriesOptionalParams | msRest.ServiceCallback<Models.CountryList>, callback?: msRest.ServiceCallback<Models.CountryList>): Promise<Models.GetDeliveryCountriesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getDeliveryCountriesOperationSpec,
+      callback) as Promise<Models.GetDeliveryCountriesResponse>;
+  }
+
+  /**
    * Used for product export. Depending on the timestamp parameter, it can return all products or
    * only products modified after the given time.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2ExportProductsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.ProductList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.ProductList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of product exports.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetExportedProductsResponse>
    */
-  exportProducts(baseSiteId: string): Promise<Models.ProductList>;
-  exportProducts(baseSiteId: string, options: Models.CommerceWebservicesV2ExportProductsOptionalParams): Promise<Models.ProductList>;
-  exportProducts(baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductList>): void;
-  exportProducts(baseSiteId: string, options: Models.CommerceWebservicesV2ExportProductsOptionalParams, callback: msRest.ServiceCallback<Models.ProductList>): void;
-  exportProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2ExportProductsOptionalParams, callback?: msRest.ServiceCallback<Models.ProductList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.ProductList>;
-    if (!callback) {
-      return this.exportProductsWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.ProductList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.exportProductsWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.ProductList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getExportedProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2GetExportedProductsOptionalParams): Promise<Models.GetExportedProductsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getExportedProducts(baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getExportedProducts(baseSiteId: string, options: Models.CommerceWebservicesV2GetExportedProductsOptionalParams, callback: msRest.ServiceCallback<Models.ProductList>): void;
+  getExportedProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2GetExportedProductsOptionalParams | msRest.ServiceCallback<Models.ProductList>, callback?: msRest.ServiceCallback<Models.ProductList>): Promise<Models.GetExportedProductsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getExportedProductsOperationSpec,
+      callback) as Promise<Models.GetExportedProductsResponse>;
   }
 
   /**
-   * @summary Get a list of orders with status updates
-   *
    * Returns the orders that have changed status. Returns only the elements from the current baseSite
    * that have been updated after the provided timestamp.
-   *
-   * @param {string} timestamp Only items newer than the given parameter are retrieved. This
-   * parameter should be in ISO-8601 format (for example, 2018-01-09T16:28:45+0000).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2OrderStatusFeedOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.OrderStatusUpdateElementList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.OrderStatusUpdateElementList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of orders with status updates.
+   * @param timestamp Only items newer than the given parameter are retrieved. This parameter should
+   * be in ISO-8601 format (for example, 2018-01-09T16:28:45+0000).
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetOrderStatusFeedResponse>
    */
-  orderStatusFeed(timestamp: string, baseSiteId: string): Promise<Models.OrderStatusUpdateElementList>;
-  orderStatusFeed(timestamp: string, baseSiteId: string, options: Models.CommerceWebservicesV2OrderStatusFeedOptionalParams): Promise<Models.OrderStatusUpdateElementList>;
-  orderStatusFeed(timestamp: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.OrderStatusUpdateElementList>): void;
-  orderStatusFeed(timestamp: string, baseSiteId: string, options: Models.CommerceWebservicesV2OrderStatusFeedOptionalParams, callback: msRest.ServiceCallback<Models.OrderStatusUpdateElementList>): void;
-  orderStatusFeed(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2OrderStatusFeedOptionalParams, callback?: msRest.ServiceCallback<Models.OrderStatusUpdateElementList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.OrderStatusUpdateElementList>;
-    if (!callback) {
-      return this.orderStatusFeedWithHttpOperationResponse(timestamp, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.OrderStatusUpdateElementList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.orderStatusFeedWithHttpOperationResponse(timestamp, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.OrderStatusUpdateElementList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getOrderStatusFeed(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetOrderStatusFeedOptionalParams): Promise<Models.GetOrderStatusFeedResponse>;
+  /**
+   * @param timestamp Only items newer than the given parameter are retrieved. This parameter should
+   * be in ISO-8601 format (for example, 2018-01-09T16:28:45+0000).
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getOrderStatusFeed(timestamp: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.OrderStatusUpdateElementList>): void;
+  /**
+   * @param timestamp Only items newer than the given parameter are retrieved. This parameter should
+   * be in ISO-8601 format (for example, 2018-01-09T16:28:45+0000).
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getOrderStatusFeed(timestamp: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetOrderStatusFeedOptionalParams, callback: msRest.ServiceCallback<Models.OrderStatusUpdateElementList>): void;
+  getOrderStatusFeed(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetOrderStatusFeedOptionalParams | msRest.ServiceCallback<Models.OrderStatusUpdateElementList>, callback?: msRest.ServiceCallback<Models.OrderStatusUpdateElementList>): Promise<Models.GetOrderStatusFeedResponse> {
+    return this.sendOperationRequest(
+      {
+        timestamp,
+        baseSiteId,
+        options
+      },
+      getOrderStatusFeedOperationSpec,
+      callback) as Promise<Models.GetOrderStatusFeedResponse>;
   }
 
   /**
-   * @summary Generates a token to restore a customer's forgotten password.
-   *
    * Generates a token to restore a customer's forgotten password.
-   *
-   * @param {string} userId Customer's user id. Customer user id is case insensitive.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Generates a token to restore a customer's forgotten password.
+   * @param userId Customer's user id. Customer user id is case insensitive.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  restorePassword(userId: string, baseSiteId: string): Promise<void>;
-  restorePassword(userId: string, baseSiteId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  restorePassword(userId: string, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  restorePassword(userId: string, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  restorePassword(userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.restorePasswordWithHttpOperationResponse(userId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.restorePasswordWithHttpOperationResponse(userId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doRestorePassword(userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param userId Customer's user id. Customer user id is case insensitive.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  doRestorePassword(userId: string, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param userId Customer's user id. Customer user id is case insensitive.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doRestorePassword(userId: string, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  doRestorePassword(userId: string, baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        userId,
+        baseSiteId,
+        options
+      },
+      doRestorePasswordOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a list of available languages.
+   * Verifies the decision of the merchant.
    *
+   * Note, the “Try it out” button is not enabled for this method (always returns an error) because
+   * the Merchant Callback Controller handles parameters differently, depending on which payment
+   * provider is used. For more information about this controller, please refer to the
+   * “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.
+   * @summary Verify the decision of the Merchant
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  doHandleMerchantCallback(baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  doHandleMerchantCallback(baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doHandleMerchantCallback(baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  doHandleMerchantCallback(baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      doHandleMerchantCallbackOperationSpec,
+      callback);
+  }
+
+  /**
+   * Verifies the decision of the merchant for a specified cart, and stores information of the
+   * PaymentSubscriptionResult for the cart.
+   *
+   * Note, the “Try it out” button is not enabled for this method (always returns an error) because
+   * the Merchant Callback Controller handles parameters differently, depending on which payment
+   * provider is used. For more information about this controller, please refer to the
+   * “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.
+   * @summary Verify the decision of the Merchant for a cart
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  doHandleCartMerchantCallback(userId: string, cartId: string, baseSiteId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  doHandleCartMerchantCallback(userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doHandleCartMerchantCallback(userId: string, cartId: string, baseSiteId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  doHandleCartMerchantCallback(userId: string, cartId: string, baseSiteId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        userId,
+        cartId,
+        baseSiteId,
+        options
+      },
+      doHandleCartMerchantCallbackOperationSpec,
+      callback);
+  }
+
+  /**
    * Lists all available languages (all languages used for a particular store). If the list of
    * languages for a base store is empty, a list of all languages available in the system will be
    * returned.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetLanguagesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.LanguageList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.LanguageList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of available languages.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetLanguagesResponse>
    */
-  getLanguages(baseSiteId: string): Promise<Models.LanguageList>;
-  getLanguages(baseSiteId: string, options: Models.CommerceWebservicesV2GetLanguagesOptionalParams): Promise<Models.LanguageList>;
+  getLanguages(baseSiteId: string, options?: Models.CommerceWebservicesV2GetLanguagesOptionalParams): Promise<Models.GetLanguagesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getLanguages(baseSiteId: string, callback: msRest.ServiceCallback<Models.LanguageList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getLanguages(baseSiteId: string, options: Models.CommerceWebservicesV2GetLanguagesOptionalParams, callback: msRest.ServiceCallback<Models.LanguageList>): void;
-  getLanguages(baseSiteId: string, options?: Models.CommerceWebservicesV2GetLanguagesOptionalParams, callback?: msRest.ServiceCallback<Models.LanguageList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.LanguageList>;
-    if (!callback) {
-      return this.getLanguagesWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.LanguageList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getLanguagesWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.LanguageList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getLanguages(baseSiteId: string, options?: Models.CommerceWebservicesV2GetLanguagesOptionalParams | msRest.ServiceCallback<Models.LanguageList>, callback?: msRest.ServiceCallback<Models.LanguageList>): Promise<Models.GetLanguagesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getLanguagesOperationSpec,
+      callback) as Promise<Models.GetLanguagesResponse>;
   }
 
   /**
-   * @summary Get a order
-   *
    * Returns details of a specific order based on the order GUID (Globally Unique Identifier) or the
    * order CODE. The response contains detailed order information.
-   *
-   * @param {string} code Order GUID (Globally Unique Identifier) or order CODE
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetOrderOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Order} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Order} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a order.
+   * @param code Order GUID (Globally Unique Identifier) or order CODE
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetOrderResponse>
    */
-  getOrder(code: string, baseSiteId: string): Promise<Models.Order>;
-  getOrder(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetOrderOptionalParams): Promise<Models.Order>;
+  getOrder(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetOrderOptionalParams): Promise<Models.GetOrderResponse>;
+  /**
+   * @param code Order GUID (Globally Unique Identifier) or order CODE
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getOrder(code: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Order>): void;
+  /**
+   * @param code Order GUID (Globally Unique Identifier) or order CODE
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getOrder(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetOrderOptionalParams, callback: msRest.ServiceCallback<Models.Order>): void;
-  getOrder(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetOrderOptionalParams, callback?: msRest.ServiceCallback<Models.Order>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Order>;
-    if (!callback) {
-      return this.getOrderWithHttpOperationResponse(code, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Order);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getOrderWithHttpOperationResponse(code, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Order;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getOrder(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetOrderOptionalParams | msRest.ServiceCallback<Models.Order>, callback?: msRest.ServiceCallback<Models.Order>): Promise<Models.GetOrderResponse> {
+    return this.sendOperationRequest(
+      {
+        code,
+        baseSiteId,
+        options
+      },
+      getOrderOperationSpec,
+      callback) as Promise<Models.GetOrderResponse>;
   }
 
   /**
-   * @summary Get products added to the express update feed
-   *
    * Returns products added to the express update feed. Returns only elements updated after the
    * provided timestamp. The queue is cleared using a defined cronjob.
-   *
-   * @param {string} timestamp Only items newer than the given parameter are retrieved from the
-   * queue. This parameter should be in ISO-8601 format.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2ExpressUpdateOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.ProductExpressUpdateElementList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.ProductExpressUpdateElementList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get products added to the express update feed.
+   * @param timestamp Only items newer than the given parameter are retrieved from the queue. This
+   * parameter should be in ISO-8601 format.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetExpressUpdateProductsResponse>
    */
-  expressUpdate(timestamp: string, baseSiteId: string): Promise<Models.ProductExpressUpdateElementList>;
-  expressUpdate(timestamp: string, baseSiteId: string, options: Models.CommerceWebservicesV2ExpressUpdateOptionalParams): Promise<Models.ProductExpressUpdateElementList>;
-  expressUpdate(timestamp: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductExpressUpdateElementList>): void;
-  expressUpdate(timestamp: string, baseSiteId: string, options: Models.CommerceWebservicesV2ExpressUpdateOptionalParams, callback: msRest.ServiceCallback<Models.ProductExpressUpdateElementList>): void;
-  expressUpdate(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2ExpressUpdateOptionalParams, callback?: msRest.ServiceCallback<Models.ProductExpressUpdateElementList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.ProductExpressUpdateElementList>;
-    if (!callback) {
-      return this.expressUpdateWithHttpOperationResponse(timestamp, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.ProductExpressUpdateElementList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.expressUpdateWithHttpOperationResponse(timestamp, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.ProductExpressUpdateElementList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getExpressUpdateProducts(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetExpressUpdateProductsOptionalParams): Promise<Models.GetExpressUpdateProductsResponse>;
+  /**
+   * @param timestamp Only items newer than the given parameter are retrieved from the queue. This
+   * parameter should be in ISO-8601 format.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getExpressUpdateProducts(timestamp: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductExpressUpdateElementList>): void;
+  /**
+   * @param timestamp Only items newer than the given parameter are retrieved from the queue. This
+   * parameter should be in ISO-8601 format.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getExpressUpdateProducts(timestamp: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetExpressUpdateProductsOptionalParams, callback: msRest.ServiceCallback<Models.ProductExpressUpdateElementList>): void;
+  getExpressUpdateProducts(timestamp: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetExpressUpdateProductsOptionalParams | msRest.ServiceCallback<Models.ProductExpressUpdateElementList>, callback?: msRest.ServiceCallback<Models.ProductExpressUpdateElementList>): Promise<Models.GetExpressUpdateProductsResponse> {
+    return this.sendOperationRequest(
+      {
+        timestamp,
+        baseSiteId,
+        options
+      },
+      getExpressUpdateProductsOperationSpec,
+      callback) as Promise<Models.GetExpressUpdateProductsResponse>;
   }
 
   /**
-   * @summary Get a list of products and additional data
-   *
    * Returns a list of products and additional data, such as available facets, available sorting, and
    * pagination options. It can also include spelling suggestions. To make spelling suggestions work,
    * you need to make sure that "enableSpellCheck" on the SearchQuery is set to "true" (by default,
    * it should already be set to "true"). You also need to have indexed properties configured to be
    * used for spellchecking.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2SearchProductsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.ProductSearchPage} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.ProductSearchPage} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of products and additional data
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetProductsResponse>
    */
-  searchProducts(baseSiteId: string): Promise<Models.ProductSearchPage>;
-  searchProducts(baseSiteId: string, options: Models.CommerceWebservicesV2SearchProductsOptionalParams): Promise<Models.ProductSearchPage>;
-  searchProducts(baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductSearchPage>): void;
-  searchProducts(baseSiteId: string, options: Models.CommerceWebservicesV2SearchProductsOptionalParams, callback: msRest.ServiceCallback<Models.ProductSearchPage>): void;
-  searchProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2SearchProductsOptionalParams, callback?: msRest.ServiceCallback<Models.ProductSearchPage>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.ProductSearchPage>;
-    if (!callback) {
-      return this.searchProductsWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.ProductSearchPage);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.searchProductsWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.ProductSearchPage;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductsOptionalParams): Promise<Models.GetProductsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getProducts(baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductSearchPage>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getProducts(baseSiteId: string, options: Models.CommerceWebservicesV2GetProductsOptionalParams, callback: msRest.ServiceCallback<Models.ProductSearchPage>): void;
+  getProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductsOptionalParams | msRest.ServiceCallback<Models.ProductSearchPage>, callback?: msRest.ServiceCallback<Models.ProductSearchPage>): Promise<Models.GetProductsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getProductsOperationSpec,
+      callback) as Promise<Models.GetProductsResponse>;
   }
 
   /**
-   * @summary Get a header with total number of products
-   *
    * In the response header, the "x-total-count" indicates the total number of products satisfying a
    * query.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CountSearchProductsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a header with total number of products.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  countSearchProducts(baseSiteId: string): Promise<void>;
-  countSearchProducts(baseSiteId: string, options: Models.CommerceWebservicesV2CountSearchProductsOptionalParams): Promise<void>;
-  countSearchProducts(baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  countSearchProducts(baseSiteId: string, options: Models.CommerceWebservicesV2CountSearchProductsOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  countSearchProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2CountSearchProductsOptionalParams, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.countSearchProductsWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.countSearchProductsWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  countProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2CountProductsOptionalParams): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  countProducts(baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  countProducts(baseSiteId: string, options: Models.CommerceWebservicesV2CountProductsOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  countProducts(baseSiteId: string, options?: Models.CommerceWebservicesV2CountProductsOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      countProductsOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a list of available suggestions
-   *
    * Returns a list of all available suggestions related to a given term and limits the results to a
    * specific value of the max parameter.
-   *
-   * @param {string} term Specified term
-   *
-   * @param {number} max Specifies the limit of results.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetSuggestionsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.SuggestionList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.SuggestionList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of available suggestions
+   * @param term Specified term
+   * @param max Specifies the limit of results.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetSuggestionsResponse>
    */
-  getSuggestions(term: string, max: number, baseSiteId: string): Promise<Models.SuggestionList>;
-  getSuggestions(term: string, max: number, baseSiteId: string, options: Models.CommerceWebservicesV2GetSuggestionsOptionalParams): Promise<Models.SuggestionList>;
+  getSuggestions(term: string, max: number, baseSiteId: string, options?: Models.CommerceWebservicesV2GetSuggestionsOptionalParams): Promise<Models.GetSuggestionsResponse>;
+  /**
+   * @param term Specified term
+   * @param max Specifies the limit of results.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getSuggestions(term: string, max: number, baseSiteId: string, callback: msRest.ServiceCallback<Models.SuggestionList>): void;
-  getSuggestions(term: string, max: number, baseSiteId: string, options: Models.CommerceWebservicesV2GetSuggestionsOptionalParams, callback: msRest.ServiceCallback<Models.SuggestionList>): void;
-  getSuggestions(term: string, max: number, baseSiteId: string, options?: Models.CommerceWebservicesV2GetSuggestionsOptionalParams, callback?: msRest.ServiceCallback<Models.SuggestionList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.SuggestionList>;
-    if (!callback) {
-      return this.getSuggestionsWithHttpOperationResponse(term, max, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.SuggestionList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getSuggestionsWithHttpOperationResponse(term, max, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.SuggestionList;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
   /**
-   * @summary Get product details
-   *
-   * Returns details of a single product according to a product code.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetProductByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Product} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Product} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param term Specified term
+   * @param max Specifies the limit of results.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
    */
-  getProductByCode(productCode: string, baseSiteId: string): Promise<Models.Product>;
-  getProductByCode(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductByCodeOptionalParams): Promise<Models.Product>;
-  getProductByCode(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Product>): void;
-  getProductByCode(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductByCodeOptionalParams, callback: msRest.ServiceCallback<Models.Product>): void;
-  getProductByCode(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductByCodeOptionalParams, callback?: msRest.ServiceCallback<Models.Product>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Product>;
-    if (!callback) {
-      return this.getProductByCodeWithHttpOperationResponse(productCode, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Product);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getProductByCodeWithHttpOperationResponse(productCode, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Product;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getSuggestions(term: string, max: number, baseSiteId: string, options: Models.CommerceWebservicesV2GetSuggestionsOptionalParams, callback: msRest.ServiceCallback<Models.SuggestionList>): void;
+  getSuggestions(term: string, max: number, baseSiteId: string, options?: Models.CommerceWebservicesV2GetSuggestionsOptionalParams | msRest.ServiceCallback<Models.SuggestionList>, callback?: msRest.ServiceCallback<Models.SuggestionList>): Promise<Models.GetSuggestionsResponse> {
+    return this.sendOperationRequest(
+      {
+        term,
+        max,
+        baseSiteId,
+        options
+      },
+      getSuggestionsOperationSpec,
+      callback) as Promise<Models.GetSuggestionsResponse>;
   }
 
   /**
-   * @summary Get a product reference
-   *
+   * Returns details of a single product according to a product code.
+   * @summary Get product details.
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetProductResponse>
+   */
+  getProduct(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductOptionalParams): Promise<Models.GetProductResponse>;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getProduct(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Product>): void;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getProduct(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductOptionalParams, callback: msRest.ServiceCallback<Models.Product>): void;
+  getProduct(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductOptionalParams | msRest.ServiceCallback<Models.Product>, callback?: msRest.ServiceCallback<Models.Product>): Promise<Models.GetProductResponse> {
+    return this.sendOperationRequest(
+      {
+        productCode,
+        baseSiteId,
+        options
+      },
+      getProductOperationSpec,
+      callback) as Promise<Models.GetProductResponse>;
+  }
+
+  /**
    * Returns references for a product with a given product code. Reference type specifies which
    * references to return.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} referenceType Reference type according to enum ProductReferenceTypeEnum
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2ExportProductReferencesOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.ProductReferenceList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.ProductReferenceList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a product reference
+   * @param productCode Product identifier
+   * @param referenceType Reference type according to enum ProductReferenceTypeEnum
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetProductReferencesResponse>
    */
-  exportProductReferences(productCode: string, referenceType: string, baseSiteId: string): Promise<Models.ProductReferenceList>;
-  exportProductReferences(productCode: string, referenceType: string, baseSiteId: string, options: Models.CommerceWebservicesV2ExportProductReferencesOptionalParams): Promise<Models.ProductReferenceList>;
-  exportProductReferences(productCode: string, referenceType: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductReferenceList>): void;
-  exportProductReferences(productCode: string, referenceType: string, baseSiteId: string, options: Models.CommerceWebservicesV2ExportProductReferencesOptionalParams, callback: msRest.ServiceCallback<Models.ProductReferenceList>): void;
-  exportProductReferences(productCode: string, referenceType: string, baseSiteId: string, options?: Models.CommerceWebservicesV2ExportProductReferencesOptionalParams, callback?: msRest.ServiceCallback<Models.ProductReferenceList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.ProductReferenceList>;
-    if (!callback) {
-      return this.exportProductReferencesWithHttpOperationResponse(productCode, referenceType, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.ProductReferenceList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.exportProductReferencesWithHttpOperationResponse(productCode, referenceType, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.ProductReferenceList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getProductReferences(productCode: string, referenceType: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductReferencesOptionalParams): Promise<Models.GetProductReferencesResponse>;
+  /**
+   * @param productCode Product identifier
+   * @param referenceType Reference type according to enum ProductReferenceTypeEnum
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getProductReferences(productCode: string, referenceType: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.ProductReferenceList>): void;
+  /**
+   * @param productCode Product identifier
+   * @param referenceType Reference type according to enum ProductReferenceTypeEnum
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getProductReferences(productCode: string, referenceType: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductReferencesOptionalParams, callback: msRest.ServiceCallback<Models.ProductReferenceList>): void;
+  getProductReferences(productCode: string, referenceType: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductReferencesOptionalParams | msRest.ServiceCallback<Models.ProductReferenceList>, callback?: msRest.ServiceCallback<Models.ProductReferenceList>): Promise<Models.GetProductReferencesResponse> {
+    return this.sendOperationRequest(
+      {
+        productCode,
+        referenceType,
+        baseSiteId,
+        options
+      },
+      getProductReferencesOperationSpec,
+      callback) as Promise<Models.GetProductReferencesResponse>;
   }
 
   /**
-   * @summary Get reviews for a product
-   *
    * Returns the reviews for a product with a given product code.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetProductReviewsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.ReviewList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.ReviewList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get reviews for a product
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetProductReviewsResponse>
    */
-  getProductReviews(productCode: string, baseSiteId: string): Promise<Models.ReviewList>;
-  getProductReviews(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductReviewsOptionalParams): Promise<Models.ReviewList>;
+  getProductReviews(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductReviewsOptionalParams): Promise<Models.GetProductReviewsResponse>;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getProductReviews(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.ReviewList>): void;
-  getProductReviews(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductReviewsOptionalParams, callback: msRest.ServiceCallback<Models.ReviewList>): void;
-  getProductReviews(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductReviewsOptionalParams, callback?: msRest.ServiceCallback<Models.ReviewList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.ReviewList>;
-    if (!callback) {
-      return this.getProductReviewsWithHttpOperationResponse(productCode, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.ReviewList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getProductReviewsWithHttpOperationResponse(productCode, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.ReviewList;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
   /**
-   * @summary Creates a new customer review as an anonymous user
-   *
-   * Creates a new customer review as an anonymous user.
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {Review} review Object contains review details like : rating, alias, headline, comment
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CreateReviewPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Review} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Review} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
    */
-  createReviewPrim(productCode: string, review: Models.Review, baseSiteId: string): Promise<Models.Review>;
-  createReviewPrim(productCode: string, review: Models.Review, baseSiteId: string, options: Models.CommerceWebservicesV2CreateReviewPrimOptionalParams): Promise<Models.Review>;
-  createReviewPrim(productCode: string, review: Models.Review, baseSiteId: string, callback: msRest.ServiceCallback<Models.Review>): void;
-  createReviewPrim(productCode: string, review: Models.Review, baseSiteId: string, options: Models.CommerceWebservicesV2CreateReviewPrimOptionalParams, callback: msRest.ServiceCallback<Models.Review>): void;
-  createReviewPrim(productCode: string, review: Models.Review, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateReviewPrimOptionalParams, callback?: msRest.ServiceCallback<Models.Review>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Review>;
-    if (!callback) {
-      return this.createReviewPrimWithHttpOperationResponse(productCode, review, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Review);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.createReviewPrimWithHttpOperationResponse(productCode, review, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Review;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getProductReviews(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetProductReviewsOptionalParams, callback: msRest.ServiceCallback<Models.ReviewList>): void;
+  getProductReviews(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetProductReviewsOptionalParams | msRest.ServiceCallback<Models.ReviewList>, callback?: msRest.ServiceCallback<Models.ReviewList>): Promise<Models.GetProductReviewsResponse> {
+    return this.sendOperationRequest(
+      {
+        productCode,
+        baseSiteId,
+        options
+      },
+      getProductReviewsOperationSpec,
+      callback) as Promise<Models.GetProductReviewsResponse>;
   }
 
   /**
-   * @summary Get a product's stock level
-   *
+   * Creates a new customer review as an anonymous user.
+   * @summary Creates a new customer review as an anonymous user.
+   * @param productCode Product identifier
+   * @param review Object contains review details like : rating, alias, headline, comment
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateProductReviewResponse>
+   */
+  createProductReview(productCode: string, review: Models.Review, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateProductReviewOptionalParams): Promise<Models.CreateProductReviewResponse>;
+  /**
+   * @param productCode Product identifier
+   * @param review Object contains review details like : rating, alias, headline, comment
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  createProductReview(productCode: string, review: Models.Review, baseSiteId: string, callback: msRest.ServiceCallback<Models.Review>): void;
+  /**
+   * @param productCode Product identifier
+   * @param review Object contains review details like : rating, alias, headline, comment
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createProductReview(productCode: string, review: Models.Review, baseSiteId: string, options: Models.CommerceWebservicesV2CreateProductReviewOptionalParams, callback: msRest.ServiceCallback<Models.Review>): void;
+  createProductReview(productCode: string, review: Models.Review, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateProductReviewOptionalParams | msRest.ServiceCallback<Models.Review>, callback?: msRest.ServiceCallback<Models.Review>): Promise<Models.CreateProductReviewResponse> {
+    return this.sendOperationRequest(
+      {
+        productCode,
+        review,
+        baseSiteId,
+        options
+      },
+      createProductReviewOperationSpec,
+      callback) as Promise<Models.CreateProductReviewResponse>;
+  }
+
+  /**
    * Returns a product's stock levels sorted by distance from the specified location, which is
    * provided using the free-text "location" parameter, or by using the longitude and latitude
    * parameters. The following two sets of parameters are available: location (required), currentPage
    * (optional), pageSize (optional); or longitude (required), latitude (required), currentPage
    * (optional), pageSize(optional).
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2SearchProductStockByLocationOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.StoreFinderStockSearchPage} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.StoreFinderStockSearchPage} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a product's stock level.
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetLocationProductStockResponse>
    */
-  searchProductStockByLocation(productCode: string, baseSiteId: string): Promise<Models.StoreFinderStockSearchPage>;
-  searchProductStockByLocation(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2SearchProductStockByLocationOptionalParams): Promise<Models.StoreFinderStockSearchPage>;
-  searchProductStockByLocation(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.StoreFinderStockSearchPage>): void;
-  searchProductStockByLocation(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2SearchProductStockByLocationOptionalParams, callback: msRest.ServiceCallback<Models.StoreFinderStockSearchPage>): void;
-  searchProductStockByLocation(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2SearchProductStockByLocationOptionalParams, callback?: msRest.ServiceCallback<Models.StoreFinderStockSearchPage>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.StoreFinderStockSearchPage>;
-    if (!callback) {
-      return this.searchProductStockByLocationWithHttpOperationResponse(productCode, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.StoreFinderStockSearchPage);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.searchProductStockByLocationWithHttpOperationResponse(productCode, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.StoreFinderStockSearchPage;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getLocationProductStock(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetLocationProductStockOptionalParams): Promise<Models.GetLocationProductStockResponse>;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getLocationProductStock(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.StoreFinderStockSearchPage>): void;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getLocationProductStock(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetLocationProductStockOptionalParams, callback: msRest.ServiceCallback<Models.StoreFinderStockSearchPage>): void;
+  getLocationProductStock(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetLocationProductStockOptionalParams | msRest.ServiceCallback<Models.StoreFinderStockSearchPage>, callback?: msRest.ServiceCallback<Models.StoreFinderStockSearchPage>): Promise<Models.GetLocationProductStockResponse> {
+    return this.sendOperationRequest(
+      {
+        productCode,
+        baseSiteId,
+        options
+      },
+      getLocationProductStockOperationSpec,
+      callback) as Promise<Models.GetLocationProductStockResponse>;
   }
 
   /**
-   * @summary Get header with a total number of product's stock levels
-   *
    * In the response header, the "x-total-count" indicates the total number of a product's stock
    * levels. The following two sets of parameters are available: location (required); or longitude
    * (required), and latitude (required).
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get header with a total number of product's stock levels.
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  countSearchProductStockByLocation(productCode: string, baseSiteId: string): Promise<void>;
-  countSearchProductStockByLocation(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams): Promise<void>;
-  countSearchProductStockByLocation(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  countSearchProductStockByLocation(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  countSearchProductStockByLocation(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2CountSearchProductStockByLocationOptionalParams, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.countSearchProductStockByLocationWithHttpOperationResponse(productCode, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.countSearchProductStockByLocationWithHttpOperationResponse(productCode, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  countProductStockByLocation(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2CountProductStockByLocationOptionalParams): Promise<msRest.RestResponse>;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  countProductStockByLocation(productCode: string, baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param productCode Product identifier
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  countProductStockByLocation(productCode: string, baseSiteId: string, options: Models.CommerceWebservicesV2CountProductStockByLocationOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  countProductStockByLocation(productCode: string, baseSiteId: string, options?: Models.CommerceWebservicesV2CountProductStockByLocationOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        productCode,
+        baseSiteId,
+        options
+      },
+      countProductStockByLocationOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a product's stock level for a store
-   *
    * Returns a product's stock level for a particular store (in other words, for a particular point
    * of sale).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} productCode Product identifier
-   *
-   * @param {string} storeName Store identifier
-   *
-   * @param {CommerceWebservicesV2GetStockDataOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Stock} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Stock} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a product's stock level for a store
+   * @param baseSiteId Base site identifier
+   * @param productCode Product identifier
+   * @param storeName Store identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetStoreProductStockResponse>
    */
-  getStockData(baseSiteId: string, productCode: string, storeName: string): Promise<Models.Stock>;
-  getStockData(baseSiteId: string, productCode: string, storeName: string, options: Models.CommerceWebservicesV2GetStockDataOptionalParams): Promise<Models.Stock>;
-  getStockData(baseSiteId: string, productCode: string, storeName: string, callback: msRest.ServiceCallback<Models.Stock>): void;
-  getStockData(baseSiteId: string, productCode: string, storeName: string, options: Models.CommerceWebservicesV2GetStockDataOptionalParams, callback: msRest.ServiceCallback<Models.Stock>): void;
-  getStockData(baseSiteId: string, productCode: string, storeName: string, options?: Models.CommerceWebservicesV2GetStockDataOptionalParams, callback?: msRest.ServiceCallback<Models.Stock>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Stock>;
-    if (!callback) {
-      return this.getStockDataWithHttpOperationResponse(baseSiteId, productCode, storeName, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Stock);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getStockDataWithHttpOperationResponse(baseSiteId, productCode, storeName, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Stock;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getStoreProductStock(baseSiteId: string, productCode: string, storeName: string, options?: Models.CommerceWebservicesV2GetStoreProductStockOptionalParams): Promise<Models.GetStoreProductStockResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param productCode Product identifier
+   * @param storeName Store identifier
+   * @param callback The callback
+   */
+  getStoreProductStock(baseSiteId: string, productCode: string, storeName: string, callback: msRest.ServiceCallback<Models.Stock>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param productCode Product identifier
+   * @param storeName Store identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getStoreProductStock(baseSiteId: string, productCode: string, storeName: string, options: Models.CommerceWebservicesV2GetStoreProductStockOptionalParams, callback: msRest.ServiceCallback<Models.Stock>): void;
+  getStoreProductStock(baseSiteId: string, productCode: string, storeName: string, options?: Models.CommerceWebservicesV2GetStoreProductStockOptionalParams | msRest.ServiceCallback<Models.Stock>, callback?: msRest.ServiceCallback<Models.Stock>): Promise<Models.GetStoreProductStockResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        productCode,
+        storeName,
+        options
+      },
+      getStoreProductStockOperationSpec,
+      callback) as Promise<Models.GetStoreProductStockResponse>;
   }
 
   /**
-   * @summary Get a list of promotions
-   *
    * Returns promotions defined for a current base site. Requests pertaining to promotions have been
    * developed for the previous version of promotions and vouchers and therefore some of them are
    * currently not compatible with the new promotion engine.
-   *
-   * @param {Type} type Defines what type of promotions should be returned. Values supported for that
+   * @summary Get a list of promotions.
+   * @param type Defines what type of promotions should be returned. Values supported for that
    * parameter are: <ul><li>all: All available promotions are returned</li><li>product: Only product
    * promotions are returned</li><li>order: Only order promotions are returned</li></ul>. Possible
    * values include: 'all', 'product', 'order'
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetPromotionsPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PromotionList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PromotionList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetPromotionsResponse>
    */
-  getPromotionsPrim(type: Models.Type, baseSiteId: string): Promise<Models.PromotionList>;
-  getPromotionsPrim(type: Models.Type, baseSiteId: string, options: Models.CommerceWebservicesV2GetPromotionsPrimOptionalParams): Promise<Models.PromotionList>;
-  getPromotionsPrim(type: Models.Type, baseSiteId: string, callback: msRest.ServiceCallback<Models.PromotionList>): void;
-  getPromotionsPrim(type: Models.Type, baseSiteId: string, options: Models.CommerceWebservicesV2GetPromotionsPrimOptionalParams, callback: msRest.ServiceCallback<Models.PromotionList>): void;
-  getPromotionsPrim(type: Models.Type, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionsPrimOptionalParams, callback?: msRest.ServiceCallback<Models.PromotionList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PromotionList>;
-    if (!callback) {
-      return this.getPromotionsPrimWithHttpOperationResponse(type, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PromotionList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPromotionsPrimWithHttpOperationResponse(type, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PromotionList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getPromotions(type: Models.Type1, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionsOptionalParams): Promise<Models.GetPromotionsResponse>;
+  /**
+   * @param type Defines what type of promotions should be returned. Values supported for that
+   * parameter are: <ul><li>all: All available promotions are returned</li><li>product: Only product
+   * promotions are returned</li><li>order: Only order promotions are returned</li></ul>. Possible
+   * values include: 'all', 'product', 'order'
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getPromotions(type: Models.Type1, baseSiteId: string, callback: msRest.ServiceCallback<Models.PromotionList>): void;
+  /**
+   * @param type Defines what type of promotions should be returned. Values supported for that
+   * parameter are: <ul><li>all: All available promotions are returned</li><li>product: Only product
+   * promotions are returned</li><li>order: Only order promotions are returned</li></ul>. Possible
+   * values include: 'all', 'product', 'order'
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getPromotions(type: Models.Type1, baseSiteId: string, options: Models.CommerceWebservicesV2GetPromotionsOptionalParams, callback: msRest.ServiceCallback<Models.PromotionList>): void;
+  getPromotions(type: Models.Type1, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionsOptionalParams | msRest.ServiceCallback<Models.PromotionList>, callback?: msRest.ServiceCallback<Models.PromotionList>): Promise<Models.GetPromotionsResponse> {
+    return this.sendOperationRequest(
+      {
+        type,
+        baseSiteId,
+        options
+      },
+      getPromotionsOperationSpec,
+      callback) as Promise<Models.GetPromotionsResponse>;
   }
 
   /**
-   * @summary Get a promotion based on code
-   *
    * Returns details of a single promotion specified by a promotion code. Requests pertaining to
    * promotions have been developed for the previous version of promotions and vouchers and therefore
    * some of them are currently not compatible with the new promotion engine.
-   *
-   * @param {string} code Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetPromotionByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Promotion} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Promotion} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a promotion based on code
+   * @param code Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetPromotionResponse>
    */
-  getPromotionByCode(code: string, baseSiteId: string): Promise<Models.Promotion>;
-  getPromotionByCode(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetPromotionByCodeOptionalParams): Promise<Models.Promotion>;
-  getPromotionByCode(code: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Promotion>): void;
-  getPromotionByCode(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetPromotionByCodeOptionalParams, callback: msRest.ServiceCallback<Models.Promotion>): void;
-  getPromotionByCode(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionByCodeOptionalParams, callback?: msRest.ServiceCallback<Models.Promotion>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Promotion>;
-    if (!callback) {
-      return this.getPromotionByCodeWithHttpOperationResponse(code, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Promotion);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPromotionByCodeWithHttpOperationResponse(code, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Promotion;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getPromotion(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionOptionalParams): Promise<Models.GetPromotionResponse>;
+  /**
+   * @param code Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getPromotion(code: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Promotion>): void;
+  /**
+   * @param code Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getPromotion(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetPromotionOptionalParams, callback: msRest.ServiceCallback<Models.Promotion>): void;
+  getPromotion(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetPromotionOptionalParams | msRest.ServiceCallback<Models.Promotion>, callback?: msRest.ServiceCallback<Models.Promotion>): Promise<Models.GetPromotionResponse> {
+    return this.sendOperationRequest(
+      {
+        code,
+        baseSiteId,
+        options
+      },
+      getPromotionOperationSpec,
+      callback) as Promise<Models.GetPromotionResponse>;
   }
 
   /**
-   * @summary Get a list of store locations
-   *
    * Lists all store locations that are near the location specified in a query or based on latitude
    * and longitude.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2LocationSearchOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.StoreFinderSearchPage} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.StoreFinderSearchPage} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of store locations
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetStoreLocationsResponse>
    */
-  locationSearch(baseSiteId: string): Promise<Models.StoreFinderSearchPage>;
-  locationSearch(baseSiteId: string, options: Models.CommerceWebservicesV2LocationSearchOptionalParams): Promise<Models.StoreFinderSearchPage>;
-  locationSearch(baseSiteId: string, callback: msRest.ServiceCallback<Models.StoreFinderSearchPage>): void;
-  locationSearch(baseSiteId: string, options: Models.CommerceWebservicesV2LocationSearchOptionalParams, callback: msRest.ServiceCallback<Models.StoreFinderSearchPage>): void;
-  locationSearch(baseSiteId: string, options?: Models.CommerceWebservicesV2LocationSearchOptionalParams, callback?: msRest.ServiceCallback<Models.StoreFinderSearchPage>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.StoreFinderSearchPage>;
-    if (!callback) {
-      return this.locationSearchWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.StoreFinderSearchPage);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.locationSearchWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.StoreFinderSearchPage;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getStoreLocations(baseSiteId: string, options?: Models.CommerceWebservicesV2GetStoreLocationsOptionalParams): Promise<Models.GetStoreLocationsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getStoreLocations(baseSiteId: string, callback: msRest.ServiceCallback<Models.StoreFinderSearchPage>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getStoreLocations(baseSiteId: string, options: Models.CommerceWebservicesV2GetStoreLocationsOptionalParams, callback: msRest.ServiceCallback<Models.StoreFinderSearchPage>): void;
+  getStoreLocations(baseSiteId: string, options?: Models.CommerceWebservicesV2GetStoreLocationsOptionalParams | msRest.ServiceCallback<Models.StoreFinderSearchPage>, callback?: msRest.ServiceCallback<Models.StoreFinderSearchPage>): Promise<Models.GetStoreLocationsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getStoreLocationsOperationSpec,
+      callback) as Promise<Models.GetStoreLocationsResponse>;
   }
 
   /**
-   * @summary Get a header with the number of store locations
-   *
    * In the response header, the "x-total-count" indicates the number of all store locations that are
    * near the location specified in a query, or based on latitude and longitude.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2CountLocationSearchOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a header with the number of store locations.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  countLocationSearch(baseSiteId: string): Promise<void>;
-  countLocationSearch(baseSiteId: string, options: Models.CommerceWebservicesV2CountLocationSearchOptionalParams): Promise<void>;
-  countLocationSearch(baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
-  countLocationSearch(baseSiteId: string, options: Models.CommerceWebservicesV2CountLocationSearchOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  countLocationSearch(baseSiteId: string, options?: Models.CommerceWebservicesV2CountLocationSearchOptionalParams, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.countLocationSearchWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.countLocationSearchWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  countStoreLocations(baseSiteId: string, options?: Models.CommerceWebservicesV2CountStoreLocationsOptionalParams): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  countStoreLocations(baseSiteId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  countStoreLocations(baseSiteId: string, options: Models.CommerceWebservicesV2CountStoreLocationsOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  countStoreLocations(baseSiteId: string, options?: Models.CommerceWebservicesV2CountStoreLocationsOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      countStoreLocationsOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a store location
-   *
    * Returns store location based on its unique name.
-   *
-   * @param {string} storeId Store identifier (currently store name)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2LocationDetailsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PointOfService} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PointOfService} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a store location.
+   * @param storeId Store identifier (currently store name)
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetStoreLocationResponse>
    */
-  locationDetails(storeId: string, baseSiteId: string): Promise<Models.PointOfService>;
-  locationDetails(storeId: string, baseSiteId: string, options: Models.CommerceWebservicesV2LocationDetailsOptionalParams): Promise<Models.PointOfService>;
-  locationDetails(storeId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.PointOfService>): void;
-  locationDetails(storeId: string, baseSiteId: string, options: Models.CommerceWebservicesV2LocationDetailsOptionalParams, callback: msRest.ServiceCallback<Models.PointOfService>): void;
-  locationDetails(storeId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2LocationDetailsOptionalParams, callback?: msRest.ServiceCallback<Models.PointOfService>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PointOfService>;
-    if (!callback) {
-      return this.locationDetailsWithHttpOperationResponse(storeId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PointOfService);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.locationDetailsWithHttpOperationResponse(storeId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PointOfService;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getStoreLocation(storeId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetStoreLocationOptionalParams): Promise<Models.GetStoreLocationResponse>;
+  /**
+   * @param storeId Store identifier (currently store name)
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getStoreLocation(storeId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.PointOfService>): void;
+  /**
+   * @param storeId Store identifier (currently store name)
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getStoreLocation(storeId: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetStoreLocationOptionalParams, callback: msRest.ServiceCallback<Models.PointOfService>): void;
+  getStoreLocation(storeId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetStoreLocationOptionalParams | msRest.ServiceCallback<Models.PointOfService>, callback?: msRest.ServiceCallback<Models.PointOfService>): Promise<Models.GetStoreLocationResponse> {
+    return this.sendOperationRequest(
+      {
+        storeId,
+        baseSiteId,
+        options
+      },
+      getStoreLocationOperationSpec,
+      callback) as Promise<Models.GetStoreLocationResponse>;
   }
 
   /**
-   * @summary Get a list of all localized titles.
-   *
    * Lists all localized titles.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetTitlesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.TitleList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.TitleList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of all localized titles.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetTitlesResponse>
    */
-  getTitles(baseSiteId: string): Promise<Models.TitleList>;
-  getTitles(baseSiteId: string, options: Models.CommerceWebservicesV2GetTitlesOptionalParams): Promise<Models.TitleList>;
+  getTitles(baseSiteId: string, options?: Models.CommerceWebservicesV2GetTitlesOptionalParams): Promise<Models.GetTitlesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
   getTitles(baseSiteId: string, callback: msRest.ServiceCallback<Models.TitleList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getTitles(baseSiteId: string, options: Models.CommerceWebservicesV2GetTitlesOptionalParams, callback: msRest.ServiceCallback<Models.TitleList>): void;
-  getTitles(baseSiteId: string, options?: Models.CommerceWebservicesV2GetTitlesOptionalParams, callback?: msRest.ServiceCallback<Models.TitleList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.TitleList>;
-    if (!callback) {
-      return this.getTitlesWithHttpOperationResponse(baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.TitleList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getTitlesWithHttpOperationResponse(baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.TitleList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getTitles(baseSiteId: string, options?: Models.CommerceWebservicesV2GetTitlesOptionalParams | msRest.ServiceCallback<Models.TitleList>, callback?: msRest.ServiceCallback<Models.TitleList>): Promise<Models.GetTitlesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        options
+      },
+      getTitlesOperationSpec,
+      callback) as Promise<Models.GetTitlesResponse>;
   }
 
   /**
-   * @summary  Registers a customer
-   *
    * Registers a customer. There are two options for registering a customer. The first option
    * requires the following parameters: login, password, firstName, lastName, titleCode. The second
    * option converts a guest to a customer. In this case, the required parameters are: guid,
    * password.
-   *
-   * @param {UserSignUp} user User's object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2RegisterUserPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.User} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.User} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary  Registers a customer
+   * @param user User's object.
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateUserResponse>
    */
-  registerUserPrim(user: Models.UserSignUp, baseSiteId: string): Promise<Models.User>;
-  registerUserPrim(user: Models.UserSignUp, baseSiteId: string, options: Models.CommerceWebservicesV2RegisterUserPrimOptionalParams): Promise<Models.User>;
-  registerUserPrim(user: Models.UserSignUp, baseSiteId: string, callback: msRest.ServiceCallback<Models.User>): void;
-  registerUserPrim(user: Models.UserSignUp, baseSiteId: string, options: Models.CommerceWebservicesV2RegisterUserPrimOptionalParams, callback: msRest.ServiceCallback<Models.User>): void;
-  registerUserPrim(user: Models.UserSignUp, baseSiteId: string, options?: Models.CommerceWebservicesV2RegisterUserPrimOptionalParams, callback?: msRest.ServiceCallback<Models.User>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.User>;
-    if (!callback) {
-      return this.registerUserPrimWithHttpOperationResponse(user, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.User);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.registerUserPrimWithHttpOperationResponse(user, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.User;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createUser(user: Models.UserSignUp, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateUserOptionalParams): Promise<Models.CreateUserResponse>;
+  /**
+   * @param user User's object.
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  createUser(user: Models.UserSignUp, baseSiteId: string, callback: msRest.ServiceCallback<Models.User>): void;
+  /**
+   * @param user User's object.
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createUser(user: Models.UserSignUp, baseSiteId: string, options: Models.CommerceWebservicesV2CreateUserOptionalParams, callback: msRest.ServiceCallback<Models.User>): void;
+  createUser(user: Models.UserSignUp, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateUserOptionalParams | msRest.ServiceCallback<Models.User>, callback?: msRest.ServiceCallback<Models.User>): Promise<Models.CreateUserResponse> {
+    return this.sendOperationRequest(
+      {
+        user,
+        baseSiteId,
+        options
+      },
+      createUserOperationSpec,
+      callback) as Promise<Models.CreateUserResponse>;
   }
 
   /**
-   * @summary Get customer profile
-   *
    * Returns customer profile.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetUserOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.User} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.User} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get customer profile
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetUserResponse>
    */
-  getUser(baseSiteId: string, userId: string): Promise<Models.User>;
-  getUser(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetUserOptionalParams): Promise<Models.User>;
+  getUser(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOptionalParams): Promise<Models.GetUserResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   getUser(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.User>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getUser(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetUserOptionalParams, callback: msRest.ServiceCallback<Models.User>): void;
-  getUser(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOptionalParams, callback?: msRest.ServiceCallback<Models.User>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.User>;
-    if (!callback) {
-      return this.getUserWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.User);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getUserWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.User;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getUser(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOptionalParams | msRest.ServiceCallback<Models.User>, callback?: msRest.ServiceCallback<Models.User>): Promise<Models.GetUserResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      getUserOperationSpec,
+      callback) as Promise<Models.GetUserResponse>;
   }
 
   /**
-   * @summary Updates customer profile
-   *
    * Updates customer profile. Attributes not provided in the request body will be defined again (set
    * to null or default).
-   *
-   * @param {User} user User's object
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
-   */
-  putUserPrim(user: Models.User, baseSiteId: string, userId: string): Promise<void>;
-  putUserPrim(user: Models.User, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  putUserPrim(user: Models.User, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  putUserPrim(user: Models.User, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  putUserPrim(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.putUserPrimWithHttpOperationResponse(user, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.putUserPrimWithHttpOperationResponse(user, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
-  /**
-   * @summary Delete customer profile
-   *
-   * Removes customer profile.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
-   */
-  deactivateUser(baseSiteId: string, userId: string): Promise<void>;
-  deactivateUser(baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  deactivateUser(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  deactivateUser(baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deactivateUser(baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.deactivateUserWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.deactivateUserWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
-  /**
    * @summary Updates customer profile
-   *
+   * @param user User's object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  replaceUser(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param user User's object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  replaceUser(user: Models.User, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param user User's object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceUser(user: Models.User, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceUser(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        user,
+        baseSiteId,
+        userId,
+        options
+      },
+      replaceUserOperationSpec,
+      callback);
+  }
+
+  /**
+   * Removes customer profile.
+   * @summary Delete customer profile.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  removeUser(baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  removeUser(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeUser(baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeUser(baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      removeUserOperationSpec,
+      callback);
+  }
+
+  /**
    * Updates customer profile. Only attributes provided in the request body will be changed.
-   *
-   * @param {User} user User's object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Updates customer profile
+   * @param user User's object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  updateUserPrim(user: Models.User, baseSiteId: string, userId: string): Promise<void>;
-  updateUserPrim(user: Models.User, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  updateUserPrim(user: Models.User, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  updateUserPrim(user: Models.User, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  updateUserPrim(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.updateUserPrimWithHttpOperationResponse(user, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.updateUserPrimWithHttpOperationResponse(user, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  updateUser(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param user User's object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  updateUser(user: Models.User, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param user User's object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updateUser(user: Models.User, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  updateUser(user: Models.User, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        user,
+        baseSiteId,
+        userId,
+        options
+      },
+      updateUserOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get customer's addresses
-   *
    * Returns customer's addresses.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetAddressesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.AddressList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.AddressList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get customer's addresses
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetAddressesResponse>
    */
-  getAddresses(baseSiteId: string, userId: string): Promise<Models.AddressList>;
-  getAddresses(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetAddressesOptionalParams): Promise<Models.AddressList>;
+  getAddresses(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressesOptionalParams): Promise<Models.GetAddressesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   getAddresses(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.AddressList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getAddresses(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetAddressesOptionalParams, callback: msRest.ServiceCallback<Models.AddressList>): void;
-  getAddresses(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressesOptionalParams, callback?: msRest.ServiceCallback<Models.AddressList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.AddressList>;
-    if (!callback) {
-      return this.getAddressesWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.AddressList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getAddressesWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.AddressList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getAddresses(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressesOptionalParams | msRest.ServiceCallback<Models.AddressList>, callback?: msRest.ServiceCallback<Models.AddressList>): Promise<Models.GetAddressesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      getAddressesOperationSpec,
+      callback) as Promise<Models.GetAddressesResponse>;
   }
 
   /**
-   * @summary Creates a new address.
-   *
    * Creates a new address.
-   *
-   * @param {Address} address Address object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2CreateAddressPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Address} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Address} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Creates a new address.
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateAddressResponse>
    */
-  createAddressPrim(address: Models.Address, baseSiteId: string, userId: string): Promise<Models.Address>;
-  createAddressPrim(address: Models.Address, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CreateAddressPrimOptionalParams): Promise<Models.Address>;
-  createAddressPrim(address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Address>): void;
-  createAddressPrim(address: Models.Address, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CreateAddressPrimOptionalParams, callback: msRest.ServiceCallback<Models.Address>): void;
-  createAddressPrim(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateAddressPrimOptionalParams, callback?: msRest.ServiceCallback<Models.Address>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Address>;
-    if (!callback) {
-      return this.createAddressPrimWithHttpOperationResponse(address, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Address);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.createAddressPrimWithHttpOperationResponse(address, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Address;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createAddress(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateAddressOptionalParams): Promise<Models.CreateAddressResponse>;
+  /**
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  createAddress(address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Address>): void;
+  /**
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createAddress(address: Models.Address, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CreateAddressOptionalParams, callback: msRest.ServiceCallback<Models.Address>): void;
+  createAddress(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateAddressOptionalParams | msRest.ServiceCallback<Models.Address>, callback?: msRest.ServiceCallback<Models.Address>): Promise<Models.CreateAddressResponse> {
+    return this.sendOperationRequest(
+      {
+        address,
+        baseSiteId,
+        userId,
+        options
+      },
+      createAddressOperationSpec,
+      callback) as Promise<Models.CreateAddressResponse>;
   }
 
   /**
-   * @summary Verifies address
-   *
    * Verifies address.
-   *
-   * @param {Address} address Address object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2VerifyAddressPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.AddressValidation} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.AddressValidation} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Verifies address.
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ValidateAddressResponse>
    */
-  verifyAddressPrim(address: Models.Address, baseSiteId: string, userId: string): Promise<Models.AddressValidation>;
-  verifyAddressPrim(address: Models.Address, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2VerifyAddressPrimOptionalParams): Promise<Models.AddressValidation>;
-  verifyAddressPrim(address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.AddressValidation>): void;
-  verifyAddressPrim(address: Models.Address, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2VerifyAddressPrimOptionalParams, callback: msRest.ServiceCallback<Models.AddressValidation>): void;
-  verifyAddressPrim(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2VerifyAddressPrimOptionalParams, callback?: msRest.ServiceCallback<Models.AddressValidation>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.AddressValidation>;
-    if (!callback) {
-      return this.verifyAddressPrimWithHttpOperationResponse(address, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.AddressValidation);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.verifyAddressPrimWithHttpOperationResponse(address, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.AddressValidation;
-        return cb(err, result, data.request, data);
-      });
-    }
+  validateAddress(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2ValidateAddressOptionalParams): Promise<Models.ValidateAddressResponse>;
+  /**
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  validateAddress(address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.AddressValidation>): void;
+  /**
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  validateAddress(address: Models.Address, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2ValidateAddressOptionalParams, callback: msRest.ServiceCallback<Models.AddressValidation>): void;
+  validateAddress(address: Models.Address, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2ValidateAddressOptionalParams | msRest.ServiceCallback<Models.AddressValidation>, callback?: msRest.ServiceCallback<Models.AddressValidation>): Promise<Models.ValidateAddressResponse> {
+    return this.sendOperationRequest(
+      {
+        address,
+        baseSiteId,
+        userId,
+        options
+      },
+      validateAddressOperationSpec,
+      callback) as Promise<Models.ValidateAddressResponse>;
   }
 
   /**
-   * @summary Get info about address
-   *
    * Returns detailed information about address with a given id.
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetAddressOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Address} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Address} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get info about address
+   * @param addressId Address identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetAddressResponse>
    */
-  getAddress(addressId: string, baseSiteId: string, userId: string): Promise<Models.Address>;
-  getAddress(addressId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetAddressOptionalParams): Promise<Models.Address>;
+  getAddress(addressId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressOptionalParams): Promise<Models.GetAddressResponse>;
+  /**
+   * @param addressId Address identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   getAddress(addressId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Address>): void;
+  /**
+   * @param addressId Address identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getAddress(addressId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetAddressOptionalParams, callback: msRest.ServiceCallback<Models.Address>): void;
-  getAddress(addressId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressOptionalParams, callback?: msRest.ServiceCallback<Models.Address>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Address>;
-    if (!callback) {
-      return this.getAddressWithHttpOperationResponse(addressId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Address);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getAddressWithHttpOperationResponse(addressId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Address;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getAddress(addressId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAddressOptionalParams | msRest.ServiceCallback<Models.Address>, callback?: msRest.ServiceCallback<Models.Address>): Promise<Models.GetAddressResponse> {
+    return this.sendOperationRequest(
+      {
+        addressId,
+        baseSiteId,
+        userId,
+        options
+      },
+      getAddressOperationSpec,
+      callback) as Promise<Models.GetAddressResponse>;
   }
 
   /**
-   * @summary Updates the address
-   *
    * Updates the address. Attributes not provided in the request will be defined again (set to null
    * or default).
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {Address} address Address object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
-   */
-  putAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string): Promise<void>;
-  putAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  putAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  putAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  putAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.putAddressPrimWithHttpOperationResponse(addressId, address, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.putAddressPrimWithHttpOperationResponse(addressId, address, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
-  /**
-   * @summary Delete customer's address
-   *
-   * Removes customer's address.
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
-   */
-  deleteAddress(addressId: string, baseSiteId: string, userId: string): Promise<void>;
-  deleteAddress(addressId: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  deleteAddress(addressId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  deleteAddress(addressId: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deleteAddress(addressId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.deleteAddressWithHttpOperationResponse(addressId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.deleteAddressWithHttpOperationResponse(addressId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
-  /**
    * @summary Updates the address
-   *
+   * @param addressId Address identifier.
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  replaceAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param addressId Address identifier.
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  replaceAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param addressId Address identifier.
+   * @param address Address object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        addressId,
+        address,
+        baseSiteId,
+        userId,
+        options
+      },
+      replaceAddressOperationSpec,
+      callback);
+  }
+
+  /**
+   * Removes customer's address.
+   * @summary Delete customer's address.
+   * @param addressId Address identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  removeAddress(addressId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param addressId Address identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  removeAddress(addressId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param addressId Address identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeAddress(addressId: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeAddress(addressId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        addressId,
+        baseSiteId,
+        userId,
+        options
+      },
+      removeAddressOperationSpec,
+      callback);
+  }
+
+  /**
    * Updates the address. Only attributes provided in the request body will be changed.
-   *
-   * @param {string} addressId Address identifier.
-   *
-   * @param {Address} address Address object
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Updates the address
+   * @param addressId Address identifier.
+   * @param address Address object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  patchAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string): Promise<void>;
-  patchAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  patchAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  patchAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  patchAddressPrim(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.patchAddressPrimWithHttpOperationResponse(addressId, address, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.patchAddressPrimWithHttpOperationResponse(addressId, address, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  updateAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param addressId Address identifier.
+   * @param address Address object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  updateAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param addressId Address identifier.
+   * @param address Address object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updateAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  updateAddress(addressId: string, address: Models.Address, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        addressId,
+        address,
+        baseSiteId,
+        userId,
+        options
+      },
+      updateAddressOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get all customer carts.
-   *
    * Lists all customer carts.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetCartsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CartList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CartList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get all customer carts.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartsResponse>
    */
-  getCarts(baseSiteId: string, userId: string): Promise<Models.CartList>;
-  getCarts(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetCartsOptionalParams): Promise<Models.CartList>;
+  getCarts(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetCartsOptionalParams): Promise<Models.GetCartsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   getCarts(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.CartList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCarts(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetCartsOptionalParams, callback: msRest.ServiceCallback<Models.CartList>): void;
-  getCarts(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetCartsOptionalParams, callback?: msRest.ServiceCallback<Models.CartList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CartList>;
-    if (!callback) {
-      return this.getCartsWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CartList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCartsWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CartList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCarts(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetCartsOptionalParams | msRest.ServiceCallback<Models.CartList>, callback?: msRest.ServiceCallback<Models.CartList>): Promise<Models.GetCartsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      getCartsOperationSpec,
+      callback) as Promise<Models.GetCartsResponse>;
   }
 
   /**
-   * @summary Creates or restore a cart for a user.
-   *
    * Creates a new cart or restores an anonymous cart as a user's cart (if an old Cart Id is given in
    * the request).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2CreateCartOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Cart} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Cart} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Creates or restore a cart for a user.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateCartResponse>
    */
-  createCart(baseSiteId: string, userId: string): Promise<Models.Cart>;
-  createCart(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CreateCartOptionalParams): Promise<Models.Cart>;
+  createCart(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateCartOptionalParams): Promise<Models.CreateCartResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   createCart(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Cart>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   createCart(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CreateCartOptionalParams, callback: msRest.ServiceCallback<Models.Cart>): void;
-  createCart(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateCartOptionalParams, callback?: msRest.ServiceCallback<Models.Cart>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Cart>;
-    if (!callback) {
-      return this.createCartWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Cart);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.createCartWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Cart;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createCart(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CreateCartOptionalParams | msRest.ServiceCallback<Models.Cart>, callback?: msRest.ServiceCallback<Models.Cart>): Promise<Models.CreateCartResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      createCartOperationSpec,
+      callback) as Promise<Models.CreateCartResponse>;
   }
 
   /**
-   * @summary Get a cart with a given identifier.
-   *
    * Returns the cart with a given identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Cart} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Cart} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a cart with a given identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartResponse>
    */
-  getCart(baseSiteId: string, userId: string, cartId: string): Promise<Models.Cart>;
-  getCart(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartOptionalParams): Promise<Models.Cart>;
+  getCart(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartOptionalParams): Promise<Models.GetCartResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
   getCart(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.Cart>): void;
-  getCart(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartOptionalParams, callback: msRest.ServiceCallback<Models.Cart>): void;
-  getCart(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartOptionalParams, callback?: msRest.ServiceCallback<Models.Cart>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Cart>;
-    if (!callback) {
-      return this.getCartWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Cart);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCartWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Cart;
-        return cb(err, result, data.request, data);
-      });
-    }
-  }
-
   /**
-   * @summary Deletes a cart with a given cart id.
-   *
-   * Deletes a cart with a given cart id.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
    */
-  deleteCart(baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  deleteCart(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  deleteCart(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  deleteCart(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deleteCart(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.deleteCartWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.deleteCartWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCart(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartOptionalParams, callback: msRest.ServiceCallback<Models.Cart>): void;
+  getCart(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartOptionalParams | msRest.ServiceCallback<Models.Cart>, callback?: msRest.ServiceCallback<Models.Cart>): Promise<Models.GetCartResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartOperationSpec,
+      callback) as Promise<Models.GetCartResponse>;
   }
 
   /**
-   * @summary Creates a delivery address for the cart.
-   *
+   * Deletes a cart with a given cart id.
+   * @summary Deletes a cart with a given cart id.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  removeCart(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  removeCart(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeCart(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeCart(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeCartOperationSpec,
+      callback);
+  }
+
+  /**
    * Creates an address and assigns it to the cart as the delivery address.
-   *
-   * @param {Address} address Request body parameter that contains details such as the customer's
-   * first name (firstName), the customer's last name (lastName), the customer's title (titleCode),
-   * the country (country.isocode), the first part of the address (line1), the second part of the
-   * address (line2), the town (town), the postal code (postalCode), and the region (region.isocode).
+   * @summary Creates a delivery address for the cart.
+   * @param address Request body parameter that contains details such as the customer's first name
+   * (firstName), the customer's last name (lastName), the customer's title (titleCode), the country
+   * (country.isocode), the first part of the address (line1), the second part of the address
+   * (line2), the town (town), the postal code (postalCode), and the region (region.isocode).
    *
    * The DTO is in XML or .json format.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Address} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Address} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateCartDeliveryAddressResponse>
    */
-  createAndSetAddressPrim(address: Models.Address, baseSiteId: string, userId: string, cartId: string): Promise<Models.Address>;
-  createAndSetAddressPrim(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams): Promise<Models.Address>;
-  createAndSetAddressPrim(address: Models.Address, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.Address>): void;
-  createAndSetAddressPrim(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams, callback: msRest.ServiceCallback<Models.Address>): void;
-  createAndSetAddressPrim(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateAndSetAddressPrimOptionalParams, callback?: msRest.ServiceCallback<Models.Address>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Address>;
-    if (!callback) {
-      return this.createAndSetAddressPrimWithHttpOperationResponse(address, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Address);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.createAndSetAddressPrimWithHttpOperationResponse(address, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Address;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createCartDeliveryAddress(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateCartDeliveryAddressOptionalParams): Promise<Models.CreateCartDeliveryAddressResponse>;
+  /**
+   * @param address Request body parameter that contains details such as the customer's first name
+   * (firstName), the customer's last name (lastName), the customer's title (titleCode), the country
+   * (country.isocode), the first part of the address (line1), the second part of the address
+   * (line2), the town (town), the postal code (postalCode), and the region (region.isocode).
+   *
+   * The DTO is in XML or .json format.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  createCartDeliveryAddress(address: Models.Address, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.Address>): void;
+  /**
+   * @param address Request body parameter that contains details such as the customer's first name
+   * (firstName), the customer's last name (lastName), the customer's title (titleCode), the country
+   * (country.isocode), the first part of the address (line1), the second part of the address
+   * (line2), the town (town), the postal code (postalCode), and the region (region.isocode).
+   *
+   * The DTO is in XML or .json format.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createCartDeliveryAddress(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2CreateCartDeliveryAddressOptionalParams, callback: msRest.ServiceCallback<Models.Address>): void;
+  createCartDeliveryAddress(address: Models.Address, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateCartDeliveryAddressOptionalParams | msRest.ServiceCallback<Models.Address>, callback?: msRest.ServiceCallback<Models.Address>): Promise<Models.CreateCartDeliveryAddressResponse> {
+    return this.sendOperationRequest(
+      {
+        address,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      createCartDeliveryAddressOperationSpec,
+      callback) as Promise<Models.CreateCartDeliveryAddressResponse>;
   }
 
   /**
-   * @summary Sets a delivery address for the cart.
-   *
    * Sets a delivery address for the cart. The address country must be placed among the delivery
    * countries of the current base store.
-   *
-   * @param {string} addressId Address identifier
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Sets a delivery address for the cart.
+   * @param addressId Address identifier
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  setCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  setCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  setCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  setCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  setCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.setCartDeliveryAddressWithHttpOperationResponse(addressId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.setCartDeliveryAddressWithHttpOperationResponse(addressId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param addressId Address identifier
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  replaceCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param addressId Address identifier
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceCartDeliveryAddress(addressId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        addressId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      replaceCartDeliveryAddressOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Delete the delivery address from the cart.
-   *
-   * Removes the delivery address from the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * Deletes the delivery address from the cart.
+   * @summary Deletes the delivery address from the cart.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
+  removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
   removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.removeCartDeliveryAddressWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.removeCartDeliveryAddressWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removeCartDeliveryAddress(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeCartDeliveryAddressOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Explicitly clones a cart.
-   *
    * Explicitly clones a cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2CloneSaveCartOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.SaveCartResult} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.SaveCartResult} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Explicitly clones a cart.
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.DoCartCloneResponse>
    */
-  cloneSaveCart(cartId: string, baseSiteId: string, userId: string): Promise<Models.SaveCartResult>;
-  cloneSaveCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CloneSaveCartOptionalParams): Promise<Models.SaveCartResult>;
-  cloneSaveCart(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  cloneSaveCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CloneSaveCartOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  cloneSaveCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CloneSaveCartOptionalParams, callback?: msRest.ServiceCallback<Models.SaveCartResult>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.SaveCartResult>;
-    if (!callback) {
-      return this.cloneSaveCartWithHttpOperationResponse(cartId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.SaveCartResult);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.cloneSaveCartWithHttpOperationResponse(cartId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.SaveCartResult;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doCartClone(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoCartCloneOptionalParams): Promise<Models.DoCartCloneResponse>;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  doCartClone(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doCartClone(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2DoCartCloneOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  doCartClone(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoCartCloneOptionalParams | msRest.ServiceCallback<Models.SaveCartResult>, callback?: msRest.ServiceCallback<Models.SaveCartResult>): Promise<Models.DoCartCloneResponse> {
+    return this.sendOperationRequest(
+      {
+        cartId,
+        baseSiteId,
+        userId,
+        options
+      },
+      doCartCloneOperationSpec,
+      callback) as Promise<Models.DoCartCloneResponse>;
   }
 
   /**
-   * @summary Get the delivery mode selected for the cart.
+   * Returns a list of stores that have all the pick-up items in stock.
    *
+   * Note, if there are no stores that have all the pick up items in stock, or all items are already
+   * set to the same pick up location, the response returns an empty list.
+   * @summary Get consolidated pickup options.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetConsolidatedPickupLocationsResponse>
+   */
+  getConsolidatedPickupLocations(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetConsolidatedPickupLocationsOptionalParams): Promise<Models.GetConsolidatedPickupLocationsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getConsolidatedPickupLocations(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PointOfServiceList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getConsolidatedPickupLocations(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetConsolidatedPickupLocationsOptionalParams, callback: msRest.ServiceCallback<Models.PointOfServiceList>): void;
+  getConsolidatedPickupLocations(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetConsolidatedPickupLocationsOptionalParams | msRest.ServiceCallback<Models.PointOfServiceList>, callback?: msRest.ServiceCallback<Models.PointOfServiceList>): Promise<Models.GetConsolidatedPickupLocationsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getConsolidatedPickupLocationsOperationSpec,
+      callback) as Promise<Models.GetConsolidatedPickupLocationsResponse>;
+  }
+
+  /**
+   * Specifies one store location where all items will be picked up.
+   *
+   * Note, if any of the items are not available at the specified location, these items are removed
+   * from the cart.
+   * @summary Handles the consolidating pickup locations.
+   * @param storeName The name of the store where items will be picked up
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateConsolidatedPickupLocationResponse>
+   */
+  createConsolidatedPickupLocation(storeName: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateConsolidatedPickupLocationOptionalParams): Promise<Models.CreateConsolidatedPickupLocationResponse>;
+  /**
+   * @param storeName The name of the store where items will be picked up
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  createConsolidatedPickupLocation(storeName: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.CartModificationList>): void;
+  /**
+   * @param storeName The name of the store where items will be picked up
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createConsolidatedPickupLocation(storeName: string, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2CreateConsolidatedPickupLocationOptionalParams, callback: msRest.ServiceCallback<Models.CartModificationList>): void;
+  createConsolidatedPickupLocation(storeName: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateConsolidatedPickupLocationOptionalParams | msRest.ServiceCallback<Models.CartModificationList>, callback?: msRest.ServiceCallback<Models.CartModificationList>): Promise<Models.CreateConsolidatedPickupLocationResponse> {
+    return this.sendOperationRequest(
+      {
+        storeName,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      createConsolidatedPickupLocationOperationSpec,
+      callback) as Promise<Models.CreateConsolidatedPickupLocationResponse>;
+  }
+
+  /**
    * Returns the delivery mode selected for the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartDeliveryModeOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.DeliveryMode} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.DeliveryMode} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get the delivery mode selected for the cart.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartDeliveryModeResponse>
    */
-  getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string): Promise<Models.DeliveryMode>;
-  getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartDeliveryModeOptionalParams): Promise<Models.DeliveryMode>;
+  getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartDeliveryModeOptionalParams): Promise<Models.GetCartDeliveryModeResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
   getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.DeliveryMode>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartDeliveryModeOptionalParams, callback: msRest.ServiceCallback<Models.DeliveryMode>): void;
-  getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartDeliveryModeOptionalParams, callback?: msRest.ServiceCallback<Models.DeliveryMode>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.DeliveryMode>;
-    if (!callback) {
-      return this.getCartDeliveryModeWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.DeliveryMode);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCartDeliveryModeWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.DeliveryMode;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartDeliveryModeOptionalParams | msRest.ServiceCallback<Models.DeliveryMode>, callback?: msRest.ServiceCallback<Models.DeliveryMode>): Promise<Models.GetCartDeliveryModeResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartDeliveryModeOperationSpec,
+      callback) as Promise<Models.GetCartDeliveryModeResponse>;
   }
 
   /**
-   * @summary Sets the delivery mode for a cart.
-   *
    * Sets the delivery mode with a given identifier for the cart.
-   *
-   * @param {string} deliveryModeId Delivery mode identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Sets the delivery mode for a cart.
+   * @param deliveryModeId Delivery mode identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  setCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  setCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  setCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  setCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  setCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.setCartDeliveryModeWithHttpOperationResponse(deliveryModeId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.setCartDeliveryModeWithHttpOperationResponse(deliveryModeId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param deliveryModeId Delivery mode identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  replaceCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param deliveryModeId Delivery mode identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceCartDeliveryMode(deliveryModeId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        deliveryModeId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      replaceCartDeliveryModeOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Delete the delivery mode from the cart.
-   *
-   * Removes the delivery mode from the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * Deletes the delivery mode from the cart.
+   * @summary Deletes the delivery mode from the cart.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  removeDeliveryMode(baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  removeDeliveryMode(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  removeDeliveryMode(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  removeDeliveryMode(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  removeDeliveryMode(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.removeDeliveryModeWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.removeDeliveryModeWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removeCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  removeCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeCartDeliveryMode(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeCartDeliveryModeOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get all delivery modes for the current store and delivery address.
-   *
    * Returns all delivery modes supported for the current base store and cart delivery address. A
    * delivery address must be set for the cart, otherwise an empty list will be returned.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.DeliveryModeList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.DeliveryModeList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get all delivery modes for the current store and delivery address.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartDeliveryModesResponse>
    */
-  getSupportedDeliveryModes(baseSiteId: string, userId: string, cartId: string): Promise<Models.DeliveryModeList>;
-  getSupportedDeliveryModes(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams): Promise<Models.DeliveryModeList>;
-  getSupportedDeliveryModes(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.DeliveryModeList>): void;
-  getSupportedDeliveryModes(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams, callback: msRest.ServiceCallback<Models.DeliveryModeList>): void;
-  getSupportedDeliveryModes(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetSupportedDeliveryModesOptionalParams, callback?: msRest.ServiceCallback<Models.DeliveryModeList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.DeliveryModeList>;
-    if (!callback) {
-      return this.getSupportedDeliveryModesWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.DeliveryModeList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getSupportedDeliveryModesWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.DeliveryModeList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartDeliveryModes(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartDeliveryModesOptionalParams): Promise<Models.GetCartDeliveryModesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getCartDeliveryModes(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.DeliveryModeList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCartDeliveryModes(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartDeliveryModesOptionalParams, callback: msRest.ServiceCallback<Models.DeliveryModeList>): void;
+  getCartDeliveryModes(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartDeliveryModesOptionalParams | msRest.ServiceCallback<Models.DeliveryModeList>, callback?: msRest.ServiceCallback<Models.DeliveryModeList>): Promise<Models.GetCartDeliveryModesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartDeliveryModesOperationSpec,
+      callback) as Promise<Models.GetCartDeliveryModesResponse>;
   }
 
   /**
-   * @summary Assigns an email to the cart.
-   *
    * Assigns an email to the cart. This step is required to make a guest checkout.
-   *
-   * @param {string} email Email of the guest user. It will be used during the checkout process.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Assigns an email to the cart.
+   * @param email Email of the guest user. It will be used during the checkout process.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  guestLogin(email: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  guestLogin(email: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  guestLogin(email: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  guestLogin(email: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  guestLogin(email: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.guestLoginWithHttpOperationResponse(email, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.guestLoginWithHttpOperationResponse(email, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceCartGuestUser(email: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param email Email of the guest user. It will be used during the checkout process.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  replaceCartGuestUser(email: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param email Email of the guest user. It will be used during the checkout process.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceCartGuestUser(email: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceCartGuestUser(email: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        email,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      replaceCartGuestUserOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get cart entries.
-   *
    * Returns cart entries.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartEntriesOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.OrderEntryList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.OrderEntryList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get cart entries.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartEntriesResponse>
    */
-  getCartEntries(baseSiteId: string, userId: string, cartId: string): Promise<Models.OrderEntryList>;
-  getCartEntries(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartEntriesOptionalParams): Promise<Models.OrderEntryList>;
+  getCartEntries(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntriesOptionalParams): Promise<Models.GetCartEntriesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
   getCartEntries(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.OrderEntryList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCartEntries(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartEntriesOptionalParams, callback: msRest.ServiceCallback<Models.OrderEntryList>): void;
-  getCartEntries(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntriesOptionalParams, callback?: msRest.ServiceCallback<Models.OrderEntryList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.OrderEntryList>;
-    if (!callback) {
-      return this.getCartEntriesWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.OrderEntryList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCartEntriesWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.OrderEntryList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartEntries(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntriesOptionalParams | msRest.ServiceCallback<Models.OrderEntryList>, callback?: msRest.ServiceCallback<Models.OrderEntryList>): Promise<Models.GetCartEntriesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartEntriesOperationSpec,
+      callback) as Promise<Models.GetCartEntriesResponse>;
   }
 
   /**
-   * @summary Adds a product to the cart.
-   *
    * Adds a product to the cart.
-   *
-   * @param {OrderEntry} entry Request body parameter that contains details such as the product code
+   * @summary Adds a product to the cart.
+   * @param entry Request body parameter that contains details such as the product code
    * (product.code), the quantity of product (quantity), and the pickup store name
    * (deliveryPointOfService.name).
    *
    * The DTO is in XML or .json format.
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2AddCartEntryPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CartModification} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CartModification} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateCartEntryResponse>
    */
-  addCartEntryPrim(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string): Promise<Models.CartModification>;
-  addCartEntryPrim(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2AddCartEntryPrimOptionalParams): Promise<Models.CartModification>;
-  addCartEntryPrim(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CartModification>): void;
-  addCartEntryPrim(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2AddCartEntryPrimOptionalParams, callback: msRest.ServiceCallback<Models.CartModification>): void;
-  addCartEntryPrim(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2AddCartEntryPrimOptionalParams, callback?: msRest.ServiceCallback<Models.CartModification>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CartModification>;
-    if (!callback) {
-      return this.addCartEntryPrimWithHttpOperationResponse(entry, userId, cartId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CartModification);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.addCartEntryPrimWithHttpOperationResponse(entry, userId, cartId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CartModification;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createCartEntry(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateCartEntryOptionalParams): Promise<Models.CreateCartEntryResponse>;
+  /**
+   * @param entry Request body parameter that contains details such as the product code
+   * (product.code), the quantity of product (quantity), and the pickup store name
+   * (deliveryPointOfService.name).
+   *
+   * The DTO is in XML or .json format.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  createCartEntry(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CartModification>): void;
+  /**
+   * @param entry Request body parameter that contains details such as the product code
+   * (product.code), the quantity of product (quantity), and the pickup store name
+   * (deliveryPointOfService.name).
+   *
+   * The DTO is in XML or .json format.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createCartEntry(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2CreateCartEntryOptionalParams, callback: msRest.ServiceCallback<Models.CartModification>): void;
+  createCartEntry(entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2CreateCartEntryOptionalParams | msRest.ServiceCallback<Models.CartModification>, callback?: msRest.ServiceCallback<Models.CartModification>): Promise<Models.CreateCartEntryResponse> {
+    return this.sendOperationRequest(
+      {
+        entry,
+        userId,
+        cartId,
+        baseSiteId,
+        options
+      },
+      createCartEntryOperationSpec,
+      callback) as Promise<Models.CreateCartEntryResponse>;
   }
 
   /**
-   * @summary Get the details of the cart entries.
-   *
    * Returns the details of the cart entries.
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetCartEntryOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.OrderEntry} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.OrderEntry} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get the details of the cart entries.
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartEntryResponse>
    */
-  getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string): Promise<Models.OrderEntry>;
-  getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartEntryOptionalParams): Promise<Models.OrderEntry>;
+  getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntryOptionalParams): Promise<Models.GetCartEntryResponse>;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
   getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.OrderEntry>): void;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartEntryOptionalParams, callback: msRest.ServiceCallback<Models.OrderEntry>): void;
-  getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntryOptionalParams, callback?: msRest.ServiceCallback<Models.OrderEntry>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.OrderEntry>;
-    if (!callback) {
-      return this.getCartEntryWithHttpOperationResponse(entryNumber, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.OrderEntry);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCartEntryWithHttpOperationResponse(entryNumber, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.OrderEntry;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartEntryOptionalParams | msRest.ServiceCallback<Models.OrderEntry>, callback?: msRest.ServiceCallback<Models.OrderEntry>): Promise<Models.GetCartEntryResponse> {
+    return this.sendOperationRequest(
+      {
+        entryNumber,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartEntryOperationSpec,
+      callback) as Promise<Models.GetCartEntryResponse>;
   }
 
   /**
-   * @summary Set quantity and store details of a cart entry.
-   *
    * Updates the quantity of a single cart entry and the details of the store where the cart entry
    * will be picked up. Attributes not provided in request will be defined again (set to null or
    * default)
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {OrderEntry} entry Request body parameter that contains details such as the quantity of
-   * product (quantity), and the pickup store name (deliveryPointOfService.name)
+   * @summary Set quantity and store details of a cart entry.
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param entry Request body parameter that contains details such as the quantity of product
+   * (quantity), and the pickup store name (deliveryPointOfService.name)
    *
    * The DTO is in XML or .json format.
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2SetCartEntryPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CartModification} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CartModification} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ReplaceCartEntryResponse>
    */
-  setCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string): Promise<Models.CartModification>;
-  setCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2SetCartEntryPrimOptionalParams): Promise<Models.CartModification>;
-  setCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CartModification>): void;
-  setCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2SetCartEntryPrimOptionalParams, callback: msRest.ServiceCallback<Models.CartModification>): void;
-  setCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2SetCartEntryPrimOptionalParams, callback?: msRest.ServiceCallback<Models.CartModification>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CartModification>;
-    if (!callback) {
-      return this.setCartEntryPrimWithHttpOperationResponse(entryNumber, entry, userId, cartId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CartModification);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.setCartEntryPrimWithHttpOperationResponse(entryNumber, entry, userId, cartId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CartModification;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2ReplaceCartEntryOptionalParams): Promise<Models.ReplaceCartEntryResponse>;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param entry Request body parameter that contains details such as the quantity of product
+   * (quantity), and the pickup store name (deliveryPointOfService.name)
+   *
+   * The DTO is in XML or .json format.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  replaceCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CartModification>): void;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param entry Request body parameter that contains details such as the quantity of product
+   * (quantity), and the pickup store name (deliveryPointOfService.name)
+   *
+   * The DTO is in XML or .json format.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2ReplaceCartEntryOptionalParams, callback: msRest.ServiceCallback<Models.CartModification>): void;
+  replaceCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2ReplaceCartEntryOptionalParams | msRest.ServiceCallback<Models.CartModification>, callback?: msRest.ServiceCallback<Models.CartModification>): Promise<Models.ReplaceCartEntryResponse> {
+    return this.sendOperationRequest(
+      {
+        entryNumber,
+        entry,
+        userId,
+        cartId,
+        baseSiteId,
+        options
+      },
+      replaceCartEntryOperationSpec,
+      callback) as Promise<Models.ReplaceCartEntryResponse>;
   }
 
   /**
-   * @summary Deletes cart entry.
-   *
    * Deletes cart entry.
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Deletes cart entry.
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
+  removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
   removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.removeCartEntryWithHttpOperationResponse(entryNumber, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.removeCartEntryWithHttpOperationResponse(entryNumber, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removeCartEntry(entryNumber: number, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        entryNumber,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeCartEntryOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Update quantity and store details of a cart entry.
-   *
    * Updates the quantity of a single cart entry and the details of the store where the cart entry
    * will be picked up.
-   *
-   * @param {number} entryNumber The entry number. Each entry in a cart has an entry number. Cart
-   * entries are numbered in ascending order, starting with zero (0).
-   *
-   * @param {OrderEntry} entry Request body parameter that contains details such as the quantity of
-   * product (quantity), and the pickup store name (deliveryPointOfService.name)
+   * @summary Update quantity and store details of a cart entry.
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param entry Request body parameter that contains details such as the quantity of product
+   * (quantity), and the pickup store name (deliveryPointOfService.name)
    *
    * The DTO is in XML or .json format.
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2UpdateCartEntryPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.CartModification} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.CartModification} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.UpdateCartEntryResponse>
    */
-  updateCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string): Promise<Models.CartModification>;
-  updateCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2UpdateCartEntryPrimOptionalParams): Promise<Models.CartModification>;
-  updateCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CartModification>): void;
-  updateCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2UpdateCartEntryPrimOptionalParams, callback: msRest.ServiceCallback<Models.CartModification>): void;
-  updateCartEntryPrim(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2UpdateCartEntryPrimOptionalParams, callback?: msRest.ServiceCallback<Models.CartModification>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.CartModification>;
-    if (!callback) {
-      return this.updateCartEntryPrimWithHttpOperationResponse(entryNumber, entry, userId, cartId, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.CartModification);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.updateCartEntryPrimWithHttpOperationResponse(entryNumber, entry, userId, cartId, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.CartModification;
-        return cb(err, result, data.request, data);
-      });
-    }
+  updateCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2UpdateCartEntryOptionalParams): Promise<Models.UpdateCartEntryResponse>;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param entry Request body parameter that contains details such as the quantity of product
+   * (quantity), and the pickup store name (deliveryPointOfService.name)
+   *
+   * The DTO is in XML or .json format.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  updateCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.CartModification>): void;
+  /**
+   * @param entryNumber The entry number. Each entry in a cart has an entry number. Cart entries are
+   * numbered in ascending order, starting with zero (0).
+   * @param entry Request body parameter that contains details such as the quantity of product
+   * (quantity), and the pickup store name (deliveryPointOfService.name)
+   *
+   * The DTO is in XML or .json format.
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updateCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options: Models.CommerceWebservicesV2UpdateCartEntryOptionalParams, callback: msRest.ServiceCallback<Models.CartModification>): void;
+  updateCartEntry(entryNumber: number, entry: Models.OrderEntry, userId: string, cartId: string, baseSiteId: string, options?: Models.CommerceWebservicesV2UpdateCartEntryOptionalParams | msRest.ServiceCallback<Models.CartModification>, callback?: msRest.ServiceCallback<Models.CartModification>): Promise<Models.UpdateCartEntryResponse> {
+    return this.sendOperationRequest(
+      {
+        entryNumber,
+        entry,
+        userId,
+        cartId,
+        baseSiteId,
+        options
+      },
+      updateCartEntryOperationSpec,
+      callback) as Promise<Models.UpdateCartEntryResponse>;
   }
 
   /**
-   * @summary Flag a cart for deletion.
-   *
    * Flags a cart for deletion (the cart doesn't have corresponding save cart attributes anymore).
    * The cart is not actually deleted from the database. But with the removal of the saved cart
    * attributes, this cart will be taken care of by the cart removal job just like any other cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2FlagForDeletionOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.SaveCartResult} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.SaveCartResult} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Flag a cart for deletion.
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.DoUpdateFlagForDeletionResponse>
    */
-  flagForDeletion(cartId: string, baseSiteId: string, userId: string): Promise<Models.SaveCartResult>;
-  flagForDeletion(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2FlagForDeletionOptionalParams): Promise<Models.SaveCartResult>;
-  flagForDeletion(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  flagForDeletion(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2FlagForDeletionOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  flagForDeletion(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2FlagForDeletionOptionalParams, callback?: msRest.ServiceCallback<Models.SaveCartResult>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.SaveCartResult>;
-    if (!callback) {
-      return this.flagForDeletionWithHttpOperationResponse(cartId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.SaveCartResult);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.flagForDeletionWithHttpOperationResponse(cartId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.SaveCartResult;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doUpdateFlagForDeletion(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoUpdateFlagForDeletionOptionalParams): Promise<Models.DoUpdateFlagForDeletionResponse>;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  doUpdateFlagForDeletion(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doUpdateFlagForDeletion(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2DoUpdateFlagForDeletionOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  doUpdateFlagForDeletion(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoUpdateFlagForDeletionOptionalParams | msRest.ServiceCallback<Models.SaveCartResult>, callback?: msRest.ServiceCallback<Models.SaveCartResult>): Promise<Models.DoUpdateFlagForDeletionResponse> {
+    return this.sendOperationRequest(
+      {
+        cartId,
+        baseSiteId,
+        userId,
+        options
+      },
+      doUpdateFlagForDeletionOperationSpec,
+      callback) as Promise<Models.DoUpdateFlagForDeletionResponse>;
   }
 
   /**
-   * @summary Defines and assigns details of a new credit card payment to the cart.
+   * Returns the necessary information for creating a subscription that contacts the payment provider
+   * directly. This information contains the payment provider URL and a list of parameters that are
+   * needed to create the subscription.
+   * @summary Get information needed for create subscription
+   * @param responseUrl The URL that the payment provider uses to return payment information.
+   * Possible values for responseUrl include the following: “orderPage_cancelResponseURL”,
+   * “orderPage_declineResponseURL”, and “orderPage_receiptResponseURL”.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetSopPaymentRequestDetailsResponse>
+   */
+  getSopPaymentRequestDetails(responseUrl: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetSopPaymentRequestDetailsOptionalParams): Promise<Models.GetSopPaymentRequestDetailsResponse>;
+  /**
+   * @param responseUrl The URL that the payment provider uses to return payment information.
+   * Possible values for responseUrl include the following: “orderPage_cancelResponseURL”,
+   * “orderPage_declineResponseURL”, and “orderPage_receiptResponseURL”.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getSopPaymentRequestDetails(responseUrl: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PaymentRequest>): void;
+  /**
+   * @param responseUrl The URL that the payment provider uses to return payment information.
+   * Possible values for responseUrl include the following: “orderPage_cancelResponseURL”,
+   * “orderPage_declineResponseURL”, and “orderPage_receiptResponseURL”.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getSopPaymentRequestDetails(responseUrl: string, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetSopPaymentRequestDetailsOptionalParams, callback: msRest.ServiceCallback<Models.PaymentRequest>): void;
+  getSopPaymentRequestDetails(responseUrl: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetSopPaymentRequestDetailsOptionalParams | msRest.ServiceCallback<Models.PaymentRequest>, callback?: msRest.ServiceCallback<Models.PaymentRequest>): Promise<Models.GetSopPaymentRequestDetailsResponse> {
+    return this.sendOperationRequest(
+      {
+        responseUrl,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getSopPaymentRequestDetailsOperationSpec,
+      callback) as Promise<Models.GetSopPaymentRequestDetailsResponse>;
+  }
+
+  /**
+   * Returns information related to creating subscription request results. If there is no response
+   * from the payment provider, a "202 Accepted" status is returned. If the subscription is created
+   * successfully, the payment details are returned. Otherwise, an error response is returned.
    *
+   * Note, the “Try it out” button is not enabled for this method (always returns an error) because
+   * the Extended Carts Controller handles parameters differently, depending on which payment
+   * provider is used. For more information about this controller, please refer to the
+   * “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.
+   * @summary Get information about create subscription request results
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetSopPaymentResponseResponse>
+   */
+  getSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetSopPaymentResponseOptionalParams): Promise<Models.GetSopPaymentResponseResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetSopPaymentResponseOptionalParams, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  getSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetSopPaymentResponseOptionalParams | msRest.ServiceCallback<Models.PaymentDetails>, callback?: msRest.ServiceCallback<Models.PaymentDetails>): Promise<Models.GetSopPaymentResponseResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getSopPaymentResponseOperationSpec,
+      callback) as Promise<Models.GetSopPaymentResponseResponse>;
+  }
+
+  /**
+   * Handles the response from the payment provider and creates payment details.
+   *
+   * Note, the “Try it out” button is not enabled for this method (always returns an error) because
+   * the Extended Carts Controller handles parameters differently, depending on which payment
+   * provider is used. For more information about this controller, please refer to the
+   * “acceleratorwebservicesaddon AddOn” documentation on help.hybris.com.
+   * @summary Handles response from payment provider and create payment details
+   * @param fields Response configuration. This is the list of fields that should be returned in the
+   * response body. Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.DoHandleSopPaymentResponseResponse>
+   */
+  doHandleSopPaymentResponse(fields: Models.Fields71, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<Models.DoHandleSopPaymentResponseResponse>;
+  /**
+   * @param fields Response configuration. This is the list of fields that should be returned in the
+   * response body. Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  doHandleSopPaymentResponse(fields: Models.Fields71, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  /**
+   * @param fields Response configuration. This is the list of fields that should be returned in the
+   * response body. Possible values include: 'BASIC', 'DEFAULT', 'FULL'
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doHandleSopPaymentResponse(fields: Models.Fields71, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  doHandleSopPaymentResponse(fields: Models.Fields71, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.PaymentDetails>, callback?: msRest.ServiceCallback<Models.PaymentDetails>): Promise<Models.DoHandleSopPaymentResponseResponse> {
+    return this.sendOperationRequest(
+      {
+        fields,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      doHandleSopPaymentResponseOperationSpec,
+      callback) as Promise<Models.DoHandleSopPaymentResponseResponse>;
+  }
+
+  /**
+   * Deletes the payment provider response related to the specified cart.
+   * @summary Deletes payment provider response related to cart.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  removeSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  removeSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeSopPaymentResponse(baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeSopPaymentResponseOperationSpec,
+      callback);
+  }
+
+  /**
    * Defines the details of a new credit card, and assigns this payment option to the cart.
-   *
-   * @param {PaymentDetails} paymentDetails Request body parameter that contains details such as the
-   * name on the card (accountHolderName), the card number (cardNumber), the card type
-   * (cardType.code), the month of the expiry date (expiryMonth), the year of the expiry date
-   * (expiryYear), whether the payment details should be saved (saved), whether the payment details
-   * should be set as default (defaultPaymentInfo), and the billing address
-   * (billingAddress.firstName, billingAddress.lastName, billingAddress.titleCode,
-   * billingAddress.country.isocode, billingAddress.line1, billingAddress.line2, billingAddress.town,
-   * billingAddress.postalCode, billingAddress.region.isocode)
+   * @summary Defines and assigns details of a new credit card payment to the cart.
+   * @param paymentDetails Request body parameter that contains details such as the name on the card
+   * (accountHolderName), the card number (cardNumber), the card type (cardType.code), the month of
+   * the expiry date (expiryMonth), the year of the expiry date (expiryYear), whether the payment
+   * details should be saved (saved), whether the payment details should be set as default
+   * (defaultPaymentInfo), and the billing address (billingAddress.firstName,
+   * billingAddress.lastName, billingAddress.titleCode, billingAddress.country.isocode,
+   * billingAddress.line1, billingAddress.line2, billingAddress.town, billingAddress.postalCode,
+   * billingAddress.region.isocode)
    *
    * The DTO is in XML or .json format.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PaymentDetails} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PaymentDetails} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.CreateCartPaymentDetailsResponse>
    */
-  addPaymentDetailsPrim(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string): Promise<Models.PaymentDetails>;
-  addPaymentDetailsPrim(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams): Promise<Models.PaymentDetails>;
-  addPaymentDetailsPrim(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
-  addPaymentDetailsPrim(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
-  addPaymentDetailsPrim(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2AddPaymentDetailsPrimOptionalParams, callback?: msRest.ServiceCallback<Models.PaymentDetails>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PaymentDetails>;
-    if (!callback) {
-      return this.addPaymentDetailsPrimWithHttpOperationResponse(paymentDetails, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PaymentDetails);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.addPaymentDetailsPrimWithHttpOperationResponse(paymentDetails, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PaymentDetails;
-        return cb(err, result, data.request, data);
-      });
-    }
+  createCartPaymentDetails(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateCartPaymentDetailsOptionalParams): Promise<Models.CreateCartPaymentDetailsResponse>;
+  /**
+   * @param paymentDetails Request body parameter that contains details such as the name on the card
+   * (accountHolderName), the card number (cardNumber), the card type (cardType.code), the month of
+   * the expiry date (expiryMonth), the year of the expiry date (expiryYear), whether the payment
+   * details should be saved (saved), whether the payment details should be set as default
+   * (defaultPaymentInfo), and the billing address (billingAddress.firstName,
+   * billingAddress.lastName, billingAddress.titleCode, billingAddress.country.isocode,
+   * billingAddress.line1, billingAddress.line2, billingAddress.town, billingAddress.postalCode,
+   * billingAddress.region.isocode)
+   *
+   * The DTO is in XML or .json format.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  createCartPaymentDetails(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  /**
+   * @param paymentDetails Request body parameter that contains details such as the name on the card
+   * (accountHolderName), the card number (cardNumber), the card type (cardType.code), the month of
+   * the expiry date (expiryMonth), the year of the expiry date (expiryYear), whether the payment
+   * details should be saved (saved), whether the payment details should be set as default
+   * (defaultPaymentInfo), and the billing address (billingAddress.firstName,
+   * billingAddress.lastName, billingAddress.titleCode, billingAddress.country.isocode,
+   * billingAddress.line1, billingAddress.line2, billingAddress.town, billingAddress.postalCode,
+   * billingAddress.region.isocode)
+   *
+   * The DTO is in XML or .json format.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createCartPaymentDetails(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2CreateCartPaymentDetailsOptionalParams, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  createCartPaymentDetails(paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2CreateCartPaymentDetailsOptionalParams | msRest.ServiceCallback<Models.PaymentDetails>, callback?: msRest.ServiceCallback<Models.PaymentDetails>): Promise<Models.CreateCartPaymentDetailsResponse> {
+    return this.sendOperationRequest(
+      {
+        paymentDetails,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      createCartPaymentDetailsOperationSpec,
+      callback) as Promise<Models.CreateCartPaymentDetailsResponse>;
   }
 
   /**
-   * @summary Sets credit card payment details for the cart.
-   *
    * Sets credit card payment details for the cart.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Sets credit card payment details for the cart.
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  setPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  setPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  setPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  setPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  setPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.setPaymentDetailsWithHttpOperationResponse(paymentDetailsId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.setPaymentDetailsWithHttpOperationResponse(paymentDetailsId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceCartPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  replaceCartPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceCartPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceCartPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        paymentDetailsId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      replaceCartPaymentDetailsOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get information about promotions applied on cart.
-   *
    * Returns information about the promotions applied on the cart. Requests pertaining to promotions
    * have been developed for the previous version of promotions and vouchers, and as a result, some
    * of them are currently not compatible with the new promotions engine.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetPromotionsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PromotionResultList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PromotionResultList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get information about promotions applied on cart.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartPromotionsResponse>
    */
-  getPromotions(baseSiteId: string, userId: string, cartId: string): Promise<Models.PromotionResultList>;
-  getPromotions(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetPromotionsOptionalParams): Promise<Models.PromotionResultList>;
-  getPromotions(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
-  getPromotions(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetPromotionsOptionalParams, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
-  getPromotions(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetPromotionsOptionalParams, callback?: msRest.ServiceCallback<Models.PromotionResultList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PromotionResultList>;
-    if (!callback) {
-      return this.getPromotionsWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PromotionResultList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPromotionsWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PromotionResultList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartPromotions(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartPromotionsOptionalParams): Promise<Models.GetCartPromotionsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getCartPromotions(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCartPromotions(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartPromotionsOptionalParams, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
+  getCartPromotions(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartPromotionsOptionalParams | msRest.ServiceCallback<Models.PromotionResultList>, callback?: msRest.ServiceCallback<Models.PromotionResultList>): Promise<Models.GetCartPromotionsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartPromotionsOperationSpec,
+      callback) as Promise<Models.GetCartPromotionsResponse>;
   }
 
   /**
-   * @summary Enables promotions based on the promotionsId of the cart.
-   *
    * Enables a promotion for the order based on the promotionId defined for the cart. Requests
    * pertaining to promotions have been developed for the previous version of promotions and
    * vouchers, and as a result, some of them are currently not compatible with the new promotions
    * engine.
-   *
-   * @param {string} promotionId Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Enables promotions based on the promotionsId of the cart.
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  applyPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  applyPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  applyPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  applyPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  applyPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.applyPromotionWithHttpOperationResponse(promotionId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.applyPromotionWithHttpOperationResponse(promotionId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doApplyCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  doApplyCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doApplyCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  doApplyCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        promotionId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      doApplyCartPromotionOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get information about promotions applied on cart.
-   *
    * Returns information about a promotion (with a specific promotionId), that has been applied on
    * the cart. Requests pertaining to promotions have been developed for the previous version of
    * promotions and vouchers, and as a result, some of them are currently not compatible with the new
    * promotions engine.
-   *
-   * @param {string} promotionId Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetPromotionOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PromotionResultList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PromotionResultList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get information about promotion applied on cart.
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartPromotionResponse>
    */
-  getPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string): Promise<Models.PromotionResultList>;
-  getPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetPromotionOptionalParams): Promise<Models.PromotionResultList>;
-  getPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
-  getPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetPromotionOptionalParams, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
-  getPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetPromotionOptionalParams, callback?: msRest.ServiceCallback<Models.PromotionResultList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PromotionResultList>;
-    if (!callback) {
-      return this.getPromotionWithHttpOperationResponse(promotionId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PromotionResultList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPromotionWithHttpOperationResponse(promotionId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PromotionResultList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartPromotionOptionalParams): Promise<Models.GetCartPromotionResponse>;
+  /**
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
+  /**
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartPromotionOptionalParams, callback: msRest.ServiceCallback<Models.PromotionResultList>): void;
+  getCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartPromotionOptionalParams | msRest.ServiceCallback<Models.PromotionResultList>, callback?: msRest.ServiceCallback<Models.PromotionResultList>): Promise<Models.GetCartPromotionResponse> {
+    return this.sendOperationRequest(
+      {
+        promotionId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartPromotionOperationSpec,
+      callback) as Promise<Models.GetCartPromotionResponse>;
   }
 
   /**
-   * @summary Disables the promotion based on the promotionsId of the cart.
-   *
    * Disables the promotion for the order based on the promotionId defined for the cart. Requests
    * pertaining to promotions have been developed for the previous version of promotions and
    * vouchers, and as a result, some of them are currently not compatible with the new promotions
    * engine.
-   *
-   * @param {string} promotionId Promotion identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Disables the promotion based on the promotionsId of the cart.
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  removePromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  removePromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  removePromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  removePromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  removePromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.removePromotionWithHttpOperationResponse(promotionId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.removePromotionWithHttpOperationResponse(promotionId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removeCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  removeCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param promotionId Promotion identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeCartPromotion(promotionId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        promotionId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeCartPromotionOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Restore a saved cart.
-   *
    * Restore a saved cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2RestoreSavedCartOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.SaveCartResult} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.SaveCartResult} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Restore a saved cart.
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.DoUpdateSavedCartResponse>
    */
-  restoreSavedCart(cartId: string, baseSiteId: string, userId: string): Promise<Models.SaveCartResult>;
-  restoreSavedCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2RestoreSavedCartOptionalParams): Promise<Models.SaveCartResult>;
-  restoreSavedCart(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  restoreSavedCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2RestoreSavedCartOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  restoreSavedCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2RestoreSavedCartOptionalParams, callback?: msRest.ServiceCallback<Models.SaveCartResult>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.SaveCartResult>;
-    if (!callback) {
-      return this.restoreSavedCartWithHttpOperationResponse(cartId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.SaveCartResult);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.restoreSavedCartWithHttpOperationResponse(cartId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.SaveCartResult;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doUpdateSavedCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoUpdateSavedCartOptionalParams): Promise<Models.DoUpdateSavedCartResponse>;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  doUpdateSavedCart(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doUpdateSavedCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2DoUpdateSavedCartOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  doUpdateSavedCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoUpdateSavedCartOptionalParams | msRest.ServiceCallback<Models.SaveCartResult>, callback?: msRest.ServiceCallback<Models.SaveCartResult>): Promise<Models.DoUpdateSavedCartResponse> {
+    return this.sendOperationRequest(
+      {
+        cartId,
+        baseSiteId,
+        userId,
+        options
+      },
+      doUpdateSavedCartOperationSpec,
+      callback) as Promise<Models.DoUpdateSavedCartResponse>;
   }
 
   /**
-   * @summary Explicitly saves a cart.
-   *
    * Explicitly saves a cart.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2SaveCartOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.SaveCartResult} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.SaveCartResult} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Explicitly saves a cart.
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.DoSaveCartResponse>
    */
-  saveCart(cartId: string, baseSiteId: string, userId: string): Promise<Models.SaveCartResult>;
-  saveCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2SaveCartOptionalParams): Promise<Models.SaveCartResult>;
-  saveCart(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  saveCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2SaveCartOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  saveCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2SaveCartOptionalParams, callback?: msRest.ServiceCallback<Models.SaveCartResult>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.SaveCartResult>;
-    if (!callback) {
-      return this.saveCartWithHttpOperationResponse(cartId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.SaveCartResult);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.saveCartWithHttpOperationResponse(cartId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.SaveCartResult;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doSaveCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoSaveCartOptionalParams): Promise<Models.DoSaveCartResponse>;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  doSaveCart(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doSaveCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2DoSaveCartOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  doSaveCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2DoSaveCartOptionalParams | msRest.ServiceCallback<Models.SaveCartResult>, callback?: msRest.ServiceCallback<Models.SaveCartResult>): Promise<Models.DoSaveCartResponse> {
+    return this.sendOperationRequest(
+      {
+        cartId,
+        baseSiteId,
+        userId,
+        options
+      },
+      doSaveCartOperationSpec,
+      callback) as Promise<Models.DoSaveCartResponse>;
   }
 
   /**
-   * @summary Get a saved cart.
-   *
    * Returns a saved cart for an authenticated user. The cart is identified using the "cartId"
    * parameter.
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetSavedCartOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.SaveCartResult} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.SaveCartResult} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a saved cart.
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetSavedCartResponse>
    */
-  getSavedCart(cartId: string, baseSiteId: string, userId: string): Promise<Models.SaveCartResult>;
-  getSavedCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetSavedCartOptionalParams): Promise<Models.SaveCartResult>;
+  getSavedCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetSavedCartOptionalParams): Promise<Models.GetSavedCartResponse>;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   getSavedCart(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
+  /**
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getSavedCart(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetSavedCartOptionalParams, callback: msRest.ServiceCallback<Models.SaveCartResult>): void;
-  getSavedCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetSavedCartOptionalParams, callback?: msRest.ServiceCallback<Models.SaveCartResult>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.SaveCartResult>;
-    if (!callback) {
-      return this.getSavedCartWithHttpOperationResponse(cartId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.SaveCartResult);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getSavedCartWithHttpOperationResponse(cartId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.SaveCartResult;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getSavedCart(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetSavedCartOptionalParams | msRest.ServiceCallback<Models.SaveCartResult>, callback?: msRest.ServiceCallback<Models.SaveCartResult>): Promise<Models.GetSavedCartResponse> {
+    return this.sendOperationRequest(
+      {
+        cartId,
+        baseSiteId,
+        userId,
+        options
+      },
+      getSavedCartOperationSpec,
+      callback) as Promise<Models.GetSavedCartResponse>;
   }
 
   /**
-   * @summary Get a list of vouchers applied to the cart.
-   *
    * Returns a list of vouchers applied to the cart.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {CommerceWebservicesV2GetVouchersOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.VoucherList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.VoucherList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a list of vouchers applied to the cart.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetCartVouchersResponse>
    */
-  getVouchers(baseSiteId: string, userId: string, cartId: string): Promise<Models.VoucherList>;
-  getVouchers(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetVouchersOptionalParams): Promise<Models.VoucherList>;
-  getVouchers(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.VoucherList>): void;
-  getVouchers(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetVouchersOptionalParams, callback: msRest.ServiceCallback<Models.VoucherList>): void;
-  getVouchers(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetVouchersOptionalParams, callback?: msRest.ServiceCallback<Models.VoucherList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.VoucherList>;
-    if (!callback) {
-      return this.getVouchersWithHttpOperationResponse(baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.VoucherList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getVouchersWithHttpOperationResponse(baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.VoucherList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getCartVouchers(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartVouchersOptionalParams): Promise<Models.GetCartVouchersResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  getCartVouchers(baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<Models.VoucherList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getCartVouchers(baseSiteId: string, userId: string, cartId: string, options: Models.CommerceWebservicesV2GetCartVouchersOptionalParams, callback: msRest.ServiceCallback<Models.VoucherList>): void;
+  getCartVouchers(baseSiteId: string, userId: string, cartId: string, options?: Models.CommerceWebservicesV2GetCartVouchersOptionalParams | msRest.ServiceCallback<Models.VoucherList>, callback?: msRest.ServiceCallback<Models.VoucherList>): Promise<Models.GetCartVouchersResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      getCartVouchersOperationSpec,
+      callback) as Promise<Models.GetCartVouchersResponse>;
   }
 
   /**
-   * @summary Applies a voucher based on the voucherId defined for the cart.
-   *
    * Applies a voucher based on the voucherId defined for the cart.
-   *
-   * @param {string} voucherId Voucher identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Applies a voucher based on the voucherId defined for the cart.
+   * @param voucherId Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  applyVoucherForCart(voucherId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  applyVoucherForCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  applyVoucherForCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  applyVoucherForCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  applyVoucherForCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.applyVoucherForCartWithHttpOperationResponse(voucherId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.applyVoucherForCartWithHttpOperationResponse(voucherId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  doApplyCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param voucherId Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  doApplyCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param voucherId Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doApplyCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  doApplyCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        voucherId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      doApplyCartVoucherOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Delete a voucher defined for the current cart.
-   *
-   * Removes a voucher based on the voucherId defined for the current cart.
-   *
-   * @param {string} voucherId Voucher identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {string} cartId Cart identifier: cart code for logged in user, cart guid for anonymous
-   * user, 'current' for the last modified cart
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * Deletes a voucher based on the voucherId defined for the current cart.
+   * @summary Deletes a voucher defined for the current cart.
+   * @param voucherId Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  releaseVoucherFromCart(voucherId: string, baseSiteId: string, userId: string, cartId: string): Promise<void>;
-  releaseVoucherFromCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  releaseVoucherFromCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
-  releaseVoucherFromCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  releaseVoucherFromCart(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.releaseVoucherFromCartWithHttpOperationResponse(voucherId, baseSiteId, userId, cartId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.releaseVoucherFromCartWithHttpOperationResponse(voucherId, baseSiteId, userId, cartId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removeCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param voucherId Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param callback The callback
+   */
+  removeCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param voucherId Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param cartId Cart identifier: cart code for logged in user, cart guid for anonymous user,
+   * 'current' for the last modified cart
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeCartVoucher(voucherId: string, baseSiteId: string, userId: string, cartId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        voucherId,
+        baseSiteId,
+        userId,
+        cartId,
+        options
+      },
+      removeCartVoucherOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get all customer groups of a customer.
-   *
+   * @summary A user can give consent.
+   * @param consentTemplateId Consent template ID.
+   * @param consentTemplateVersion Consent template version.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.DoGiveConsentResponse>
+   */
+  doGiveConsent(consentTemplateId: string, consentTemplateVersion: number, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<Models.DoGiveConsentResponse>;
+  /**
+   * @param consentTemplateId Consent template ID.
+   * @param consentTemplateVersion Consent template version.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  doGiveConsent(consentTemplateId: string, consentTemplateVersion: number, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.ConsentTemplate>): void;
+  /**
+   * @param consentTemplateId Consent template ID.
+   * @param consentTemplateVersion Consent template version.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  doGiveConsent(consentTemplateId: string, consentTemplateVersion: number, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ConsentTemplate>): void;
+  doGiveConsent(consentTemplateId: string, consentTemplateVersion: number, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ConsentTemplate>, callback?: msRest.ServiceCallback<Models.ConsentTemplate>): Promise<Models.DoGiveConsentResponse> {
+    return this.sendOperationRequest(
+      {
+        consentTemplateId,
+        consentTemplateVersion,
+        baseSiteId,
+        userId,
+        options
+      },
+      doGiveConsentOperationSpec,
+      callback) as Promise<Models.DoGiveConsentResponse>;
+  }
+
+  /**
+   * If the user consent was given, the consent is withdrawn. If consent was already withdrawn then
+   * returns consent already withdrawn error. If there is no such consent then returns not found. If
+   * the current user is an anonymous user then returns access denied error.
+   * @summary Withdraw the user consent for a given consent code.
+   * @param consentCode consentCode
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  removeConsent(consentCode: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param consentCode consentCode
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  removeConsent(consentCode: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param consentCode consentCode
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removeConsent(consentCode: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removeConsent(consentCode: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        consentCode,
+        baseSiteId,
+        userId,
+        options
+      },
+      removeConsentOperationSpec,
+      callback);
+  }
+
+  /**
+   * If user has not given or withdrawn consent to any of the template, no given or withdraw date is
+   * returned.
+   * @summary Fetch the list of consents
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetConsentTemplatesResponse>
+   */
+  getConsentTemplates(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetConsentTemplatesOptionalParams): Promise<Models.GetConsentTemplatesResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  getConsentTemplates(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.ConsentTemplateList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getConsentTemplates(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetConsentTemplatesOptionalParams, callback: msRest.ServiceCallback<Models.ConsentTemplateList>): void;
+  getConsentTemplates(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetConsentTemplatesOptionalParams | msRest.ServiceCallback<Models.ConsentTemplateList>, callback?: msRest.ServiceCallback<Models.ConsentTemplateList>): Promise<Models.GetConsentTemplatesResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      getConsentTemplatesOperationSpec,
+      callback) as Promise<Models.GetConsentTemplatesResponse>;
+  }
+
+  /**
+   * If user has not given or withdrawn consent to the template, no given or withdraw date is
+   * returned.
+   * @summary Fetch the consent.
+   * @param consentTemplateId Consent template id.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetConsentTemplateResponse>
+   */
+  getConsentTemplate(consentTemplateId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetConsentTemplateOptionalParams): Promise<Models.GetConsentTemplateResponse>;
+  /**
+   * @param consentTemplateId Consent template id.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  getConsentTemplate(consentTemplateId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.ConsentTemplate>): void;
+  /**
+   * @param consentTemplateId Consent template id.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getConsentTemplate(consentTemplateId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetConsentTemplateOptionalParams, callback: msRest.ServiceCallback<Models.ConsentTemplate>): void;
+  getConsentTemplate(consentTemplateId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetConsentTemplateOptionalParams | msRest.ServiceCallback<Models.ConsentTemplate>, callback?: msRest.ServiceCallback<Models.ConsentTemplate>): Promise<Models.GetConsentTemplateResponse> {
+    return this.sendOperationRequest(
+      {
+        consentTemplateId,
+        baseSiteId,
+        userId,
+        options
+      },
+      getConsentTemplateOperationSpec,
+      callback) as Promise<Models.GetConsentTemplateResponse>;
+  }
+
+  /**
    * Returns all customer groups of a customer.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams} [options] Optional
-   * Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.UserGroupList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.UserGroupList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get all customer groups of a customer.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetUserCustomerGroupsResponse>
    */
-  getAllCustomerGroupsForCustomer(baseSiteId: string, userId: string): Promise<Models.UserGroupList>;
-  getAllCustomerGroupsForCustomer(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams): Promise<Models.UserGroupList>;
-  getAllCustomerGroupsForCustomer(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
-  getAllCustomerGroupsForCustomer(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
-  getAllCustomerGroupsForCustomer(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetAllCustomerGroupsForCustomerOptionalParams, callback?: msRest.ServiceCallback<Models.UserGroupList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.UserGroupList>;
-    if (!callback) {
-      return this.getAllCustomerGroupsForCustomerWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.UserGroupList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getAllCustomerGroupsForCustomerWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.UserGroupList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getUserCustomerGroups(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserCustomerGroupsOptionalParams): Promise<Models.GetUserCustomerGroupsResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  getUserCustomerGroups(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getUserCustomerGroups(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetUserCustomerGroupsOptionalParams, callback: msRest.ServiceCallback<Models.UserGroupList>): void;
+  getUserCustomerGroups(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserCustomerGroupsOptionalParams | msRest.ServiceCallback<Models.UserGroupList>, callback?: msRest.ServiceCallback<Models.UserGroupList>): Promise<Models.GetUserCustomerGroupsResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      getUserCustomerGroupsOperationSpec,
+      callback) as Promise<Models.GetUserCustomerGroupsResponse>;
   }
 
   /**
-   * @summary Changes customer's login name.
-   *
    * Changes a customer's login name. Requires the customer's current password.
-   *
-   * @param {string} newLogin Customer's new login name. Customer login is case insensitive.
-   *
-   * @param {string} password Customer's current password.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Changes customer's login name.
+   * @param newLogin Customer's new login name. Customer login is case insensitive.
+   * @param password Customer's current password.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  changeLogin(newLogin: string, password: string, baseSiteId: string, userId: string): Promise<void>;
-  changeLogin(newLogin: string, password: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  changeLogin(newLogin: string, password: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  changeLogin(newLogin: string, password: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  changeLogin(newLogin: string, password: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.changeLoginWithHttpOperationResponse(newLogin, password, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.changeLoginWithHttpOperationResponse(newLogin, password, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceUserLogin(newLogin: string, password: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param newLogin Customer's new login name. Customer login is case insensitive.
+   * @param password Customer's current password.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  replaceUserLogin(newLogin: string, password: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param newLogin Customer's new login name. Customer login is case insensitive.
+   * @param password Customer's current password.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceUserLogin(newLogin: string, password: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replaceUserLogin(newLogin: string, password: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        newLogin,
+        password,
+        baseSiteId,
+        userId,
+        options
+      },
+      replaceUserLoginOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get order history for user
-   *
    * Returns order history data for all orders placed by a specified user for a specified base store.
    * The response can display the results across multiple pages, if required.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetOrdersForUserOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.OrderHistoryList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.OrderHistoryList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get order history for user.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetUserOrderHistoryResponse>
    */
-  getOrdersForUser(baseSiteId: string, userId: string): Promise<Models.OrderHistoryList>;
-  getOrdersForUser(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetOrdersForUserOptionalParams): Promise<Models.OrderHistoryList>;
-  getOrdersForUser(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.OrderHistoryList>): void;
-  getOrdersForUser(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetOrdersForUserOptionalParams, callback: msRest.ServiceCallback<Models.OrderHistoryList>): void;
-  getOrdersForUser(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetOrdersForUserOptionalParams, callback?: msRest.ServiceCallback<Models.OrderHistoryList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.OrderHistoryList>;
-    if (!callback) {
-      return this.getOrdersForUserWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.OrderHistoryList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getOrdersForUserWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.OrderHistoryList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getUserOrderHistory(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOrderHistoryOptionalParams): Promise<Models.GetUserOrderHistoryResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  getUserOrderHistory(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.OrderHistoryList>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getUserOrderHistory(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetUserOrderHistoryOptionalParams, callback: msRest.ServiceCallback<Models.OrderHistoryList>): void;
+  getUserOrderHistory(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOrderHistoryOptionalParams | msRest.ServiceCallback<Models.OrderHistoryList>, callback?: msRest.ServiceCallback<Models.OrderHistoryList>): Promise<Models.GetUserOrderHistoryResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      getUserOrderHistoryOperationSpec,
+      callback) as Promise<Models.GetUserOrderHistoryResponse>;
   }
 
   /**
-   * @summary Get total number of orders
-   *
    * In the response header, the "x-total-count" indicates the total number of orders placed by a
    * specified user for a specified base store.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetCountOrdersForUserOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get total number of orders.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  getCountOrdersForUser(baseSiteId: string, userId: string): Promise<void>;
-  getCountOrdersForUser(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetCountOrdersForUserOptionalParams): Promise<void>;
-  getCountOrdersForUser(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  getCountOrdersForUser(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetCountOrdersForUserOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  getCountOrdersForUser(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetCountOrdersForUserOptionalParams, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.getCountOrdersForUserWithHttpOperationResponse(baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getCountOrdersForUserWithHttpOperationResponse(baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  countUserOrders(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CountUserOrdersOptionalParams): Promise<msRest.RestResponse>;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  countUserOrders(baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  countUserOrders(baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2CountUserOrdersOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  countUserOrders(baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2CountUserOrdersOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        baseSiteId,
+        userId,
+        options
+      },
+      countUserOrdersOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Post a order
-   *
    * Authorizes the cart and places the order. The response contains the new order data.
-   *
-   * @param {string} cartId Cart code for logged in user, cart GUID for guest checkout
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2PlaceOrderOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Order} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Order} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Place a order.
+   * @param cartId Cart code for logged in user, cart GUID for guest checkout
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.PlaceOrderResponse>
    */
-  placeOrder(cartId: string, baseSiteId: string, userId: string): Promise<Models.Order>;
-  placeOrder(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2PlaceOrderOptionalParams): Promise<Models.Order>;
+  placeOrder(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2PlaceOrderOptionalParams): Promise<Models.PlaceOrderResponse>;
+  /**
+   * @param cartId Cart code for logged in user, cart GUID for guest checkout
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   placeOrder(cartId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Order>): void;
+  /**
+   * @param cartId Cart code for logged in user, cart GUID for guest checkout
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   placeOrder(cartId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2PlaceOrderOptionalParams, callback: msRest.ServiceCallback<Models.Order>): void;
-  placeOrder(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2PlaceOrderOptionalParams, callback?: msRest.ServiceCallback<Models.Order>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Order>;
-    if (!callback) {
-      return this.placeOrderWithHttpOperationResponse(cartId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Order);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.placeOrderWithHttpOperationResponse(cartId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Order;
-        return cb(err, result, data.request, data);
-      });
-    }
+  placeOrder(cartId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2PlaceOrderOptionalParams | msRest.ServiceCallback<Models.Order>, callback?: msRest.ServiceCallback<Models.Order>): Promise<Models.PlaceOrderResponse> {
+    return this.sendOperationRequest(
+      {
+        cartId,
+        baseSiteId,
+        userId,
+        options
+      },
+      placeOrderOperationSpec,
+      callback) as Promise<Models.PlaceOrderResponse>;
   }
 
   /**
-   * @summary Get a order
-   *
    * Returns specific order details based on a specific order code. The response contains detailed
    * order information.
-   *
-   * @param {string} code Order GUID (Globally Unique Identifier) or order CODE
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetOrderForUserByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Order} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Order} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a order.
+   * @param code Order GUID (Globally Unique Identifier) or order CODE
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetUserOrdersResponse>
    */
-  getOrderForUserByCode(code: string, baseSiteId: string, userId: string): Promise<Models.Order>;
-  getOrderForUserByCode(code: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetOrderForUserByCodeOptionalParams): Promise<Models.Order>;
-  getOrderForUserByCode(code: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Order>): void;
-  getOrderForUserByCode(code: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetOrderForUserByCodeOptionalParams, callback: msRest.ServiceCallback<Models.Order>): void;
-  getOrderForUserByCode(code: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetOrderForUserByCodeOptionalParams, callback?: msRest.ServiceCallback<Models.Order>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Order>;
-    if (!callback) {
-      return this.getOrderForUserByCodeWithHttpOperationResponse(code, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Order);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getOrderForUserByCodeWithHttpOperationResponse(code, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Order;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getUserOrders(code: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOrdersOptionalParams): Promise<Models.GetUserOrdersResponse>;
+  /**
+   * @param code Order GUID (Globally Unique Identifier) or order CODE
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  getUserOrders(code: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.Order>): void;
+  /**
+   * @param code Order GUID (Globally Unique Identifier) or order CODE
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getUserOrders(code: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetUserOrdersOptionalParams, callback: msRest.ServiceCallback<Models.Order>): void;
+  getUserOrders(code: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetUserOrdersOptionalParams | msRest.ServiceCallback<Models.Order>, callback?: msRest.ServiceCallback<Models.Order>): Promise<Models.GetUserOrdersResponse> {
+    return this.sendOperationRequest(
+      {
+        code,
+        baseSiteId,
+        userId,
+        options
+      },
+      getUserOrdersOperationSpec,
+      callback) as Promise<Models.GetUserOrdersResponse>;
   }
 
   /**
-   * @summary Changes customer's password
-   *
    * Changes customer's password.
-   *
-   * @param {string} newParameter New password.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2ChangePasswordOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Changes customer's password
+   * @param newParameter New password.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  changePassword(newParameter: string, baseSiteId: string, userId: string): Promise<void>;
-  changePassword(newParameter: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2ChangePasswordOptionalParams): Promise<void>;
-  changePassword(newParameter: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  changePassword(newParameter: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2ChangePasswordOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  changePassword(newParameter: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2ChangePasswordOptionalParams, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.changePasswordWithHttpOperationResponse(newParameter, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.changePasswordWithHttpOperationResponse(newParameter, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replaceUserPassword(newParameter: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2ReplaceUserPasswordOptionalParams): Promise<msRest.RestResponse>;
+  /**
+   * @param newParameter New password.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  replaceUserPassword(newParameter: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param newParameter New password.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replaceUserPassword(newParameter: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2ReplaceUserPasswordOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  replaceUserPassword(newParameter: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2ReplaceUserPasswordOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        newParameter,
+        baseSiteId,
+        userId,
+        options
+      },
+      replaceUserPasswordOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get customer's credit card payment details list.
-   *
    * Return customer's credit card payment details list.
-   *
-   * @param {boolean} saved Type of payment details.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetPaymentInfosOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PaymentDetailsList} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PaymentDetailsList} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get customer's credit card payment details list.
+   * @param saved Type of payment details.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetPaymentDetailsListResponse>
    */
-  getPaymentInfos(saved: boolean, baseSiteId: string, userId: string): Promise<Models.PaymentDetailsList>;
-  getPaymentInfos(saved: boolean, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetPaymentInfosOptionalParams): Promise<Models.PaymentDetailsList>;
-  getPaymentInfos(saved: boolean, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.PaymentDetailsList>): void;
-  getPaymentInfos(saved: boolean, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetPaymentInfosOptionalParams, callback: msRest.ServiceCallback<Models.PaymentDetailsList>): void;
-  getPaymentInfos(saved: boolean, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentInfosOptionalParams, callback?: msRest.ServiceCallback<Models.PaymentDetailsList>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PaymentDetailsList>;
-    if (!callback) {
-      return this.getPaymentInfosWithHttpOperationResponse(saved, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PaymentDetailsList);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPaymentInfosWithHttpOperationResponse(saved, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PaymentDetailsList;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getPaymentDetailsList(saved: boolean, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentDetailsListOptionalParams): Promise<Models.GetPaymentDetailsListResponse>;
+  /**
+   * @param saved Type of payment details.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  getPaymentDetailsList(saved: boolean, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.PaymentDetailsList>): void;
+  /**
+   * @param saved Type of payment details.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getPaymentDetailsList(saved: boolean, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetPaymentDetailsListOptionalParams, callback: msRest.ServiceCallback<Models.PaymentDetailsList>): void;
+  getPaymentDetailsList(saved: boolean, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentDetailsListOptionalParams | msRest.ServiceCallback<Models.PaymentDetailsList>, callback?: msRest.ServiceCallback<Models.PaymentDetailsList>): Promise<Models.GetPaymentDetailsListResponse> {
+    return this.sendOperationRequest(
+      {
+        saved,
+        baseSiteId,
+        userId,
+        options
+      },
+      getPaymentDetailsListOperationSpec,
+      callback) as Promise<Models.GetPaymentDetailsListResponse>;
   }
 
   /**
-   * @summary Get customer's credit card payment details.
-   *
    * Returns a customer's credit card payment details for the specified paymentDetailsId.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {CommerceWebservicesV2GetPaymentDetailsOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.PaymentDetails} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.PaymentDetails} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get customer's credit card payment details.
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetPaymentDetailsResponse>
    */
-  getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string): Promise<Models.PaymentDetails>;
-  getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetPaymentDetailsOptionalParams): Promise<Models.PaymentDetails>;
+  getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentDetailsOptionalParams): Promise<Models.GetPaymentDetailsResponse>;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
   getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
   getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options: Models.CommerceWebservicesV2GetPaymentDetailsOptionalParams, callback: msRest.ServiceCallback<Models.PaymentDetails>): void;
-  getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentDetailsOptionalParams, callback?: msRest.ServiceCallback<Models.PaymentDetails>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.PaymentDetails>;
-    if (!callback) {
-      return this.getPaymentDetailsWithHttpOperationResponse(paymentDetailsId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.PaymentDetails);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getPaymentDetailsWithHttpOperationResponse(paymentDetailsId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.PaymentDetails;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getPaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options?: Models.CommerceWebservicesV2GetPaymentDetailsOptionalParams | msRest.ServiceCallback<Models.PaymentDetails>, callback?: msRest.ServiceCallback<Models.PaymentDetails>): Promise<Models.GetPaymentDetailsResponse> {
+    return this.sendOperationRequest(
+      {
+        paymentDetailsId,
+        baseSiteId,
+        userId,
+        options
+      },
+      getPaymentDetailsOperationSpec,
+      callback) as Promise<Models.GetPaymentDetailsResponse>;
   }
 
   /**
-   * @summary Updates existing customer's credit card payment info.
-   *
    * Updates existing customer's credit card payment info based on the payment info ID. Attributes
    * not given in request will be defined again (set to null or default).
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {PaymentDetails} paymentDetails Payment details object.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Updates existing customer's credit card payment info.
+   * @param paymentDetailsId Payment details identifier.
+   * @param paymentDetails Payment details object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  putPaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string): Promise<void>;
-  putPaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  putPaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  putPaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  putPaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.putPaymentInfoPrimWithHttpOperationResponse(paymentDetailsId, paymentDetails, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.putPaymentInfoPrimWithHttpOperationResponse(paymentDetailsId, paymentDetails, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  replacePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param paymentDetails Payment details object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  replacePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param paymentDetails Payment details object.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  replacePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  replacePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        paymentDetailsId,
+        paymentDetails,
+        baseSiteId,
+        userId,
+        options
+      },
+      replacePaymentDetailsOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Delete customer's credit card payment details.
-   *
-   * Removes a customer's credit card payment details based on a specified paymentDetailsId.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * Deletes a customer's credit card payment details based on a specified paymentDetailsId.
+   * @summary Deletes customer's credit card payment details.
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  deletePaymentInfo(paymentDetailsId: string, baseSiteId: string, userId: string): Promise<void>;
-  deletePaymentInfo(paymentDetailsId: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  deletePaymentInfo(paymentDetailsId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  deletePaymentInfo(paymentDetailsId: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deletePaymentInfo(paymentDetailsId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.deletePaymentInfoWithHttpOperationResponse(paymentDetailsId, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.deletePaymentInfoWithHttpOperationResponse(paymentDetailsId, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  removePaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  removePaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  removePaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  removePaymentDetails(paymentDetailsId: string, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        paymentDetailsId,
+        baseSiteId,
+        userId,
+        options
+      },
+      removePaymentDetailsOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Updates existing customer's credit card payment details.
-   *
    * Updates an existing customer's credit card payment details based on the specified
    * paymentDetailsId. Only those attributes provided in the request will be updated.
-   *
-   * @param {string} paymentDetailsId Payment details identifier.
-   *
-   * @param {PaymentDetails} paymentDetails Payment details object
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {string} userId User identifier or one of the literals : 'current' for currently
-   * authenticated user, 'anonymous' for anonymous user
-   *
-   * @param {RequestOptionsBase} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {void} [result]   - The deserialized result object if an error did not occur.
-   *
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Updates existing customer's credit card payment details.
+   * @param paymentDetailsId Payment details identifier.
+   * @param paymentDetails Payment details object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
    */
-  updatePaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string): Promise<void>;
-  updatePaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase): Promise<void>;
-  updatePaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
-  updatePaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  updatePaymentInfoPrim(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase, callback?: msRest.ServiceCallback<void>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<void>;
-    if (!callback) {
-      return this.updatePaymentInfoPrimWithHttpOperationResponse(paymentDetailsId, paymentDetails, baseSiteId, userId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as void);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.updatePaymentInfoPrimWithHttpOperationResponse(paymentDetailsId, paymentDetails, baseSiteId, userId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as void;
-        return cb(err, result, data.request, data);
-      });
-    }
+  updatePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param paymentDetails Payment details object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param callback The callback
+   */
+  updatePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param paymentDetailsId Payment details identifier.
+   * @param paymentDetails Payment details object
+   * @param baseSiteId Base site identifier
+   * @param userId User identifier or one of the literals : 'current' for currently authenticated
+   * user, 'anonymous' for anonymous user
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updatePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  updatePaymentDetails(paymentDetailsId: string, paymentDetails: Models.PaymentDetails, baseSiteId: string, userId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        paymentDetailsId,
+        paymentDetails,
+        baseSiteId,
+        userId,
+        options
+      },
+      updatePaymentDetailsOperationSpec,
+      callback);
   }
 
   /**
-   * @summary Get a voucher based on code
-   *
    * Returns details of a single voucher that is specified by its voucher identification code.
-   *
-   * @param {string} code Voucher identifier (code)
-   *
-   * @param {string} baseSiteId Base site identifier
-   *
-   * @param {CommerceWebservicesV2GetVoucherByCodeOptionalParams} [options] Optional Parameters.
-   *
-   * @param {ServiceCallback} callback The callback.
-   *
-   * @returns {ServiceCallback} callback(err, result, request, operationRes)
-   *                      {Error|ServiceError}  err        - The Error object if an error occurred, null otherwise.
-   *                      {Models.Voucher} [result]   - The deserialized result object if an error did not occur.
-   *                      See {@link Models.Voucher} for more information.
-   *                      {WebResource} [request]  - The HTTP Request object if an error did not occur.
-   *                      {HttpOperationResponse} [response] - The HTTP Response stream if an error did not occur.
+   * @summary Get a voucher based on code.
+   * @param code Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GetVoucherResponse>
    */
-  getVoucherByCode(code: string, baseSiteId: string): Promise<Models.Voucher>;
-  getVoucherByCode(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetVoucherByCodeOptionalParams): Promise<Models.Voucher>;
-  getVoucherByCode(code: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Voucher>): void;
-  getVoucherByCode(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetVoucherByCodeOptionalParams, callback: msRest.ServiceCallback<Models.Voucher>): void;
-  getVoucherByCode(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetVoucherByCodeOptionalParams, callback?: msRest.ServiceCallback<Models.Voucher>): any {
-    if (!callback && typeof options === 'function') {
-      callback = options;
-      options = undefined;
-    }
-    let cb = callback as msRest.ServiceCallback<Models.Voucher>;
-    if (!callback) {
-      return this.getVoucherByCodeWithHttpOperationResponse(code, baseSiteId, options).then((operationRes: msRest.HttpOperationResponse) => {
-        return Promise.resolve(operationRes.parsedBody as Models.Voucher);
-      }).catch((err: Error) => {
-        return Promise.reject(err);
-      });
-    } else {
-      msRest.promiseToCallback(this.getVoucherByCodeWithHttpOperationResponse(code, baseSiteId, options))((err: Error, data: msRest.HttpOperationResponse) => {
-        if (err) {
-          return cb(err);
-        }
-        let result = data.parsedBody as Models.Voucher;
-        return cb(err, result, data.request, data);
-      });
-    }
+  getVoucher(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetVoucherOptionalParams): Promise<Models.GetVoucherResponse>;
+  /**
+   * @param code Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param callback The callback
+   */
+  getVoucher(code: string, baseSiteId: string, callback: msRest.ServiceCallback<Models.Voucher>): void;
+  /**
+   * @param code Voucher identifier (code)
+   * @param baseSiteId Base site identifier
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getVoucher(code: string, baseSiteId: string, options: Models.CommerceWebservicesV2GetVoucherOptionalParams, callback: msRest.ServiceCallback<Models.Voucher>): void;
+  getVoucher(code: string, baseSiteId: string, options?: Models.CommerceWebservicesV2GetVoucherOptionalParams | msRest.ServiceCallback<Models.Voucher>, callback?: msRest.ServiceCallback<Models.Voucher>): Promise<Models.GetVoucherResponse> {
+    return this.sendOperationRequest(
+      {
+        code,
+        baseSiteId,
+        options
+      },
+      getVoucherOperationSpec,
+      callback) as Promise<Models.GetVoucherResponse>;
   }
 }
 
-export { CommerceWebservicesV2, Models as CommerceWebservicesV2Models, Mappers as CommerceWebservicesV2Mappers };
+// Operation Specifications
+const serializer = new msRest.Serializer(Mappers);
+const getBaseStoreOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/basestores/{baseStoreUid}",
+  urlParameters: [
+    Parameters.baseStoreUid,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.BaseStore
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCardTypesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/cardtypes",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CardTypeList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCatalogsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/catalogs",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CatalogList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCatalogOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/catalogs/{catalogId}",
+  urlParameters: [
+    Parameters.catalogId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Catalog
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCatalogVersionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/catalogs/{catalogId}/{catalogVersionId}",
+  urlParameters: [
+    Parameters.catalogId,
+    Parameters.catalogVersionId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CatalogVersion
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCategoriesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/catalogs/{catalogId}/{catalogVersionId}/categories/{categoryId}",
+  urlParameters: [
+    Parameters.catalogId,
+    Parameters.catalogVersionId,
+    Parameters.categoryId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CategoryHierarchy
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getComponentByIdListUsingPOSTOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/cms/components",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.catalogCode,
+    Parameters.productCode0,
+    Parameters.categoryCode,
+    Parameters.fields0,
+    Parameters.currentPage,
+    Parameters.pageSize0,
+    Parameters.sort0
+  ],
+  requestBody: {
+    parameterPath: "componentIdList",
+    mapper: {
+      ...Mappers.ComponentIDList,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.ListAdaptedComponents
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getComponentByIdUsingGETOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/cms/components/{componentId}",
+  urlParameters: [
+    Parameters.componentId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.catalogCode,
+    Parameters.productCode0,
+    Parameters.categoryCode,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: {
+        serializedName: "parsedResponse",
+        type: {
+          name: "Object"
+        }
+      }
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getPageDataUsingGETOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/cms/pages",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.pageType,
+    Parameters.pageLabelOrId,
+    Parameters.code0,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CMSPage
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCountriesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/countries",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.type0,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CountryList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCountryRegionsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/countries/{countyIsoCode}/regions",
+  urlParameters: [
+    Parameters.countyIsoCode,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.RegionList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCurrenciesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/currencies",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CurrencyList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCustomerGroupsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/customergroups",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.fields1
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.UserGroupList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createCustomerGroupOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/customergroups",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  requestBody: {
+    parameterPath: "userGroup",
+    mapper: {
+      ...Mappers.UserGroup,
+      required: true
+    }
+  },
+  responses: {
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCustomerGroupOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/customergroups/{groupId}",
+  urlParameters: [
+    Parameters.groupId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields1
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.UserGroup
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceUsersForCustomerGroupOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/customergroups/{groupId}/members",
+  urlParameters: [
+    Parameters.groupId,
+    Parameters.baseSiteId
+  ],
+  requestBody: {
+    parameterPath: "members",
+    mapper: {
+      ...Mappers.MemberList,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const updateCustomerGroupWithUsersOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/customergroups/{groupId}/members",
+  urlParameters: [
+    Parameters.groupId,
+    Parameters.baseSiteId
+  ],
+  requestBody: {
+    parameterPath: "members",
+    mapper: {
+      ...Mappers.MemberList,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeUsersFromCustomerGroupOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/customergroups/{groupId}/members/{userId}",
+  urlParameters: [
+    Parameters.groupId,
+    Parameters.userId,
+    Parameters.baseSiteId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getDeliveryCountriesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/deliverycountries",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CountryList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getExportedProductsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/export/products",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0,
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.catalog,
+    Parameters.version,
+    Parameters.timestamp0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ProductList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getOrderStatusFeedOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/feeds/orders/statusfeed",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.timestamp1,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.OrderStatusUpdateElementList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const doRestorePasswordOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/forgottenpasswordtokens",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.userId
+  ],
+  responses: {
+    201: {},
+    202: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const doHandleMerchantCallbackOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/integration/merchant_callback",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const doHandleCartMerchantCallbackOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/integration/users/{userId}/carts/{cartId}/payment/sop/response",
+  urlParameters: [
+    Parameters.userId,
+    Parameters.cartId,
+    Parameters.baseSiteId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getLanguagesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/languages",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.LanguageList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getOrderOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/orders/{code}",
+  urlParameters: [
+    Parameters.code1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Order
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getExpressUpdateProductsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/expressupdate",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.timestamp1,
+    Parameters.catalog,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ProductExpressUpdateElementList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getProductsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/search",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.query,
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.sort0,
+    Parameters.fields0,
+    Parameters.searchQueryContext
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ProductSearchPage
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const countProductsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "HEAD",
+  path: "rest/v2/{baseSiteId}/products/search",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.query
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getSuggestionsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/suggestions",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.term,
+    Parameters.max,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SuggestionList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getProductOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/{productCode}",
+  urlParameters: [
+    Parameters.productCode1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Product
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getProductReferencesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/{productCode}/references",
+  urlParameters: [
+    Parameters.productCode1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.pageSize2,
+    Parameters.referenceType,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ProductReferenceList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getProductReviewsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/{productCode}/reviews",
+  urlParameters: [
+    Parameters.productCode1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.maxCount,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ReviewList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createProductReviewOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/products/{productCode}/reviews",
+  urlParameters: [
+    Parameters.productCode1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "review",
+    mapper: {
+      ...Mappers.Review,
+      required: true
+    }
+  },
+  responses: {
+    201: {
+      bodyMapper: Mappers.Review
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getLocationProductStockOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/{productCode}/stock",
+  urlParameters: [
+    Parameters.productCode1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.location,
+    Parameters.latitude,
+    Parameters.longitude,
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.StoreFinderStockSearchPage
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const countProductStockByLocationOperationSpec: msRest.OperationSpec = {
+  httpMethod: "HEAD",
+  path: "rest/v2/{baseSiteId}/products/{productCode}/stock",
+  urlParameters: [
+    Parameters.productCode1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.location,
+    Parameters.latitude,
+    Parameters.longitude
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getStoreProductStockOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/products/{productCode}/stock/{storeName}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.productCode1,
+    Parameters.storeName
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Stock
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getPromotionsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/promotions",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.type1,
+    Parameters.promotionGroup,
+    Parameters.fields1
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PromotionList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getPromotionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/promotions/{code}",
+  urlParameters: [
+    Parameters.code1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields1
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Promotion
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getStoreLocationsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/stores",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.query,
+    Parameters.latitude,
+    Parameters.longitude,
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.sort1,
+    Parameters.radius,
+    Parameters.accuracy,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.StoreFinderSearchPage
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const countStoreLocationsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "HEAD",
+  path: "rest/v2/{baseSiteId}/stores",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.query,
+    Parameters.latitude,
+    Parameters.longitude,
+    Parameters.radius,
+    Parameters.accuracy
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getStoreLocationOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/stores/{storeId}",
+  urlParameters: [
+    Parameters.storeId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PointOfService
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getTitlesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/titles",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.TitleList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createUserOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users",
+  urlParameters: [
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "user",
+    mapper: {
+      ...Mappers.UserSignUp,
+      required: true
+    }
+  },
+  responses: {
+    201: {
+      bodyMapper: Mappers.User
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getUserOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.User
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceUserOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  requestBody: {
+    parameterPath: "user",
+    mapper: {
+      ...Mappers.User,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeUserOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const updateUserOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  requestBody: {
+    parameterPath: "user",
+    mapper: {
+      ...Mappers.User,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getAddressesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.AddressList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "address",
+    mapper: {
+      ...Mappers.Address,
+      required: true
+    }
+  },
+  responses: {
+    201: {
+      bodyMapper: Mappers.Address
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const validateAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses/verification",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "address",
+    mapper: {
+      ...Mappers.Address,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.AddressValidation
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
+  urlParameters: [
+    Parameters.addressId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Address
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
+  urlParameters: [
+    Parameters.addressId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  requestBody: {
+    parameterPath: "address",
+    mapper: {
+      ...Mappers.Address,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
+  urlParameters: [
+    Parameters.addressId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const updateAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}/addresses/{addressId}",
+  urlParameters: [
+    Parameters.addressId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  requestBody: {
+    parameterPath: "address",
+    mapper: {
+      ...Mappers.Address,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0,
+    Parameters.savedCartsOnly,
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.sort0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CartList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createCartOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.oldCartId,
+    Parameters.toMergeCartGuid,
+    Parameters.fields0
+  ],
+  responses: {
+    201: {
+      bodyMapper: Mappers.Cart
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Cart
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeCartOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const createCartDeliveryAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "address",
+    mapper: {
+      ...Mappers.Address,
+      required: true
+    }
+  },
+  responses: {
+    201: {
+      bodyMapper: Mappers.Address
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceCartDeliveryAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.addressId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeCartDeliveryAddressOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/addresses/delivery",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const doCartCloneOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/clonesavedcart",
+  urlParameters: [
+    Parameters.cartId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.name,
+    Parameters.description,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SaveCartResult
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getConsolidatedPickupLocationsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/consolidate",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PointOfServiceList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createConsolidatedPickupLocationOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/consolidate",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.storeName,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.CartModificationList
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartDeliveryModeOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.DeliveryMode
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceCartDeliveryModeOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.deliveryModeId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeCartDeliveryModeOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymode",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartDeliveryModesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/deliverymodes",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.DeliveryModeList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceCartGuestUserOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/email",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.email
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartEntriesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.OrderEntryList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const createCartEntryOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries",
+  urlParameters: [
+    Parameters.userId,
+    Parameters.cartId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "entry",
+    mapper: {
+      ...Mappers.OrderEntry,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.CartModification
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartEntryOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
+  urlParameters: [
+    Parameters.entryNumber,
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.OrderEntry
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceCartEntryOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
+  urlParameters: [
+    Parameters.entryNumber,
+    Parameters.userId,
+    Parameters.cartId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "entry",
+    mapper: {
+      ...Mappers.OrderEntry,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.CartModification
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeCartEntryOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
+  urlParameters: [
+    Parameters.entryNumber,
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const updateCartEntryOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/entries/{entryNumber}",
+  urlParameters: [
+    Parameters.entryNumber,
+    Parameters.userId,
+    Parameters.cartId,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "entry",
+    mapper: {
+      ...Mappers.OrderEntry,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.CartModification
+    },
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const doUpdateFlagForDeletionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/flagForDeletion",
+  urlParameters: [
+    Parameters.cartId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SaveCartResult
+    },
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getSopPaymentRequestDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/payment/sop/request",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.responseUrl,
+    Parameters.extendedMerchantCallback,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PaymentRequest
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getSopPaymentResponseOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/payment/sop/response",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PaymentDetails
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const doHandleSopPaymentResponseOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/payment/sop/response",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields2
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PaymentDetails
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeSopPaymentResponseOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/payment/sop/response",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const createCartPaymentDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/paymentdetails",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  requestBody: {
+    parameterPath: "paymentDetails",
+    mapper: {
+      ...Mappers.PaymentDetails,
+      required: true
+    }
+  },
+  responses: {
+    201: {
+      bodyMapper: Mappers.PaymentDetails
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceCartPaymentDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/paymentdetails",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.paymentDetailsId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartPromotionsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PromotionResultList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const doApplyCartPromotionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.promotionId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartPromotionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions/{promotionId}",
+  urlParameters: [
+    Parameters.promotionId,
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PromotionResultList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeCartPromotionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/promotions/{promotionId}",
+  urlParameters: [
+    Parameters.promotionId,
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const doUpdateSavedCartOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/restoresavedcart",
+  urlParameters: [
+    Parameters.cartId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SaveCartResult
+    },
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const doSaveCartOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/save",
+  urlParameters: [
+    Parameters.cartId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.saveCartName,
+    Parameters.saveCartDescription,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SaveCartResult
+    },
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getSavedCartOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/savedcart",
+  urlParameters: [
+    Parameters.cartId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SaveCartResult
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getCartVouchersOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/vouchers",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.VoucherList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const doApplyCartVoucherOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/vouchers",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  queryParameters: [
+    Parameters.voucherId
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeCartVoucherOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/carts/{cartId}/vouchers/{voucherId}",
+  urlParameters: [
+    Parameters.voucherId,
+    Parameters.baseSiteId,
+    Parameters.userId,
+    Parameters.cartId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const doGiveConsentOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/consents",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.consentTemplateId,
+    Parameters.consentTemplateVersion
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ConsentTemplate
+    },
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removeConsentOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/consents/{consentCode}",
+  urlParameters: [
+    Parameters.consentCode,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getConsentTemplatesOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/consenttemplates",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ConsentTemplateList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getConsentTemplateOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/consenttemplates/{consentTemplateId}",
+  urlParameters: [
+    Parameters.consentTemplateId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ConsentTemplate
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getUserCustomerGroupsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/customergroups",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.UserGroupList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceUserLoginOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/login",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.newLogin,
+    Parameters.password
+  ],
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getUserOrderHistoryOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/orders",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.statuses,
+    Parameters.currentPage,
+    Parameters.pageSize1,
+    Parameters.sort0,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.OrderHistoryList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const countUserOrdersOperationSpec: msRest.OperationSpec = {
+  httpMethod: "HEAD",
+  path: "rest/v2/{baseSiteId}/users/{userId}/orders",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.statuses
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const placeOrderOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "rest/v2/{baseSiteId}/users/{userId}/orders",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.cartId,
+    Parameters.securityCode,
+    Parameters.fields0
+  ],
+  responses: {
+    201: {
+      bodyMapper: Mappers.Order
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getUserOrdersOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/orders/{code}",
+  urlParameters: [
+    Parameters.code1,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Order
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replaceUserPasswordOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/password",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.old,
+    Parameters.newParameter
+  ],
+  responses: {
+    201: {},
+    202: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getPaymentDetailsListOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails",
+  urlParameters: [
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.saved,
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PaymentDetailsList
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const getPaymentDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
+  urlParameters: [
+    Parameters.paymentDetailsId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  queryParameters: [
+    Parameters.fields0
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PaymentDetails
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const replacePaymentDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
+  urlParameters: [
+    Parameters.paymentDetailsId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  requestBody: {
+    parameterPath: "paymentDetails",
+    mapper: {
+      ...Mappers.PaymentDetails,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    201: {},
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+const removePaymentDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
+  urlParameters: [
+    Parameters.paymentDetailsId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const updatePaymentDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "rest/v2/{baseSiteId}/users/{userId}/paymentdetails/{paymentDetailsId}",
+  urlParameters: [
+    Parameters.paymentDetailsId,
+    Parameters.baseSiteId,
+    Parameters.userId
+  ],
+  requestBody: {
+    parameterPath: "paymentDetails",
+    mapper: {
+      ...Mappers.PaymentDetails,
+      required: true
+    }
+  },
+  responses: {
+    200: {},
+    204: {},
+    401: {},
+    403: {},
+    default: {}
+  },
+  serializer
+};
+
+const getVoucherOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "rest/v2/{baseSiteId}/vouchers/{code}",
+  urlParameters: [
+    Parameters.code1,
+    Parameters.baseSiteId
+  ],
+  queryParameters: [
+    Parameters.fields1
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.Voucher
+    },
+    401: {},
+    403: {},
+    404: {},
+    default: {}
+  },
+  serializer
+};
+
+export {
+  CommerceWebservicesV2,
+  CommerceWebservicesV2Context,
+  Models as CommerceWebservicesV2Models,
+  Mappers as CommerceWebservicesV2Mappers
+};
