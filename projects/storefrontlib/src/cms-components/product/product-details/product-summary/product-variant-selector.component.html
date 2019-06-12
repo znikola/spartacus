@@ -63,13 +63,17 @@
       >
     </div>
     <select
+      (change)="routeToVariant($event.target.value)"
       id="{{ getVariantName(variant) }}"
       class="form-control variant-select"
     >
-      <option value="" selected="selected"> Select a size</option>
-      <option *ngFor="let option of variant.options" value="{{ option.url }}">{{
-        option.variantOptionQualifiers[0].value
-      }}</option>
+      <!-- <option value="" selected="selected"> Select a size</option> -->
+      <option
+        *ngFor="let option of variant.options"
+        value="{{ option.url }}"
+        [selected]="isVariantSelected(option)"
+        >{{ option.variantOptionQualifiers[0].value }}</option
+      >
     </select>
     <a href="#" class="size-guide" title="Size guide">&nbsp;</a>
   </ng-template>
