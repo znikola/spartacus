@@ -16,6 +16,7 @@ import {
   StorefrontComponent,
 } from '@spartacus/storefront';
 import { environment } from '../environments/environment';
+import { VariantRoutingModule } from './variant-semantic-path.service';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeJa);
@@ -37,7 +38,7 @@ if (!environment.production) {
       backend: {
         occ: {
           baseUrl: environment.occBaseUrl,
-          legacy: false,
+          legacy: true,
         },
       },
       siteContext: {
@@ -83,6 +84,8 @@ if (!environment.production) {
           'https://tag.static.us.context.cloud.sap/config/6665e5b0-810e-11e9-93f1-1dd46bc3fec0',
       },
     }),
+
+    VariantRoutingModule,
 
     ...devImports,
   ],

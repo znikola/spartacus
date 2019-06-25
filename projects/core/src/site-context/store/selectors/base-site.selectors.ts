@@ -17,5 +17,5 @@ export const getBaseSiteData: MemoizedSelector<
   BaseSite
 > = createSelector(
   getSiteContextState,
-  (state: SiteContextState) => state.baseSite.details
+  (state: SiteContextState) => state && state.baseSite && state.baseSite.details
 );

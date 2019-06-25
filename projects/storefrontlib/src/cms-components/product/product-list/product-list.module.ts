@@ -8,7 +8,7 @@ import {
   UrlModule,
 } from '@spartacus/core';
 import {
-  FormComponentsModule,
+  ItemCounterModule,
   ListNavigationModule,
   MediaModule,
   StarRatingModule,
@@ -29,6 +29,9 @@ import { ProductViewComponent } from './product-view/product-view.component';
         CMSProductListComponent: {
           component: ProductListComponent,
         },
+        ProductGridComponent: {
+          component: ProductListComponent,
+        },
         SearchResultsListComponent: {
           component: ProductListComponent,
         },
@@ -40,7 +43,7 @@ import { ProductViewComponent } from './product-view/product-view.component';
     RouterModule,
     MediaModule,
     AddToCartModule,
-    FormComponentsModule,
+    ItemCounterModule,
     ListNavigationModule,
     UrlModule,
     I18nModule,

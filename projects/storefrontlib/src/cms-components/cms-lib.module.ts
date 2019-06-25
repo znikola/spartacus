@@ -6,7 +6,7 @@ import {
   BannerModule,
   CmsParagraphModule,
   LinkModule,
-  TabParagraphContainerModule,
+  // TabParagraphContainerModule,
 } from './content/index';
 import { SiteContextSelectorModule } from './misc/index';
 import {
@@ -34,11 +34,12 @@ import {
   ProductCarouselModule,
   ProductIntroModule,
   ProductListModule,
-  ProductReferencesModule,
+  // ProductReferencesModule,
   ProductTabsModule,
 } from './product/index';
 import { ProductImagesModule } from './product/product-images/product-images.module';
 import { ProductSummaryModule } from './product/product-summary/product-summary.module';
+import { ProductVariantSelectorModule } from './product/product-variant-selector/product-variant-selector.module';
 
 @NgModule({
   imports: [
@@ -57,7 +58,7 @@ import { ProductSummaryModule } from './product/product-summary/product-summary.
     ProductListModule,
     ProductTabsModule,
     ProductCarouselModule,
-    ProductReferencesModule,
+    // ProductReferencesModule,
     OrderDetailsModule,
     PaymentMethodsModule,
     UpdateEmailModule,
@@ -66,12 +67,13 @@ import { ProductSummaryModule } from './product/product-summary/product-summary.
     ConsentManagementModule,
     CloseAccountModule,
     CartComponentModule,
-    TabParagraphContainerModule,
+    // TabParagraphContainerModule,
     OrderConfirmationModule,
     // TODO:#2811 - uncomment to enable
     // StoreFinderModule,
     ProductImagesModule,
     ProductSummaryModule,
+    ProductVariantSelectorModule,
     ProductIntroModule,
     CheckoutComponentModule,
     ForgotPasswordModule,
