@@ -34,7 +34,7 @@ if (!environment.production) {
     B2cStorefrontModule.withConfig({
       backend: {
         occ: {
-          baseUrl: environment.occBaseUrl,
+          baseUrl: 'https://dev-com-21.accdemo.b2c.ydev.hybris.com:9002',
           legacy: false,
         },
       },
