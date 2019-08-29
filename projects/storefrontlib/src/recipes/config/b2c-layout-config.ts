@@ -40,7 +40,7 @@ export const b2cLayoutConfig: LayoutConfig = {
       ],
     },
     ContentPage1Template: {
-      slots: ['Section2A', 'Section2B'],
+      slots: ['Section1', 'Section2A', 'Section2B'],
     },
     CategoryPageTemplate: {
       slots: ['Section1', 'Section2', 'Section3'],
