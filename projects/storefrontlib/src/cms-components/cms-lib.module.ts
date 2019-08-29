@@ -41,6 +41,7 @@ import {
 import { ProductImagesModule } from './product/product-images/product-images.module';
 import { ProductSummaryModule } from './product/product-summary/product-summary.module';
 import { UserComponentModule } from './user/user.module';
+import { YFormModule } from './yform/yform.module';
 
 @NgModule({
   imports: [
@@ -80,6 +81,9 @@ import { UserComponentModule } from './user/user.module';
     ResetPasswordModule,
     BannerCarouselModule,
     UserComponentModule,
+
+    // yforms
+    YFormModule,
   ],
 })
 export class CmsLibModule {}
