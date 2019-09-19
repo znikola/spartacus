@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Cart } from '../../model/cart.model';
 import { CartSelectors } from '../store/selectors/index';
-import { ANONYMOUS_USERID } from './cart-data.service';
 import { StateWithCart } from '../store/cart-state';
 import { UserService } from '../../user/facade/user.service';
 import { AuthService } from '../../auth/facade/auth.service';
 import { filter } from 'rxjs/operators';
+import { OCC_USER_ID_ANONYMOUS } from '../../occ/utils/occ-constants';
 
 @Injectable()
 export class SaveForLaterDataService {
-  private _userId = ANONYMOUS_USERID;
-  private _customerId = ANONYMOUS_USERID;
+  private _userId = OCC_USER_ID_ANONYMOUS;
+  private _customerId = OCC_USER_ID_ANONYMOUS;
   private _saveForLater: Cart;
 
   constructor(
@@ -26,7 +26,7 @@ export class SaveForLaterDataService {
         if (Object.keys(userToken).length !== 0) {
           this._userId = userToken.userId;
         } else {
-          this._userId = ANONYMOUS_USERID;
+          this._userId = OCC_USER_ID_ANONYMOUS;
         }
       });
 

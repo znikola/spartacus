@@ -13,10 +13,10 @@ import { AuthService } from '../../auth/index';
 import { CartActions } from '../store/actions/index';
 import { CartSelectors } from '../store/selectors/index';
 import { SaveForLaterDataService } from './save-for-later-data.service';
-import { ANONYMOUS_USERID } from './cart-data.service';
 import { StateWithCart } from '../store/cart-state';
 import { Cart } from '../../model/cart.model';
 import { OrderEntry } from '../../model/order.model';
+import { OCC_USER_ID_ANONYMOUS } from '../../occ/utils/occ-constants';
 
 @Injectable()
 export class SaveForLaterService {
@@ -61,6 +61,7 @@ export class SaveForLaterService {
             !this.isCreated(saveForLater) &&
             !loaded) // try to load current cart for logged in user (loaded flag to prevent infinite loop when user doesn't have cart)
         ) {
+          debugger;
           this.load();
         }
 
@@ -105,7 +106,7 @@ export class SaveForLaterService {
   }
 
   protected load(): void {
-    if (this.saveForLaterData.userId !== ANONYMOUS_USERID) {
+    if (this.saveForLaterData.userId !== OCC_USER_ID_ANONYMOUS) {
       this.store.dispatch(
         new CartActions.LoadSaveForLater({
           userId: this.saveForLaterData.userId,
