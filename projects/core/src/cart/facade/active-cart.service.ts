@@ -198,20 +198,12 @@ export class ActiveCartService {
   }
 
   updateEntry(entryNumber: number, quantity: number): void {
-    if (quantity > 0) {
-      this.lowLevelCartService.updateEntry(
-        this.userId,
-        this.cartId,
-        entryNumber,
-        quantity
-      );
-    } else {
-      this.lowLevelCartService.removeEntry(
-        this.userId,
-        this.cartId,
-        entryNumber
-      );
-    }
+    this.lowLevelCartService.updateEntry(
+      this.userId,
+      this.cartId,
+      entryNumber,
+      quantity
+    )
   }
 
   getEntry(productCode: string): Observable<OrderEntry> {

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Cart, OrderEntry, SelectiveCartService } from '@spartacus/core';
+import { Component, OnInit } from '@angular/core';
+import { Cart, OrderEntry, SelectiveCartService, ActiveCartService } from '@spartacus/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -7,26 +7,18 @@ import { Observable } from 'rxjs';
   templateUrl: './save-for-later.component.html',
 })
 export class SaveForLaterComponent implements OnInit {
-  @Input()
-  cartEntries$: Observable<OrderEntry[]>;
 
   sflCart$: Observable<Cart>;
   sflEntries$: Observable<OrderEntry[]>;
   sflCartLoaded$: Observable<boolean>;
+  cartEntries$: Observable<OrderEntry[]>;
 
-  // constructor(private saveForLaterService: SaveForLaterService) {}
-
-  // ngOnInit() {
-  //   this.sflCart$ =
-  //   this.sflCart$ = this.saveForLaterService.getSaveForLater();
-  //   this.sflEntries$ = this.saveForLaterService.getEntries();
-  //   this.sflCartLoading$ = this.saveForLaterService.getLoading();
-  // }
-  constructor(private selectiveCartService: SelectiveCartService) {}
+  constructor(private selectiveCartService: SelectiveCartService, private activeCartService: ActiveCartService) {}
 
   ngOnInit() {
-    this.sflCart$ = this.sflCart$ = this.selectiveCartService.getCart();
+    this.sflCart$ = this.selectiveCartService.getCart();
     this.sflEntries$ = this.selectiveCartService.getEntries();
     this.sflCartLoaded$ = this.selectiveCartService.getLoaded();
+    this.cartEntries$ = this.activeCartService.getEntries();
   }
 }
