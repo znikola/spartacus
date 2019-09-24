@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {
-  SaveForLaterService,
   CartService,
   PromotionResult,
+  SelectiveCartService,
 } from '@spartacus/core';
 import { Item } from 'projects/storefrontlib/src/cms-components/cart/cart-shared';
 
@@ -20,7 +20,8 @@ export class SaveForLaterItemListComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private saveForLaterService: SaveForLaterService
+    // private saveForLaterService: SaveForLaterService
+    private selectiveCartService: SelectiveCartService
   ) {}
 
   ngOnInit() {}
@@ -31,7 +32,8 @@ export class SaveForLaterItemListComponent implements OnInit {
   }
 
   removeEntry(item: Item): void {
-    this.saveForLaterService.removeEntry(item);
+    // this.saveForLaterService.removeEntry(item);
+    this.selectiveCartService.removeEntry(item);
   }
 
   getPotentialProductPromotionsForItem(item: Item): PromotionResult[] {

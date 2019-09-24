@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, from, of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, exhaustMap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  exhaustMap,
+} from 'rxjs/operators';
 import { Cart } from '../../../model/cart.model';
 import { SiteContextActions } from '../../../site-context/store/actions/index';
 import { makeErrorSerializable } from '../../../util/serialization-utils';
@@ -242,7 +248,7 @@ export class CartEffects {
 
   // TODO: remove old actions usage (LoadCart)
   @Effect()
-  refresh$: Observable<CartActions.LoadCart | CartActions.LoadSaveForLater> = this.actions$.pipe(
+  refresh$: Observable<CartActions.LoadCart> = this.actions$.pipe(
     ofType(
       CartActions.MERGE_CART_SUCCESS,
       CartActions.CART_ADD_ENTRY_SUCCESS,
@@ -260,19 +266,14 @@ export class CartEffects {
           | CartActions.AddEmailToCartSuccess
       ) => action.payload
     ),
-    map(payload => {
-      if (payload.isSaveForLater) {
-        return new CartActions.LoadSaveForLater({
+    map(
+      payload =>
+        payload &&
+        new CartActions.LoadCart({
           userId: payload.userId,
           cartId: payload.cartId,
-        });
-      } else {
-        return new CartActions.LoadCart({
-          userId: payload.userId,
-          cartId: payload.cartId,
-        });
-      }
-    })
+        })
+    )
   );
 
   // TODO: remove old actions usage, replace with new

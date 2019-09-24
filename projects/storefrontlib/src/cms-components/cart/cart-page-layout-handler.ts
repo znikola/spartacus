@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CartService, SaveForLaterService } from '@spartacus/core';
+import { CartService, SelectiveCartService } from '@spartacus/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageLayoutHandler } from '../../cms-structure/page/page-layout/page-layout-handler';
@@ -8,7 +8,8 @@ import { PageLayoutHandler } from '../../cms-structure/page/page-layout/page-lay
 export class CartPageLayoutHandler implements PageLayoutHandler {
   constructor(
     private cartService: CartService,
-    private saveForLaterService: SaveForLaterService
+    // private saveForLaterService: SaveForLaterService
+    private selectiveCartService: SelectiveCartService
   ) {}
 
   handle(
@@ -20,7 +21,8 @@ export class CartPageLayoutHandler implements PageLayoutHandler {
       return combineLatest([
         slots$,
         this.cartService.getActive(),
-        this.saveForLaterService.getSaveForLater(),
+        // this.saveForLaterService.getSaveForLater(),
+        this.selectiveCartService.getCart(),
       ]).pipe(
         map(([slots, cart, saveForLater]) => {
           //If cart is empty but save for later is not empty, show save for later list

@@ -29,6 +29,7 @@ import {
   UserService,
   SaveForLaterService,
   SaveForLaterDataService,
+  SelectiveCartService,
 } from '@spartacus/core';
 import { CmsComponentData } from '../model';
 
@@ -47,6 +48,7 @@ export class CxApiService {
     // save for later
     @Optional() public saveForLater: SaveForLaterService,
     @Optional() public saveForLaterData: SaveForLaterDataService,
+    @Optional() public selectiveCartService: SelectiveCartService,
     // checkout
     @Optional() public checkout: CheckoutService,
     @Optional() public checkoutDelivery: CheckoutDeliveryService,

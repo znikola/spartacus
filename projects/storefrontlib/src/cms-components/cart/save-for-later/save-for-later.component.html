@@ -16,8 +16,8 @@
   </div>
 </div>
 
-<ng-container *ngIf="(sflCart$ | async) as cart">
-  <ng-container *ngIf="(sflEntries$ | async) as entries">
+<ng-container *ngIf="sflCart$ | async as cart">
+  <ng-container *ngIf="sflEntries$ | async as entries">
     <ng-container *ngIf="entries.length > 0">
       <div class="cart-details-wrapper">
         <div class="cx-total" data-test="sfl-total">

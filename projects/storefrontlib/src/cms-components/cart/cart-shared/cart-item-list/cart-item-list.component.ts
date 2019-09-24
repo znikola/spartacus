@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   CartService,
   PromotionResult,
-  SaveForLaterService,
+  SelectiveCartService,
 } from '@spartacus/core';
 import { Item } from '../cart-item/cart-item.component';
 
@@ -41,7 +41,8 @@ export class CartItemListComponent implements OnInit, OnChanges {
   constructor(
     protected cartService: CartService,
     protected fb: FormBuilder,
-    protected saveForLaterService: SaveForLaterService
+    // protected saveForLaterService: SaveForLaterService
+    protected selectiveCartService: SelectiveCartService
   ) {}
 
   ngOnInit() {
@@ -77,8 +78,8 @@ export class CartItemListComponent implements OnInit, OnChanges {
   }
 
   saveItemForLater(item: Item): void {
-    this.saveForLaterService.addEntry(item.product.code, item.quantity);
-    this.removeEntry(item);
+    this.selectiveCartService.addEntry(item.product.code, item.quantity);
+    //this.removeEntry(item);
   }
 
   getPotentialProductPromotionsForItem(item: Item): PromotionResult[] {
