@@ -12,7 +12,7 @@ export class SaveForLaterComponent implements OnInit {
 
   sflCart$: Observable<Cart>;
   sflEntries$: Observable<OrderEntry[]>;
-  sflCartLoading$: Observable<boolean>;
+  sflCartLoaded$: Observable<boolean>;
 
   // constructor(private saveForLaterService: SaveForLaterService) {}
 
@@ -27,6 +27,6 @@ export class SaveForLaterComponent implements OnInit {
   ngOnInit() {
     this.sflCart$ = this.sflCart$ = this.selectiveCartService.getCart();
     this.sflEntries$ = this.selectiveCartService.getEntries();
-    this.sflCartLoading$ = this.selectiveCartService.getLoaded();
+    this.sflCartLoaded$ = this.selectiveCartService.getLoaded();
   }
 }

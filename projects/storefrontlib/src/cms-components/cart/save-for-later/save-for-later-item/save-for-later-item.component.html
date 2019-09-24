@@ -92,8 +92,8 @@
       <div class="col-md-3 col-lg-3 col-xl-3">
         <button
           class="link"
-          [class.disabled]="saveForLaterLoading"
-          [disabled]="saveForLaterLoading"
+          [class.disabled]="!saveForLaterLoaded"
+          [disabled]="!saveForLaterLoaded"
           (click)="moveItemToCart()"
           data-test="move-btn"
         >
@@ -103,8 +103,8 @@
       <div class="col-md-3 col-lg-3 col-xl-2">
         <button
           class="link"
-          [class.disabled]="saveForLaterLoading"
-          [disabled]="saveForLaterLoading"
+          [class.disabled]="!saveForLaterLoaded"
+          [disabled]="!saveForLaterLoaded"
           (click)="removeItem()"
           data-test="remove-btn"
         >

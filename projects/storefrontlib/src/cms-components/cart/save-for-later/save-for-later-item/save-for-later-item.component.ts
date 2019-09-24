@@ -10,7 +10,7 @@ export class SaveForLaterItemComponent implements OnInit {
   @Input()
   item: Item;
   @Input()
-  saveForLaterLoading = false;
+  saveForLaterLoaded = false;
   @Input()
   potentialProductPromotions: PromotionResult[];
   @Input()

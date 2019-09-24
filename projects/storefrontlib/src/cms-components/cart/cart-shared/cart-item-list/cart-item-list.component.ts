@@ -79,7 +79,7 @@ export class CartItemListComponent implements OnInit, OnChanges {
 
   saveItemForLater(item: Item): void {
     this.selectiveCartService.addEntry(item.product.code, item.quantity);
-    //this.removeEntry(item);
+    this.removeEntry(item);
   }
 
   getPotentialProductPromotionsForItem(item: Item): PromotionResult[] {

@@ -85,6 +85,7 @@ export class SelectiveCartService {
       userId: this._userId,
       cartId: this._cartId,
     });
+    this.cartSelector = this.lowLevelCartService.getCartEntity(this._cartId);
   }
 
   addEntry(productCode: string, quantity: number): void {
@@ -138,7 +139,7 @@ export class SelectiveCartService {
   }
 
   getEntry(productCode: string): Observable<OrderEntry> {
-    return this.lowLevelCartService.getEntry(this._cartId, productCode)
+    return this.lowLevelCartService.getEntry(this._cartId, productCode);
   }
 
   private isEmpty(cart: Cart): boolean {

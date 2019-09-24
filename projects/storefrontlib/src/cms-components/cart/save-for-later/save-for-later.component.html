@@ -30,7 +30,7 @@
           }}
         </div>
         <cx-save-for-later-item-list
-          [saveForLaterLoading]="sflCartLoading$ | async"
+          [saveForLaterLoaded]="sflCartLoaded$ | async"
           [items]="entries"
           [potentialProductPromotions]="cart.potentialProductPromotions"
         >

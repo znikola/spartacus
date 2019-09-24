@@ -14,7 +14,7 @@ export class SaveForLaterItemListComponent implements OnInit {
   @Input()
   items: Item[] = [];
   @Input()
-  saveForLaterLoading = false;
+  saveForLaterLoaded = false;
   @Input()
   potentialProductPromotions: PromotionResult[] = [];
 
