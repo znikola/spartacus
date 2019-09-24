@@ -67,7 +67,7 @@ export class SelectiveCartService {
           this.load();
         }
       }),
-      map(cart => (cart ? cart : {})),
+      map(([cart]) => (cart ? cart : {})),
       shareReplay({ bufferSize: 1, refCount: true })
     );
   }
