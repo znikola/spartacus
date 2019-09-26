@@ -20,7 +20,6 @@ export class SaveForLaterItemListComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    // private saveForLaterService: SaveForLaterService
     private selectiveCartService: SelectiveCartService
   ) {}
 
@@ -32,7 +31,6 @@ export class SaveForLaterItemListComponent implements OnInit {
   }
 
   removeEntry(item: Item): void {
-    // this.saveForLaterService.removeEntry(item);
     this.selectiveCartService.removeEntry(item);
   }
 

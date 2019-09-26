@@ -106,15 +106,15 @@
     <!-- Promotion -->
     <cx-promotions [promotions]="potentialProductPromotions"></cx-promotions>
     <!-- Actions -->
-    <div *ngIf="!isReadOnly" class="cx-actions row col-12">
-      <div *ngIf="enableSaveForLater" class="col-md-3 col-lg-3 col-xl-3">
+    <div *ngIf="!isReadOnly || optionalButton" class="cx-actions row col-12">
+      <div *ngIf="optionalButton" class="col-md-3 col-lg-3 col-xl-3">
         <button
           class="link"
           [class.disabled]="cartIsLoading"
           [disabled]="cartIsLoading"
-          (click)="saveItemForLater()"
+          (click)="doOtionalAction()"
         >
-          {{ 'cartItems.saveForLater' | cxTranslate }}
+          {{ optionalButton }}
         </button>
       </div>
       <div class="col-md-3 col-lg-3 col-xl-2">

@@ -4,6 +4,8 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
@@ -36,12 +38,17 @@ export class CartItemListComponent implements OnInit, OnChanges {
   @Input()
   enableSaveForLater = false;
 
+  @Input()
+  optionalButton = undefined;
+
+  @Output()
+  optionalAction = new EventEmitter<any>();
+
   form: FormGroup = this.fb.group({});
 
   constructor(
     protected cartService: CartService,
     protected fb: FormBuilder,
-    // protected saveForLaterService: SaveForLaterService
     protected selectiveCartService: SelectiveCartService
   ) {}
 
@@ -77,9 +84,8 @@ export class CartItemListComponent implements OnInit, OnChanges {
     this.cartService.updateEntry(item.entryNumber, updatedQuantity);
   }
 
-  saveItemForLater(item: Item): void {
-    this.selectiveCartService.addEntry(item.product.code, item.quantity);
-    this.removeEntry(item);
+  doOtionalAction(item: Item): void {
+    this.optionalAction.emit(item);
   }
 
   getPotentialProductPromotionsForItem(item: Item): PromotionResult[] {

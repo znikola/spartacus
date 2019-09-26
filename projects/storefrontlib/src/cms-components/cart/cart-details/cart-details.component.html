@@ -1,6 +1,9 @@
-<ng-container *ngIf="(cart$ | async) as cart">
-  <ng-container *ngIf="(entries$ | async) as entries">
-    <div class="cart-details-wrapper" *ngIf="entries.length > 0">
+<ng-container *ngIf="cart$ | async as cart">
+  <ng-container *ngIf="entries$ | async as entries">
+    <div
+      class="cart-details-wrapper"
+      *ngIf="entries.length > 0; else cartEmpty"
+    >
       <div class="cx-total">
         {{ 'cartDetails.cartName' | cxTranslate: { code: cart.code } }}
       </div>
@@ -11,11 +14,50 @@
         [items]="entries"
         [potentialProductPromotions]="cart.potentialProductPromotions"
         [cartIsLoading]="cartLoading$ | async"
-        [enableSaveForLater]="true"
+        [optionalButton]="'saveForLaterItems.saveForLater' | cxTranslate"
+        (optionalAction)="saveItemForLater($event)"
       ></cx-cart-item-list>
       <!-- NOT FOR MVP  <cx-cart-coupon></cx-cart-coupon> -->
     </div>
   </ng-container>
 </ng-container>
-
-<cx-save-for-later></cx-save-for-later>
+<!-- Original Save For Later Component -->
+<!-- <cx-save-for-later></cx-save-for-later> -->
+<ng-container *ngIf="sflCart$ | async as sflCart">
+  <ng-container *ngIf="sflEntries$ | async as sflEntries">
+    <div class="cart-details-wrapper" *ngIf="sflEntries.length > 0">
+      <div class="cx-total" data-test="sfl-total">
+        {{
+          'saveForLaterItems.itemTotal'
+            | cxTranslate
+              : {
+                  count: sflCart.deliveryItemsQuantity
+                }
+        }}
+      </div>
+      <cx-cart-item-list
+        [items]="sflEntries"
+        [cartIsLoading]="cartLoading$ | async"
+        [optionalButton]="'saveForLaterItems.moveToCart' | cxTranslate"
+        [isReadOnly]="true"
+        (optionalAction)="moveItemToCart($event)"
+      ></cx-cart-item-list>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-template #cartEmpty>
+  <div class="cart-details-wrapper">
+    <div class="cx-total">
+      {{ 'saveForLaterItems.cartTitle' | cxTranslate }}
+    </div>
+    <div class="d-none d-md-block d-lg-block d-xl-block">
+      <div class="cx-empty-cart-header row"></div>
+    </div>
+    <div class="cx-msg" data-test="cart-empty-msg">
+      {{
+        'saveForLaterItems.cartEmpty'
+          | cxTranslate: { count: (sflCart$ | async).deliveryItemsQuantity }
+      }}
+    </div>
+  </div>
+</ng-template>

@@ -30,7 +30,7 @@ export class CartItemComponent implements OnInit {
   @Input()
   cartIsLoading = false;
   @Input()
-  enableSaveForLater = false;
+  optionalButton = undefined;
 
   @Output()
   remove = new EventEmitter<any>();
@@ -39,7 +39,7 @@ export class CartItemComponent implements OnInit {
   @Output()
   view = new EventEmitter<any>();
   @Output()
-  saveForLater = new EventEmitter<any>();
+  optionalAction = new EventEmitter<any>();
 
   @Input()
   parent: FormGroup;
@@ -73,13 +73,13 @@ export class CartItemComponent implements OnInit {
     this.view.emit();
   }
 
-  saveItemForLater() {
+  doOtionalAction() {
     this.authService.getUserToken().subscribe(token => {
       if (!token.access_token) {
         this.routingService.go({ cxRoute: 'login' });
         this.authRedirectService.reportAuthGuard();
       } else {
-        this.saveForLater.emit(this.item);
+        this.optionalAction.emit(this.item);
       }
     });
   }

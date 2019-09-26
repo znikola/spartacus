@@ -1,11 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { PageMetaResolver } from '../cms/page/page-meta.resolver';
 import { CartDataService } from './facade/cart-data.service';
-import {
-  CartService,
-  SaveForLaterService,
-  SaveForLaterDataService,
-} from './facade/index';
+import { CartService } from './facade/index';
 import { CartPageMetaResolver } from './services/cart-page-meta.resolver';
 import { CartStoreModule } from './store/cart-store.module';
 import { MultiCartStoreModule } from './store/multi-cart-store.module';
@@ -23,8 +19,6 @@ export class CartModule {
       providers: [
         CartDataService,
         CartService,
-        SaveForLaterService,
-        SaveForLaterDataService,
         LowLevelCartService,
         ActiveCartService,
         SelectiveCartService,

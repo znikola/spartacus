@@ -28,8 +28,8 @@
         (remove)="removeEntry($event)"
         [cartIsLoading]="cartIsLoading"
         (update)="updateEntry($event)"
-        [enableSaveForLater]="enableSaveForLater"
-        (saveForLater)="saveItemForLater($event)"
+        [optionalButton]="optionalButton"
+        (optionalAction)="doOtionalAction($event)"
       >
       </cx-cart-item>
     </div>

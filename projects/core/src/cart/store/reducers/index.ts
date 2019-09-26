@@ -6,7 +6,6 @@ import { loaderReducer } from '../../../state/utils/loader/loader.reducer';
 import { CartsState, CartState, CART_DATA } from '../cart-state';
 import { MultiCartState, MULTI_CART_FEATURE } from '../multi-cart-state';
 import { reducer as cartReducer } from './cart.reducer';
-import { reducer as saveForLaterReducer } from './save-for-later.reducer';
 import { entityLoaderReducer } from '../../../state/utils/entity-loader/entity-loader.reducer';
 import { activeCartReducer, cartEntitiesReducer } from './multi-cart.reducer';
 import { Cart } from '../../../model/cart.model';
@@ -14,7 +13,6 @@ import { Cart } from '../../../model/cart.model';
 export function getReducers(): ActionReducerMap<CartsState> {
   return {
     active: loaderReducer<CartState>(CART_DATA, cartReducer),
-    saveForLater: loaderReducer<CartState>(CART_DATA, saveForLaterReducer),
   };
 }
 

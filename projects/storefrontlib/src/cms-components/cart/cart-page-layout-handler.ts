@@ -8,7 +8,6 @@ import { PageLayoutHandler } from '../../cms-structure/page/page-layout/page-lay
 export class CartPageLayoutHandler implements PageLayoutHandler {
   constructor(
     private cartService: CartService,
-    // private saveForLaterService: SaveForLaterService
     private selectiveCartService: SelectiveCartService
   ) {}
 
@@ -21,7 +20,6 @@ export class CartPageLayoutHandler implements PageLayoutHandler {
       return combineLatest([
         slots$,
         this.cartService.getActive(),
-        // this.saveForLaterService.getSaveForLater(),
         this.selectiveCartService.getCart(),
       ]).pipe(
         map(([slots, cart, saveForLater]) => {
