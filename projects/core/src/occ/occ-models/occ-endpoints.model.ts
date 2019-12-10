@@ -288,4 +288,10 @@ export interface OccEndpoints {
    * @member {string}
    */
   cartVoucher?: string;
+  /**
+   * Explicitly saves a cart
+   *
+   * @member {string}
+   */
+  saveCart?: string;
 }
