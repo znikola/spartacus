@@ -1,25 +1,26 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
   ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import {
-  UserInterestsService,
-  UserNotificationPreferenceService,
   AuthService,
-  OCC_USER_ID_ANONYMOUS,
+  GlobalMessageService,
+  GlobalMessageType,
   NotificationPreference,
   NotificationType,
+  OCC_USER_ID_ANONYMOUS,
   Product,
-  GlobalMessageService,
   TranslationService,
-  GlobalMessageType,
+  UserInterestsService,
+  UserNotificationPreferenceService,
 } from '@spartacus/core';
-import { Observable, Subscription, combineLatest } from 'rxjs';
-import { map, filter, tap, first } from 'rxjs/operators';
-import { CurrentProductService } from '../current-product.service';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { filter, first, map, tap } from 'rxjs/operators';
 import { ModalService } from '../../../shared/components/modal/modal.service';
+import { CurrentProductService } from '../current-product.service';
 import { StockNotificationDialogComponent } from './stock-notification-dialog/stock-notification-dialog.component';
 
 @Component({
@@ -33,6 +34,8 @@ export class StockNotificationComponent implements OnInit, OnDestroy {
   outOfStock$: Observable<boolean>;
   isRemoveInterestLoading$: Observable<boolean>;
   anonymous = true;
+
+  @HostBinding('class.d-none') hideComponent = true;
 
   private enabledPrefs: NotificationPreference[] = [];
   private productCode: string;
@@ -71,7 +74,8 @@ export class StockNotificationComponent implements OnInit, OnDestroy {
       map(
         ([product]: [Product, String]) =>
           !!product.stock && product.stock.stockLevelStatus === 'outOfStock'
-      )
+      ),
+      tap(stocks => (this.hideComponent = !stocks))
     );
 
     this.hasProductInterests$ = this.interestsService
