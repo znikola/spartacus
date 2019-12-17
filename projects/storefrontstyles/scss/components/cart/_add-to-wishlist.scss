@@ -1,11 +1,17 @@
 %cx-add-to-wishlist {
   @include media-breakpoint-up(lg) {
     grid-column: 2;
-    grid-row: 3;
-    padding: 0 20px;
+    padding: 0px 20px;
     // Workaround for limitation, fixed in calydon
-    margin-top: 155px;
+    grid-row: 3;
+    align-self: end;
+    margin-bottom: -5px;
   }
+
+  @include media-breakpoint-up(xl) {
+    margin-bottom: 55px;
+  }
+  // End of workaround
 
   .btn {
     text-transform: none;
