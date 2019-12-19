@@ -199,4 +199,29 @@
       padding: 0 0 0 1rem;
     }
   }
+
+  // Column revealers
+  .cx-item-list-header {
+    div {
+      background-color: yellow;
+      border: 1px solid;
+    }
+  }
+
+  .cx-item-list-items {
+    .row {
+      .col-10,
+      .col-2 {
+        background-color: aqua;
+        border: 1px solid;
+      }
+    }
+  }
+
+  .cx-info-container {
+    > div {
+      background-color: aquamarine;
+      border: 1px solid red;
+    }
+  }
 }

@@ -181,4 +181,22 @@
       margin: 1.25rem 0;
     }
   }
+
+  // Table revealer
+  .cx-order-history-table {
+    th {
+      background-color: yellow;
+      border: 2px solid black;
+    }
+
+    tr {
+      // background-color: aqua;
+      border: 3px solid green;
+    }
+
+    td {
+      background-color: aquamarine;
+      border: 2px solid red;
+    }
+  }
 }
