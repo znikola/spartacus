@@ -9,6 +9,7 @@ export const initialState: ProductsSearchState = {
   results: {},
   suggestions: [],
   auxResults: {},
+  loading: false,
 };
 
 export function reducer(
@@ -16,12 +17,27 @@ export function reducer(
   action: ProductActions.ProductSearchAction
 ): ProductsSearchState {
   switch (action.type) {
+    case ProductActions.SEARCH_PRODUCTS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
     case ProductActions.SEARCH_PRODUCTS_SUCCESS: {
       const results = action.payload;
       const res = action.auxiliary ? { auxResults: results } : { results };
       return {
         ...state,
         ...res,
+        loading: false,
+      };
+    }
+
+    case ProductActions.SEARCH_PRODUCTS_FAIL: {
+      return {
+        ...state,
+        loading: false,
       };
     }
 

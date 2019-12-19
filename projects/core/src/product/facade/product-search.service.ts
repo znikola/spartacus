@@ -24,6 +24,10 @@ export class ProductSearchService {
     return this.store.pipe(select(ProductSelectors.getSearchResults));
   }
 
+  isSearching(): Observable<boolean> {
+    return this.store.pipe(select(ProductSelectors.getSearchLoading));
+  }
+
   clearResults(): void {
     this.store.dispatch(
       new ProductActions.ClearProductSearchResult({

@@ -23,6 +23,7 @@ export interface ProductsSearchState {
   results: ProductSearchPage;
   suggestions: Suggestion[];
   auxResults: ProductSearchPage;
+  loading: boolean;
 }
 
 export interface ProductReviewsState {

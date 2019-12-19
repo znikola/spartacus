@@ -12,6 +12,7 @@ import {
   distinctUntilChanged,
   filter,
   map,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import {
@@ -70,8 +71,14 @@ export class CdsMerchandisingUserContextService {
   }
 
   private searchResultChangeEvent(): Observable<Breadcrumb[]> {
-    return this.productSearchService.getResults().pipe(
-      map(searchResults =>
+    return combineLatest([
+      this.productSearchService.getResults(),
+      this.productSearchService.isSearching().pipe(distinctUntilChanged()),
+    ]).pipe(
+      tap(x => console.log('searching before: ', x[1])),
+      filter(([_searchResults, searching]) => !searching),
+      tap(x => console.log('searching after: ', x[1])),
+      map(([searchResults, _searching]) =>
         searchResults.breadcrumbs ? searchResults.breadcrumbs : []
       ),
       filter(facets => !!facets)

@@ -19,6 +19,14 @@ export const getProductsSearchState: MemoizedSelector<
   (state: ProductsState) => state.search
 );
 
+export const getSearchLoading: MemoizedSelector<
+  StateWithProduct,
+  boolean
+> = createSelector(
+  getProductsSearchState,
+  state => state.loading
+);
+
 export const getSearchResults: MemoizedSelector<
   StateWithProduct,
   ProductSearchPage
