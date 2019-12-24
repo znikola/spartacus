@@ -8,7 +8,7 @@ const digitalCompactCamerasCategoryName = 'Digital Compacts';
 const digitalCompactCamerasCategoryCode = '576';
 const digitalCompactCamerasCategoryPagePath = `Open-Catalogue/Cameras/Digital-Cameras/c/${digitalCompactCamerasCategoryCode}`;
 
-function testCategoryPage() {
+function testCategoryPage(): void {
   cy.visit(digitalCompactCamerasCategoryPagePath);
 
   /*
@@ -29,7 +29,7 @@ function testCategoryPage() {
   );
 }
 
-function testBrandPage() {
+function testBrandPage(): void {
   cy.visit(sonyBrandPagePath);
 
   /*
@@ -133,7 +133,7 @@ describe('Merchandsing Carousel', () => {
      * (e.g. a brand page) to a page with no facets (e.g. the homepage) maintains
      * the facet context.
      *
-     * Remove the additioanl facet parameter from the below method (invocation and implementation) once the bug has been fixed
+     * Remove t he additioanl facet parameter from the below method (invocation and implementation) once the bug has been fixed
      */
     merchandisingCarousel.verifyMerchandisingCarouselRendersOnHomePage(
       strategyRequestAlias,

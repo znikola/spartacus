@@ -32,9 +32,9 @@ export const STRATEGY_RESPONSE = {
   ],
 };
 
-function veifyCarouselLevelMetadata(
+function verifyCarouselLevelMetadata(
   $merchandisingCarousel: JQuery<HTMLElement>
-) {
+): void {
   cy.wrap($merchandisingCarousel)
     .get('.data-cx-merchandising-carousel')
     .should($merchandisingCarouselMetadata => {
@@ -50,7 +50,7 @@ function veifyCarouselLevelMetadata(
 function verifyCarouselItemRendered(
   $carouselItem: JQuery<HTMLElement>,
   index: number
-) {
+): void {
   cy.wrap($carouselItem).within(() => {
     const product = STRATEGY_RESPONSE.products[index];
 
@@ -79,7 +79,7 @@ function verifyCarouselItemRendered(
 
 function verifyCarouselItemsRendered(
   $merchandisingCarousel: JQuery<HTMLElement>
-) {
+): void {
   cy.wrap($merchandisingCarousel)
     .get('.item')
     .should('have.length', STRATEGY_RESPONSE.products.length)
@@ -88,7 +88,7 @@ function verifyCarouselItemsRendered(
     });
 }
 
-function verifyMerchandisingCarouselRendersProducts() {
+function verifyMerchandisingCarouselRendersProducts(): void {
   cy.get('cx-merchandising-carousel')
     /*
      * There could be multiple merchandising carousels on the page being used to test them,
@@ -98,7 +98,7 @@ function verifyMerchandisingCarouselRendersProducts() {
     .first()
     .should('be.visible')
     .within($merchandisingCarousel => {
-      veifyCarouselLevelMetadata($merchandisingCarousel);
+      verifyCarouselLevelMetadata($merchandisingCarousel);
       verifyCarouselItemsRendered($merchandisingCarousel);
     });
 }
@@ -107,7 +107,7 @@ export function verifyRequestToStrategyService(
   requestAlias: string,
   categoryCode?: string,
   facets?: string[]
-) {
+): void {
   cy.wait(`@${requestAlias}`).then(request => {
     expect(request.url).to.contain(`site=${SITE}`);
     expect(request.url).to.contain(`language=${DEFAULT_LANGUAGE}`);
@@ -128,9 +128,9 @@ export function verifyRequestToStrategyService(
 }
 
 export function verifyMerchandisingCarouselRendersOnHomePage(
-  strategyRequestAlias,
+  strategyRequestAlias: string,
   additionalFacets?: string[]
-) {
+): void {
   verifyRequestToStrategyService(
     strategyRequestAlias,
     undefined,
@@ -144,7 +144,7 @@ export function verifyMerchandisingCarouselRendersOnCategoryPage(
   strategyRequestAlias: string,
   categoryCode: string,
   additionalFacets?: string[]
-) {
+): void {
   const facets = [`category:${categoryCode}`];
   if (additionalFacets) {
     facets.push(...additionalFacets);
@@ -158,7 +158,7 @@ export function verifyMerchandisingCarouselRendersOnBrandPage(
   strategyRequestAlias: string,
   brandCode: string,
   additionalFacets?: string[]
-) {
+): void {
   const facets = [`brand:${brandCode}`];
   if (additionalFacets) {
     facets.push(...additionalFacets);
@@ -168,7 +168,7 @@ export function verifyMerchandisingCarouselRendersOnBrandPage(
   verifyMerchandisingCarouselRendersProducts();
 }
 
-export function applyFacet(facetGroup: string, facetName: string) {
+export function applyFacet(facetGroup: string, facetName: string): void {
   cy.get('.cx-facet-header')
     .contains(facetGroup)
     .parents('.cx-facet-group')
