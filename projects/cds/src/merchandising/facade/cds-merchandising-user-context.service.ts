@@ -12,7 +12,6 @@ import {
   distinctUntilChanged,
   filter,
   map,
-  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import {
@@ -33,8 +32,8 @@ export class CdsMerchandisingUserContextService {
 
   getUserContext(): Observable<MerchandisingUserContext> {
     return merge(
-      this.getProductNavigationContext(),
-      this.getCategoryAndFacetContext()
+      this.getCategoryAndFacetContext(),
+      this.getProductNavigationContext()
     );
   }
 
@@ -75,9 +74,7 @@ export class CdsMerchandisingUserContextService {
       this.productSearchService.getResults(),
       this.productSearchService.isSearching().pipe(distinctUntilChanged()),
     ]).pipe(
-      tap(x => console.log('searching before: ', x[1])),
       filter(([_searchResults, searching]) => !searching),
-      tap(x => console.log('searching after: ', x[1])),
       map(([searchResults, _searching]) =>
         searchResults.breadcrumbs ? searchResults.breadcrumbs : []
       ),
