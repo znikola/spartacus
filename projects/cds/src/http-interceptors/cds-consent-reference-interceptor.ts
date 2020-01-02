@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CdsConfig } from '../config';
+import { CdsConfig } from '../config/cds-config';
 import { ProfileTagEventService } from './../profiletag/services/profiletag-event.service';
 
 @Injectable({ providedIn: 'root' })
