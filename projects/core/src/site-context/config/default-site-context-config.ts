@@ -1,8 +1,8 @@
-import { SiteContextConfig } from './site-context-config';
 import {
   CURRENCY_CONTEXT_ID,
   LANGUAGE_CONTEXT_ID,
 } from '../providers/context-ids';
+import { SiteContextConfig } from './site-context-config';
 
 export function defaultSiteContextConfigFactory(): SiteContextConfig {
   return {
@@ -27,26 +27,26 @@ export function defaultSiteContextConfigFactory(): SiteContextConfig {
         'pa',
       ],
       [CURRENCY_CONTEXT_ID]: [
-        'USD',
-        'EUR',
-        'JPY',
         'GBP',
-        'AUD',
-        'CAD',
-        'CHF',
-        'CNY',
-        'SEK',
-        'NZD',
-        'MXN',
-        'SGD',
-        'HKD',
-        'NOK',
-        'KRW',
-        'TRY',
-        'RUB',
-        'INR',
-        'BRL',
-        'ZAR',
+        // 'USD',
+        // 'EUR',
+        // 'JPY',
+        // 'AUD',
+        // 'CAD',
+        // 'CHF',
+        // 'CNY',
+        // 'SEK',
+        // 'NZD',
+        // 'MXN',
+        // 'SGD',
+        // 'HKD',
+        // 'NOK',
+        // 'KRW',
+        // 'TRY',
+        // 'RUB',
+        // 'INR',
+        // 'BRL',
+        // 'ZAR',
       ],
     },
   };

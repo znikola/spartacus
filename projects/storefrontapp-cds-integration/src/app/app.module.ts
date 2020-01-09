@@ -43,6 +43,7 @@ if (!environment.production) {
       context: {
         urlParameters: ['baseSite', 'language', 'currency'],
         baseSite: [
+          'apparel-uk-spa',
           'electronics-spa',
           'electronics',
           'apparel-de',
@@ -72,17 +73,18 @@ if (!environment.production) {
     JsonLdBuilderModule,
     CdsModule.forRoot({
       cds: {
-        tenant: 'argotest',
-        baseUrl: 'https://api.stage.context.cloud.sap',
+        tenant: 'htp741065159',
+        baseUrl: 'https://api.eu.context.cloud.sap',
         endpoints: {
           strategyProducts:
             '/strategy/${tenant}/strategies/${strategyId}/products',
         },
         profileTag: {
+          allowInsecureCookies: true,
           javascriptUrl:
-            'http://tag.static.stage.context.cloud.sap/js/profile-tag.js',
+            'https://tag.static.eu.context.cloud.sap/js/profile-tag.js',
           configUrl:
-            'https://tag.static.stage.context.cloud.sap/config/dfbb97b0-f4d7-11e9-9c99-2125ab7968c6',
+            'https://tag.static.eu.context.cloud.sap/config/b2497b60-3264-11ea-a3e2-0ffe0a4b6e70',
         },
       },
     }),
