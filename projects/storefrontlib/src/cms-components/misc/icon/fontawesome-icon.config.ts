@@ -27,6 +27,9 @@ export const fontawesomeIconConfig: IconConfig = {
       CIRCLE: 'fas fa-circle',
       HEART: 'fas fa-heart',
       EMPTY_HEART: 'far fa-heart',
+      FACEBOOK: 'fab fa-facebook',
+      TWITTER: 'fab fa-twitter',
+      EMAIL:'far fa-envelope',
     },
     resources: [
       {

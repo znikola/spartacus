@@ -23,6 +23,10 @@ export enum ICON_TYPE {
   CIRCLE = 'CIRCLE',
   HEART = 'HEART',
   EMPTY_HEART = 'EMPTY_HEART',
+  FACEBOOK = 'FACEBOOK',
+  TWITTER = 'TWITTER',
+  EMAIL = 'EMAIL',
+
 }
 
 export abstract class IconConfig {
