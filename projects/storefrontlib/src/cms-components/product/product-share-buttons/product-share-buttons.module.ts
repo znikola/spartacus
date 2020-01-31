@@ -7,7 +7,6 @@ import { MediaModule } from '../../../shared/components/media/media.module';
 import { ProductShareButtonsComponent } from './product-share-buttons.component';
 import { IconModule } from '../../../cms-components/misc/icon/index';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -15,8 +14,7 @@ import { IconModule } from '../../../cms-components/misc/icon/index';
     MediaModule,
     OutletModule,
     IconModule,
-    ConfigModule.withConfig(<CmsConfig>{
-    }),
+    ConfigModule.withConfig(<CmsConfig>{}),
   ],
   declarations: [ProductShareButtonsComponent],
   entryComponents: [ProductShareButtonsComponent],

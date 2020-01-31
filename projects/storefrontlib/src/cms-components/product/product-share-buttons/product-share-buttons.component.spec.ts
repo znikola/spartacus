@@ -5,4 +5,3 @@ import { Product } from '@spartacus/core';
 import { Observable, of } from 'rxjs';
 import { CurrentProductService } from '../current-product.service';
 import { ProductImagesComponent } from './product-images.component';
-

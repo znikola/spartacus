@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { CmsConfig, ConfigModule, I18nModule } from '@spartacus/core';
 import { OutletModule } from '../../../cms-structure/outlet/outlet.module';
 import { ProductSummaryComponent } from './product-summary.component';
-import { ProductSharedButtonsModule} from '../../product/product-share-buttons/product-share-buttons.module';
-
+import { ProductSharedButtonsModule } from '../../product/product-share-buttons/product-share-buttons.module';
 
 @NgModule({
   imports: [

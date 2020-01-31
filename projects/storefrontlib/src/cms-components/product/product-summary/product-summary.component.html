@@ -16,8 +16,10 @@
   </ng-template>
 
   <div>
-      <cx-product-share-buttons></cx-product-share-buttons>
-      </div>
+    <cx-product-share-buttons
+      [productID]="product?.code"
+    ></cx-product-share-buttons>
+  </div>
 
   <!-- @TODO: Temp. Comment out share link while not in use by CMS -->
   <!-- <ng-container *cxOutlet="outlets.SHARE">
