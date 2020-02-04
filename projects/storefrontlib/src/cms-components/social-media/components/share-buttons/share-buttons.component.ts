@@ -6,14 +6,14 @@ import {
   Input,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ICON_TYPE } from '../../misc/icon/index';
+import { ICON_TYPE } from '../../../misc/icon/index';
 
 @Component({
-  selector: 'cx-product-share-buttons',
-  templateUrl: './product-share-buttons.component.html',
+  selector: 'cx-share-buttons',
+  templateUrl: './share-buttons.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductShareButtonsComponent implements OnInit {
+export class ShareButtonsComponent implements OnInit {
   @Input() productID;
 
   iconTypes = ICON_TYPE;

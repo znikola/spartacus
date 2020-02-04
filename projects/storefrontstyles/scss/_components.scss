@@ -20,6 +20,7 @@ $asm-components-whitelist: () !default;
 $pwa-components-whitelist: () !default;
 $cds-components-whitelist: () !default;
 $wish-list-components-whitelist: () !default;
+$share-buttons-components-whitelist: () !default;
 
 $selectors: mergeAll(
   (
@@ -35,7 +36,8 @@ $selectors: mergeAll(
     $pwa-components-whitelist,
     $cds-components-whitelist,
     $asm-components-whitelist,
-    $wish-list-components-whitelist
+    $wish-list-components-whitelist,
+    $share-buttons-components-whitelist
   )
 );
 
