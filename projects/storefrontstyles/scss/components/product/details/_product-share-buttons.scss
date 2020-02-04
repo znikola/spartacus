@@ -1,12 +1,8 @@
 %cx-product-share-buttons {
   display: flex;
-  flex-direction: column;
-  flex-grow: 0;
-  flex-wrap: wrap;
+  font-size: 1.25rem;
 
-  .socialIcon {
-    font-size: 20px;
+  a {
     margin: 0 2.5px;
   }
-
 }

@@ -1,14 +1,8 @@
-<ng-container>
-   <div>
-    <a *ngFor="let shareButton of shareButtons"
-          class="resp-sharing-button__link"
-          href="{{shareButton.url}}"
-          target="_blank"
-          rel="noopener"
-        >
-          <cx-icon [type]="shareButton.icon"
-                  class="socialIcon"
-          ></cx-icon>
-      </a>     
-    </div> 
-</ng-container>
+<a
+  *ngFor="let shareButton of shareButtons"
+  [href]="shareButton.url"
+  target="_blank"
+  rel="noopener"
+>
+  <cx-icon [type]="shareButton.icon"></cx-icon>
+</a>

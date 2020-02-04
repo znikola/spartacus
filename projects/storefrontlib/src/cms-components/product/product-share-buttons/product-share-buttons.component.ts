@@ -27,18 +27,28 @@ export class ProductShareButtonsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productUrl =
-      this.document.location.origin + '/product/' + this.productID;
+    //Product needs to get from product observable
+    this.productUrl = this.document.location.origin + '/p/' + this.productID;
+    //Router
 
-      this.shareButtons = [{
-        url: 'https://facebook.com/sharer/sharer.php?u='+this.productUrl,
-        icon: this.iconTypes.FACEBOOK
-      },{
-        url: 'https://twitter.com/intent/tweet/?text='+this.text+'&url='+this.productUrl,
-        icon: this.iconTypes.TWITTER
-      },{
-        url: 'mailto:?subject='+this.text+'&body='+this.productUrl,
-        icon: this.iconTypes.EMAIL
-      }];
+    //create service. Injection token
+    this.shareButtons = [
+      {
+        url: 'https://facebook.com/sharer/sharer.php?u=' + this.productUrl,
+        icon: this.iconTypes.FACEBOOK,
+      },
+      {
+        url:
+          'https://twitter.com/intent/tweet/?text=' +
+          this.text +
+          '&url=' +
+          this.productUrl,
+        icon: this.iconTypes.TWITTER,
+      },
+      {
+        url: 'mailto:?subject=' + this.text + '&body=' + this.productUrl,
+        icon: this.iconTypes.EMAIL,
+      },
+    ];
   }
 }

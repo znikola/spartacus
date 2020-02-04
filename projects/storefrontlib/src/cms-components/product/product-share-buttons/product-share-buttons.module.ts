@@ -14,7 +14,13 @@ import { IconModule } from '../../../cms-components/misc/icon/index';
     MediaModule,
     OutletModule,
     IconModule,
-    ConfigModule.withConfig(<CmsConfig>{}),
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        SocialShareComponent: {
+          component: ProductShareButtonsComponent,
+        },
+      },
+    }),
   ],
   declarations: [ProductShareButtonsComponent],
   entryComponents: [ProductShareButtonsComponent],
