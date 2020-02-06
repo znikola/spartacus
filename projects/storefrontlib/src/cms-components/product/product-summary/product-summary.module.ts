@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CmsConfig, ConfigModule, I18nModule } from '@spartacus/core';
 import { OutletModule } from '../../../cms-structure/outlet/outlet.module';
+import { SelectorModule } from '../../../selector/selector.module';
 import { ProductSummaryComponent } from './product-summary.component';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ProductSummaryComponent } from './product-summary.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [ProductSummaryComponent],
   entryComponents: [ProductSummaryComponent],

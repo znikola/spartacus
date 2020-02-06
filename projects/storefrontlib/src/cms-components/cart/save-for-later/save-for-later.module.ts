@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SaveForLaterComponent } from './save-for-later.component';
+import { NgModule } from '@angular/core';
 import {
-  ConfigModule,
   CmsConfig,
-  I18nModule,
+  ConfigModule,
   FeaturesConfig,
+  I18nModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { CartSharedModule } from '../cart-shared/cart-shared.module';
+import { SaveForLaterComponent } from './save-for-later.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { CartSharedModule } from '../cart-shared/cart-shared.module';
     }),
     I18nModule,
     CartSharedModule,
+    SelectorModule,
   ],
   declarations: [SaveForLaterComponent],
   exports: [SaveForLaterComponent],

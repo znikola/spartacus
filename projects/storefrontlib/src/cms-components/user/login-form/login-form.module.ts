@@ -9,6 +9,7 @@ import {
   NotAuthGuard,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { LoginFormComponent } from './login-form.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { LoginFormComponent } from './login-form.component';
       },
     }),
     I18nModule,
+    SelectorModule,
   ],
   declarations: [LoginFormComponent],
   exports: [LoginFormComponent],

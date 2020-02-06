@@ -7320,6 +7320,11 @@ next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-dynamic-component@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ng-dynamic-component/-/ng-dynamic-component-5.0.0.tgz#8be806cf7b4d6ab6e59d86f69e65f2b0820c2892"
+  integrity sha512-87ragKzHGkeuXY3OqphZwNog7na4FhzJqcpqHFxCov2MXWm+fcInqcf3xunPhjJFYpAnbjb89VZO2zElLqvosA==
+
 ng-packagr@^5.5.1:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-5.5.1.tgz#2d27968c1079fba12ff2ae542beab82747a92e7b"

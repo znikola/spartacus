@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
   ConfigModule,
-  UrlModule,
   I18nModule,
+  UrlModule,
 } from '@spartacus/core';
-import { ProductVariantsComponent } from './product-variants.component';
-import { RouterModule } from '@angular/router';
-import { VariantStyleSelectorModule } from './variant-style-selector/variant-style-selector.module';
-import { VariantSizeSelectorModule } from './variant-size-selector/variant-size-selector.module';
-import { VariantColorSelectorModule } from './variant-color-selector/variant-color-selector.module';
-import { VariantStyleIconsModule } from './variant-style-icons/variant-style-icons.module';
+import { SelectorModule } from '../../../selector/selector.module';
+import { VariantColorSelectorModule } from './color-selector/color-selector.module';
 import { ProductVariantGuard } from './guards/product-variant.guard';
-import { VariantStyleIconsComponent } from './variant-style-icons/variant-style-icons.component';
+import { ProductVariantsComponent } from './product-variants.component';
+import { VariantSizeSelectorModule } from './size-selector/size-selector.module';
+import { VariantStyleIconsComponent } from './style-icons/style-icons.component';
+import { VariantStyleIconsModule } from './style-icons/style-icons.module';
+import { VariantStyleSelectorModule } from './style-selector/style-selector.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { VariantStyleIconsComponent } from './variant-style-icons/variant-style-
     VariantSizeSelectorModule,
     VariantColorSelectorModule,
     VariantStyleIconsModule,
+    SelectorModule,
   ],
   declarations: [ProductVariantsComponent],
   entryComponents: [ProductVariantsComponent],

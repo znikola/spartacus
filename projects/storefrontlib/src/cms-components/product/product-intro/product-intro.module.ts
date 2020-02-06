@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CmsConfig, ConfigModule, I18nModule } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { StarRatingModule } from '../../../shared/components/star-rating/star-rating.module';
 import { ProductIntroComponent } from './product-intro.component';
 
@@ -16,6 +17,7 @@ import { ProductIntroComponent } from './product-intro.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [ProductIntroComponent],
   exports: [ProductIntroComponent],

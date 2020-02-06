@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CmsConfig, ConfigModule, UrlModule } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { CarouselModule } from '../../../../shared/components/carousel/carousel.module';
 import { MediaModule } from '../../../../shared/components/media/media.module';
 import { ProductReferencesComponent } from './product-references.component';
@@ -20,6 +21,7 @@ import { ProductReferencesComponent } from './product-references.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [ProductReferencesComponent],
   entryComponents: [ProductReferencesComponent],

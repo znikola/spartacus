@@ -6,6 +6,7 @@ import {
   ConfigModule,
   I18nModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { NotificationPreferenceComponent } from './notification-preference.component';
 
@@ -23,6 +24,7 @@ import { NotificationPreferenceComponent } from './notification-preference.compo
         },
       },
     }),
+    SelectorModule,
   ],
   exports: [NotificationPreferenceComponent],
   entryComponents: [NotificationPreferenceComponent],

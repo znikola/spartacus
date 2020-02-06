@@ -8,6 +8,7 @@ import {
   I18nModule,
   NotAuthGuard,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { ResetPasswordFormComponent } from './reset-password-form.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ResetPasswordFormComponent } from './reset-password-form.component';
     ReactiveFormsModule,
     RouterModule,
     I18nModule,
+    SelectorModule,
   ],
   declarations: [ResetPasswordFormComponent],
   exports: [ResetPasswordFormComponent],

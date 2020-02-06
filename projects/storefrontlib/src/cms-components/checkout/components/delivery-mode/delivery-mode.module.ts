@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CmsConfig, ConfigModule, I18nModule } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { SpinnerModule } from '../../../../shared/components/spinner/spinner.module';
 import { CheckoutAuthGuard } from '../../guards/checkout-auth.guard';
 import { ShippingAddressSetGuard } from '../../guards/shipping-address-set.guard';
@@ -26,6 +27,7 @@ import { DeliveryModeComponent } from './delivery-mode.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [DeliveryModeComponent],
   entryComponents: [DeliveryModeComponent],

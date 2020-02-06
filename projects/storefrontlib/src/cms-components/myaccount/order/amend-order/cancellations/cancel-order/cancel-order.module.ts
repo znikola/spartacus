@@ -6,6 +6,7 @@ import {
   CmsPageGuard,
   PageLayoutComponent,
 } from '../../../../../../cms-structure/index';
+import { SelectorModule } from '../../../../../../selector/selector.module';
 import { AmendOrderActionsModule } from '../../amend-order-actions/amend-order-actions.module';
 import { AmendOrderItemsModule } from '../../amend-order-items/amend-order-items.module';
 import { OrderAmendService } from '../../amend-order.service';
@@ -40,6 +41,7 @@ import { CancelOrderComponent } from './cancel-order.component';
     }),
     AmendOrderItemsModule,
     AmendOrderActionsModule,
+    SelectorModule,
   ],
   declarations: [CancelOrderComponent],
   exports: [CancelOrderComponent],

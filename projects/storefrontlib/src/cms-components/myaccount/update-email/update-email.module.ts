@@ -7,6 +7,7 @@ import {
   ConfigModule,
   I18nModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { UpdateEmailFormComponent } from './update-email-form/update-email-form.component';
 import { UpdateEmailComponent } from './update-email.component';
@@ -26,9 +27,15 @@ import { UpdateEmailComponent } from './update-email.component';
     ReactiveFormsModule,
     SpinnerModule,
     I18nModule,
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-update-email-form': { component: UpdateEmailFormComponent },
+      },
+    }),
+    SelectorModule,
   ],
   declarations: [UpdateEmailFormComponent, UpdateEmailComponent],
   exports: [UpdateEmailComponent, UpdateEmailFormComponent],
-  entryComponents: [UpdateEmailComponent],
+  entryComponents: [UpdateEmailComponent, UpdateEmailFormComponent],
 })
 export class UpdateEmailModule {}

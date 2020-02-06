@@ -1,8 +1,31 @@
-<cx-icon
+<!-- SPIKE NOT OK - WORKAROUND: WRAPPING ELEMENT - restyle  -->
+<!-- <span class="star">
+  <ng-container
+    *ngFor="let i of [1, 2, 3, 4, 5]"
+    cxSelector="cx-icon"
+    [inputs]="{ type: iconTypes.STAR }"
+    [events]="{
+      mouseover: setRate | cxArgs: i,
+      mouseout: setRate | cxArgs: 0,
+      click: saveRate | cxArgs: i
+    }"
+  ></ng-container>
+</span> -->
+
+<cx-icon-outlet
   *ngFor="let i of [1, 2, 3, 4, 5]"
   [type]="iconTypes.STAR"
   class="star"
   (mouseover)="setRate(i)"
   (mouseout)="setRate(0)"
   (click)="saveRate(i)"
-></cx-icon>
+></cx-icon-outlet>
+
+<!-- <cx-icon
+  *ngFor="let i of [1, 2, 3, 4, 5]"
+  [type]="iconTypes.STAR"
+  class="star"
+  (mouseover)="setRate(i)"
+  (mouseout)="setRate(0)"
+  (click)="saveRate(i)"
+></cx-icon> -->

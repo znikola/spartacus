@@ -7,6 +7,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { CartNotEmptyGuard } from '../../../cart/cart-not-empty.guard';
 import { CheckoutAuthGuard } from '../../guards/checkout-auth.guard';
 import { PlaceOrderComponent } from './place-order.component';
@@ -25,6 +26,7 @@ import { PlaceOrderComponent } from './place-order.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [PlaceOrderComponent],
   entryComponents: [PlaceOrderComponent],

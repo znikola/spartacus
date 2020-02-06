@@ -1,0 +1,17 @@
+<h2>PARENT</h2>
+<ul>
+  <li>Sum: {{ sum }}</li>
+  <li><button (click)="log()">console.log</button></li>
+  <li><button (click)="zero()">zero</button></li>
+</ul>
+
+<hr />
+<h3>CHILDREN</h3>
+<ng-container *ngFor="let i of copiesArr">
+  <cx-selector-testing
+    [depth]="depth"
+    [id]="i"
+    [someInput]="getParentSomeInput()"
+    (spike)="increment($event)"
+  ></cx-selector-testing>
+</ng-container>

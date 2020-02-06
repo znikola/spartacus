@@ -7,6 +7,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../../../selector/selector.module';
 import { defaultCheckoutConfig } from '../../../config/default-checkout-config';
 import { CheckoutAuthGuard } from '../../../guards/checkout-auth.guard';
 import { CartNotEmptyGuard } from './../../../../../cms-components/cart/cart-not-empty.guard';
@@ -26,6 +27,7 @@ import { CheckoutProgressMobileTopComponent } from './checkout-progress-mobile-t
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [CheckoutProgressMobileTopComponent],
   entryComponents: [CheckoutProgressMobileTopComponent],

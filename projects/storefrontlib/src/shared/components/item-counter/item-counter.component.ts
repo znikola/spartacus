@@ -55,6 +55,9 @@ export class ItemCounterComponent
   @Input()
   isValueChangeable = false;
 
+  @Input()
+  spike = false;
+
   @Output()
   update = new EventEmitter<number>();
 
@@ -78,7 +81,10 @@ export class ItemCounterComponent
       });
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes) {
+    //spike todo remove
+    console.log(changes);
+
     if (this.cartIsLoading) {
       this.inputValue.disable({
         onlySelf: true,

@@ -4,8 +4,8 @@ import {
   Cart,
   CartService,
   OrderEntry,
-  PromotionResult,
   PromotionLocation,
+  PromotionResult,
 } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -84,19 +84,19 @@ export class AddedToCartDialogComponent implements OnInit {
     );
   }
 
-  dismissModal(reason?: any): void {
+  dismissModal = (reason?: any): void => {
     this.modalService.dismissActiveModal(reason);
-  }
+  };
 
-  removeEntry(item: OrderEntry): void {
+  removeEntry = (item: OrderEntry): void => {
     this.cartService.removeEntry(item);
     delete this.form.controls[item.product.code];
     this.dismissModal('Removed');
-  }
+  };
 
-  updateEntry({ item, updatedQuantity }): void {
+  updateEntry = ({ item, updatedQuantity }): void => {
     this.cartService.updateEntry(item.entryNumber, updatedQuantity);
-  }
+  };
 
   private createEntryFormGroup(entry: OrderEntry): FormGroup {
     return this.fb.group({

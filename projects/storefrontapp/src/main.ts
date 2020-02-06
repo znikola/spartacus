@@ -8,5 +8,6 @@ if (environment.production) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  performance.mark('[SPR] platformBrowserDynamic().bootstrapModule');
   platformBrowserDynamic().bootstrapModule(AppModule);
 });

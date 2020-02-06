@@ -2,15 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   CartService,
-  PromotionResult,
-  PromotionLocation,
-  SelectiveCartService,
   FeatureConfigService,
-  ConsignmentEntry,
+  PromotionLocation,
+  PromotionResult,
+  SelectiveCartService,
 } from '@spartacus/core';
 import {
-  Item,
   CartItemComponentOptions,
+  Item,
 } from '../cart-item/cart-item.component';
 
 @Component({
@@ -90,7 +89,9 @@ export class CartItemListComponent implements OnInit {
     protected fb: FormBuilder,
     protected selectiveCartService?: SelectiveCartService,
     private featureConfig?: FeatureConfigService
-  ) {}
+  ) {
+    window['form'] = this.form; //spike todo remove
+  }
 
   // TODO remove for 2.0 - left to keep backward compatibility
   ngOnInit(): void {}
@@ -104,24 +105,24 @@ export class CartItemListComponent implements OnInit {
   }
   //TODO remove feature flag for #5958
 
-  removeEntry(item: Item): void {
+  removeEntry = (item: Item): void => {
     if (this.selectiveCartService && this.options.isSaveForLater) {
       this.selectiveCartService.removeEntry(item);
     } else {
       this.cartService.removeEntry(item);
     }
     delete this.form.controls[item.product.code];
-  }
+  };
 
-  updateEntry({
+  updateEntry = ({
     item,
     updatedQuantity,
   }: {
     item: any;
     updatedQuantity: number;
-  }): void {
+  }): void => {
     this.cartService.updateEntry(item.entryNumber, updatedQuantity);
-  }
+  };
 
   private createEntryFormGroup(entry): FormGroup {
     return this.fb.group({

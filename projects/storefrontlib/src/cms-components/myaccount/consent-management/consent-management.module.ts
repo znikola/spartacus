@@ -7,6 +7,7 @@ import {
   ConfigModule,
   I18nModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { IconModule } from '../../misc/index';
 import { ConsentManagementFormComponent } from './components/consent-form/consent-management-form.component';
@@ -28,9 +29,17 @@ import { ConsentManagementComponent } from './components/consent-management.comp
         },
       },
     }),
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-consent-management-form': {
+          component: ConsentManagementFormComponent,
+        },
+      },
+    }),
+    SelectorModule,
   ],
   declarations: [ConsentManagementComponent, ConsentManagementFormComponent],
   exports: [ConsentManagementComponent, ConsentManagementFormComponent],
-  entryComponents: [ConsentManagementComponent],
+  entryComponents: [ConsentManagementComponent, ConsentManagementFormComponent],
 })
 export class ConsentManagementModule {}

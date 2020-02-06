@@ -8,6 +8,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { ListNavigationModule } from '../../../../shared/components/list-navigation/list-navigation.module';
 import { OrderReturnRequestListComponent } from './order-return-request-list.component';
 
@@ -26,6 +27,7 @@ import { OrderReturnRequestListComponent } from './order-return-request-list.com
     ListNavigationModule,
     UrlModule,
     I18nModule,
+    SelectorModule,
   ],
   declarations: [OrderReturnRequestListComponent],
   exports: [OrderReturnRequestListComponent],

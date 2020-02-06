@@ -8,6 +8,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { CheckoutConfig } from '../../config/checkout-config';
 import { defaultCheckoutConfig } from '../../config/default-checkout-config';
 import { CheckoutAuthGuard } from '../../guards/checkout-auth.guard';
@@ -29,6 +30,7 @@ import { CheckoutProgressComponent } from './checkout-progress.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [CheckoutProgressComponent],
   entryComponents: [CheckoutProgressComponent],

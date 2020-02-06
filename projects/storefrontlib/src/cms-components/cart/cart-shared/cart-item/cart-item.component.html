@@ -96,6 +96,23 @@
             formControlName="quantity"
           >
           </cx-item-counter>
+
+          <!-- SPIKE NOT OK - ERROR: FORM NOT WORKING -->
+
+          <!-- <ng-container
+            cxSelector="cx-item-counter"
+            [inputs]="{
+              isValueChangeable: item.updateable,
+              step: 1,
+              min: 1,
+              max: item.product.stock?.stockLevel || 1000,
+              cartIsLoading: cartIsLoading
+            }"
+            [outputs]="{
+              update: updateItem
+            }"
+          >
+          </ng-container> -->
         </div>
       </div>
       <!-- Total -->

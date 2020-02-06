@@ -4,13 +4,14 @@ import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
   ConfigModule,
+  FeaturesConfigModule,
   I18nModule,
   UrlModule,
-  FeaturesConfigModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { PromotionsModule } from '../../checkout/components/promotions/promotions.module';
-import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { CartCouponModule } from '../cart-coupon/cart-coupon.module';
+import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { CartDetailsComponent } from './cart-details.component';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { CartDetailsComponent } from './cart-details.component';
       },
     }),
     I18nModule,
+    SelectorModule,
   ],
   declarations: [CartDetailsComponent],
   exports: [CartDetailsComponent],

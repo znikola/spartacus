@@ -1,0 +1,26 @@
+<h3>
+  {{ id }} {{ trackChangeDetection() }} [{{ someInput }}]
+  <button (click)="emitSpike()">SPIKE</button>
+</h3>
+
+<ng-container *ngIf="depth > 0">
+  <ng-container *ngFor="let i of range">
+    <ng-container
+      cxSelector="cx-selector-testing2"
+      [inputs]="{
+        depth: depth - 1,
+        id: id + '.' + i,
+        someInput: getSomeInput()
+      }"
+      [outputs]="{
+        spike: emitSpike
+      }"
+    ></ng-container>
+
+    <!-- <cx-selector-testing
+    id="{{ id }}.{{ i }}"
+    [depth]="depth - 1"
+    (spike)="emitSpike()"
+  ></cx-selector-testing> -->
+  </ng-container>
+</ng-container>

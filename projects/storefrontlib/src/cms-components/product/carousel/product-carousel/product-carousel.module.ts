@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CmsConfig, ConfigModule, UrlModule } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import {
   CarouselModule,
   MediaModule,
@@ -22,6 +23,7 @@ import { ProductCarouselComponent } from './product-carousel.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [ProductCarouselComponent],
   entryComponents: [ProductCarouselComponent],

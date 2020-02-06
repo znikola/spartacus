@@ -7,8 +7,9 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
-import { IconModule } from '../../misc/icon/icon.module';
+import { SelectorModule } from '../../../selector/selector.module';
 import { MediaModule } from '../../../shared/components/media/media.module';
+import { IconModule } from '../../misc/icon/icon.module';
 import { HighlightPipe } from './highlight.pipe';
 import { SearchBoxComponent } from './search-box.component';
 @NgModule({
@@ -26,6 +27,7 @@ import { SearchBoxComponent } from './search-box.component';
     IconModule,
     UrlModule,
     I18nModule,
+    SelectorModule,
   ],
   declarations: [SearchBoxComponent, HighlightPipe],
   entryComponents: [SearchBoxComponent],

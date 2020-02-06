@@ -11,7 +11,7 @@
           placeholder="{{ 'storeFinder.searchBox' | cxTranslate }}"
           required
         />
-        <cx-icon
+        <!-- <cx-icon
           [type]="iconTypes.SEARCH"
           aria-label="search"
           class="search"
@@ -20,7 +20,28 @@
           [ngClass]="{
             'disabled-action': !(queryInput.value && queryInput.value.length)
           }"
-        ></cx-icon>
+        ></cx-icon> -->
+
+        <!-- SPIKE NOT OK - WORKAROUND: WRAPPER ELEMENT -->
+
+        <a
+          [routerLink]="['/store-finder/find']"
+          [queryParams]="{ query: queryInput.value }"
+          [ngClass]="{
+            'disabled-action': !(queryInput.value && queryInput.value.length)
+          }"
+        >
+          <ng-container
+            cxSelector="cx-icon"
+            [inputs]="{
+              type: iconTypes.SEARCH
+            }"
+            [attributes]="{
+              'aria-label': 'search',
+              class: 'search '
+            }"
+          ></ng-container>
+        </a>
       </div>
     </div>
     <div class="col-md-12 col-lg-5">

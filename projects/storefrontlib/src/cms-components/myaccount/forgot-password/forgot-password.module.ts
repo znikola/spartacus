@@ -9,6 +9,7 @@ import {
   NotAuthGuard,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { ForgotPasswordComponent } from './forgot-password.component';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ForgotPasswordComponent } from './forgot-password.component';
       },
     }),
     I18nModule,
+    SelectorModule,
   ],
   declarations: [ForgotPasswordComponent],
   exports: [ForgotPasswordComponent],

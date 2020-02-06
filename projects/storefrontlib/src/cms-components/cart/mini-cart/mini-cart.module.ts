@@ -8,6 +8,7 @@ import {
   UrlModule,
 } from '@spartacus/core';
 import { IconModule } from '../../../cms-components/misc/icon/index';
+import { SelectorModule } from '../../../selector/selector.module';
 import { MiniCartComponent } from './mini-cart.component';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MiniCartComponent } from './mini-cart.component';
     UrlModule,
     IconModule,
     I18nModule,
+    SelectorModule,
   ],
   declarations: [MiniCartComponent],
   exports: [MiniCartComponent],

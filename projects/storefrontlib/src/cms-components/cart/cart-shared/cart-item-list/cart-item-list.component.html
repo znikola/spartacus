@@ -42,7 +42,24 @@
       </ng-container>
 
       <ng-container *cxFeatureLevel="'1.5'">
-        <cx-cart-item
+        <!-- SPIKE OK -->
+        <ng-container
+          cxSelector="cx-cart-item"
+          [inputs]="{
+            parent: form.controls[item.product.code],
+            item: item,
+            isReadOnly: isReadOnly,
+            promotionLocation: promotionLocation,
+            cartIsLoading: cartIsLoading,
+            options: options
+          }"
+          [outputs]="{
+            remove: removeEntry,
+            update: updateEntry
+          }"
+        >
+        </ng-container>
+        <!-- <cx-cart-item
           [parent]="form.controls[item.product.code]"
           [item]="item"
           [isReadOnly]="isReadOnly"
@@ -52,7 +69,7 @@
           (update)="updateEntry($event)"
           [options]="options"
         >
-        </cx-cart-item>
+        </cx-cart-item> -->
       </ng-container>
     </div>
   </div>

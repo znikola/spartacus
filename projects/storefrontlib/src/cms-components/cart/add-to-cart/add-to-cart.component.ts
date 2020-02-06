@@ -9,6 +9,7 @@ import {
 import { CartService, OrderEntry, Product } from '@spartacus/core';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { cxEvent } from '../../../selector/cx-event-token';
 import { ModalRef, ModalService } from '../../../shared/components/modal/index';
 import { CurrentProductService } from '../../product/current-product.service';
 import { AddedToCartDialogComponent } from './added-to-cart-dialog/added-to-cart-dialog.component';
@@ -21,6 +22,8 @@ import { AddedToCartDialogComponent } from './added-to-cart-dialog/added-to-cart
 export class AddToCartComponent implements OnInit, OnDestroy {
   @Input() productCode: string;
   @Input() showQuantity = true;
+
+  cxEvent = cxEvent;
 
   /**
    * As long as we do not support #5026, we require product input, as we need
@@ -86,9 +89,10 @@ export class AddToCartComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateCount(value: number): void {
+  updateCount = (value: number, ...extra): void => {
+    console.log('updateCount', value, extra); //spike todo remove
     this.quantity = value;
-  }
+  };
 
   addToCart() {
     if (!this.productCode || this.quantity <= 0) {

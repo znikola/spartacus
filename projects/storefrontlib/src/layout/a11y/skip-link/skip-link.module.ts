@@ -4,11 +4,12 @@ import {
   ComponentFactoryResolver,
   NgModule,
 } from '@angular/core';
-import { Config, ConfigModule, I18nModule } from '@spartacus/core';
+import { CmsConfig, Config, ConfigModule, I18nModule } from '@spartacus/core';
 import {
   OutletPosition,
   OutletService,
 } from '../../../cms-structure/outlet/index';
+import { SelectorModule } from '../../../selector/selector.module';
 import { SkipLinkComponent } from './component/skip-link.component';
 import { defaultSkipLinkConfig } from './config/default-skip-link.config';
 import { SkipLinkConfig } from './config/skip-link.config';
@@ -19,6 +20,14 @@ import { SkipLinkDirective } from './directive/skip-link.directive';
     CommonModule,
     I18nModule,
     ConfigModule.withConfig(defaultSkipLinkConfig),
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-skip-link': {
+          component: SkipLinkComponent,
+        },
+      },
+    }),
+    SelectorModule,
   ],
   declarations: [SkipLinkComponent, SkipLinkDirective],
   exports: [SkipLinkDirective],

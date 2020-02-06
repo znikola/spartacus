@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ConfigModule, CmsConfig, I18nModule } from '@spartacus/core';
+import { NgModule } from '@angular/core';
+import { CmsConfig, ConfigModule, I18nModule } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { ProductAttributesComponent } from './product-attributes.component';
 
 @NgModule({
@@ -15,6 +15,7 @@ import { ProductAttributesComponent } from './product-attributes.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [ProductAttributesComponent],
   entryComponents: [ProductAttributesComponent],

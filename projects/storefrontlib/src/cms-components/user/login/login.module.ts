@@ -8,6 +8,7 @@ import {
   UrlModule,
 } from '@spartacus/core';
 import { PageSlotModule } from '../../../cms-structure/page/slot/page-slot.module';
+import { SelectorModule } from '../../../selector/selector.module';
 import { LoginComponent } from './login.component';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { LoginComponent } from './login.component';
       },
     }),
     I18nModule,
+    SelectorModule,
   ],
   declarations: [LoginComponent],
   entryComponents: [LoginComponent],

@@ -11,9 +11,10 @@ import {
   UrlModule,
   UserService,
 } from '@spartacus/core';
-import { ListNavigationModule } from '../../../../shared/components/list-navigation/list-navigation.module';
 import { CmsPageGuard } from '../../../../cms-structure/guards/cms-page.guard';
 import { PageLayoutComponent } from '../../../../cms-structure/page/page-layout/page-layout.component';
+import { SelectorModule } from '../../../../selector/selector.module';
+import { ListNavigationModule } from '../../../../shared/components/list-navigation/list-navigation.module';
 import { OrderHistoryComponent } from './order-history.component';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { OrderHistoryComponent } from './order-history.component';
     ListNavigationModule,
     UrlModule,
     I18nModule,
+    SelectorModule,
   ],
   declarations: [OrderHistoryComponent],
   exports: [OrderHistoryComponent],

@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ConfigModule, CmsConfig, CmsPageTitleModule } from '@spartacus/core';
+import { CmsConfig, CmsPageTitleModule, ConfigModule } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { BreadcrumbComponent } from './breadcrumb.component';
       },
     }),
     CmsPageTitleModule,
+    SelectorModule,
   ],
   declarations: [BreadcrumbComponent],
   exports: [BreadcrumbComponent],

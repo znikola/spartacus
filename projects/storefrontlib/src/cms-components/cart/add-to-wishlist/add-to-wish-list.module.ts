@@ -7,6 +7,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { IconModule } from '../../misc/icon/icon.module';
 import { AddToWishListComponent } from './add-to-wish-list.component';
 
@@ -24,6 +25,7 @@ import { AddToWishListComponent } from './add-to-wish-list.component';
     IconModule,
     RouterModule,
     UrlModule,
+    SelectorModule,
   ],
   declarations: [AddToWishListComponent],
   entryComponents: [AddToWishListComponent],

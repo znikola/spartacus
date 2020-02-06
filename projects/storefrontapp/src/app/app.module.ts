@@ -17,6 +17,10 @@ import {
 } from '@spartacus/storefront';
 import { environment } from '../environments/environment';
 import { TestOutletModule } from '../test-outlets/test-outlet.module';
+import { SelectorTestingComponent } from './selector/selector-testing/selector-testing-component/selector-testing.component';
+import { SelectorTesting2Component } from './selector/selector-testing/selector-testing-component/selector-testing2.component';
+import { TestModule } from './selector/selector-testing/test.module';
+
 registerLocaleData(localeDe);
 registerLocaleData(localeJa);
 registerLocaleData(localeZh);
@@ -76,8 +80,16 @@ if (!environment.production) {
 
     ...devImports,
     ConfigModule,
-  ],
 
+    //spike todo remove:
+    TestModule,
+    ConfigModule.withConfig({
+      cmsComponents: {
+        'cx-selector-testing': { component: SelectorTestingComponent },
+        'cx-selector-testing2': { component: SelectorTesting2Component },
+      },
+    }),
+  ],
   bootstrap: [StorefrontComponent],
 })
 export class AppModule {}

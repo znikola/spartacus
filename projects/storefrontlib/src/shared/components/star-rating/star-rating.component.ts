@@ -51,7 +51,7 @@ export class StarRatingComponent implements OnInit {
     this.setRate(this.rating, true);
   }
 
-  setRate(value: number, force?: boolean): void {
+  setRate = (value: number, force?: boolean): void => {
     if (!this.disabled || force) {
       // TODO(issue:#3803) deprecated since 1.0.2
       if (this.renderer) {
@@ -67,14 +67,14 @@ export class StarRatingComponent implements OnInit {
         );
       }
     }
-  }
+  };
 
-  saveRate(rating: number): void {
+  saveRate = (rating: number): void => {
     if (this.disabled) {
       return;
     }
     this.initialRate = rating;
     this.setRate(rating);
     this.change.emit(rating);
-  }
+  };
 }

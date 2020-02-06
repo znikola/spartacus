@@ -7,6 +7,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { CartCouponModule } from '../cart-coupon/cart-coupon.module';
 import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { CartTotalsComponent } from './cart-totals.component';
@@ -26,6 +27,7 @@ import { CartTotalsComponent } from './cart-totals.component';
     CartSharedModule,
     I18nModule,
     CartCouponModule,
+    SelectorModule,
   ],
   declarations: [CartTotalsComponent],
   exports: [CartTotalsComponent],

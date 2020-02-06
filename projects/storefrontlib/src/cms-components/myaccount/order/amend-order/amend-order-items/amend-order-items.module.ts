@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { I18nModule, FeaturesConfigModule } from '@spartacus/core';
+import {
+  CmsConfig,
+  ConfigModule,
+  FeaturesConfigModule,
+  I18nModule,
+} from '@spartacus/core';
+import { SelectorModule } from '../../../../../selector/selector.module';
 import { ItemCounterModule, MediaModule } from '../../../../../shared/index';
 import { CancelOrReturnItemsComponent } from './amend-order-items.component';
 
@@ -13,6 +19,14 @@ import { CancelOrReturnItemsComponent } from './amend-order-items.component';
     MediaModule,
     ItemCounterModule,
     FeaturesConfigModule,
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-cancel-or-return-items-component': {
+          component: CancelOrReturnItemsComponent,
+        },
+      },
+    }),
+    SelectorModule,
   ],
   declarations: [CancelOrReturnItemsComponent],
   exports: [CancelOrReturnItemsComponent],

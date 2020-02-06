@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CmsConfig, ConfigModule } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { ParagraphComponent } from './paragraph.component';
-import { ConfigModule } from '@spartacus/core';
-import { CmsConfig } from '@spartacus/core';
 
 @NgModule({
   imports: [
@@ -16,10 +16,11 @@ import { CmsConfig } from '@spartacus/core';
           component: ParagraphComponent,
         },
       },
-    }),
+    }),SelectorModule
   ],
   declarations: [ParagraphComponent],
   exports: [ParagraphComponent],
   entryComponents: [ParagraphComponent],
 })
 export class CmsParagraphModule {}
+

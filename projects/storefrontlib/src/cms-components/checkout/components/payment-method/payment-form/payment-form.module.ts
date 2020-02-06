@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { I18nModule } from '@spartacus/core';
+import { SelectorModule } from '../../../../../selector/selector.module';
 import { CardModule } from '../../../../../shared/components/card/card.module';
 import { SpinnerModule } from '../../../../../shared/components/spinner/spinner.module';
 import { IconModule } from '../../../../misc/icon/icon.module';
@@ -18,6 +19,7 @@ import { PaymentFormComponent } from './payment-form.component';
     BillingAddressFormModule,
     I18nModule,
     IconModule,
+    SelectorModule,
     SpinnerModule,
   ],
   declarations: [PaymentFormComponent],

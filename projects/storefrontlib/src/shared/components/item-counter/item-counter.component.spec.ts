@@ -9,7 +9,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ItemCounterComponent } from './item-counter.component';
+import { ItemCounterComponentImpl } from './item-counter.component';
 
 class MockEvent {
   code: string;
@@ -41,8 +41,8 @@ const testData3 = [
 ];
 
 describe('ItemCounterComponent', () => {
-  let itemCounterComponent: ItemCounterComponent;
-  let fixture: ComponentFixture<ItemCounterComponent>;
+  let itemCounterComponent: ItemCounterComponentImpl;
+  let fixture: ComponentFixture<ItemCounterComponentImpl>;
 
   let keyBoardEvent: MockEvent;
   let focusEvent: FocusEvent;
@@ -54,7 +54,7 @@ describe('ItemCounterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, ReactiveFormsModule],
-      declarations: [ItemCounterComponent],
+      declarations: [ItemCounterComponentImpl],
       providers: [
         { provide: Function },
         { provide: KeyboardEvent, useClass: MockEvent },
@@ -68,7 +68,7 @@ describe('ItemCounterComponent', () => {
     isInputFocused = false;
     isIncrementBtnFocused = false;
     isDecrementBtnFocused = false;
-    fixture = TestBed.createComponent(ItemCounterComponent);
+    fixture = TestBed.createComponent(ItemCounterComponentImpl);
     itemCounterComponent = fixture.componentInstance;
     itemCounterComponent.input = {
       nativeElement: {

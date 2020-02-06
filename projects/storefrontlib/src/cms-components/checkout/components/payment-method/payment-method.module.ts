@@ -7,6 +7,7 @@ import {
   I18nModule,
   UserService,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../../selector/selector.module';
 import { CardModule } from '../../../../shared/components/card/card.module';
 import { SpinnerModule } from '../../../../shared/components/spinner/spinner.module';
 import { CheckoutAuthGuard } from '../../guards/checkout-auth.guard';
@@ -37,6 +38,7 @@ import { PaymentMethodComponent } from './payment-method.component';
         },
       },
     }),
+    SelectorModule,
   ],
   providers: [UserService],
   declarations: [PaymentMethodComponent],

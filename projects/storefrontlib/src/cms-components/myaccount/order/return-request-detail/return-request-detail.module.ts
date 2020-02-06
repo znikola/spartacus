@@ -5,15 +5,16 @@ import {
   AuthGuard,
   CmsConfig,
   ConfigModule,
+  FeaturesConfigModule,
   I18nModule,
   UrlModule,
-  FeaturesConfigModule,
 } from '@spartacus/core';
-import { MediaModule } from '../../../../shared/index';
 import { CmsPageGuard } from '../../../../cms-structure/guards/cms-page.guard';
 import { PageLayoutComponent } from '../../../../cms-structure/page/page-layout/page-layout.component';
-import { ReturnRequestOverviewComponent } from './return-request-overview/return-request-overview.component';
+import { SelectorModule } from '../../../../selector/selector.module';
+import { MediaModule } from '../../../../shared/index';
 import { ReturnRequestItemsComponent } from './return-request-items/return-request-items.component';
+import { ReturnRequestOverviewComponent } from './return-request-overview/return-request-overview.component';
 import { ReturnRequestTotalsComponent } from './return-request-totals/return-request-totals.component';
 
 const components = [
@@ -51,6 +52,7 @@ const components = [
     I18nModule,
     MediaModule,
     FeaturesConfigModule,
+    SelectorModule,
   ],
   declarations: [...components],
   exports: [...components],

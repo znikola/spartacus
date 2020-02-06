@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CmsConfig, ConfigModule, I18nModule } from '@spartacus/core';
 import { OutletModule } from '../../../cms-structure/outlet/outlet.module';
 import { PageComponentModule } from '../../../cms-structure/page/component/page-component.module';
+import { SelectorModule } from '../../../selector/selector.module';
 import { TabParagraphContainerComponent } from './tab-paragraph-container.component';
 
 @NgModule({
@@ -17,10 +18,11 @@ import { TabParagraphContainerComponent } from './tab-paragraph-container.compon
     }),
     PageComponentModule,
     OutletModule,
-    I18nModule,
+    I18nModule,SelectorModule
   ],
   declarations: [TabParagraphContainerComponent],
   entryComponents: [TabParagraphContainerComponent],
   exports: [TabParagraphContainerComponent],
 })
 export class TabParagraphContainerModule {}
+

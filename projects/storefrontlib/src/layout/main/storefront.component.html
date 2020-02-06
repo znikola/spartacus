@@ -5,10 +5,26 @@
       (keydown.escape)="collapseMenu()"
       (click)="collapseMenuIfClickOutside($event)"
     >
-      <cx-page-layout section="header"></cx-page-layout>
-      <cx-page-layout section="navigation"></cx-page-layout>
+      <!-- <cx-page-layout section="header"></cx-page-layout> -->
+      <!-- <cx-page-layout section="navigation"></cx-page-layout> -->
+
+      <!-- SPIKE OK -->
+
+      <ng-container
+        cxSelector="cx-page-layout"
+        [inputs]="{ section: 'header' }"
+      ></ng-container>
+      <ng-container
+        cxSelector="cx-page-layout"
+        [inputs]="{ section: 'navigation' }"
+      ></ng-container>
     </header>
-    <cx-page-slot position="BottomHeaderSlot"></cx-page-slot>
+    <!-- <cx-page-slot position="BottomHeaderSlot"></cx-page-slot> -->
+
+    <ng-container
+      cxSelector="cx-page-slot"
+      [inputs]="{ position: 'BottomHeaderSlot' }"
+    ></ng-container>
     <cx-global-message></cx-global-message>
   </ng-template>
 
@@ -16,7 +32,12 @@
 
   <ng-template cxOutlet="cx-footer">
     <footer>
-      <cx-page-layout section="footer"></cx-page-layout>
+      <!-- <cx-page-layout section="footer"></cx-page-layout> -->
+
+      <ng-container
+        cxSelector="cx-page-layout"
+        [inputs]="{ section: 'footer' }"
+      ></ng-container>
     </footer>
   </ng-template>
 </ng-template>

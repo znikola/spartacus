@@ -1,13 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Injector, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-  CmsConfig,
-  ConfigModule,
-  ContextServiceMap,
-  SiteContextModule,
-} from '@spartacus/core';
+import { CmsConfig, ConfigModule, ContextServiceMap, SiteContextModule } from '@spartacus/core';
 import { CmsComponentData } from '../../../cms-structure/page/model/cms-component-data';
+import { SelectorModule } from '../../../selector/selector.module';
 import { IconModule } from '../icon/index';
 import { LanguageCurrencyComponent } from './language-currency.component';
 import { SiteContextComponentService } from './site-context-component.service';
@@ -36,6 +32,7 @@ import { SiteContextSelectorComponent } from './site-context-selector.component'
     }),
     SiteContextModule,
     IconModule,
+    SelectorModule,
   ],
   providers: [SiteContextComponentService],
   declarations: [SiteContextSelectorComponent, LanguageCurrencyComponent],
@@ -43,3 +40,4 @@ import { SiteContextSelectorComponent } from './site-context-selector.component'
   exports: [SiteContextSelectorComponent, LanguageCurrencyComponent],
 })
 export class SiteContextSelectorModule {}
+

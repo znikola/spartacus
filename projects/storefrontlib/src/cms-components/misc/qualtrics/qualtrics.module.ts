@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CmsConfig, Config, ConfigModule } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { defaultQualtricsConfig } from './config/default-qualtrics-config';
 import { QualtricsConfig } from './config/qualtrics-config';
 import { QualtricsComponent } from './qualtrics.component';
@@ -18,6 +19,7 @@ import { QualtricsComponent } from './qualtrics.component';
       },
     }),
     ConfigModule.withConfig(defaultQualtricsConfig),
+    SelectorModule,
   ],
   declarations: [QualtricsComponent],
   entryComponents: [QualtricsComponent],
@@ -29,3 +31,4 @@ import { QualtricsComponent } from './qualtrics.component';
   ],
 })
 export class QualtricsModule {}
+

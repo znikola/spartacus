@@ -8,6 +8,7 @@ import {
   I18nModule,
   UrlModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../selector/selector.module';
 import {
   ItemCounterModule,
   MediaModule,
@@ -29,15 +30,23 @@ import { WishListComponent } from './components/wish-list/wish-list.component';
         },
       },
     }),
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-wish-list-item': {
+          component: WishListItemComponent,
+        },
+      },
+    }),
     I18nModule,
     MediaModule,
     RouterModule,
     StarRatingModule,
     UrlModule,
     ItemCounterModule,
+    SelectorModule,
   ],
   declarations: [WishListComponent, WishListItemComponent],
-  entryComponents: [WishListComponent],
+  entryComponents: [WishListComponent, WishListItemComponent],
   exports: [WishListComponent, WishListItemComponent],
 })
 export class WishListModule {}

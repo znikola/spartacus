@@ -7,6 +7,7 @@ import {
   I18nModule,
   UserService,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { CardModule } from '../../../shared/components/card/card.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { PaymentMethodsComponent } from './payment-methods.component';
@@ -25,6 +26,7 @@ import { PaymentMethodsComponent } from './payment-methods.component';
       },
     }),
     I18nModule,
+    SelectorModule,
   ],
   providers: [UserService],
   declarations: [PaymentMethodsComponent],

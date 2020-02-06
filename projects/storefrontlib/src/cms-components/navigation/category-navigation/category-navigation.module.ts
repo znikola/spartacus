@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CmsConfig, ConfigModule } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { NavigationModule } from '../navigation/navigation.module';
 import { CategoryNavigationComponent } from './category-navigation.component';
 
@@ -15,6 +16,7 @@ import { CategoryNavigationComponent } from './category-navigation.component';
         },
       },
     }),
+    SelectorModule,
   ],
   declarations: [CategoryNavigationComponent],
   entryComponents: [CategoryNavigationComponent],

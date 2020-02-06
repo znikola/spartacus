@@ -11,6 +11,7 @@ import {
   UrlModule,
 } from '@spartacus/core';
 import { LayoutConfig } from '../../layout/config/layout-config';
+import { SelectorModule } from '../../selector/selector.module';
 import { ListNavigationModule } from '../../shared/components/list-navigation/list-navigation.module';
 import { SpinnerModule } from '../../shared/components/spinner/spinner.module';
 import { IconModule } from './../misc/icon/icon.module';
@@ -24,9 +25,25 @@ import { StoreFinderListComponent } from './components/store-finder-search-resul
 import { StoreFinderSearchResultComponent } from './components/store-finder-search-result/store-finder-search-result.component';
 import { StoreFinderSearchComponent } from './components/store-finder-search/store-finder-search.component';
 import { StoreFinderStoreDescriptionComponent } from './components/store-finder-store-description/store-finder-store-description.component';
+import { StoreFinderStoreComponent } from './components/store-finder-store/store-finder-store.component';
 import { StoreFinderStoresCountComponent } from './components/store-finder-stores-count/store-finder-stores-count.component';
 import { StoreFinderComponent } from './components/store-finder/store-finder.component';
-import { StoreFinderStoreComponent } from './components/store-finder-store/store-finder-store.component';
+
+const components = [
+  StoreFinderSearchComponent,
+  StoreFinderListComponent,
+  StoreFinderMapComponent,
+  StoreFinderListItemComponent,
+  StoreFinderStoresCountComponent, //
+  StoreFinderGridComponent, //
+  StoreFinderStoreDescriptionComponent,
+  ScheduleComponent,
+  StoreFinderHeaderComponent,
+  StoreFinderSearchResultComponent, //
+  StoreFinderComponent, //
+  StoreFinderPaginationDetailsComponent,
+  StoreFinderStoreComponent, //
+];
 
 @NgModule({
   imports: [
@@ -78,43 +95,24 @@ import { StoreFinderStoreComponent } from './components/store-finder-store/store
         },
       },
     }),
+    ConfigModule.withConfig(<CmsConfig>{
+      'cx-store-finder-search': { component: StoreFinderSearchComponent },
+      'cx-store-finder-list': { component: StoreFinderListComponent },
+      'cx-store-finder-map': { component: StoreFinderMapComponent },
+      'cx-store-finder-list-item': { component: StoreFinderListItemComponent },
+      'cx-store-finder-store-description': {
+        component: StoreFinderStoreDescriptionComponent,
+      },
+      'cx-schedule': { component: ScheduleComponent },
+      'cx-store-finder-header': { component: StoreFinderHeaderComponent },
+      'cx-store-finder-pagination-details': {
+        component: StoreFinderPaginationDetailsComponent,
+      },
+    }),
+    SelectorModule,
   ],
-  declarations: [
-    StoreFinderSearchComponent,
-    StoreFinderListComponent,
-    StoreFinderMapComponent,
-    StoreFinderListItemComponent,
-    StoreFinderStoresCountComponent,
-    StoreFinderGridComponent,
-    StoreFinderStoreDescriptionComponent,
-    ScheduleComponent,
-    StoreFinderHeaderComponent,
-    StoreFinderSearchResultComponent,
-    StoreFinderComponent,
-    StoreFinderPaginationDetailsComponent,
-    StoreFinderStoreComponent,
-  ],
-  exports: [
-    ScheduleComponent,
-    StoreFinderComponent,
-    StoreFinderGridComponent,
-    StoreFinderHeaderComponent,
-    StoreFinderListItemComponent,
-    StoreFinderMapComponent,
-    StoreFinderPaginationDetailsComponent,
-    StoreFinderSearchComponent,
-    StoreFinderSearchResultComponent,
-    StoreFinderListComponent,
-    StoreFinderStoreDescriptionComponent,
-    StoreFinderStoresCountComponent,
-    StoreFinderStoreComponent,
-  ],
-  entryComponents: [
-    StoreFinderComponent,
-    StoreFinderSearchResultComponent,
-    StoreFinderStoresCountComponent,
-    StoreFinderGridComponent,
-    StoreFinderStoreComponent,
-  ],
+  declarations: [...components],
+  exports: [...components],
+  entryComponents: [...components],
 })
 export class StoreFinderModule {}

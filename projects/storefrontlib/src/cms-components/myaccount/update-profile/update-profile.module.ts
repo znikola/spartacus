@@ -7,6 +7,7 @@ import {
   ConfigModule,
   I18nModule,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { UpdateProfileFormComponent } from './components/update-profile-form.component';
 import { UpdateProfileComponent } from './update-profile.component';
@@ -26,9 +27,10 @@ import { UpdateProfileComponent } from './update-profile.component';
     ReactiveFormsModule,
     SpinnerModule,
     I18nModule,
+    SelectorModule,
   ],
   declarations: [UpdateProfileComponent, UpdateProfileFormComponent],
   exports: [UpdateProfileComponent, UpdateProfileFormComponent],
-  entryComponents: [UpdateProfileComponent],
+  entryComponents: [UpdateProfileComponent, UpdateProfileFormComponent],
 })
 export class UpdateProfileModule {}

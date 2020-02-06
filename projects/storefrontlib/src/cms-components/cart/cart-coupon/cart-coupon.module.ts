@@ -1,21 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   CmsConfig,
   ConfigModule,
-  I18nModule,
   FeaturesConfigModule,
+  I18nModule,
 } from '@spartacus/core';
 import { IconModule } from '../../../cms-components/misc/icon/index';
+import { SelectorModule } from '../../../selector/selector.module';
 import { AppliedCouponsComponent } from './applied-coupons/applied-coupons.component';
 import { CartCouponComponent } from './cart-coupon.component';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [CartCouponComponent, AppliedCouponsComponent],
   exports: [CartCouponComponent, AppliedCouponsComponent],
   imports: [
+    SelectorModule,
     FeaturesConfigModule,
     CommonModule,
     NgSelectModule,
@@ -30,7 +32,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
         },
       },
     }),
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-applied-coupons-component': {
+          component: AppliedCouponsComponent,
+        },
+      },
+    }),
   ],
-  entryComponents: [CartCouponComponent],
+  entryComponents: [CartCouponComponent, AppliedCouponsComponent],
 })
 export class CartCouponModule {}

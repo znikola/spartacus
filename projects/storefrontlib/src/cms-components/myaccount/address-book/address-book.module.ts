@@ -7,6 +7,7 @@ import {
   I18nModule,
   UserAddressService,
 } from '@spartacus/core';
+import { SelectorModule } from '../../../selector/selector.module';
 import { CardModule } from '../../../shared/components/card/card.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { AddressFormModule } from '../../checkout/components/shipping-address/address-form/address-form.module';
@@ -36,10 +37,16 @@ import { AddressCardComponent } from './address-card/address-card.component';
     AddressFormModule,
     SpinnerModule,
     I18nModule,
+    ConfigModule.withConfig(<CmsConfig>{
+      cmsComponents: {
+        'cx-address-cart': { component: AddressCardComponent },
+      },
+    }),
+    SelectorModule,
   ],
   declarations: [AddressBookComponent, AddressCardComponent],
   exports: [AddressBookComponent, AddressCardComponent],
   providers: [UserAddressService, AddressBookComponentService],
-  entryComponents: [AddressBookComponent],
+  entryComponents: [AddressBookComponent, AddressCardComponent],
 })
 export class AddressBookModule {}

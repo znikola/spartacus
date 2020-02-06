@@ -24,7 +24,26 @@
     <div class="cx-dialog-body modal-body" *ngIf="entry$ | async as entry">
       <div class="cx-dialog-row">
         <div class="cx-dialog-item col-sm-12 col-md-6">
-          <cx-cart-item
+          <!-- SPIKE OK -->
+
+          <ng-container
+            cxSelector="cx-cart-item"
+            [inputs]="{
+              item: entry,
+              compact: true,
+              isReadOnly: false,
+              parent: form.controls[entry.product.code],
+              cartIsLoading: form.dirty,
+              promotionLocation: promotionLocation
+            }"
+            [outputs]="{
+              remove: removeEntry,
+              update: updateEntry,
+              view: dismissModal | cxArgs: 'Product selected'
+            }"
+          ></ng-container>
+
+          <!-- <cx-cart-item
             [item]="entry"
             [compact]="true"
             [isReadOnly]="false"
@@ -34,7 +53,7 @@
             (remove)="removeEntry($event)"
             (update)="updateEntry($event)"
             (view)="dismissModal('Product selected')"
-          ></cx-cart-item>
+          ></cx-cart-item> -->
         </div>
         <!-- Separator -->
         <div

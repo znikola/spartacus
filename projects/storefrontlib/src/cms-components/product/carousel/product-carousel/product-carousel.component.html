@@ -1,10 +1,23 @@
-<cx-carousel
+<!-- <cx-carousel
   [items]="items$ | async"
   [title]="title$ | async"
   [template]="carouselItem"
   itemWidth="285px"
 >
-</cx-carousel>
+</cx-carousel> -->
+
+<!-- SPIKE OK -->
+
+<ng-container
+  cxSelector="cx-carousel"
+  [inputs]="{
+    items: items$ | async,
+    title: title$ | async,
+    template: carouselItem,
+    itemWidth: '285px'
+  }"
+>
+</ng-container>
 
 <ng-template #carouselItem let-item="item">
   <a tabindex="0" [routerLink]="{ cxRoute: 'product', params: item } | cxUrl">
@@ -14,7 +27,7 @@
       format="product"
     >
     </cx-media>
-    <h4>{{ item.name }}</h4>
+    <h4>{{ item.name }}SPIKE!</h4>
     <div class="price">{{ item.price?.formattedValue }}</div>
   </a>
 </ng-template>

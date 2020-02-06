@@ -8,6 +8,7 @@ import { PageLayoutModule } from '../../cms-structure/page/page-layout/page-layo
 import { PageSlotModule } from '../../cms-structure/page/slot/page-slot.module';
 import { PwaModule } from '../../cms-structure/pwa/pwa.module';
 import { SeoModule } from '../../cms-structure/seo/seo.module';
+import { SelectorModule } from '../../selector/selector.module';
 import { AnonymousConsentsModule } from '../../shared/components/anonymous-consents/anonymous-consents.module';
 import { StorefrontComponent } from './storefront.component';
 
@@ -24,6 +25,7 @@ import { StorefrontComponent } from './storefront.component';
     PageSlotModule,
     AnonymousConsentsModule,
     FeaturesConfigModule,
+    SelectorModule,
   ],
   declarations: [StorefrontComponent],
   exports: [StorefrontComponent],
