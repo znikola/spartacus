@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { ICON_TYPE } from '../misc/icon/index';
+import { ShareLink } from './share-link.model';
+import { Observable } from 'rxjs';
+
+export const SOCIAL_NETWORKS = new InjectionToken<string>('socialNetworks');
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +11,9 @@ import { ICON_TYPE } from '../misc/icon/index';
 export class ShareLinksService {
   iconTypes = ICON_TYPE;
 
-  getShareLinks(url: string, text: string): { url: string; icon: ICON_TYPE }[] {
+  constructor(@Inject(SOCIAL_NETWORKS) public networks: String) {}
+
+  getShareLinks(url: string, text: string): Observable<ShareLink[]> {
     const links = [
       {
         url: 'https://facebook.com/sharer/sharer.php?u=' + url,
@@ -22,7 +28,17 @@ export class ShareLinksService {
         icon: this.iconTypes.EMAIL,
       },
     ];
-    console.log(links.length);
-    return links;
+    const allLinks = Array<ShareLink>();
+    for (const entry of links) {
+      allLinks.push(new ShareLink(entry.url, entry.icon));
+    }
+
+    // create observable
+    const simpleObservable = new Observable<ShareLink[]>(observer => {
+      // observable execution
+      observer.next(allLinks);
+    });
+
+    return simpleObservable;
   }
 }

@@ -6,6 +6,7 @@ import { OutletModule } from '../../../../cms-structure/outlet/index';
 import { MediaModule } from '../../../../shared/components/media/media.module';
 import { ShareButtonsComponent } from './share-buttons.component';
 import { IconModule } from '../../../misc/icon/index';
+import { SOCIAL_NETWORKS, ShareLinksService } from '../../share-links.service';
 
 @NgModule({
   imports: [
@@ -25,5 +26,9 @@ import { IconModule } from '../../../misc/icon/index';
   declarations: [ShareButtonsComponent],
   entryComponents: [ShareButtonsComponent],
   exports: [ShareButtonsComponent],
+  providers: [
+    ShareLinksService,
+    { provide: SOCIAL_NETWORKS, useValue: 'Test', multi: true },
+  ],
 })
 export class ShareButtonsModule {}

@@ -1,8 +1,10 @@
-<a
-  *ngFor="let shareButton of shareButtons"
-  [href]="shareButton.url"
-  target="_blank"
-  rel="noopener"
->
-  <cx-icon [type]="shareButton.icon"></cx-icon>
-</a>
+<ng-container *ngIf="shareButtons$ | async as shareButtons">
+  <a
+    *ngFor="let shareButton of shareButtons"
+    [href]="shareButton.url"
+    target="_blank"
+    rel="noopener"
+  >
+    <cx-icon [type]="shareButton.icon"></cx-icon>
+  </a>
+</ng-container>
