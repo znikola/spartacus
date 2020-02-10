@@ -11,26 +11,37 @@ export const SOCIAL_NETWORKS = new InjectionToken<string>('socialNetworks');
 export class ShareLinksService {
   iconTypes = ICON_TYPE;
 
-  constructor(@Inject(SOCIAL_NETWORKS) public networks: String) {}
+  constructor(@Inject(SOCIAL_NETWORKS) public networks: String[]) {}
 
   getShareLinks(url: string, text: string): Observable<ShareLink[]> {
+    console.log(this.networks);
     const links = [
       {
+        name: 'FACEBOOK',
         url: 'https://facebook.com/sharer/sharer.php?u=' + url,
         icon: this.iconTypes.FACEBOOK,
       },
       {
+        name: 'TWITTER',
         url: 'https://twitter.com/intent/tweet/?text=' + text + '&url=' + url,
         icon: this.iconTypes.TWITTER,
       },
       {
+        name: 'EMAIL',
         url: 'mailto:?subject=' + text + '&body=' + url,
         icon: this.iconTypes.EMAIL,
       },
     ];
     const allLinks = Array<ShareLink>();
+
     for (const entry of links) {
-      allLinks.push(new ShareLink(entry.url, entry.icon));
+      if (
+        this.networks
+          .map(a => a.toUpperCase())
+          .includes(entry.name.toUpperCase())
+      ) {
+        allLinks.push(new ShareLink(entry.url, entry.icon));
+      }
     }
 
     // create observable

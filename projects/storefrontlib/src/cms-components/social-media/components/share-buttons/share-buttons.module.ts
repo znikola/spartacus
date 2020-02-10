@@ -28,7 +28,10 @@ import { SOCIAL_NETWORKS, ShareLinksService } from '../../share-links.service';
   exports: [ShareButtonsComponent],
   providers: [
     ShareLinksService,
-    { provide: SOCIAL_NETWORKS, useValue: 'Test', multi: true },
+    {
+      provide: SOCIAL_NETWORKS,
+      useValue: ['Facebook', 'Twitter', 'EMAIL'],
+    },
   ],
 })
 export class ShareButtonsModule {}
