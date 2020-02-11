@@ -29,32 +29,29 @@ export class ShareButtonsComponent implements OnInit {
   product$: Observable<Product> = this.currentProductService.getProduct();
 
   iconTypes = ICON_TYPE;
-  readonly document: Document;
   shareButtons$: Observable<ShareLink[]> = this.product$.pipe(
     filter(p => !!p),
     distinctUntilChanged(),
     switchMap(productObject => this.getShareLinks(productObject))
   );
 
-  @Optional()
-  @Inject(SERVER_REQUEST_ORIGIN)
-  protected serverRequestOrigin?: string;
-
   constructor(
-    @Inject(DOCUMENT) document,
+    @Inject(DOCUMENT) private document: any,
     @Inject(PLATFORM_ID) protected platformId,
     protected shareLinksService: ShareLinksService,
     protected currentProductService: CurrentProductService,
     private router: Router,
-    private semanticPath: SemanticPathService
-  ) {
-    this.document = document;
-  }
+    private semanticPath: SemanticPathService,
+    @Optional()
+    @Inject(SERVER_REQUEST_ORIGIN)
+    protected serverRequestOrigin?: string
+  ) {}
 
   ngOnInit() {
     this.product$.subscribe();
   }
   private getShareLinks(product: Product): Observable<ShareLink[]> {
+    let origin;
     const productUrlParam = this.semanticPath.transform({
       cxRoute: 'product',
       params: product,
@@ -64,7 +61,6 @@ export class ShareButtonsComponent implements OnInit {
       this.router.createUrlTree(productUrlParam)
     );
 
-    let origin;
     if (isPlatformServer(this.platformId)) {
       origin = this.serverRequestOrigin;
     } else {
