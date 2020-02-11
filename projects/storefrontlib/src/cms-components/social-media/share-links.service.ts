@@ -14,7 +14,6 @@ export class ShareLinksService {
   constructor(@Inject(SOCIAL_NETWORKS) public networks: String[]) {}
 
   getShareLinks(url: string, text: string): Observable<ShareLink[]> {
-    console.log(this.networks);
     const links = [
       {
         name: 'FACEBOOK',

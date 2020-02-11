@@ -1,6 +1,9 @@
 %cx-share-buttons {
   display: flex;
   font-size: 1.25rem;
+  grid-row: 4;
+  grid-column: 2;
+  padding: 0 20px;
 
   a {
     margin: 0 2.5px;
