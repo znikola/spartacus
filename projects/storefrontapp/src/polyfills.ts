@@ -57,3 +57,44 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
  * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
  */
 // import 'intl';  // Run `npm install --save intl`.
+
+// SPIKE DO IT ONLY FOR OUTLETS COMPONENTS:
+const CX_LISTENERS = 'cxListeners';
+
+const addEventListener = Element.prototype.addEventListener;
+const removeEventListener = Element.prototype.removeEventListener;
+
+Element.prototype.addEventListener = function(
+  type: string,
+  listener: EventListenerOrEventListenerObject,
+  options: boolean | AddEventListenerOptions
+) {
+  if (!this[CX_LISTENERS]) {
+    this[CX_LISTENERS] = {};
+  }
+  if (!this[CX_LISTENERS][type]) {
+    this[CX_LISTENERS][type] = [];
+  }
+  this[CX_LISTENERS][type].push({ type, listener, options });
+
+  return addEventListener.call(this, type, listener, options);
+};
+
+Element.prototype.removeEventListener = function(
+  type: string,
+  listener: EventListenerOrEventListenerObject,
+  options: boolean | AddEventListenerOptions
+) {
+  if (this[CX_LISTENERS] && this[CX_LISTENERS][type]) {
+    const array = this[CX_LISTENERS][type];
+    for (let i = 0; i < array.length; i++) {
+      const obj = array[i];
+      if (obj.type === type && obj.listener && obj.options === options) {
+        array.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  return removeEventListener.call(this, type, listener, options);
+};

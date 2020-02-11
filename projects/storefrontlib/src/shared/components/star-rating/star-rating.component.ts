@@ -47,6 +47,14 @@ export class StarRatingComponent implements OnInit {
   constructor(el: ElementRef);
   constructor(protected el: ElementRef, protected renderer?: Renderer2) {}
 
+  //spike todo remove
+  spikeCheck = true;
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngDoCheck() {
+    this.spikeCheck = !this.spikeCheck;
+  }
+  // end spike todo remove
+
   ngOnInit(): void {
     this.setRate(this.rating, true);
   }

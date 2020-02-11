@@ -15,10 +15,11 @@
 <cx-icon-outlet
   *ngFor="let i of [1, 2, 3, 4, 5]"
   [type]="iconTypes.STAR"
-  class="star"
   (mouseover)="setRate(i)"
   (mouseout)="setRate(0)"
   (click)="saveRate(i)"
+  [attr.aria-label]="'spike2'"
+  [class.star]="spikeCheck"
 ></cx-icon-outlet>
 
 <!-- <cx-icon
