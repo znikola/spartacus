@@ -8,13 +8,13 @@ import {
   UrlModule,
 } from '@spartacus/core';
 import { SelectorModule } from '../../../selector/selector.module';
-import { VariantColorSelectorModule } from './color-selector/color-selector.module';
 import { ProductVariantGuard } from './guards/product-variant.guard';
 import { ProductVariantsComponent } from './product-variants.component';
-import { VariantSizeSelectorModule } from './size-selector/size-selector.module';
-import { VariantStyleIconsComponent } from './style-icons/style-icons.component';
-import { VariantStyleIconsModule } from './style-icons/style-icons.module';
-import { VariantStyleSelectorModule } from './style-selector/style-selector.module';
+import { VariantColorSelectorModule } from './variant-color-selector/variant-color-selector.module';
+import { VariantSizeSelectorModule } from './variant-size-selector/variant-size-selector.module';
+import { VariantStyleIconsComponent } from './variant-style-icons/variant-style-icons.component';
+import { VariantStyleIconsModule } from './variant-style-icons/variant-style-icons.module';
+import { VariantStyleSelectorModule } from './variant-style-selector/variant-style-selector.module';
 
 @NgModule({
   imports: [

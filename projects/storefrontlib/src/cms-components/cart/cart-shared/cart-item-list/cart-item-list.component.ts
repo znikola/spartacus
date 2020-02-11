@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   CartService,
   FeatureConfigService,
+  Occ,
   PromotionLocation,
   PromotionResult,
   SelectiveCartService,
@@ -40,7 +41,7 @@ export class CartItemListComponent implements OnInit {
       this._items = _items.map(consignmentEntry => {
         const entry = Object.assign(
           {},
-          (consignmentEntry as ConsignmentEntry).orderEntry
+          (consignmentEntry as Occ.ConsignmentEntry).orderEntry
         );
         entry.quantity = consignmentEntry.quantity;
         return entry;
