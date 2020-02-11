@@ -194,12 +194,13 @@ export class SearchBoxComponentService {
     });
   }
 
-  public launchPage(route: string) {
-    if (new RegExp(/^(http|\/\/)/i).test(route)) {
-      // no support to launch the absolute URL yet
-    } else {
-      this.routingService.go(route);
-    }
+  /**
+   * Navigates to a url.
+   *
+   * Absolute URLs require an implemention of #6483.
+   */
+  public launchPage(url: string) {
+    this.routingService.go(url);
   }
 
   private fetchTranslation(
