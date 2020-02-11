@@ -7,7 +7,7 @@ import {
   WindowRef,
 } from '@spartacus/core';
 import { combineLatest, Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, pluck, switchMap, tap } from 'rxjs/operators';
 import { SearchBoxConfig, SearchResults } from './search-box.model';
 
 const HAS_SEARCH_RESULT_CLASS = 'has-searchbox-results';
@@ -63,12 +63,14 @@ export class SearchBoxComponentService {
     return combineLatest([
       this.getProductResults(config),
       this.getProductSuggestions(config),
+      this.getRedirectUrl(config),
       this.getSearchMessage(config),
     ]).pipe(
-      map(([productResults, suggestions, message]) => {
+      map(([productResults, suggestions, redirect, message]) => {
         return {
           products: productResults ? productResults.products : null,
           suggestions,
+          redirect,
           message,
         };
       }),
@@ -178,6 +180,10 @@ export class SearchBoxComponentService {
     );
   }
 
+  private getRedirectUrl(config: SearchBoxConfig): Observable<string> {
+    return this.getProductResults(config).pipe(pluck('keywordRedirectUrl'));
+  }
+
   /**
    * Navigates to the search result page with a given query
    */
@@ -186,6 +192,14 @@ export class SearchBoxComponentService {
       cxRoute: 'search',
       params: { query },
     });
+  }
+
+  public launchPage(route: string) {
+    if (new RegExp(/^(http|\/\/)/i).test(route)) {
+      // no support to launch the absolute URL yet
+    } else {
+      this.routingService.go(route);
+    }
   }
 
   private fetchTranslation(

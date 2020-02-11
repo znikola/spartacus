@@ -11,4 +11,5 @@ export interface SearchResults {
   message?: string;
   products?: any[];
   suggestions?: string[];
+  redirect?: string;
 }

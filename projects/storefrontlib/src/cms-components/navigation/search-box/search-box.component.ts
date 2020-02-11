@@ -27,6 +27,7 @@ const DEFAULT_SEARCHBOX_CONFIG: SearchBoxConfig = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBoxComponent {
+  keywordRedirect: string;
   config: SearchBoxConfig;
   /**
    * Sets the search box input field
@@ -58,7 +59,8 @@ export class SearchBoxComponent {
 
   results$: Observable<SearchResults> = this.config$.pipe(
     tap(c => (this.config = c)),
-    switchMap(config => this.searchBoxComponentService.getResults(config))
+    switchMap(config => this.searchBoxComponentService.getResults(config)),
+    tap(results => (this.keywordRedirect = results.redirect))
   );
 
   /**
@@ -140,8 +142,12 @@ export class SearchBoxComponent {
     if (!query || query.trim().length === 0) {
       return;
     }
+    if (this.keywordRedirect) {
+      this.searchBoxComponentService.launchPage(this.keywordRedirect);
+    } else {
+      this.searchBoxComponentService.launchSearchPage(query);
+    }
     this.close(event);
-    this.searchBoxComponentService.launchSearchPage(query);
   }
 
   /**
