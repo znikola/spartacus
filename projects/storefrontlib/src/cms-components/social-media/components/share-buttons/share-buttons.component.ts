@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ICON_TYPE } from '../../../misc/icon/index';
-import { ShareLinksService } from '../../share-links.service';
+import { ShareLinksService } from '../../services/share-links-service/share-links.service';
 import { ShareLink } from '../../share-link.model';
 import { CurrentProductService } from '../../../product/current-product.service';
 import { Product } from '@spartacus/core';

@@ -6,7 +6,10 @@ import { OutletModule } from '../../../../cms-structure/outlet/index';
 import { MediaModule } from '../../../../shared/components/media/media.module';
 import { ShareButtonsComponent } from './share-buttons.component';
 import { IconModule } from '../../../misc/icon/index';
-import { SOCIAL_NETWORKS, ShareLinksService } from '../../share-links.service';
+import {
+  SOCIAL_NETWORKS,
+  ShareLinksService,
+} from '../../services/share-links-service/share-links.service';
 
 @NgModule({
   imports: [

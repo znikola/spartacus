@@ -1,6 +1,6 @@
 import { Injectable, InjectionToken, Inject } from '@angular/core';
-import { ICON_TYPE } from '../misc/icon/index';
-import { ShareLink } from './share-link.model';
+import { ICON_TYPE } from '../../../misc/icon/index';
+import { ShareLink } from '../../share-link.model';
 import { Observable } from 'rxjs';
 import { WindowRef } from '@spartacus/core';
 
