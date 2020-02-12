@@ -6,10 +6,11 @@ import { OutletModule } from '../../../../cms-structure/outlet/index';
 import { MediaModule } from '../../../../shared/components/media/media.module';
 import { ShareButtonsComponent } from './share-buttons.component';
 import { IconModule } from '../../../misc/icon/index';
-import {
-  SOCIAL_NETWORKS,
-  ShareLinksService,
-} from '../../services/share-links-service/share-links.service';
+import { AbstractSocialNetworkService } from '../../services/social-network-service/abstract-social-network.service';
+import { FacebookSocialNetworkService } from '../../services/social-network-service/facebook-social-network.service';
+import { TwitterSocialNetworkService } from '../../services/social-network-service/twitter-social-network.service';
+import { EMailSocialNetworkService } from '../../services/social-network-service/email-social-network.service';
+import { PinterestSocialNetworkService } from '../../services/social-network-service/pinterest-social-network.service';
 
 @NgModule({
   imports: [
@@ -30,10 +31,25 @@ import {
   entryComponents: [ShareButtonsComponent],
   exports: [ShareButtonsComponent],
   providers: [
-    ShareLinksService,
     {
-      provide: SOCIAL_NETWORKS,
-      useValue: ['Facebook', 'Twitter', 'EMAIL'],
+      provide: AbstractSocialNetworkService,
+      useExisting: FacebookSocialNetworkService,
+      multi: true,
+    },
+    {
+      provide: AbstractSocialNetworkService,
+      useExisting: TwitterSocialNetworkService,
+      multi: true,
+    },
+    {
+      provide: AbstractSocialNetworkService,
+      useExisting: EMailSocialNetworkService,
+      multi: true,
+    },
+    {
+      provide: AbstractSocialNetworkService,
+      useExisting: PinterestSocialNetworkService,
+      multi: true,
     },
   ],
 })

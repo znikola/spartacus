@@ -26,6 +26,7 @@ export enum ICON_TYPE {
   FACEBOOK = 'FACEBOOK',
   TWITTER = 'TWITTER',
   EMAIL = 'EMAIL',
+  PINTEREST = 'PINTEREST',
 }
 
 export abstract class IconConfig {

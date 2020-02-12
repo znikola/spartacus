@@ -30,6 +30,7 @@ export const fontawesomeIconConfig: IconConfig = {
       FACEBOOK: 'fab fa-facebook',
       TWITTER: 'fab fa-twitter',
       EMAIL: 'far fa-envelope',
+      PINTEREST: 'fab fa-pinterest',
     },
     resources: [
       {
