@@ -48,6 +48,27 @@ export class UrlMatcherFactoryService {
     return matcher;
   }
 
+  // spike new:
+  getRestWildcardUrlMatcher(path: string = ''): UrlMatcher {
+    const restParamName = 'restParam';
+    const pathUrlMatcher = this.getPathUrlMatcher(path);
+    return (
+      segments: UrlSegment[],
+      segmentGroup: UrlSegmentGroup,
+      route: Route
+    ): UrlMatchResult | null => {
+      const result = pathUrlMatcher(segments, segmentGroup, route);
+      if (result) {
+        const restSegments = segments.slice(result.consumed.length);
+        restSegments.forEach((segment, i) => {
+          result.posParams[`${restParamName}${i}`] = segment;
+        });
+        result.consumed = segments.slice(0, segments.length);
+      }
+      return result;
+    };
+  }
+
   /**
    * Similar to Angular's defaultUrlMatcher. Differences:
    * - the `path` comes from function's argument, not from `route.path`

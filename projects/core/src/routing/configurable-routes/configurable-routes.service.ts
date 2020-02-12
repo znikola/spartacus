@@ -61,7 +61,19 @@ export class ConfigurableRoutesService {
         };
       } else if (paths.length === 1) {
         delete route.matcher;
-        return { ...route, path: paths[0] };
+
+        // spike todo remove:
+        // spike in reality each path alias should take into consideration the restWildcard matcher
+        // spike todo: check if path aliases work well with restWildcard url matcher at all
+
+        return routeName === 'category'
+          ? {
+              ...route,
+              matcher: this.urlMatcherFactory.getRestWildcardUrlMatcher(
+                paths[0]
+              ),
+            }
+          : { ...route, path: paths[0] };
       } else {
         delete route.path;
         return {

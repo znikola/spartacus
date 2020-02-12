@@ -59,6 +59,7 @@ export class ProductListComponentService {
     ActivatedRouterStateSnapshot
   > = combineLatest([
     this.routing.getRouterState().pipe(
+      tap(console.log), // spike todo remove
       distinctUntilChanged((x, y) => {
         // router emits new value also when the anticipated `nextState` changes
         // but we want to perform search only when current url changes
