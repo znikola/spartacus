@@ -1,24 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  Inject,
-  Optional,
-  PLATFORM_ID,
-} from '@angular/core';
-import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ICON_TYPE } from '../../../misc/icon/index';
 import { ShareLinksService } from '../../share-links.service';
 import { ShareLink } from '../../share-link.model';
 import { CurrentProductService } from '../../../product/current-product.service';
-import {
-  Product,
-  SemanticPathService,
-  SERVER_REQUEST_ORIGIN,
-} from '@spartacus/core';
+import { Product } from '@spartacus/core';
 import { Observable } from 'rxjs';
-import { filter, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { filter, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'cx-share-buttons',
@@ -31,44 +18,20 @@ export class ShareButtonsComponent implements OnInit {
   iconTypes = ICON_TYPE;
   shareButtons$: Observable<ShareLink[]> = this.product$.pipe(
     filter(p => !!p),
+    map(p => p.summary),
     distinctUntilChanged(),
-    switchMap(productObject => this.getShareLinks(productObject))
+    switchMap(productSummary => this.getShareLinks(productSummary))
   );
 
   constructor(
-    @Inject(DOCUMENT) private document: any,
-    @Inject(PLATFORM_ID) protected platformId,
     protected shareLinksService: ShareLinksService,
-    protected currentProductService: CurrentProductService,
-    private router: Router,
-    private semanticPath: SemanticPathService,
-    @Optional()
-    @Inject(SERVER_REQUEST_ORIGIN)
-    protected serverRequestOrigin?: string
+    protected currentProductService: CurrentProductService
   ) {}
 
   ngOnInit() {
     this.product$.subscribe();
   }
-  private getShareLinks(product: Product): Observable<ShareLink[]> {
-    let origin;
-    const productUrlParam = this.semanticPath.transform({
-      cxRoute: 'product',
-      params: product,
-    });
-
-    const serializedProductUrl = this.router.serializeUrl(
-      this.router.createUrlTree(productUrlParam)
-    );
-
-    if (isPlatformServer(this.platformId)) {
-      origin = this.serverRequestOrigin;
-    } else {
-      origin = this.document.location.origin;
-    }
-
-    const productUrl = origin + '/' + serializedProductUrl;
-
-    return this.shareLinksService.getShareLinks(productUrl, product.summary);
+  private getShareLinks(productSummary: string): Observable<ShareLink[]> {
+    return this.shareLinksService.getShareLinks(productSummary);
   }
 }

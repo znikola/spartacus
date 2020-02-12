@@ -2,6 +2,7 @@ import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { ICON_TYPE } from '../misc/icon/index';
 import { ShareLink } from './share-link.model';
 import { Observable } from 'rxjs';
+import { WindowRef } from '@spartacus/core';
 
 export const SOCIAL_NETWORKS = new InjectionToken<string>('socialNetworks');
 
@@ -11,9 +12,14 @@ export const SOCIAL_NETWORKS = new InjectionToken<string>('socialNetworks');
 export class ShareLinksService {
   iconTypes = ICON_TYPE;
 
-  constructor(@Inject(SOCIAL_NETWORKS) public networks: String[]) {}
+  constructor(
+    @Inject(SOCIAL_NETWORKS) public networks: String[],
+    private winRef: WindowRef
+  ) {}
+  //private AstractClass: Type;
 
-  getShareLinks(url: string, text: string): Observable<ShareLink[]> {
+  getShareLinks(text: string): Observable<ShareLink[]> {
+    const url = this.winRef.document.location.href;
     const links = [
       {
         name: 'FACEBOOK',
