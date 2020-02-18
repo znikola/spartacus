@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ICON_TYPE } from '../../../misc/icon/index';
 import { ShareLinksService } from '../../services/share-links-service/share-links.service';
 import { ShareLink } from '../../share-link.model';
@@ -12,7 +12,7 @@ import { filter, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
   templateUrl: './share-buttons.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShareButtonsComponent implements OnInit {
+export class ShareButtonsComponent {
   product$: Observable<Product> = this.currentProductService.getProduct();
 
   iconTypes = ICON_TYPE;
@@ -28,9 +28,6 @@ export class ShareButtonsComponent implements OnInit {
     protected currentProductService: CurrentProductService
   ) {}
 
-  ngOnInit() {
-    this.product$.subscribe();
-  }
   private getShareLinks(productSummary: string): Observable<ShareLink[]> {
     return this.shareLinksService.getShareLinks(productSummary);
   }
