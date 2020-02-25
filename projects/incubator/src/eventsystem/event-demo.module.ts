@@ -6,8 +6,6 @@ import {
   NgModule,
 } from '@angular/core';
 import { OutletPosition, OutletService } from '@spartacus/storefront';
-import { CartEventModule } from './cart/index';
-import { CmsEventModule } from './cms/index';
 import { EventDemoComponent } from './event-demo.component';
 import { UiEventModule } from './ui/index';
 
@@ -16,7 +14,7 @@ import { UiEventModule } from './ui/index';
  * adding serveral event modules to Spartacus, as well as the `EventDemoComponent`.
  */
 @NgModule({
-  imports: [CommonModule, UiEventModule, CartEventModule, CmsEventModule],
+  imports: [CommonModule, UiEventModule],
   providers: [
     {
       provide: APP_INITIALIZER,

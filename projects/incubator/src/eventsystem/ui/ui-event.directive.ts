@@ -5,9 +5,9 @@ import {
   Optional,
   TemplateRef,
 } from '@angular/core';
+import { EventService } from '@spartacus/core';
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EventEmitter } from '../events/event.emitter';
 import {
   ClickEvent,
   MouseDownEvent,
@@ -24,7 +24,7 @@ export class UiEventDirective implements OnInit {
   uiEventType = 'click';
 
   constructor(
-    private eventEmitter: EventEmitter,
+    private eventService: EventService,
     private elementRef: ElementRef,
     @Optional() private template: TemplateRef<HTMLElement>
   ) {}
@@ -39,14 +39,14 @@ export class UiEventDirective implements OnInit {
     }
 
     if (uiEventType === 'click') {
-      this.eventEmitter.attach(
+      this.eventService.attach(
         ClickEvent,
         fromEvent(element, 'click').pipe(map(ClickData => ({ ClickData })))
       );
     }
 
     if (uiEventType === 'mousedown') {
-      this.eventEmitter.attach(
+      this.eventService.attach(
         MouseDownEvent,
         fromEvent(element, 'mousedown').pipe(
           map(MouseDownData => ({ MouseDownData }))
@@ -54,7 +54,7 @@ export class UiEventDirective implements OnInit {
       );
     }
     if (uiEventType === 'mouseup') {
-      this.eventEmitter.attach(
+      this.eventService.attach(
         MouseUpEvent,
         fromEvent(element, 'mouseup').pipe(
           map(MouseUpData => ({ MouseUpData }))
@@ -63,7 +63,7 @@ export class UiEventDirective implements OnInit {
     }
 
     if (uiEventType === 'hover' || uiEventType === 'mouseover') {
-      this.eventEmitter.attach(
+      this.eventService.attach(
         MouseHoverEvent,
         fromEvent(element, 'mouseover').pipe(
           map(MouseHoverData => ({ MouseHoverData }))

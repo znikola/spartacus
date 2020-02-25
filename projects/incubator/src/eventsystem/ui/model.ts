@@ -1,14 +1,14 @@
-import { Event } from '../events/event.model';
+import { BaseEvent } from '@spartacus/core';
 
-export class ClickEvent extends Event {
+export class ClickEvent extends BaseEvent {
   ClickData?: any;
 }
-export class MouseDownEvent extends Event {
+export class MouseDownEvent extends BaseEvent {
   MouseDownData?: any;
 }
-export class MouseUpEvent extends Event {
+export class MouseUpEvent extends BaseEvent {
   MouseUpData?: any;
 }
-export class MouseHoverEvent extends Event {
+export class MouseHoverEvent extends BaseEvent {
   MouseHoverData?: any;
 }
