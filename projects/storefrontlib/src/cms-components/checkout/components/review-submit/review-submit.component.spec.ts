@@ -1,6 +1,7 @@
-import { Component, Input, Type, Pipe, PipeTransform } from '@angular/core';
+import { Component, Input, Pipe, PipeTransform } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import {
   Address,
   Cart,
@@ -9,21 +10,25 @@ import {
   CheckoutPaymentService,
   Country,
   DeliveryMode,
+  FeaturesConfig,
+  FeaturesConfigModule,
   I18nTestingModule,
   OrderEntry,
   PaymentDetails,
+  PromotionLocation,
   PromotionResult,
   UserAddressService,
 } from '@spartacus/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { PromotionsModule } from '../../..';
 import { Item } from '../../../../cms-components/cart/index';
 import { Card } from '../../../../shared/components/card/card.component';
+import { PromotionService } from '../../../../shared/services/promotion/promotion.service';
+import { MockFeatureLevelDirective } from '../../../../shared/test/mock-feature-level-directive';
+import { CheckoutStep, CheckoutStepType } from '../../model/index';
+import { CheckoutConfigService } from '../../services/index';
 import { ReviewSubmitComponent } from './review-submit.component';
 import createSpy = jasmine.createSpy;
-import { CheckoutStepType, CheckoutStep } from '../../model/index';
-import { CheckoutConfigService } from '../../services/index';
-import { RouterTestingModule } from '@angular/router/testing';
-import { MockFeatureLevelDirective } from '../../../../shared/test/mock-feature-level-directive';
 
 const mockCart: Cart = {
   guid: 'test',
@@ -71,12 +76,10 @@ const mockEntries: OrderEntry[] = [{ entryNumber: 123 }, { entryNumber: 456 }];
   template: '',
 })
 class MockCartItemListComponent {
-  @Input()
-  items: Item[];
-  @Input()
-  isReadOnly: boolean;
-  @Input()
-  potentialProductPromotions: PromotionResult[];
+  @Input() items: Item[];
+  @Input() readonly: boolean;
+  @Input() potentialProductPromotions: PromotionResult[] = [];
+  @Input() promotionLocation: PromotionLocation = PromotionLocation.ActiveCart;
 }
 
 @Component({
@@ -102,6 +105,8 @@ class MockCheckoutPaymentService {
   getPaymentDetails(): Observable<PaymentDetails> {
     return of(mockPaymentDetails);
   }
+
+  paymentProcessSuccess(): void {}
 }
 
 class MockUserAddressService {
@@ -140,14 +145,27 @@ class MockUrlPipe implements PipeTransform {
   transform(): any {}
 }
 
+class MockPromotionService {
+  getOrderPromotions(): void {}
+  getOrderPromotionsFromCart(): void {}
+  getOrderPromotionsFromCheckout(): void {}
+  getOrderPromotionsFromOrder(): void {}
+  getProductPromotionForEntry(): void {}
+}
+
 describe('ReviewSubmitComponent', () => {
   let component: ReviewSubmitComponent;
   let fixture: ComponentFixture<ReviewSubmitComponent>;
-  let mockCheckoutDeliveryService: MockCheckoutDeliveryService;
+  let mockCheckoutDeliveryService: CheckoutDeliveryService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [I18nTestingModule, RouterTestingModule],
+      imports: [
+        I18nTestingModule,
+        PromotionsModule,
+        RouterTestingModule,
+        FeaturesConfigModule,
+      ],
       declarations: [
         ReviewSubmitComponent,
         MockCartItemListComponent,
@@ -170,6 +188,16 @@ describe('ReviewSubmitComponent', () => {
           provide: CheckoutConfigService,
           useClass: MockCheckoutConfigService,
         },
+        {
+          provide: PromotionService,
+          useClass: MockPromotionService,
+        },
+        {
+          provide: FeaturesConfig,
+          useValue: {
+            features: { level: '1.3' },
+          },
+        },
       ],
     }).compileComponents();
   }));
@@ -178,9 +206,7 @@ describe('ReviewSubmitComponent', () => {
     fixture = TestBed.createComponent(ReviewSubmitComponent);
     component = fixture.componentInstance;
 
-    mockCheckoutDeliveryService = TestBed.get(CheckoutDeliveryService as Type<
-      CheckoutDeliveryService
-    >);
+    mockCheckoutDeliveryService = TestBed.inject(CheckoutDeliveryService);
 
     addressBS.next(mockAddress.country);
     deliveryModeBS.next(mockDeliveryMode);
@@ -350,15 +376,7 @@ describe('ReviewSubmitComponent', () => {
         { entryNumber: 123 },
         { entryNumber: 456 },
       ]);
-      expect(getCartItemList().isReadOnly).toBe(true);
-    });
-
-    it('should receive potentialProductPromotions attribute with potential product promotions of cart', () => {
-      fixture.detectChanges();
-      expect(getCartItemList().potentialProductPromotions).toEqual([
-        { description: 'Promotion 1' },
-        { description: 'Promotion 2' },
-      ]);
+      expect(getCartItemList().readonly).toBe(true);
     });
   });
 });

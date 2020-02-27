@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -6,7 +5,8 @@ import { AuthService } from '../../auth/facade/auth.service';
 import { UserToken } from '../../auth/models/token-types.model';
 import { Cart } from '../../model/cart.model';
 import { OCC_USER_ID_ANONYMOUS } from '../../occ/utils/occ-constants';
-import { CartActions, StateWithCart } from '../store/index';
+import * as DeprecatedCartActions from '../store/actions/cart.action';
+import { StateWithCart } from '../store/index';
 import * as fromReducers from '../store/reducers/index';
 import { CartDataService } from './cart-data.service';
 
@@ -50,8 +50,8 @@ describe('CartDataService', () => {
         },
       ],
     });
-    service = TestBed.get(CartDataService as Type<CartDataService>);
-    store = TestBed.get(Store as Type<Store<StateWithCart>>);
+    service = TestBed.inject(CartDataService);
+    store = TestBed.inject(Store);
   });
 
   describe('userId', () => {
@@ -71,16 +71,16 @@ describe('CartDataService', () => {
   describe('cart', () => {
     it('should return current cart', () => {
       expect(service.cart).toEqual({});
-      store.dispatch(new CartActions.CreateCartSuccess(testCart));
+      store.dispatch(new DeprecatedCartActions.CreateCartSuccess(testCart));
       expect(service.cart).toEqual(testCart);
     });
   });
 
   describe('hasCart', () => {
     it('should check if cart exists', () => {
-      store.dispatch(new CartActions.ClearCart());
+      store.dispatch(new DeprecatedCartActions.ClearCart());
       expect(service.hasCart).toEqual(false);
-      store.dispatch(new CartActions.CreateCartSuccess(testCart));
+      store.dispatch(new DeprecatedCartActions.CreateCartSuccess(testCart));
       expect(service.hasCart).toEqual(true);
     });
   });
@@ -88,13 +88,13 @@ describe('CartDataService', () => {
   describe('cartId', () => {
     it('should return cart guid for anonymous user', () => {
       userToken$.next({});
-      store.dispatch(new CartActions.CreateCartSuccess(testCart));
+      store.dispatch(new DeprecatedCartActions.CreateCartSuccess(testCart));
       expect(service.cartId).toEqual(testCart.guid);
     });
 
     it('should return code for logged user', () => {
       userToken$.next(testUserToken);
-      store.dispatch(new CartActions.CreateCartSuccess(testCart));
+      store.dispatch(new DeprecatedCartActions.CreateCartSuccess(testCart));
       expect(service.cartId).toEqual(testCart.code);
     });
   });
@@ -102,7 +102,7 @@ describe('CartDataService', () => {
   describe('isGuestCart', () => {
     it('should be able to check cart owned by guest or not', () => {
       store.dispatch(
-        new CartActions.CreateCartSuccess({
+        new DeprecatedCartActions.CreateCartSuccess({
           guid: 'guid',
           code: 'code',
           user: { name: 'anonymous', uid: 'anonymous' },
@@ -111,7 +111,7 @@ describe('CartDataService', () => {
       expect(service.isGuestCart).toBeFalsy();
 
       store.dispatch(
-        new CartActions.CreateCartSuccess({
+        new DeprecatedCartActions.CreateCartSuccess({
           guid: 'guid',
           code: 'code',
           user: { name: 'guest' },
@@ -120,7 +120,7 @@ describe('CartDataService', () => {
       expect(service.isGuestCart).toBeTruthy();
 
       store.dispatch(
-        new CartActions.CreateCartSuccess({
+        new DeprecatedCartActions.CreateCartSuccess({
           guid: 'guid',
           code: 'code',
           user: { name: 'test', uid: 'use-guid|test@test.com' },

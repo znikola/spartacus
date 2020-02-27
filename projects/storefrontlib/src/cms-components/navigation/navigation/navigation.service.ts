@@ -49,6 +49,22 @@ export class NavigationService {
           tap(items => {
             if (items === undefined) {
               this.loadNavigationEntryItems(navigation, true);
+            } else {
+              // we should check whether the existing node items are what expected
+              const expectedItems = [];
+              this.loadNavigationEntryItems(navigation, false, expectedItems);
+              const existingItems = Object.keys(items).map(
+                key => items[key].uid
+              );
+              const missingItems = expectedItems.filter(
+                it => !existingItems.includes(it.id)
+              );
+              if (missingItems.length > 0) {
+                this.cmsService.loadNavigationItems(
+                  navigation.uid,
+                  missingItems
+                );
+              }
             }
           }),
           filter(Boolean),
@@ -131,11 +147,13 @@ export class NavigationService {
       if (!node.title) {
         node.title = item.linkName;
       }
+      const url = this.getLink(item);
       // only populate the node link if we have a visible node
-      if (node.title) {
-        node.url = this.getLink(item);
-        // if "NEWWINDOW", target is true
-        node.target = item.target;
+      if (node.title && url) {
+        node.url = url;
+        // the backend provide boolean value for the target
+        // in case the link should be opened in a new window
+        node.target = !!item.target ? '_blank' : '';
       }
     }
   }

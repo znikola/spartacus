@@ -3,6 +3,7 @@ import {
   CmsProductCarouselComponent as model,
   FeatureConfigService,
   Product,
+  ProductScope,
   ProductService,
 } from '@spartacus/core';
 import { Observable } from 'rxjs';
@@ -16,7 +17,7 @@ import { CmsComponentData } from '../../../../cms-structure/page/model/cms-compo
 })
 export class ProductCarouselComponent {
   protected readonly PRODUCT_SCOPE =
-    this.features && this.features.isLevel('1.4') ? 'list' : '';
+    this.features && this.features.isLevel('1.4') ? ProductScope.LIST : '';
 
   private componentData$: Observable<model> = this.componentData.data$.pipe(
     filter(Boolean)
@@ -39,6 +40,21 @@ export class ProductCarouselComponent {
     map(codes =>
       codes.map(code => this.productService.get(code, this.PRODUCT_SCOPE))
     )
+  );
+
+  constructor(
+    componentData: CmsComponentData<model>,
+    productService: ProductService,
+    // tslint:disable-next-line: unified-signatures
+    features?: FeatureConfigService
+  );
+
+  /**
+   * @deprecated since 1.4
+   */
+  constructor(
+    componentData: CmsComponentData<model>,
+    productService: ProductService
   );
 
   constructor(

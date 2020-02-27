@@ -48,6 +48,7 @@ if (!environment.production) {
           'electronics',
           'apparel-de',
           'apparel-uk',
+          'apparel-uk-spa',
         ],
       },
 
@@ -66,7 +67,7 @@ if (!environment.production) {
         fallbackLang: 'en',
       },
       features: {
-        level: '1.4',
+        level: '1.5',
         anonymousConsents: true,
       },
     }),

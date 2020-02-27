@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/app-server",
+    "baseUrl": ".",
+    "module": "commonjs",
+    "types": [],
+    "paths": {
+      "@spartacus/core": ["../../dist/core"],
+      "@spartacus/storefront": ["../../dist/storefrontlib"],
+      "@spartacus/assets": ["../../dist/assets"],
+      "@spartacus/cds": ["../../dist/cds"]
+    }
+  },
+  "angularCompilerOptions": {
+    "entryModule": "src/app/app.server.module#AppServerModule",
+    "enableIvy": false
+  },
+  "files": ["src/main.server.ts"],
+  "include": ["projects/storefrontapp-cds-integration/src/**/*.d.ts"]
+}

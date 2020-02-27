@@ -4,7 +4,6 @@ import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { OccEndpointsService } from '../../../occ/services/occ-endpoints.service';
 import { AuthConfig } from '../../config/auth-config';
@@ -68,15 +67,9 @@ describe('UserAuthenticationTokenService', () => {
       ],
     });
 
-    authTokenService = TestBed.get(UserAuthenticationTokenService as Type<
-      UserAuthenticationTokenService
-    >);
-    httpMock = TestBed.get(HttpTestingController as Type<
-      HttpTestingController
-    >);
-    occEndpointsService = TestBed.get(OccEndpointsService as Type<
-      OccEndpointsService
-    >);
+    authTokenService = TestBed.inject(UserAuthenticationTokenService);
+    httpMock = TestBed.inject(HttpTestingController);
+    occEndpointsService = TestBed.inject(OccEndpointsService);
     spyOn(occEndpointsService, 'getRawEndpoint').and.callThrough();
   });
 
@@ -139,6 +132,28 @@ describe('UserAuthenticationTokenService', () => {
       mockReq.flush(
         { error: 'Invalid refresh token' },
         { status: 400, statusText: 'Error' }
+      );
+    });
+  });
+
+  describe('revoke user token', () => {
+    it('should make a revocation request for given user token', () => {
+      authTokenService.revoke(token).subscribe();
+
+      const mockReq = httpMock.expectOne(req => {
+        return req.method === 'POST';
+      });
+
+      expect(mockReq.cancelled).toBeFalsy();
+      expect(occEndpointsService.getRawEndpoint).toHaveBeenCalledWith('revoke');
+      expect(mockReq.request.headers.get('Authorization')).toEqual(
+        `${token.token_type} ${token.access_token}`
+      );
+      expect(mockReq.request.headers.get('Content-Type')).toEqual(
+        'application/x-www-form-urlencoded'
+      );
+      expect(mockReq.request.serializeBody()).toEqual(
+        `token=${token.access_token}`
       );
     });
   });
