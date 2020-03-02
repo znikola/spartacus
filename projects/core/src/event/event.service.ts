@@ -104,7 +104,7 @@ export class EventService {
    * Dispatches an event
    */
   dispatch(event: BaseEvent): void {
-    const eventType = event.constructor as Type<any>; // SPIKE TODO CHECK IF IT WORKS
+    const eventType = event.constructor as Type<any>;
     return this.getEventMeta(eventType).inputSubject$.next(event);
   }
 
