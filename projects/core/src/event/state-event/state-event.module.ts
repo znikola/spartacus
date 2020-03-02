@@ -1,5 +1,5 @@
 import { isDevMode, ModuleWithProviders, NgModule, Type } from '@angular/core';
-import { EVENT_SOURCES } from '../event-sources';
+import { CxEventSource, provideEventSources } from '../event-sources';
 import { ActionToEvent, ACTION_TO_EVENT } from './action-to-event';
 import { StateEvent } from './state-event.model';
 import { StateEventService } from './state-event.service';
@@ -28,7 +28,7 @@ export function validateMapping(
 export function eventSourcesFactory(
   stateEventService: StateEventService,
   mappingChunks: ActionToEvent[][]
-) {
+): CxEventSource<any>[] {
   const result = [];
   mappingChunks.forEach(mappingChunk =>
     mappingChunk.forEach(mapping => {
@@ -36,10 +36,10 @@ export function eventSourcesFactory(
       const eventType = mapping[1];
       validateMapping(actionType, eventType);
 
-      result.push([
-        eventType,
-        stateEventService.fromAction(eventType, actionType),
-      ]);
+      result.push({
+        type: eventType,
+        source$: stateEventService.getFromAction(eventType, actionType),
+      });
     })
   );
   return result;
@@ -51,12 +51,10 @@ export class StateEventModule {
     return {
       ngModule: StateEventModule,
       providers: [
-        {
-          provide: EVENT_SOURCES,
-          multi: true,
-          useFactory: eventSourcesFactory,
-          deps: [StateEventService, ACTION_TO_EVENT],
-        },
+        provideEventSources(eventSourcesFactory, [
+          StateEventService,
+          ACTION_TO_EVENT,
+        ]),
       ],
     };
   }

@@ -39,14 +39,14 @@ export class UiEventDirective implements OnInit {
     }
 
     if (uiEventType === 'click') {
-      this.eventService.attach(
+      this.eventService.register(
         ClickEvent,
         fromEvent(element, 'click').pipe(map(ClickData => ({ ClickData })))
       );
     }
 
     if (uiEventType === 'mousedown') {
-      this.eventService.attach(
+      this.eventService.register(
         MouseDownEvent,
         fromEvent(element, 'mousedown').pipe(
           map(MouseDownData => ({ MouseDownData }))
@@ -54,7 +54,7 @@ export class UiEventDirective implements OnInit {
       );
     }
     if (uiEventType === 'mouseup') {
-      this.eventService.attach(
+      this.eventService.register(
         MouseUpEvent,
         fromEvent(element, 'mouseup').pipe(
           map(MouseUpData => ({ MouseUpData }))
@@ -63,7 +63,7 @@ export class UiEventDirective implements OnInit {
     }
 
     if (uiEventType === 'hover' || uiEventType === 'mouseover') {
-      this.eventService.attach(
+      this.eventService.register(
         MouseHoverEvent,
         fromEvent(element, 'mouseover').pipe(
           map(MouseHoverData => ({ MouseHoverData }))

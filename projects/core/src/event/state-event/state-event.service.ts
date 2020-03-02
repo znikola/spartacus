@@ -11,29 +11,19 @@ import { StateEvent } from './state-event.model';
 export class StateEventService {
   constructor(protected actionsSubject: ActionsSubject) {}
 
-  fromAction<T>(
+  getFromAction<T>(
     eventType: Type<StateEvent<T>>,
     actionType: string
   ): Observable<StateEvent<T>> {
     const result = this.actionsSubject
       .pipe(ofType(actionType))
       .pipe(
-        map((action: { type: string; payload: T }) =>
-          this.createEvent(eventType, action)
+        map(
+          (action: { type: string; payload: T }) =>
+            new eventType({ state: action.payload })
         )
       );
 
-    //spike todo remove:
-    result['spike'] = actionType;
-    return result;
-  }
-
-  protected createEvent<T>(
-    eventType: Type<StateEvent<T>>,
-    action: { type: string; payload: T }
-  ): StateEvent<T> {
-    const result = new eventType();
-    result.state = action.payload;
     return result;
   }
 }
