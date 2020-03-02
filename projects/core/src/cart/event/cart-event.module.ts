@@ -5,31 +5,58 @@ import { CartEvents } from './cart-event.model';
 @NgModule({
   imports: [
     StateEventModule.fromActions([
-      [CartActions.LOAD_CART, CartEvents.LoadCart],
-      [CartActions.LOAD_CART_FAIL, CartEvents.LoadCartFail],
-      [CartActions.LOAD_CART_SUCCESS, CartEvents.LoadCartSuccess],
+      { action: CartActions.LOAD_CART, event: CartEvents.LoadCart },
+      { action: CartActions.LOAD_CART_FAIL, event: CartEvents.LoadCartFail },
+      {
+        action: CartActions.LOAD_CART_SUCCESS,
+        event: CartEvents.LoadCartSuccess,
+      },
 
-      [CartActions.CREATE_CART, CartEvents.CreateCart],
-      [CartActions.CREATE_CART_FAIL, CartEvents.CreateCartFail],
-      [CartActions.CREATE_CART_SUCCESS, CartEvents.CreateCartSuccess],
+      { action: CartActions.CREATE_CART, event: CartEvents.CreateCart },
+      {
+        action: CartActions.CREATE_CART_FAIL,
+        event: CartEvents.CreateCartFail,
+      },
+      {
+        action: CartActions.CREATE_CART_SUCCESS,
+        event: CartEvents.CreateCartSuccess,
+      },
 
-      [CartActions.CART_ADD_ENTRY, CartEvents.CartAddEntry],
-      [CartActions.CART_ADD_ENTRY_FAIL, CartEvents.CartAddEntryFail],
-      [CartActions.CART_ADD_ENTRY_SUCCESS, CartEvents.CartAddEntrySuccess],
+      { action: CartActions.CART_ADD_ENTRY, event: CartEvents.CartAddEntry },
+      {
+        action: CartActions.CART_ADD_ENTRY_FAIL,
+        event: CartEvents.CartAddEntryFail,
+      },
+      {
+        action: CartActions.CART_ADD_ENTRY_SUCCESS,
+        event: CartEvents.CartAddEntrySuccess,
+      },
 
-      [CartActions.CART_UPDATE_ENTRY, CartEvents.CartUpdateEntry],
-      [CartActions.CART_UPDATE_ENTRY_FAIL, CartEvents.CartUpdateEntryFail],
-      [
-        CartActions.CART_UPDATE_ENTRY_SUCCESS,
-        CartEvents.CartUpdateEntrySuccess,
-      ],
+      {
+        action: CartActions.CART_UPDATE_ENTRY,
+        event: CartEvents.CartUpdateEntry,
+      },
+      {
+        action: CartActions.CART_UPDATE_ENTRY_FAIL,
+        event: CartEvents.CartUpdateEntryFail,
+      },
+      {
+        action: CartActions.CART_UPDATE_ENTRY_SUCCESS,
+        event: CartEvents.CartUpdateEntrySuccess,
+      },
 
-      [CartActions.CART_REMOVE_ENTRY, CartEvents.CartRemoveEntry],
-      [CartActions.CART_REMOVE_ENTRY_FAIL, CartEvents.CartRemoveEntryFail],
-      [
-        CartActions.CART_REMOVE_ENTRY_SUCCESS,
-        CartEvents.CartRemoveEntrySuccess,
-      ],
+      {
+        action: CartActions.CART_REMOVE_ENTRY,
+        event: CartEvents.CartRemoveEntry,
+      },
+      {
+        action: CartActions.CART_REMOVE_ENTRY_FAIL,
+        event: CartEvents.CartRemoveEntryFail,
+      },
+      {
+        action: CartActions.CART_REMOVE_ENTRY_SUCCESS,
+        event: CartEvents.CartRemoveEntrySuccess,
+      },
 
       // todo: consider adding, if needed: addEmailToCart, deleteCart, mergeCart)],
     ]),

@@ -25,20 +25,19 @@ export function validateMapping(
 }
 
 // private
+/**
+ * Creates the event sources based on mappings from actions to events.
+ */
 export function eventSourcesFactory(
   stateEventService: StateEventService,
-  mappingChunks: ActionToEvent[][]
+  mappingChunks: ActionToEvent<any>[][]
 ): CxEventSource<any>[] {
-  const result = [];
+  const result: CxEventSource<any>[] = [];
   mappingChunks.forEach(mappingChunk =>
     mappingChunk.forEach(mapping => {
-      const actionType = mapping[0];
-      const eventType = mapping[1];
-      validateMapping(actionType, eventType);
-
       result.push({
-        type: eventType,
-        source$: stateEventService.getFromAction(eventType, actionType),
+        type: mapping.event,
+        source$: stateEventService.getFromMapping(mapping),
       });
     })
   );
@@ -60,7 +59,7 @@ export class StateEventModule {
   }
 
   static fromActions(
-    mappings: ActionToEvent[]
+    mappings: ActionToEvent<any>[]
   ): ModuleWithProviders<StateEventModule> {
     return {
       ngModule: StateEventModule,

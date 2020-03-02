@@ -12,7 +12,18 @@ import { CmsEvents } from './cms-event.model';
 @NgModule({
   imports: [
     StateEventModule.fromActions([
-      [CmsActions.LOAD_CMS_PAGE_DATA_SUCCESS, CmsEvents.PageLoadSuccess],
+      {
+        action: CmsActions.LOAD_CMS_PAGE_DATA_SUCCESS,
+        event: CmsEvents.PageLoadSuccess,
+        // spike just to test factory
+        factory: (action: CmsActions.LoadCmsPageData) => {
+          const res = new CmsEvents.PageLoadSuccess({
+            state: action.payload,
+          });
+          res['_test'] = 'test';
+          return res;
+        },
+      },
     ]),
   ],
 })
