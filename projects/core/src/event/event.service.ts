@@ -1,6 +1,6 @@
 import { Injectable, isDevMode, Type } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
-import { mergeMap, share } from 'rxjs/operators';
+import { share, switchMap } from 'rxjs/operators';
 import { BaseEvent } from './event-type';
 
 /**
@@ -124,16 +124,25 @@ export class EventService {
   protected createEventMeta<T>(eventType: Type<T>): void {
     const inputSubject$ = new Subject<T>();
     const sources$ = new BehaviorSubject<Observable<T>[]>([inputSubject$]);
-    const output$ = sources$.pipe(
-      mergeMap((sources: Observable<T>[]) => merge(...sources)),
-      share() // spike todo check if works
-    );
+    const output$ = this.createOutput(sources$);
 
     this.eventsMeta.set(eventType, {
       inputSubject$,
       sources$,
       output$,
     });
+  }
+
+  /**
+   * Takes a reactive array of event sources and returns all sources merged as one observable.
+   */
+  protected createOutput<T>(sources$: EventMeta<T>['sources$']) : Observable<T> {
+    return sources$.pipe(
+      // We cannot use mergeMap, since it maintains the inner observables (which are potentially never closed)
+      // which could cause memory leaks.
+      switchMap((sources: Observable<T>[]) => merge(...sources)),
+      share() // share the result observable to avoid executing the above logic for each subscriber
+    );
   }
 
   /**
