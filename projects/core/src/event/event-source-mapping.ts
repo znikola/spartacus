@@ -2,21 +2,21 @@ import { FactoryProvider, InjectionToken, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 
 // spike todo consider different name. But EventSource is a global one :/
-export type CxEventSource<T> = {
+export type EventSourceMapping<T> = {
   type: Type<T>;
   source$: Observable<T>;
 };
 
-export const EVENT_SOURCES = new InjectionToken<CxEventSource<any>>(
-  'EVENT_SOURCES'
-);
+export const EVENT_SOURCE_MAPPINGS = new InjectionToken<
+  EventSourceMapping<any>[]
+>('EVENT_SOURCE_MAPPINGS');
 
 export function provideEventSources<T>(
-  useFactory: (..._args: any[]) => CxEventSource<T>[],
+  useFactory: (..._args: any[]) => EventSourceMapping<T>[],
   deps?: any[]
 ): FactoryProvider {
   return {
-    provide: EVENT_SOURCES,
+    provide: EVENT_SOURCE_MAPPINGS,
     multi: true,
     useFactory,
     deps,

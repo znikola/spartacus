@@ -1,5 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { CxEventSource, EVENT_SOURCES } from './event-sources';
+import {
+  EventSourceMapping,
+  EVENT_SOURCE_MAPPINGS,
+} from './event-source-mapping';
 import { EventService } from './event.service';
 
 /**
@@ -8,9 +11,9 @@ import { EventService } from './event.service';
 @Injectable({
   providedIn: 'root',
 })
-export class EventSourcesService {
+export class EventSourceMappingService {
   constructor(
-    @Inject(EVENT_SOURCES) sourcesChunks: CxEventSource<any>[][],
+    @Inject(EVENT_SOURCE_MAPPINGS) sourcesChunks: EventSourceMapping<any>[][],
     protected eventService: EventService
   ) {
     this.registerInjectedSources(sourcesChunks);
@@ -20,7 +23,9 @@ export class EventSourcesService {
    * Attaches all provided event sources
    * @param sourcesChunks chunks of event source tuples
    */
-  protected registerInjectedSources(sourcesChunks: CxEventSource<any>[][]) {
+  protected registerInjectedSources(
+    sourcesChunks: EventSourceMapping<any>[][]
+  ) {
     sourcesChunks.forEach(sources => {
       sources.forEach(({ type, source$ }) => {
         this.eventService.register(type, source$);

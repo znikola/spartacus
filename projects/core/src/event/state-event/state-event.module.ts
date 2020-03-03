@@ -1,5 +1,8 @@
 import { isDevMode, ModuleWithProviders, NgModule, Type } from '@angular/core';
-import { CxEventSource, provideEventSources } from '../event-sources';
+import {
+  EventSourceMapping,
+  provideEventSources,
+} from '../event-source-mapping';
 import { ActionToEvent, ACTION_TO_EVENT } from './action-to-event';
 import { StateEvent } from './state-event.model';
 import { StateEventService } from './state-event.service';
@@ -31,8 +34,8 @@ export function validateMapping(
 export function eventSourcesFactory(
   stateEventService: StateEventService,
   mappingChunks: ActionToEvent<any>[][]
-): CxEventSource<any>[] {
-  const result: CxEventSource<any>[] = [];
+): EventSourceMapping<any>[] {
+  const result: EventSourceMapping<any>[] = [];
   mappingChunks.forEach(mappingChunk =>
     mappingChunk.forEach(mapping => {
       result.push({

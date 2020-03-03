@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { EventSourcesService } from './event-sources.service';
+import { EventSourceMappingService } from './event-source-mapping.service';
 import { StateEventModule } from './state-event';
 
 @NgModule({
@@ -10,7 +10,7 @@ import { StateEventModule } from './state-event';
 })
 export class EventModule {
   // spike new:
-  constructor(_service: EventSourcesService) {}
+  constructor(_service: EventSourceMappingService) {}
 
   static forRoot(): ModuleWithProviders<EventModule> {
     return {
