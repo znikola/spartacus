@@ -39,6 +39,6 @@ export class StateEventService {
       return mapping.factory(action);
     }
 
-    return new mapping.event({ state: action.payload });
+    return new mapping.event(action.payload);
   }
 }

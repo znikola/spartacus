@@ -1,6 +1,7 @@
 import { Injectable, isDevMode, Type } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { share, switchMap } from 'rxjs/operators';
+import { EventGetter } from './event-facade';
 import { BaseEvent } from './event-type';
 
 /**
@@ -89,15 +90,41 @@ export class EventService {
   get<T1, T2, T3, T4, T5, T6>(
     eventTypes: [Type<T1>, Type<T2>, Type<T3>, Type<T4>, Type<T5>, Type<T6>]
   ): Observable<T1 | T2 | T3 | T4 | T5 | T6>;
-  get<T>(eventTypes: Type<T> | Type<any>[]): Observable<T>;
+  get<T>(eventTypes: Type<T> | Type<T>[]): Observable<T>;
 
-  get<T>(eventTypes: Type<T> | Type<any>[]): Observable<T> {
+  get<T>(eventTypes: Type<T> | Type<T>[]): Observable<T> {
     if (Array.isArray(eventTypes)) {
       return merge(
         ...eventTypes.map(eventType => this.getEventMeta(eventType).output$)
       );
     }
     return this.getEventMeta(eventTypes).output$;
+  }
+
+  /**
+   * Higher order function over the method #get.
+   * Given the allowed event types, it returns a function similar to #get. It validates whether
+   * the returned function is called with allowed event types. If not, it prints error to the console in dev mode.
+   *
+   * @param allowedEventTypes allowed event types in the returned getter function
+   * @return the method #get enhanced with a validation in dev mode against the allowed event types
+   */
+  createGetter<T>(allowedEventTypes: Type<T>[]): EventGetter<T> {
+    return (eventTypes: Type<T> | Type<T>[]) => {
+      // Type safety is limited to the number of generic arguments of the method #get. So we validate in dev mode.
+      if (
+        isDevMode() &&
+        [].concat(eventTypes).some(type => !allowedEventTypes.includes(type))
+      ) {
+        console.error(
+          'EventService#createGetterFor: Requested for event types',
+          eventTypes,
+          'which are not included in the whitelist',
+          allowedEventTypes
+        );
+      }
+      return this.get(eventTypes);
+    };
   }
 
   /**
@@ -136,7 +163,7 @@ export class EventService {
   /**
    * Takes a reactive array of event sources and returns all sources merged as one observable.
    */
-  protected createOutput<T>(sources$: EventMeta<T>['sources$']) : Observable<T> {
+  protected createOutput<T>(sources$: EventMeta<T>['sources$']): Observable<T> {
     return sources$.pipe(
       // We cannot use mergeMap, since it maintains the inner observables (which are potentially never closed)
       // which could cause memory leaks.
@@ -148,9 +175,11 @@ export class EventService {
   /**
    * Checks if the event type is a valid type (is a class with constructor). Runs only in dev mode.
    */
-  protected validateEventType<T>(eventType: Type<T>): void{
-    if(isDevMode() && !eventType?.constructor) {
-      throw new Error(`${eventType} is not a valid event type. Please provide an object constructor.`)
+  protected validateEventType<T>(eventType: Type<T>): void {
+    if (isDevMode() && !eventType?.constructor) {
+      throw new Error(
+        `${eventType} is not a valid event type. Please provide an object constructor.`
+      );
     }
   }
 }

@@ -61,19 +61,19 @@ export namespace CartEvents {
     UpdateEntry,
     UpdateEntryFail,
     UpdateEntrySuccess,
-  ] as const;
-
-  export type Event =
-    | Create
-    | CreateFail
-    | CreateSuccess
-    | Load
-    | LoadFail
-    | LoadSuccess
-    | AddEntry
-    | AddEntryFail
-    | AddEntrySuccess
-    | UpdateEntry
-    | UpdateEntryFail
-    | UpdateEntrySuccess;
+  ];
 }
+
+export type CartEvent =
+  | CartEvents.Create
+  | CartEvents.CreateFail
+  | CartEvents.CreateSuccess
+  | CartEvents.Load
+  | CartEvents.LoadFail
+  | CartEvents.LoadSuccess
+  | CartEvents.AddEntry
+  | CartEvents.AddEntryFail
+  | CartEvents.AddEntrySuccess
+  | CartEvents.UpdateEntry
+  | CartEvents.UpdateEntryFail
+  | CartEvents.UpdateEntrySuccess;

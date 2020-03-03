@@ -1,5 +1,6 @@
 export * from './auth.module';
 export * from './config/auth-config';
+export * from './event/index';
 export * from './facade/auth.service';
 export * from './guards/index';
 export * from './models/token-types.model';

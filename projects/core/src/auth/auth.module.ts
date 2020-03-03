@@ -4,6 +4,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Config, ConfigModule } from '../config/config.module';
 import { AuthConfig } from './config/auth-config';
 import { defaultAuthConfig } from './config/default-auth-config';
+import { AuthEventModule } from './event/auth-event.module';
 import { interceptors } from './http-interceptors/index';
 import { AuthServices } from './services/index';
 import { AuthStoreModule } from './store/auth-store.module';
@@ -13,6 +14,7 @@ import { AuthStoreModule } from './store/auth-store.module';
     CommonModule,
     HttpClientModule,
     AuthStoreModule,
+    AuthEventModule,
     ConfigModule.withConfig(defaultAuthConfig),
   ],
 })

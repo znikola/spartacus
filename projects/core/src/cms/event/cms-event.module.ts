@@ -18,9 +18,9 @@ import { CmsEvents } from './cms-event.model';
         // spike just to test factory
         factory: (action: CmsActions.LoadCmsPageData) => {
           const res = new CmsEvents.PageLoadSuccess({
-            state: action.payload,
+            ...action.payload,
+            _test: 'test',
           });
-          res['_test'] = 'test';
           return res;
         },
       },

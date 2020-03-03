@@ -33,7 +33,7 @@ export class UserTokenEffects {
   @Effect()
   login$: Observable<AuthActions.Login> = this.actions$.pipe(
     ofType(AuthActions.LOAD_USER_TOKEN_SUCCESS),
-    map(() => new AuthActions.Login())
+    map((action: AuthActions.LoadUserToken) => new AuthActions.Login({userId: action?.payload?.userId}))
   );
 
   @Effect()

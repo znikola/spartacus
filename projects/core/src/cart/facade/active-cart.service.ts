@@ -13,6 +13,8 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { AuthService } from '../../auth/index';
+import { EventService } from '../../event';
+import { EventFacade, EventGetter } from '../../event/event-facade';
 import { Cart } from '../../model/cart.model';
 import { User } from '../../model/misc.model';
 import { OrderEntry } from '../../model/order.model';
@@ -23,13 +25,14 @@ import {
 } from '../../occ/utils/occ-constants';
 import { ProcessesLoaderState } from '../../state/utils/processes-loader/processes-loader-state';
 import { EMAIL_PATTERN } from '../../util/regex-pattern';
+import { CartEvent, CartEvents } from '../event/cart-event.model';
 import { StateWithMultiCart } from '../store/multi-cart-state';
 import { MultiCartSelectors } from '../store/selectors/index';
 import { getCartIdByUserId, isTempCartId } from '../utils/utils';
 import { MultiCartService } from './multi-cart.service';
 
 @Injectable()
-export class ActiveCartService {
+export class ActiveCartService implements EventFacade<CartEvent> {
   private readonly PREVIOUS_USER_ID_INITIAL_VALUE =
     'PREVIOUS_USER_ID_INITIAL_VALUE';
   private previousUserId = this.PREVIOUS_USER_ID_INITIAL_VALUE;
@@ -52,10 +55,15 @@ export class ActiveCartService {
     switchMap(cartId => this.multiCartService.getCartEntity(cartId))
   );
 
+  getEvent: EventGetter<CartEvent> = this.eventService.createGetter(
+    CartEvents.all
+  );
+
   constructor(
     protected store: Store<StateWithMultiCart>,
     protected authService: AuthService,
-    protected multiCartService: MultiCartService
+    protected multiCartService: MultiCartService,
+    protected eventService: EventService // spike todo - deprecation breaking change!
   ) {
     this.authService.getOccUserId().subscribe(userId => {
       this.userId = userId;

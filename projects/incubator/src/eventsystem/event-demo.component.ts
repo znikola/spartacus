@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { ActiveCartService, CartEvents, CmsEvents, EventService, MultiCartService } from '@spartacus/core';
+import { ActiveCartService, AuthEvents, AuthService, CartEvents, CmsEvents, EventService, MultiCartService } from '@spartacus/core';
 import { RoutingEvents } from 'projects/core/src/routing/event/routing-event.model';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -69,7 +69,25 @@ export class EventDemoComponent {
       CartEvents.CreateSuccess,
     ]);
     cartEvents$.subscribe(e => console.log('cart event', e));
-    console.log('subscribed');
+    console.log('subscribed cart events');
+
+    const authService = this.injector.get(AuthService);
+    const authEvents$ = authService.getEvent([
+      AuthEvents.Login,
+      AuthEvents.Logout,
+      // spike todo test typing: CAUTION!!! SHOULD WARN:
+      // CmsEvents.PageLoadSuccess,
+      // ClickEvent,
+      // RoutingEvents.NavigationSuccess,
+      // RoutingEvents.NavigationCancel,
+      // RoutingEvents.Navigation,
+      // CartEvents.AddEntry,
+      // CartEvents.AddEntrySuccess,
+      // CartEvents.AddEntryFail,
+      // CartEvents.UpdateEntry,
+    ]);
+    authEvents$.subscribe(e => console.log('auth event', e));
+    console.log('subscribed auth events');
 
 
     const spike$ = this.eventService.get([
