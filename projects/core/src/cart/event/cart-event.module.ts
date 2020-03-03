@@ -5,57 +5,57 @@ import { CartEvents } from './cart-event.model';
 @NgModule({
   imports: [
     StateEventModule.fromActions([
-      { action: CartActions.LOAD_CART, event: CartEvents.LoadCart },
-      { action: CartActions.LOAD_CART_FAIL, event: CartEvents.LoadCartFail },
+      { action: CartActions.LOAD_CART, event: CartEvents.Load },
+      { action: CartActions.LOAD_CART_FAIL, event: CartEvents.LoadFail },
       {
         action: CartActions.LOAD_CART_SUCCESS,
-        event: CartEvents.LoadCartSuccess,
+        event: CartEvents.LoadSuccess,
       },
 
-      { action: CartActions.CREATE_CART, event: CartEvents.CreateCart },
+      { action: CartActions.CREATE_CART, event: CartEvents.Create },
       {
         action: CartActions.CREATE_CART_FAIL,
-        event: CartEvents.CreateCartFail,
+        event: CartEvents.CreateFail,
       },
       {
         action: CartActions.CREATE_CART_SUCCESS,
-        event: CartEvents.CreateCartSuccess,
+        event: CartEvents.CreateSuccess,
       },
 
-      { action: CartActions.CART_ADD_ENTRY, event: CartEvents.CartAddEntry },
+      { action: CartActions.CART_ADD_ENTRY, event: CartEvents.AddEntry },
       {
         action: CartActions.CART_ADD_ENTRY_FAIL,
-        event: CartEvents.CartAddEntryFail,
+        event: CartEvents.AddEntryFail,
       },
       {
         action: CartActions.CART_ADD_ENTRY_SUCCESS,
-        event: CartEvents.CartAddEntrySuccess,
+        event: CartEvents.AddEntrySuccess,
       },
 
       {
         action: CartActions.CART_UPDATE_ENTRY,
-        event: CartEvents.CartUpdateEntry,
+        event: CartEvents.UpdateEntry,
       },
       {
         action: CartActions.CART_UPDATE_ENTRY_FAIL,
-        event: CartEvents.CartUpdateEntryFail,
+        event: CartEvents.UpdateEntryFail,
       },
       {
         action: CartActions.CART_UPDATE_ENTRY_SUCCESS,
-        event: CartEvents.CartUpdateEntrySuccess,
+        event: CartEvents.UpdateEntrySuccess,
       },
 
       {
         action: CartActions.CART_REMOVE_ENTRY,
-        event: CartEvents.CartRemoveEntry,
+        event: CartEvents.RemoveEntry,
       },
       {
         action: CartActions.CART_REMOVE_ENTRY_FAIL,
-        event: CartEvents.CartRemoveEntryFail,
+        event: CartEvents.RemoveEntryFail,
       },
       {
         action: CartActions.CART_REMOVE_ENTRY_SUCCESS,
-        event: CartEvents.CartRemoveEntrySuccess,
+        event: CartEvents.RemoveEntrySuccess,
       },
 
       // todo: consider adding, if needed: addEmailToCart, deleteCart, mergeCart)],

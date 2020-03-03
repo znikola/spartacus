@@ -2,51 +2,78 @@ import { CartActions } from '@spartacus/core';
 import { StateEvent } from '../../event/state-event/state-event.model';
 
 export namespace CartEvents {
-  export class CreateCart extends StateEvent<
-    CartActions.CreateCart['payload']
-  > {}
-  export class CreateCartFail extends StateEvent<
+  export class Create extends StateEvent<CartActions.CreateCart['payload']> {}
+  export class CreateFail extends StateEvent<
     CartActions.CreateCartFail['payload']
   > {}
-  export class CreateCartSuccess extends StateEvent<
+  export class CreateSuccess extends StateEvent<
     CartActions.CreateCartSuccess['payload']
   > {}
 
-  export class LoadCart extends StateEvent<CartActions.LoadCart['payload']> {}
-  export class LoadCartFail extends StateEvent<
+  export class Load extends StateEvent<CartActions.LoadCart['payload']> {}
+  export class LoadFail extends StateEvent<
     CartActions.LoadCartFail['payload']
   > {}
-  export class LoadCartSuccess extends StateEvent<
+  export class LoadSuccess extends StateEvent<
     CartActions.LoadCartSuccess['payload']
   > {}
 
-  export class CartAddEntry extends StateEvent<
+  export class AddEntry extends StateEvent<
     CartActions.CartAddEntry['payload']
   > {}
-  export class CartAddEntrySuccess extends StateEvent<
+  export class AddEntrySuccess extends StateEvent<
     CartActions.CartAddEntrySuccess['payload']
   > {}
-  export class CartAddEntryFail extends StateEvent<
+  export class AddEntryFail extends StateEvent<
     CartActions.CartAddEntryFail['payload']
   > {}
 
-  export class CartRemoveEntry extends StateEvent<
+  export class RemoveEntry extends StateEvent<
     CartActions.CartRemoveEntry['payload']
   > {}
-  export class CartRemoveEntrySuccess extends StateEvent<
+  export class RemoveEntrySuccess extends StateEvent<
     CartActions.CartRemoveEntrySuccess['payload']
   > {}
-  export class CartRemoveEntryFail extends StateEvent<
+  export class RemoveEntryFail extends StateEvent<
     CartActions.CartRemoveEntryFail['payload']
   > {}
 
-  export class CartUpdateEntry extends StateEvent<
+  export class UpdateEntry extends StateEvent<
     CartActions.CartUpdateEntry['payload']
   > {}
-  export class CartUpdateEntrySuccess extends StateEvent<
+  export class UpdateEntrySuccess extends StateEvent<
     CartActions.CartUpdateEntrySuccess['payload']
   > {}
-  export class CartUpdateEntryFail extends StateEvent<
+  export class UpdateEntryFail extends StateEvent<
     CartActions.CartUpdateEntryFail['payload']
   > {}
+
+  export const all = [
+    Create,
+    CreateFail,
+    CreateSuccess,
+    Load,
+    LoadFail,
+    LoadSuccess,
+    AddEntry,
+    AddEntryFail,
+    AddEntrySuccess,
+    UpdateEntry,
+    UpdateEntryFail,
+    UpdateEntrySuccess,
+  ] as const;
+
+  export type Event =
+    | Create
+    | CreateFail
+    | CreateSuccess
+    | Load
+    | LoadFail
+    | LoadSuccess
+    | AddEntry
+    | AddEntryFail
+    | AddEntrySuccess
+    | UpdateEntry
+    | UpdateEntryFail
+    | UpdateEntrySuccess;
 }
