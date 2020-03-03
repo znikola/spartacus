@@ -12,7 +12,7 @@ import { StateEvent } from './state-event.model';
 export class StateEventService {
   constructor(protected actionsSubject: ActionsSubject) {}
 
-  getFromMapping<T>(mapping: ActionToEvent<T>): Observable<StateEvent<T>> {
+  getFromAction<T>(mapping: ActionToEvent<T>): Observable<StateEvent<T>> {
     const result = this.actionsSubject
       .pipe(ofType(mapping.action))
       .pipe(

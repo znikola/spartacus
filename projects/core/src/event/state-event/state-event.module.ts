@@ -37,7 +37,7 @@ export function eventSourcesFactory(
     mappingChunk.forEach(mapping => {
       result.push({
         type: mapping.event,
-        source$: stateEventService.getFromMapping(mapping),
+        source$: stateEventService.getFromAction(mapping),
       });
     })
   );
