@@ -1,9 +1,8 @@
 import { FactoryProvider, InjectionToken, Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseEvent } from './event-type';
 
 // spike todo consider different name. But EventSource is a global one :/
-export type CxEventSource<T extends BaseEvent> = {
+export type CxEventSource<T> = {
   type: Type<T>;
   source$: Observable<T>;
 };

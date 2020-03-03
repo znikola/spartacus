@@ -2,7 +2,6 @@ import { Injectable, isDevMode, Type } from '@angular/core';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { share, switchMap } from 'rxjs/operators';
 import { EventGetter } from './event-facade';
-import { BaseEvent } from './event-type';
 
 /**
  * The object holds an array of sources.
@@ -130,7 +129,7 @@ export class EventService {
   /**
    * Dispatches an event
    */
-  dispatch(event: BaseEvent): void {
+  dispatch(event: Object): void {
     const eventType = event.constructor as Type<any>;
     return this.getEventMeta(eventType).inputSubject$.next(event);
   }

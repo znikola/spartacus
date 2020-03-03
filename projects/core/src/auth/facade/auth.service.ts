@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { EventService } from '../../event';
 import { EventFacade, EventGetter } from '../../event/event-facade';
-import { OCC_USER_ID_ANONYMOUS, OCC_USER_ID_CURRENT } from '../../occ/utils/occ-constants';
+import {
+  OCC_USER_ID_ANONYMOUS,
+  OCC_USER_ID_CURRENT,
+} from '../../occ/utils/occ-constants';
 import { LoaderState } from '../../state/utils/loader/loader-state';
 import { AuthEvent, AuthEvents } from '../event/auth-event.model';
 import { ClientToken, UserToken } from '../models/token-types.model';
@@ -16,12 +19,14 @@ import { AuthSelectors } from '../store/selectors/index';
   providedIn: 'root',
 })
 export class AuthService implements EventFacade<AuthEvent> {
-  getEvent: EventGetter<AuthEvent> = this.eventService.createGetter(AuthEvents.all);
-  
+  getEvent: EventGetter<AuthEvent> = this.eventService.createGetter(
+    AuthEvents.all
+  );
+
   constructor(
     protected store: Store<StateWithAuth>,
     protected eventService: EventService // spike todo - add deprecation
-    ) {}
+  ) {}
 
   /**
    * Loads a new user token
@@ -92,7 +97,9 @@ export class AuthService implements EventFacade<AuthEvent> {
     this.getUserToken()
       .pipe(take(1))
       .subscribe(userToken => {
-        this.store.dispatch(new AuthActions.Logout({userId: userToken?.userId}));
+        this.store.dispatch(
+          new AuthActions.Logout({ userId: userToken?.userId })
+        );
         if (Boolean(userToken) && userToken.userId === OCC_USER_ID_CURRENT) {
           this.store.dispatch(new AuthActions.RevokeUserToken(userToken));
         }

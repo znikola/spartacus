@@ -1,10 +1,7 @@
-import { BaseEvent } from '../event-type';
-
-export class StateEvent<T> extends BaseEvent {
+export class StateEvent<T> {
   state: T;
 
   constructor(state?: T) {
-    super();
     this.state = state;
   }
 }
