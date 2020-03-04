@@ -1,5 +1,5 @@
-import { CartActions } from '@spartacus/core';
 import { StateEvent } from '../../event/state-event/state-event.model';
+import { CartActions } from '../store/actions';
 
 export namespace CartEvents {
   export class Create extends StateEvent<CartActions.CreateCart['payload']> {}
