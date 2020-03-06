@@ -8,8 +8,6 @@ import { CartEvents } from './cart-event.model';
       {
         action: CartActions.CART_ADD_ENTRY,
         event: CartEvents.AddCartEntry,
-        factory: ({ payload }: CartActions.CartAddEntry) =>
-          new CartEvents.AddCartEntry(payload),
       },
       {
         action: CartActions.CART_ADD_ENTRY_SUCCESS,
@@ -19,7 +17,7 @@ import { CartEvents } from './cart-event.model';
         action: CartActions.CREATE_CART_SUCCESS,
         event: CartEvents.CreateCartSuccess,
         factory: ({ payload }: CartActions.CreateCartSuccess) =>
-          new CartEvents.CreateCartSuccess(payload),
+          new CartEvents.CreateCartSuccess({ cart: payload }),
       },
     ]),
   ],

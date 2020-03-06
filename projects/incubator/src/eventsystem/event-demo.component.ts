@@ -73,12 +73,6 @@ export class EventDemoComponent {
     const cartEvents$ = activeCartService.getEvent([
       CartEvents.AddCartEntry,
       CartEvents.AddCartEntrySuccess,
-      // spike todo test typing: CAUTION!!! SHOULD WARN:
-      // CmsEvents.PageLoadSuccess,
-      // ClickEvent,
-      // RoutingEvents.NavigationSuccess,
-      // RoutingEvents.NavigationCancel,
-      // RoutingEvents.Navigation,
     ]);
     cartEvents$.subscribe(e => console.log('cart event', e));
     console.log('subscribed cart events');
