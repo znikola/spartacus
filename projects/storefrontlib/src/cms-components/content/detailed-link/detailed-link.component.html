@@ -1,0 +1,17 @@
+<ng-container *ngIf="component.data$ | async as data">
+  <cx-generic-link [url]="data.urlLink" [title]="data.title">
+    <div class="row">
+      <div class="col-12 col-md-2">
+        <cx-media
+          [container]="data.media"
+          [title]="data.media?.altText"
+        ></cx-media>
+      </div>
+      <div class="col-12 col-md-10">
+        <p *ngIf="data.title" [innerHTML]="data.title"></p>
+        <p *ngIf="data.subtitle" [innerHTML]="data.subtitle"></p>
+      </div>
+    </div>
+    <div class="thumbnail"></div>
+  </cx-generic-link>
+</ng-container>

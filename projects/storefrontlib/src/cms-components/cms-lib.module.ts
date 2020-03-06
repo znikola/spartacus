@@ -8,6 +8,7 @@ import { BannerCarouselModule } from './content/banner-carousel/banner-carousel.
 import {
   BannerModule,
   CmsParagraphModule,
+  DetailedLinkModule,
   LinkModule,
   TabParagraphContainerModule,
 } from './content/index';
@@ -17,6 +18,7 @@ import {
   CloseAccountModule,
   ConsentManagementModule,
   ForgotPasswordModule,
+  MyCouponsModule,
   MyInterestsModule,
   NotificationPreferenceModule,
   OrderCancellationModule,
@@ -30,7 +32,6 @@ import {
   UpdateEmailModule,
   UpdatePasswordModule,
   UpdateProfileModule,
-  MyCouponsModule,
 } from './myaccount/index';
 import {
   BreadcrumbModule,
@@ -105,6 +106,7 @@ import { WishListModule } from './wish-list/wish-list.module';
     NotificationPreferenceModule,
     MyInterestsModule,
     StockNotificationModule,
+    DetailedLinkModule,
   ],
 })
 export class CmsLibModule {}

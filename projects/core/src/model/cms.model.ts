@@ -72,6 +72,13 @@ export interface CmsBannerComponent extends CmsComponent {
   external?: string;
 }
 
+export interface CmsDetailedLinkComponent extends CmsComponent {
+  title?: string;
+  subtitle?: string;
+  media?: CmsResponsiveBannerComponentMedia;
+  urlLink?: string;
+}
+
 export enum CmsBannerCarouselEffect {
   FADE = 'FADE',
   ZOOM = 'ZOOM',
