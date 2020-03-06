@@ -13,7 +13,7 @@ import {
   MouseDownEvent,
   MouseHoverEvent,
   MouseUpEvent,
-} from './model';
+} from './ui-event.model';
 
 @Directive({
   selector: '[cxUiEvent]',
@@ -41,7 +41,9 @@ export class UiEventDirective implements OnInit {
     if (uiEventType === 'click') {
       this.eventService.register(
         ClickEvent,
-        fromEvent(element, 'click').pipe(map(ClickData => ({ ClickData })))
+        fromEvent(element, 'click').pipe(
+          map(ClickData => new ClickEvent({ ClickData }))
+        )
       );
     }
 
@@ -49,7 +51,7 @@ export class UiEventDirective implements OnInit {
       this.eventService.register(
         MouseDownEvent,
         fromEvent(element, 'mousedown').pipe(
-          map(MouseDownData => ({ MouseDownData }))
+          map(MouseDownData => new MouseDownEvent({ MouseDownData }))
         )
       );
     }
@@ -57,7 +59,7 @@ export class UiEventDirective implements OnInit {
       this.eventService.register(
         MouseUpEvent,
         fromEvent(element, 'mouseup').pipe(
-          map(MouseUpData => ({ MouseUpData }))
+          map(MouseUpData => new MouseUpEvent({ MouseUpData }))
         )
       );
     }
@@ -66,7 +68,7 @@ export class UiEventDirective implements OnInit {
       this.eventService.register(
         MouseHoverEvent,
         fromEvent(element, 'mouseover').pipe(
-          map(MouseHoverData => ({ MouseHoverData }))
+          map(MouseHoverData => new MouseHoverEvent({ MouseHoverData }))
         )
       );
     }
