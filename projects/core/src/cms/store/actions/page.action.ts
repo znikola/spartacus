@@ -24,14 +24,14 @@ export class LoadCmsPageDataFail extends StateEntityLoaderActions.EntityFailActi
 
 export class LoadCmsPageDataSuccess extends StateEntityLoaderActions.EntitySuccessAction {
   readonly type = LOAD_CMS_PAGE_DATA_SUCCESS;
-  constructor(pageContext: PageContext, payload: Page) {
+  constructor(pageContext: PageContext, public payload: Page) {
     super(pageContext.type, pageContext.id, payload);
   }
 }
 
 export class CmsSetPageSuccessIndex extends StateEntityLoaderActions.EntitySuccessAction {
   readonly type = CMS_SET_PAGE_SUCCESS_INDEX;
-  constructor(pageContext: PageContext, payload: Page) {
+  constructor(pageContext: PageContext, public payload: Page) {
     super(pageContext.type, pageContext.id, payload);
   }
 }
