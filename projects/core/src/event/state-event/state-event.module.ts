@@ -1,31 +1,10 @@
-import { isDevMode, ModuleWithProviders, NgModule, Type } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
   EventSourceMapping,
   provideEventSources,
 } from '../event-source-mapping';
 import { ActionToEvent, ACTION_TO_EVENT } from './action-to-event';
-import { StateEvent } from './state-event.model';
 import { StateEventService } from './state-event.service';
-
-// private
-export function validateMapping(
-  actionType: string,
-  eventType: Type<StateEvent<any>>
-) {
-  if (isDevMode()) {
-    if (
-      typeof actionType !== 'string' ||
-      !(eventType.prototype instanceof StateEvent)
-    ) {
-      console.warn(
-        'ACTION_TO_EVENT mapping invalid. Action type:',
-        actionType,
-        '. Event type: ',
-        eventType
-      );
-    }
-  }
-}
 
 // private
 /**

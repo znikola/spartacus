@@ -4,7 +4,6 @@ import { ActionsSubject } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActionToEvent } from './action-to-event';
-import { StateEvent } from './state-event.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,7 @@ import { StateEvent } from './state-event.model';
 export class StateEventService {
   constructor(protected actionsSubject: ActionsSubject) {}
 
-  getFromAction<T>(mapping: ActionToEvent<T>): Observable<StateEvent<T>> {
+  getFromAction<T>(mapping: ActionToEvent<T>): Observable<T> {
     const result = this.actionsSubject
       .pipe(ofType(mapping.action))
       .pipe(
@@ -34,11 +33,11 @@ export class StateEventService {
   protected createEvent<T>(
     action: { type: string; payload: any },
     mapping: ActionToEvent<T>
-  ): StateEvent<T> {
+  ): T {
     if (mapping.factory) {
       return mapping.factory(action);
     }
 
-    return new mapping.event(action.payload);
+    return new mapping.event(action.payload ?? {});
   }
 }

@@ -16,10 +16,10 @@ import { CmsEvents } from './cms-event.model';
         action: CmsActions.LOAD_CMS_PAGE_DATA_SUCCESS,
         event: CmsEvents.PageLoadSuccess,
         // spike just to test factory
-        factory: (action: CmsActions.LoadCmsPageData) => {
+        factory: (action: CmsActions.LoadCmsPageDataSuccess) => {
           const res = new CmsEvents.PageLoadSuccess({
-            ...action.payload,
-            _test: 'test',
+            page: action.payload,
+            // _test: 'test',
           });
           return res;
         },

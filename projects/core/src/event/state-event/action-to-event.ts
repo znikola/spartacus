@@ -1,5 +1,4 @@
 import { InjectionToken, Type } from '@angular/core';
-import { StateEvent } from './state-event.model';
 
 export interface ActionToEvent<T> {
   /**
@@ -10,12 +9,12 @@ export interface ActionToEvent<T> {
   /**
    * Event class type (constructor)
    */
-  event: Type<StateEvent<T>> | null;
+  event: Type<T> | null;
 
   /**
    * Function mapping the instance of
    */
-  factory?: (action: any) => StateEvent<T>;
+  factory?: (action: any) => T;
 }
 
 export const ACTION_TO_EVENT = new InjectionToken<ActionToEvent<any>>(

@@ -55,9 +55,11 @@ export class ActiveCartService implements EventFacade<CartEvent> {
     switchMap(cartId => this.multiCartService.getCartEntity(cartId))
   );
 
-  getEvent: EventGetter<CartEvent> = this.eventService.createGetter(
-    CartEvents.all
-  );
+  getEvent: EventGetter<CartEvent> = this.eventService.createGetter<CartEvent>([
+    CartEvents.AddCartEntry,
+    CartEvents.AddCartEntrySuccess,
+    CartEvents.CreateCartSuccess,
+  ]);
 
   constructor(
     protected store: Store<StateWithMultiCart>,
