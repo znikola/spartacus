@@ -78,7 +78,7 @@ export class EventDemoComponent {
     console.log('subscribed cart events');
 
     const spike$ = this.eventService.get([
-      CmsEvents.PageLoadSuccess,
+      CmsEvents.LoadCmsPageDataSuccess,
       ClickEvent,
       RoutingEvents.NavigationSuccess,
       RoutingEvents.NavigationCancel,

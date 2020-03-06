@@ -23,7 +23,7 @@ export function customEventSourceFactory(eventService: EventService) {
     .get(CartEvents.AddCartEntrySuccess)
     .pipe(
       withLatestFrom(
-        eventService.get(CmsEvents.PageLoadSuccess),
+        eventService.get(CmsEvents.LoadCmsPageDataSuccess),
         eventService.get(RoutingEvents.NavigationSuccess)
       ),
       map(

@@ -1,9 +1,9 @@
 import { Page } from '../model/page.model';
 
 export namespace CmsEvents {
-  export class PageLoadSuccess {
+  export class LoadCmsPageDataSuccess {
     page: Page;
-    constructor(data: PageLoadSuccess) {
+    constructor(data: LoadCmsPageDataSuccess) {
       Object.assign(this, data);
     }
   }

@@ -14,19 +14,13 @@ import { CmsEvents } from './cms-event.model';
     StateEventModule.fromActions([
       {
         action: CmsActions.LOAD_CMS_PAGE_DATA_SUCCESS,
-        event: CmsEvents.PageLoadSuccess,
-        // spike just to test factory
-        factory: (action: CmsActions.LoadCmsPageDataSuccess) => {
-          const res = new CmsEvents.PageLoadSuccess({
+        event: CmsEvents.LoadCmsPageDataSuccess,
+        factory: (action: CmsActions.LoadCmsPageDataSuccess) =>
+          new CmsEvents.LoadCmsPageDataSuccess({
             page: action.payload,
-            // _test: 'test',
-          });
-          return res;
-        },
+          }),
       },
     ]),
   ],
 })
 export class CmsEventModule {}
-
-/// SPIKE TODO SHOULD NOT BE EXPOSED
