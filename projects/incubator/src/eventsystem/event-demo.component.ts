@@ -1,10 +1,16 @@
 import { Component, Injector } from '@angular/core';
-import { ActiveCartService, AuthEvents, AuthService, CartEvents, CmsEvents, EventService, MultiCartService } from '@spartacus/core';
+import {
+  ActiveCartService,
+  CartEvents,
+  CmsEvents,
+  EventService,
+  MultiCartService,
+} from '@spartacus/core';
 import { RoutingEvents } from 'projects/core/src/routing/event/routing-event.model';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AddedToCartContextAware } from './added-to-cart-context-aware';
-import { ClickEvent } from './ui/model';
+import { ClickEvent } from './ui/ui-event.model';
 
 let i = 0;
 
@@ -25,7 +31,6 @@ window['q$'] = new BehaviorSubject(new SpikeEvent(2000));
 
 window['trigger$'] = new Subject();
 
-
 /**
  * This demo component adds a click event to the cx-storefront,
  * as well as subscribing to a couple of events.
@@ -41,7 +46,6 @@ export class EventDemoComponent {
     protected eventService: EventService,
     protected injector: Injector
   ) {
-
     window['eventService'] = eventService;
     this.demo2();
     this.demo1();
@@ -58,37 +62,26 @@ export class EventDemoComponent {
     combined$.subscribe(x => console.warn('Combined', x[0], x[1]));
 
     const combined2$ = combineLatest([combined$, window['trigger$']]);
-    combined2$.subscribe(x => console.error('Combined', x[0][0], x[0][1], x[1]));
+    combined2$.subscribe(x =>
+      console.error('Combined', x[0][0], x[0][1], x[1])
+    );
   }
 
   demo1() {
     // dispatch any of these events using a single API
     const activeCartService = this.injector.get(ActiveCartService);
     const cartEvents$ = activeCartService.getEvent([
-      CartEvents.AddEntrySuccess,
-      CartEvents.CreateSuccess,
-    ]);
-    cartEvents$.subscribe(e => console.log('cart event', e));
-    console.log('subscribed cart events');
-
-    const authService = this.injector.get(AuthService);
-    const authEvents$ = authService.getEvent([
-      AuthEvents.Login,
-      AuthEvents.Logout,
+      CartEvents.AddCartEntry,
+      CartEvents.AddCartEntrySuccess,
       // spike todo test typing: CAUTION!!! SHOULD WARN:
       // CmsEvents.PageLoadSuccess,
       // ClickEvent,
       // RoutingEvents.NavigationSuccess,
       // RoutingEvents.NavigationCancel,
       // RoutingEvents.Navigation,
-      // CartEvents.AddEntry,
-      // CartEvents.AddEntrySuccess,
-      // CartEvents.AddEntryFail,
-      // CartEvents.UpdateEntry,
     ]);
-    authEvents$.subscribe(e => console.log('auth event', e));
-    console.log('subscribed auth events');
-
+    cartEvents$.subscribe(e => console.log('cart event', e));
+    console.log('subscribed cart events');
 
     const spike$ = this.eventService.get([
       CmsEvents.PageLoadSuccess,

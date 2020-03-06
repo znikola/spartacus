@@ -20,7 +20,7 @@ import { UiEventModule } from './ui/index';
 
 export function customEventSourceFactory(eventService: EventService) {
   const addedToCartWithContext$ = eventService
-    .get(CartEvents.AddEntrySuccess)
+    .get(CartEvents.AddCartEntrySuccess)
     .pipe(
       withLatestFrom(
         eventService.get(CmsEvents.PageLoadSuccess),
@@ -29,9 +29,9 @@ export function customEventSourceFactory(eventService: EventService) {
       map(
         ([eAdded, ePage, eNavigated]) =>
           new AddedToCartContextAware({
-            url: eNavigated.state.url,
-            page: ePage.state,
-            added: eAdded.state,
+            url: eNavigated.url,
+            page: ePage.page,
+            added: eAdded,
           })
       )
     );
