@@ -89,9 +89,9 @@ export class EventService {
   get<T1, T2, T3, T4, T5, T6>(
     eventTypes: [Type<T1>, Type<T2>, Type<T3>, Type<T4>, Type<T5>, Type<T6>]
   ): Observable<T1 | T2 | T3 | T4 | T5 | T6>;
-  get<T>(eventTypes: Type<T> | Type<T>[]): Observable<T>;
+  get<T>(eventTypes: Type<T> | Type<any>[]): Observable<T>;
 
-  get<T>(eventTypes: Type<T> | Type<T>[]): Observable<T> {
+  get<T>(eventTypes: Type<T> | Type<any>[]): Observable<T> {
     if (Array.isArray(eventTypes)) {
       return merge(
         ...eventTypes.map(eventType => this.getEventMeta(eventType).output$)

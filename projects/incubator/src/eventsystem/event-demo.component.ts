@@ -83,6 +83,8 @@ export class EventDemoComponent {
       RoutingEvents.NavigationSuccess,
       RoutingEvents.NavigationCancel,
       RoutingEvents.Navigation,
+      CartEvents.AddCartEntry,
+      CartEvents.AddCartEntrySuccess,
     ]);
     spike$.subscribe(console.log);
     console.log('subscribed');
