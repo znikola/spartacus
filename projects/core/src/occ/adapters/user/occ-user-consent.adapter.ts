@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { ConsentTemplate } from '../../../model/consent.model';
 import { CONSENT_TEMPLATE_NORMALIZER } from '../../../user/connectors/consent/converters';
 import { UserConsentAdapter } from '../../../user/connectors/consent/user-consent.adapter';
@@ -19,10 +19,17 @@ export class OccUserConsentAdapter implements UserConsentAdapter {
 
   loadConsents(userId: string): Observable<ConsentTemplate[]> {
     const url = this.occEndpoints.getUrl('consentTemplates', { userId });
-    const headers = new HttpHeaders({ 'Cache-Control': 'no-cache' });
+    const headers = new HttpHeaders({
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, private, max-stale=0, max-age=0, post-check=0, pre-check=0, proxy-revalidate, s-maxage=0 ',
+      Vary: '*',
+      Pragma: 'no-cache',
+      Expires: '0',
+    });
     return this.http
       .get<Occ.ConsentTemplateList>(url, { headers })
       .pipe(
+        tap(x => console.log('in adapter', x)),
         catchError((error: any) => throwError(error)),
         map(consentList => consentList.consentTemplates),
         this.converter.pipeableMany(CONSENT_TEMPLATE_NORMALIZER)
@@ -40,7 +47,11 @@ export class OccUserConsentAdapter implements UserConsentAdapter {
       .set('consentTemplateVersion', consentTemplateVersion.toString());
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Cache-Control': 'no-cache',
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, private, max-stale=0, max-age=0, post-check=0, pre-check=0, proxy-revalidate, s-maxage=0 ',
+      Vary: '*',
+      Pragma: 'no-cache',
+      Expires: '0',
     });
     return this.http
       .post<Occ.ConsentTemplate>(url, httpParams, { headers })
@@ -52,7 +63,11 @@ export class OccUserConsentAdapter implements UserConsentAdapter {
 
   withdrawConsent(userId: string, consentCode: string): Observable<{}> {
     const headers = new HttpHeaders({
-      'Cache-Control': 'no-cache',
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, private, max-stale=0, max-age=0, post-check=0, pre-check=0, proxy-revalidate, s-maxage=0 ',
+      Vary: '*',
+      Pragma: 'no-cache',
+      Expires: '0',
     });
     const url = this.occEndpoints.getUrl('consentDetail', {
       userId,
