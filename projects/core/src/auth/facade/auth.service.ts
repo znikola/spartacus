@@ -3,13 +3,11 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { EventService } from '../../event';
-import { EventFacade, EventGetter } from '../../event/event-facade';
 import {
   OCC_USER_ID_ANONYMOUS,
   OCC_USER_ID_CURRENT,
 } from '../../occ/utils/occ-constants';
 import { LoaderState } from '../../state/utils/loader/loader-state';
-import { AuthEvent, AuthEvents } from '../event/auth-event.model';
 import { ClientToken, UserToken } from '../models/token-types.model';
 import { AuthActions } from '../store/actions/index';
 import { StateWithAuth } from '../store/auth-state';
@@ -18,11 +16,7 @@ import { AuthSelectors } from '../store/selectors/index';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements EventFacade<AuthEvent> {
-  getEvent: EventGetter<AuthEvent> = this.eventService.createGetter(
-    AuthEvents.all
-  );
-
+export class AuthService {
   constructor(
     protected store: Store<StateWithAuth>,
     protected eventService: EventService // spike todo - add deprecation
