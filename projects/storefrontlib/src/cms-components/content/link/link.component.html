@@ -1,6 +1,11 @@
-<cx-generic-link
-  *ngIf="component.data$ | async as data"
-  [url]="data.url"
-  [style]="data.styleAttributes"
-  >{{ data.linkName }}</cx-generic-link
->
+<ng-container *ngIf="component.data$ | async as data">
+  <cx-generic-link [url]="data.url" [style]="data.styleAttributes">{{
+    data.linkName
+  }}</cx-generic-link>
+  <p *ngIf="data.content" [innerHTML]="data.content"></p>
+  <img
+    *ngIf="data.icon"
+    [attr.src]="data.icon.url"
+    [attr.alt]="data.icon.altText"
+  />
+</ng-container>
