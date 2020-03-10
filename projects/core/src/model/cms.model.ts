@@ -73,10 +73,11 @@ export interface CmsBannerComponent extends CmsComponent {
 }
 
 export interface CmsDetailedLinkComponent extends CmsComponent {
-  title?: string;
-  subtitle?: string;
+  linkName?: string;
+  content?: string;
   media?: CmsResponsiveBannerComponentMedia;
-  urlLink?: string;
+  url?: string;
+  styleClasses?: string;
 }
 
 export enum CmsBannerCarouselEffect {
