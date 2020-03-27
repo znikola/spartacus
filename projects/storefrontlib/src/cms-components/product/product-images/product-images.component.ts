@@ -10,6 +10,9 @@ import { CurrentProductService } from '../current-product.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductImagesComponent {
+  name = 'Angular';
+  style: string;
+  img = 'https://picsum.photos/300/200?random=1';
   private mainMediaContainer = new BehaviorSubject(null);
 
   private product$: Observable<

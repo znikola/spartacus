@@ -6,12 +6,20 @@ $zoomOutWhileLoading: false !default;
 
 $productThumbSize: 75px !default;
 
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 400px;
+  height: 500px;
+}
+
 %cx-product-images {
   display: flex;
   flex-direction: column;
 
   height: 100%;
-  > cx-media {
+
+  >cx-media {
     height: 100%;
     width: 100%; // required to support horizontal layouts
     position: relative;
@@ -24,16 +32,17 @@ $productThumbSize: 75px !default;
       min-height: 30vh;
     }
 
-    @if $zoomOutWhileLoading == true {
+    @if $zoomOutWhileLoading==true {
       &.is-initialized.is-loading {
         --cx-zoom: 0.5;
       }
     }
 
-    @if $spinWhileLoading == true OR $spinWhileWaiting == true {
+    @if $spinWhileLoading==true OR $spinWhileWaiting==true {
       &:after {
         @extend %spinner !optional;
       }
+
       &:not(.is-loading):after {
         animation-play-state: paused;
       }
@@ -41,12 +50,13 @@ $productThumbSize: 75px !default;
 
     // the effects run always, but are made visible only when loading or waiting
     // this is done so we can slowly fadein/out the effect
-    @if $spinWhileLoading == true {
+    @if $spinWhileLoading==true {
       &.is-loading:after {
         --cx-opacity: 1;
       }
     }
-    @if $spinWhileWaiting == true {
+
+    @if $spinWhileWaiting==true {
       &.is-waiting:after {
         --cx-opacity: 1;
       }

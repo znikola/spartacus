@@ -9,38 +9,7 @@ import {
 
 @Component({
   selector: 'cx-app-zoom',
-  template: `
-    <div class="img-zoom-container">
-      <img
-        #img
-        [style.width]="yet && imgWidth ? imgWidth + 'px' : null"
-        [style.heigth]="yet && imgHeigth ? imgHeigth + 'px' : null"
-        id="myimage"
-        [src]="image"
-        (load)="onLoad()"
-      />
-      <div
-        #len
-        [style.width]="lenSize + 'px'"
-        [style.height]="lenSize + 'px'"
-        [style.left]="posX + 'px'"
-        [style.top]="posY + 'px'"
-        class="img-zoom-lens"
-      ></div>
-    </div>
-  `,
-  styles: [
-    `
-      .img-zoom-container {
-        position: relative;
-      }
-
-      .img-zoom-lens {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-      }
-    `,
-  ],
+  templateUrl: './zoom.component.html',
 })
 export class ZoomComponent {
   @Input('img') image: string;

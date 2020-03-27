@@ -1,26 +1,23 @@
 <ng-container *ngIf="mainImage$ | async as main">
-  <!-- <cx-media [container]="main" format="zoom"> </cx-media> -->
-  <cx-zoom></cx-zoom>
+
+  <ng-container *ngIf="main.zoom.url">
+
+    <cx-app-zoom [img]="main.zoom.url" [zoom]="2" [lenSize]="20" [imgWidth]="100" [divZoomed]="divZoomed">
+    </cx-app-zoom>
+
+    <div #divZoomed class="img-zoom-result"></div>
+
+
+  </ng-container>
 </ng-container>
 
 <ng-container *ngIf="thumbs$ | async as thumbs">
-  <cx-carousel
-    *ngIf="thumbs.length"
-    class="thumbs"
-    [items]="thumbs"
-    itemWidth="120px"
-    [hideIndicators]="false"
-    [template]="thumb"
-  ></cx-carousel>
+  <cx-carousel *ngIf="thumbs.length" class="thumbs" [items]="thumbs" itemWidth="120px" [hideIndicators]="false"
+    [template]="thumb"></cx-carousel>
 </ng-container>
 
 <ng-template #thumb let-item="item">
-  <cx-media
-    [container]="item.container"
-    tabindex="0"
-    format="thumbnail"
-    (focus)="openImage(item.container)"
-    [class.is-active]="isActive(item.container) | async"
-  >
+  <cx-media [container]="item.container" tabindex="0" format="thumbnail" (focus)="openImage(item.container)"
+    [class.is-active]="isActive(item.container) | async">
   </cx-media>
 </ng-template>
