@@ -32,7 +32,18 @@ export class ZoomComponent {
   @HostListener('mousemove', ['$event'])
   mouseMove(event: any) {
     const result = this.moveLens(event);
+    this.render.setStyle(this.divZoomed, 'visibility', 'visible');
     this.render.setStyle(this.divZoomed, 'background-position', result);
+  }
+
+  @HostListener('mouseenter', ['$event'])
+  mouseenter() {
+    this.render.setStyle(this.divZoomed, 'visibility', 'visible');
+  }
+
+  @HostListener('mouseleave', ['$event'])
+  mouseleave() {
+    this.render.setStyle(this.divZoomed, 'visibility', 'hidden');
   }
 
   constructor(private render: Renderer2) {}

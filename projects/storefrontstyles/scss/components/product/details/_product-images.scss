@@ -6,15 +6,6 @@ $zoomOutWhileLoading: false !default;
 
 $productThumbSize: 75px !default;
 
-.img-zoom-result {
-  border: 1px solid var(--cx-color-light);
-  /*set the size of the result div:*/
-  width: 45vw;
-  height: 50vh;
-  position: absolute;
-  right: 3em;
-}
-
 %cx-product-images {
   display: flex;
   flex-direction: column;
