@@ -38,12 +38,14 @@ export class ZoomComponent {
 
   @HostListener('mouseenter', ['$event'])
   mouseenter() {
+    this.lens.nativeElement.style.visibility = 'visible';
     this.render.setStyle(this.divZoomed, 'visibility', 'visible');
   }
 
   @HostListener('mouseleave', ['$event'])
   mouseleave() {
     this.render.setStyle(this.divZoomed, 'visibility', 'hidden');
+    this.lens.nativeElement.style.visibility = 'hidden';
   }
 
   constructor(private render: Renderer2) {}
