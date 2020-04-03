@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AnonymousConsentDialogComponent } from '../../../shared/components/anonymous-consents/dialog/anonymous-consent-dialog.component';
+import { Component, ViewContainerRef } from '@angular/core';
+import { LaunchDialogService, LAUNCH_CALLER } from '../../../layout/index';
 import { ModalService } from '../../../shared/components/modal/modal.service';
 
 @Component({
@@ -7,12 +7,17 @@ import { ModalService } from '../../../shared/components/modal/modal.service';
   templateUrl: './anonymous-consent-open-dialog.component.html',
 })
 export class AnonymousConsentOpenDialogComponent {
-  constructor(protected modalService: ModalService) {}
+  constructor(
+    protected modalService: ModalService,
+    protected launchDialogService: LaunchDialogService,
+    protected vcr: ViewContainerRef
+  ) {}
 
   openDialog(): void {
-    this.modalService.open(AnonymousConsentDialogComponent, {
-      centered: true,
-      size: 'lg',
-    });
+    // this.modalService.open(AnonymousConsentDialogComponent, {
+    //   centered: true,
+    //   size: 'lg',
+    // });
+    this.launchDialogService.launch(LAUNCH_CALLER.ANONYMOUS_CONSENT, this.vcr);
   }
 }

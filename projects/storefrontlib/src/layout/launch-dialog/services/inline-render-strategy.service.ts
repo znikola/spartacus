@@ -2,6 +2,8 @@ import {
   ComponentFactoryResolver,
   Injectable,
   isDevMode,
+  Renderer2,
+  RendererFactory2,
   ViewContainerRef,
 } from '@angular/core';
 import { LaunchInlineDialog, LAUNCH_CALLER } from '../config';
@@ -9,8 +11,13 @@ import { LaunchRenderStrategy } from './launch-render.strategy';
 
 @Injectable({ providedIn: 'root' })
 export class InlineRenderStrategy extends LaunchRenderStrategy {
-  constructor(protected componentFactoryResolver: ComponentFactoryResolver) {
+  private renderer: Renderer2;
+  constructor(
+    protected componentFactoryResolver: ComponentFactoryResolver,
+    protected rendererFactory: RendererFactory2
+  ) {
     super();
+    this.renderer = rendererFactory.createRenderer(null, null);
   }
 
   /**
@@ -30,7 +37,11 @@ export class InlineRenderStrategy extends LaunchRenderStrategy {
       const template = this.componentFactoryResolver.resolveComponentFactory(
         config.component
       );
-      vcr.createComponent(template);
+      const component = vcr.createComponent(template);
+      const classes = ['d-block', 'fade', 'modal', 'show'];
+      for (const newClass of classes) {
+        this.renderer.addClass(component.location.nativeElement, newClass);
+      }
       this.renderedCallers.push({ caller, element: vcr.element });
     } else if (isDevMode()) {
       if (!vcr) {
