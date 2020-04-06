@@ -42,7 +42,7 @@ export class InlineRenderStrategy extends LaunchRenderStrategy {
       for (const newClass of classes) {
         this.renderer.addClass(component.location.nativeElement, newClass);
       }
-      this.renderedCallers.push({ caller, element: vcr.element });
+      this.renderedCallers.push({ caller, element: vcr.element, component });
     } else if (isDevMode()) {
       if (!vcr) {
         console.warn(`No view container ref provided for ${caller}`);
@@ -52,6 +52,16 @@ export class InlineRenderStrategy extends LaunchRenderStrategy {
         );
       }
     }
+  }
+
+  remove(caller: LAUNCH_CALLER): void {
+    const component = this.renderedCallers.find((el) => el.caller === caller)
+      .component;
+    component.destroy();
+
+    this.renderedCallers = this.renderedCallers.filter(
+      (el) => el.caller === caller
+    );
   }
 
   match(config: LaunchInlineDialog) {

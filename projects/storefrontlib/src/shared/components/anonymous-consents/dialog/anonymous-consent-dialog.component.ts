@@ -9,7 +9,6 @@ import {
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { ICON_TYPE } from '../../../../cms-components/misc/icon/index';
-import { ModalService } from '../../modal/index';
 
 @Component({
   selector: 'cx-anonymous-consent-dialog',
@@ -31,7 +30,6 @@ export class AnonymousConsentDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     private config: AnonymousConsentsConfig,
-    private modalService: ModalService,
     private anonymousConsentsService: AnonymousConsentsService
   ) {
     if (Boolean(this.config.anonymousConsents)) {
@@ -48,8 +46,8 @@ export class AnonymousConsentDialogComponent implements OnInit, OnDestroy {
     this.loading$ = this.anonymousConsentsService.getLoadTemplatesLoading();
   }
 
-  closeModal(reason?: any): void {
-    this.modalService.closeActiveModal(reason);
+  closeModal(_reason?: any): void {
+    // this.modalService.closeActiveModal(reason);
   }
 
   rejectAll(): void {

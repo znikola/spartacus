@@ -1,4 +1,4 @@
-import { ViewContainerRef } from '@angular/core';
+import { ComponentRef, ViewContainerRef } from '@angular/core';
 import { LaunchDialog, LaunchOptions, LAUNCH_CALLER } from '../config';
 
 export abstract class LaunchRenderStrategy {
@@ -6,6 +6,7 @@ export abstract class LaunchRenderStrategy {
   protected renderedCallers: Array<{
     caller: LAUNCH_CALLER;
     element?: any;
+    component?: ComponentRef<any>;
   }> = [];
 
   /**
