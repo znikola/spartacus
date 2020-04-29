@@ -13,6 +13,7 @@ import { ConfigModule, TestConfigModule } from '@spartacus/core';
 import {
   B2cStorefrontModule,
   JsonLdBuilderModule,
+  QualtricsConfig,
   StorefrontComponent,
 } from '@spartacus/storefront';
 import { environment } from '../environments/environment';
@@ -79,7 +80,12 @@ if (!environment.production) {
     TestConfigModule.forRoot({ cookie: 'cxConfigE2E' }), // Injects config dynamically from e2e tests. Should be imported after other config modules.
 
     ...devImports,
-    ConfigModule,
+
+    ConfigModule.withConfig({
+      qualtrics: {
+        scriptSource: 'assets/qualtrics1.js',
+      },
+    } as QualtricsConfig),
   ],
 
   bootstrap: [StorefrontComponent],

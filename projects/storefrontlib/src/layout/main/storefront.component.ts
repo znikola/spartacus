@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { RoutingService } from '@spartacus/core';
 import { Observable, Subscription } from 'rxjs';
+import { QualtricsLoaderService } from '../../cms-components/misc/qualtrics/qualtrics-loader.service';
 import {
   FocusConfig,
   KeyboardFocusService,
@@ -50,7 +51,8 @@ export class StorefrontComponent implements OnInit, OnDestroy {
     private hamburgerMenuService: HamburgerMenuService,
     private routingService: RoutingService,
     protected elementRef: ElementRef<HTMLElement>,
-    protected keyboardFocusService: KeyboardFocusService
+    protected keyboardFocusService: KeyboardFocusService,
+    protected qualtricsLoaderService: QualtricsLoaderService
   ) {}
 
   ngOnInit(): void {
@@ -76,5 +78,9 @@ export class StorefrontComponent implements OnInit, OnDestroy {
     if (this.navigateSubscription) {
       this.navigateSubscription.unsubscribe();
     }
+  }
+
+  loadQualtrics() {
+    this.qualtricsLoaderService.addScript('assets/qualtrics2.js');
   }
 }
