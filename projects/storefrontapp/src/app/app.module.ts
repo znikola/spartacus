@@ -36,7 +36,7 @@ if (!environment.production) {
       backend: {
         occ: {
           baseUrl: environment.occBaseUrl,
-          prefix: '/occ/v2/',
+          prefix: '/rest/v2/',
         },
       },
       context: {
