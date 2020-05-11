@@ -1,9 +1,14 @@
 @import '../../theme';
 
 %cx-close-account-modal {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  // display: flex;
+  // flex-direction: column;
+  // height: 100%;
+
+  .cx-account-modal {
+    @extend .modal-dialog;
+    @extend .modal-dialog-centered;
+  }
 
   .cx-dialog-header {
     padding: 2rem 1.75rem 0.85rem;

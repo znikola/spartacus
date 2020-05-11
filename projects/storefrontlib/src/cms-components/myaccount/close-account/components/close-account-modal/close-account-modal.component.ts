@@ -13,9 +13,11 @@ import {
   UserService,
   UserToken,
 } from '@spartacus/core';
+import { FocusConfig } from 'projects/storefrontlib/src/layout';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ICON_TYPE } from '../../../../../cms-components/misc/icon/icon.model';
+import { LaunchDialogService } from '../../../../../layout/launch-dialog/index';
 import { ModalService } from '../../../../../shared/components/modal/modal.service';
 
 @Component({
@@ -30,13 +32,21 @@ export class CloseAccountModalComponent implements OnInit, OnDestroy {
   userToken$: Observable<UserToken>;
   isLoading$: Observable<boolean>;
 
+  focusConfig: FocusConfig = {
+    trap: true,
+    block: true,
+    autofocus: 'button.btn-primary',
+    focusOnEscape: true,
+  };
+
   constructor(
     protected modalService: ModalService,
     private userService: UserService,
     private authService: AuthService,
     private globalMessageService: GlobalMessageService,
     private routingService: RoutingService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private launchDialogService: LaunchDialogService
   ) {}
 
   ngOnInit() {
@@ -85,6 +95,7 @@ export class CloseAccountModalComponent implements OnInit, OnDestroy {
   }
 
   dismissModal(reason?: any): void {
+    this.launchDialogService.closeDialog(reason);
     this.modalService.dismissActiveModal(reason);
   }
 

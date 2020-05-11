@@ -3,15 +3,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   AuthGuard,
-  CmsConfig,
   I18nModule,
   provideDefaultConfig,
   UrlModule,
 } from '@spartacus/core';
+import { IconModule } from '../../../cms-components/misc/icon/index';
+import { KeyboardFocusModule } from '../../../layout/a11y/keyboard-focus/keyboard-focus.module';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { CloseAccountModalComponent } from './components/close-account-modal/close-account-modal.component';
-import { IconModule } from '../../../cms-components/misc/icon/index';
 import { CloseAccountComponent } from './components/close-account/close-account.component';
+import { defaultCloseAccountLayoutConfig } from './default-close-account-layout.config';
 
 @NgModule({
   imports: [
@@ -21,15 +22,17 @@ import { CloseAccountComponent } from './components/close-account/close-account.
     I18nModule,
     IconModule,
     SpinnerModule,
+    KeyboardFocusModule,
   ],
   providers: [
-    provideDefaultConfig(<CmsConfig>{
+    provideDefaultConfig({
       cmsComponents: {
         CloseAccountComponent: {
           component: CloseAccountComponent,
           guards: [AuthGuard],
         },
       },
+      ...defaultCloseAccountLayoutConfig,
     }),
   ],
   declarations: [CloseAccountComponent, CloseAccountModalComponent],

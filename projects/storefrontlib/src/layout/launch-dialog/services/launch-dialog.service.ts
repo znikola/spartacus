@@ -66,7 +66,7 @@ export class LaunchDialogService {
     return this._dialogClose.asObservable();
   }
 
-  closeDialog(reason: string) {
+  closeDialog(reason = '') {
     this._dialogClose.next(reason);
   }
 

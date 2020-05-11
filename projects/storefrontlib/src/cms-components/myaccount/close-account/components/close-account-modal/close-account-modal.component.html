@@ -1,4 +1,9 @@
-<ng-container *ngIf="userToken$ | async as userToken">
+<div
+  class="cx-account-modal"
+  *ngIf="userToken$ | async as userToken"
+  [cxFocus]="focusConfig"
+  (esc)="dismissModal('Escape clicked')"
+>
   <div class="modal-header cx-dialog-header">
     <h3 class="modal-title">
       {{ 'closeAccount.confirmAccountClosure' | cxTranslate }}
@@ -40,4 +45,4 @@
       </div>
     </div>
   </ng-template>
-</ng-container>
+</div>
