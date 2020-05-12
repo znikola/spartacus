@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { merge, Observable } from 'rxjs';
 import { filter, mapTo, switchMap, tap } from 'rxjs/operators';
-import { CdsBackendConnector } from '../connectors/cds-backend-connector';
 import {
   CartChangedPushEvent,
   ConsentChangedPushEvent,
@@ -18,14 +17,12 @@ export class ProfileTagInjectorService {
   private injectionsEvents$: Observable<boolean> = merge(
     this.notifyProfileTagOfConsentGranted(),
     this.notifyProfileTagOfCartChange(),
-    this.notifyProfileTagOfPageLoaded(),
-    this.notifyEcOfLoginSuccessful()
+    this.notifyProfileTagOfPageLoaded()
   );
 
   constructor(
     private profileTagEventTracker: ProfileTagEventService,
-    private spartacusEventTracker: SpartacusEventService,
-    private cdsBackendConnector: CdsBackendConnector
+    private spartacusEventTracker: SpartacusEventService
   ) {}
 
   track(): Observable<boolean> {
@@ -63,16 +60,6 @@ export class ProfileTagInjectorService {
         this.profileTagEventTracker.notifyProfileTagOfEventOccurence(
           new NavigatedPushEvent()
         );
-      })
-    );
-  }
-
-  private notifyEcOfLoginSuccessful(): Observable<boolean> {
-    return this.spartacusEventTracker.loginSuccessful().pipe(
-      switchMap((_) => {
-        return this.cdsBackendConnector
-          .notifySuccessfulLogin()
-          .pipe(mapTo(true));
       })
     );
   }

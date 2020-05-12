@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { ActionsSubject } from '@ngrx/store';
-import {
-  ActiveCartService,
-  AuthActions,
-  Cart,
-  ConsentService,
-} from '@spartacus/core';
+import { ActiveCartService, Cart, ConsentService } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { filter, map, mapTo, skipWhile, take } from 'rxjs/operators';
 import { CdsConfig } from '../../config/cds-config';
@@ -19,8 +13,7 @@ export class SpartacusEventService {
     protected consentService: ConsentService,
     protected router: Router,
     protected config: CdsConfig,
-    protected activeCartService: ActiveCartService,
-    private actionsSubject: ActionsSubject
+    protected activeCartService: ActiveCartService
   ) {}
 
   navigated(): Observable<boolean> {
@@ -55,13 +48,6 @@ export class SpartacusEventService {
       map((cart) => ({
         cart,
       }))
-    );
-  }
-
-  loginSuccessful(): Observable<boolean> {
-    return this.actionsSubject.pipe(
-      filter((action) => action.type === AuthActions.LOGIN),
-      mapTo(true)
     );
   }
 }
