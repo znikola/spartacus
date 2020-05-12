@@ -1,22 +1,26 @@
 @import '../../theme';
 
 %cx-close-account-modal {
-  // display: flex;
-  // flex-direction: column;
-  // height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 
   .cx-account-modal {
     @extend .modal-dialog;
     @extend .modal-dialog-centered;
+
+    .cx-dialog-content {
+      @extend .modal-content;
+      background-color: var(--cx-color-inverse);
+    }
   }
 
   .cx-dialog-header {
+    @extend .modal-header;
     padding: 2rem 1.75rem 0.85rem;
     border-width: 0;
-  }
 
-  h3 {
-    font-weight: var(--cx-font-weight-semi);
+    h3 {
+      font-weight: var(--cx-font-weight-semi);
+    }
   }
 
   .cx-row {
@@ -36,7 +40,8 @@
     }
   }
 
-  .modal-body {
+  .cx-dialog-body {
+    @extend .modal-body;
     @include media-breakpoint-down(sm) {
       top: -85px;
       flex: none;

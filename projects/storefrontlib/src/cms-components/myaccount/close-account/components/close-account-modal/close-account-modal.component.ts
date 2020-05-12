@@ -35,7 +35,7 @@ export class CloseAccountModalComponent implements OnInit, OnDestroy {
   focusConfig: FocusConfig = {
     trap: true,
     block: true,
-    autofocus: 'button.btn-primary',
+    autofocus: 'button.close',
     focusOnEscape: true,
   };
 
