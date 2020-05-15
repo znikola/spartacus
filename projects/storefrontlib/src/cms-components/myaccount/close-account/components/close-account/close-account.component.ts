@@ -13,8 +13,6 @@ import {
   LaunchDialogService,
   LAUNCH_CALLER,
 } from '../../../../../layout/launch-dialog/index';
-// import { ModalService } from '../../../../../shared/components/modal/index';
-// import { CloseAccountModalComponent } from '../close-account-modal/close-account-modal.component';
 
 @Component({
   selector: 'cx-close-account',
@@ -28,15 +26,11 @@ export class CloseAccountComponent implements OnDestroy {
   modal: any;
 
   constructor(
-    // private modalService: ModalService,
     protected launchDialogService: LaunchDialogService,
     protected vcr: ViewContainerRef
   ) {}
 
   openModal(): void {
-    // this.modal = this.modalService.open(CloseAccountModalComponent, {
-    //   centered: true,
-    // }).componentInstance;
     const component = this.launchDialogService.launch(
       LAUNCH_CALLER.CLOSE_ACCOUNT,
       this.vcr
