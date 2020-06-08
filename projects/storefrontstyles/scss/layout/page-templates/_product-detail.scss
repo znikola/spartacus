@@ -1,6 +1,26 @@
 %ProductDetailsPageTemplate {
   padding: var(--cx-padding, 2.5rem 0 0);
 
+  .img-zoom-result {
+    border: 1px solid var(--cx-color-light);
+    /*set the size of the result div:*/
+    width: 45vw;
+    height: 60vh;
+    position: absolute;
+    right: 3em;
+    visibility: hidden;
+  }
+
+  .img-zoom-container {
+    position: relative;
+  }
+
+  .img-zoom-lens {
+    position: absolute;
+    border: 1px solid var(--cx-color-light);
+    visibility: hidden;
+  }
+
   cx-page-slot {
     &.Summary {
       @extend .container !optional;

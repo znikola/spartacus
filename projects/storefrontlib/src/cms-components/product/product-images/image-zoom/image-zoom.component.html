@@ -1,0 +1,19 @@
+<div class="img-zoom-container">
+  <img
+    class="check"
+    #image
+    [style.width]="yet && imgWidth ? imgWidth + 'px' : null"
+    [style.height]="yet && imgHeight ? imgHeight + 'px' : null"
+    [src]="imageUrl"
+    (load)="onLoad()"
+  />
+
+  <div
+    #lensElement
+    [style.width]="lensSize + 'px'"
+    [style.height]="lensSize + 'px'"
+    [style.left]="lensPositionX + 'px'"
+    [style.top]="lensPositionY + 'px'"
+    class="img-zoom-lens"
+  ></div>
+</div>

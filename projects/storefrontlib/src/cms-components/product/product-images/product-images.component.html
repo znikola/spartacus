@@ -1,5 +1,16 @@
 <ng-container *ngIf="mainImage$ | async as main">
-  <cx-media [container]="main"> </cx-media>
+  <!-- <cx-media [container]="main"> </cx-media> -->
+  <ng-container>
+    <cx-image-zoom
+      [imageUrl]="main.zoom.url"
+      [zoom]="2"
+      [lensSize]="80"
+      [divZoomed]="divZoomed"
+    >
+    </cx-image-zoom>
+
+    <div #divZoomed class="img-zoom-result"></div>
+  </ng-container>
 </ng-container>
 
 <ng-container *ngIf="thumbs$ | async as thumbs">
