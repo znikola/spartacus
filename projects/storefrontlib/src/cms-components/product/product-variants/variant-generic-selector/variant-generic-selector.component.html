@@ -1,0 +1,17 @@
+<ng-container>
+  <div class="variant-selector">
+    <ng-container *ngFor="let v of product.categories; let i = index">
+      <div class="variant-name">{{ 'variantMatrix[i].elements[0].parentVariantCategory.name' }}:</div>
+      <select
+        class="form-control variant-select"
+      >
+        <option
+          *ngFor="let v of product.variantMatrix[0].elements"
+          value="{{ v.variantOption.code }}"
+          [selected]="v.variantOption.code === product?.code"
+          >{{ v.variantValueCategory.name }}</option
+        >
+      </select>
+    </ng-container>
+  </div>
+</ng-container>

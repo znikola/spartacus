@@ -3,5 +3,4 @@ export interface Environment {
   occBaseUrl: string;
   occApiPrefix: string;
   b2b: boolean;
-  cds: boolean;
 }

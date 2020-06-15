@@ -17,16 +17,6 @@ export class ProductVariantsComponent implements OnInit {
   product$: Observable<Product>;
 
   ngOnInit(): void {
-    this.product$ = this.currentProductService.getProduct().pipe(
-      filter((product) => !!(product && product.baseOptions)),
-      distinctUntilChanged(),
-      tap((product) => {
-        product.baseOptions.forEach((option) => {
-          if (option && option.variantType) {
-            this.variants[option.variantType] = option;
-          }
-        });
-      })
-    );
+    this.product$ = this.currentProductService.getProduct()
   }
 }

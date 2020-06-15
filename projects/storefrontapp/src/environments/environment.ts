@@ -7,8 +7,7 @@ import { Environment } from './models/environment.model';
 
 export const environment: Environment = {
   production: false,
-  occBaseUrl: build.process.env.SPARTACUS_BASE_URL,
+  occBaseUrl: 'https://dev-com-7.accdemo.b2c.ydev.hybris.com:9002',
   occApiPrefix: '/occ/v2/',
-  b2b: build.process.env.SPARTACUS_B2B,
-  cds: false,
+  b2b: true,
 };

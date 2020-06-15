@@ -1,5 +1,5 @@
 <ng-container *ngIf="product$ | async as product">
-  <div class="variant-section" *ngIf="product.baseOptions?.length">
+  <div class="variant-section">
     <cx-variant-style-selector
       *ngIf="variants[variantType.STYLE]"
       [variants]="variants[variantType.STYLE]"
@@ -14,5 +14,10 @@
       [product]="product"
       [variants]="variants[variantType.COLOR]"
     ></cx-variant-color-selector>
+    <cx-variant-generic-selector
+      *ngIf="product.multidimensional && product.variantMatrix"
+      [product]="product"
+    >
+    </cx-variant-generic-selector>
   </div>
 </ng-container>

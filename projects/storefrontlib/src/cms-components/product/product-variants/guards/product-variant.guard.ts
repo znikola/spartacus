@@ -3,7 +3,6 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap, filter, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
-  VariantOption,
   ProductService,
   Product,
   RoutingService,
@@ -20,6 +19,7 @@ export class ProductVariantGuard implements CanActivate {
   ) {}
 
   canActivate(): Observable<boolean | UrlTree> {
+          // return of(true);
     return this.routingService.getRouterState().pipe(
       map((state) => state.nextState.params.productCode),
       switchMap((productCode: string) => {
@@ -31,20 +31,20 @@ export class ProductVariantGuard implements CanActivate {
         return this.productService.get(productCode, ProductScope.VARIANTS).pipe(
           filter(Boolean),
           map((product: Product) => {
-            if (!product.purchasable) {
-              const variant = this.findVariant(product.variantOptions);
+            if (product.multidimensional && product.variantMatrix) {
+              // const variant = this.findVariant(product.variantOptions);
               // below call might looks redundant but in fact this data is going to be loaded anyways
               // we're just calling it earlier and storing
-              this.productService
-                .get(variant.code, ProductScope.LIST)
-                .pipe(filter(Boolean), take(1))
-                .subscribe((_product: Product) => {
-                  this.routingService.go({
-                    cxRoute: 'product',
-                    params: _product,
-                  });
-                });
-              return false;
+              // this.productService
+              //   .get(product.code, ProductScope.LIST)
+              //   .pipe(filter(Boolean), take(1))
+              //   .subscribe((_product: Product) => {
+              //     this.routingService.go({
+              //       cxRoute: 'product',
+              //       params: _product,
+              //     });
+              //   });
+              return true;
             } else {
               return true;
             }
@@ -54,10 +54,10 @@ export class ProductVariantGuard implements CanActivate {
     );
   }
 
-  findVariant(variants: VariantOption[]): VariantOption {
-    const results: VariantOption[] = variants.filter((variant) => {
-      return variant.stock && variant.stock.stockLevel ? variant : false;
-    });
-    return !results.length && variants.length ? variants[0] : results[0];
-  }
+  // protected findVariant(variants: VariantOption[]): VariantOption {
+  //   const results: VariantOption[] = variants.filter((variant) => {
+  //     return variant.stock && variant.stock.stockLevel ? variant : false;
+  //   });
+  //   return !results.length && variants.length ? variants[0] : results[0];
+  // }
 }
