@@ -1,0 +1,32 @@
+<cx-interactive-table
+  [data$]="data$"
+  [header]="'orderApprovalsList.header' | cxTranslate"
+  [sortLabels]="{
+    byOrderNumber: 'orderApprovalsList.sorting.byOrderNumber' | cxTranslate,
+    byDate: 'orderApprovalsList.sorting.byDate' | cxTranslate
+  }"
+  [columns]="[
+    {
+      key: 'code',
+      value: 'orderApprovalsList.code' | cxTranslate,
+      cxRoute: 'orderApprovalsDetails'
+    },
+    { key: 'POCode', value: 'orderApprovalsList.POCode' | cxTranslate },
+    { key: 'placedBy', value: 'orderApprovalsList.placedBy' | cxTranslate },
+    {
+      key: 'date',
+      value: 'orderApprovalsList.date' | cxTranslate
+    },
+    {
+      key: 'status',
+      value: 'orderApprovalsList.status' | cxTranslate
+    },
+    {
+      key: 'total',
+      value: 'orderApprovalsList.total' | cxTranslate
+    }
+  ]"
+  (pageChange)="pageChange($event)"
+  (changeSortCode)="changeSortCode($event)"
+>
+</cx-interactive-table>
