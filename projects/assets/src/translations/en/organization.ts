@@ -197,6 +197,22 @@ export const organization = {
     },
     currency: 'Currency',
   },
+  orderApprovalsList: {
+    header: 'Order Approval Dashboard',
+    orderCode: 'Order #',
+    POCode: 'PO #',
+    placedBy: 'Placed by',
+    date: 'Date',
+    status: 'Status',
+    total: 'Total',
+    sorting: {
+      byDate: 'Date',
+      byOrderCode: 'Order #',
+      byPlacedBy: 'Placed By',
+      byPOCode: 'PO #',
+      byValue: 'Value',
+    },
+  },
   orgUnitsList: {
     orgUnitManagement: 'Units',
     create: 'Create new Unit',

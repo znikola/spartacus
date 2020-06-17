@@ -158,6 +158,17 @@
           "configurations": {
             "production": {}
           }
+        },
+        "prerender-cds": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "storefrontapp:build:cds.ci.1905",
+            "serverTarget": "storefrontapp:server-cds:production",
+            "routes": ["/"]
+          },
+          "configurations": {
+            "production": {}
+          }
         }
       }
     },
@@ -470,5 +481,8 @@
       }
     }
   },
-  "defaultProject": "storefrontapp"
+  "defaultProject": "storefrontapp",
+  "cli": {
+    "analytics": false
+  }
 }
