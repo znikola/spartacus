@@ -92,6 +92,9 @@ export const defaultStorefrontRoutesConfig: RoutesConfig = {
   orderApprovals: {
     paths: ['my-account/approval-dashboard'],
   },
+  orderApprovalsDetails: {
+    paths: ['organization/order-approvals/:code'],
+  },
   orgUnits: {
     paths: ['organization/units'],
   },
