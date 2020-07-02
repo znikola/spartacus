@@ -25,10 +25,10 @@ export class CostCenterBudgetListService extends BaseOrganizationListService<
   }
 
   protected load(config: B2BSearchConfig, code: string): void {
-    const value =
-      config.infiniteScroll && config.currentPage > 0
-        ? this.dataset$.value
-        : [];
+    // const value =
+    //   config.infiniteScroll && config.currentPage > 0
+    //     ? this.dataset$.value
+    //     : [];
 
     this.costCenterService
       .getBudgets(code, config)
@@ -38,7 +38,13 @@ export class CostCenterBudgetListService extends BaseOrganizationListService<
         map((budgets: Budget[]) => budgets.filter((budget) => budget.selected))
       )
       .subscribe((budgets) => {
-        this.dataset$.next([...value, ...budgets]);
+        const value = this.datasetSrc$.value;
+        value[config.currentPage ?? 0] = budgets;
+
+        this.datasetSrc$.next(
+          value
+        );
+
       });
   }
 }

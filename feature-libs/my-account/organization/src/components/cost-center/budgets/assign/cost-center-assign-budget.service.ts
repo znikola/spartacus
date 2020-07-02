@@ -21,16 +21,20 @@ export class CostCenterAssignBudgetListService extends BaseOrganizationListServi
   }
 
   protected load(config: B2BSearchConfig, code: string): void {
-    const value =
-      config.infiniteScroll && config.currentPage > 0
-        ? this.dataset$.value
-        : [];
+    // const value =
+    //   config.infiniteScroll && config.currentPage > 0
+    //     ? this.dataset$.value
+    //     : [];
 
     this.costCenterService
       .getBudgets(code, config)
       .pipe(first((d) => Boolean(d)))
       .subscribe((dataset) => {
-        this.dataset$.next([...value, ...dataset.values]);
+        const value = this.datasetSrc$.value;
+        value[config.currentPage ?? 0] = dataset.values;
+        this.datasetSrc$.next(
+          value
+        );
       });
   }
 
