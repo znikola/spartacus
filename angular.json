@@ -481,8 +481,5 @@
       }
     }
   },
-  "defaultProject": "storefrontapp",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "storefrontapp"
 }
