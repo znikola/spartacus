@@ -1,17 +1,36 @@
 <ng-container>
   <div class="variant-selector">
-    <ng-container *ngFor="let v of product.categories; let i = index">
-      <div class="variant-name">{{ 'variantMatrix[i].elements[0].parentVariantCategory.name' }}:</div>
-      <select
-        class="form-control variant-select"
-      >
-        <option
-          *ngFor="let v of product.variantMatrix[0].elements"
-          value="{{ v.variantOption.code }}"
-          [selected]="v.variantOption.code === product?.code"
-          >{{ v.variantValueCategory.name }}</option
+    <ng-container *ngFor="let pc of product.categories; let i = index">
+      <div style="border: 1px solid yellow;">
+      <ng-container *ngIf="getVariantMatrix(i)[0].parentVariantCategory.hasImage">
+        <ul>
+          <ng-container *ngFor="let vm of getVariantMatrix(i)">
+            <li [ngClass]="{'selected': isSelected(vm, i)}">{{ vm.variantValueCategory.name }}
+            </li>
+          </ng-container>
+        </ul>
+      </ng-container>
+      <ng-container *ngIf="!getVariantMatrix(i)[0].parentVariantCategory.hasImage">
+        <select
+          class="form-control variant-select"
         >
-      </select>
+          <option
+            *ngFor="let vm of getVariantMatrix(i)"
+            value="{{ vm.variantOption.code }}"
+            [selected]="isSelected(vm, i)"
+            >{{ vm.variantValueCategory.name }}</option
+          >
+        </select>
+      </ng-container>
+      </div>
     </ng-container>
   </div>
 </ng-container>
+
+<!-- ideally prepare the date in component as follows for the templae:
+
+product.categories:
+  - [origin category fields]
+  - getVariantMatrix (productMatrix)
+    - [origin variantMatrix fields]
+    - isSelected -->

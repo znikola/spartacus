@@ -1,6 +1,6 @@
 import { CanActivate, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, filter, take } from 'rxjs/operators';
+import { map, switchMap, filter, } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   ProductService,
