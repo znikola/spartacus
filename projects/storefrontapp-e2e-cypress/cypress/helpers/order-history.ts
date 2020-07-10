@@ -27,7 +27,7 @@ export function doPlaceOrder() {
 export const orderHistoryTest = {
   // no orders flow
   checkRedirectNotLoggedInUser() {
-    it('should redirect to login page if user is not logged in', () => {
+    it.only('should redirect to login page if user is not logged in', () => {
       cy.visit(orderHistoryLink);
       cy.url().should('contain', '/login');
       cy.get('cx-login').should('contain', 'Sign In / Register');
@@ -52,23 +52,36 @@ export const orderHistoryTest = {
   // orders flow
   checkIfOrderIsDisplayed() {
     it('should display placed order in Order History', () => {
-      doPlaceOrder().then(() => {
+      doPlaceOrder().then((firstOrderData: any) => {
+        cy.log(`Placed first order with code ${firstOrderData.body.code}`);
         doPlaceOrder().then((orderData: any) => {
+          cy.log(`Placed second order with code ${orderData.body.code}`);
           cy.waitForOrderToBePlacedRequest(
             undefined,
             undefined,
             orderData.body.code
           );
+
+          const baseUrl = `${Cypress.env('API_URL')}/${Cypress.env(
+            'OCC_PREFIX'
+          )}/${Cypress.env('BASE_SITE')}`;
+          cy.route('GET', `${baseUrl}/users/current/orders*`).as(
+            'orders_request'
+          );
+
           cy.visit('/my-account/orders');
-          cy.get('cx-order-history h3').should('contain', 'Order history');
-          cy.get('.cx-order-history-code > .cx-order-history-value').should(
-            'contain',
-            orderData.body.code
-          );
-          cy.get('.cx-order-history-total > .cx-order-history-value').should(
-            'contain',
-            orderData.body.totalPrice.formattedValue
-          );
+
+          cy.wait(`@orders_request`).then(() => {
+            cy.get('cx-order-history h3').should('contain', 'Order history');
+            cy.get('.cx-order-history-code > .cx-order-history-value').should(
+              'contain',
+              orderData.body.code
+            );
+            cy.get('.cx-order-history-total > .cx-order-history-value').should(
+              'contain',
+              orderData.body.totalPrice.formattedValue
+            );
+          });
         });
       });
     });

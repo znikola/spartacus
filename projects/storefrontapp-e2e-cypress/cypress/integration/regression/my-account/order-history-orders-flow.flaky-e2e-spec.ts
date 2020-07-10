@@ -27,13 +27,25 @@ describe('Order details page', () => {
   });
   it('should display order details page with unconsigned entries', () => {
     doPlaceOrder().then((orderData: any) => {
-      cy.visit(`/my-account/order/${orderData.body.code}`);
-      cy.get('.cx-item-list-row .cx-link').should('contain', product.name);
-      cy.get('.cx-item-list-row .cx-code').should('contain', product.code);
-      cy.get('.cx-summary-total > .cx-summary-amount').should(
-        'contain',
-        orderData.body.totalPrice.formattedValue
+      const orderCode = orderData.body.code;
+      cy.log(`Order ${orderCode} placed asynchronously`);
+      cy.visit(`/my-account/order/${orderCode}`);
+
+      const baseUrl = `${Cypress.env('API_URL')}/${Cypress.env(
+        'OCC_PREFIX'
+      )}/${Cypress.env('BASE_SITE')}`;
+      cy.route('GET', `${baseUrl}/users/current/orders/${orderCode}*`).as(
+        'order_request'
       );
+
+      cy.wait('@order_request').then(() => {
+        cy.get('.cx-item-list-row .cx-link').should('contain', product.name);
+        cy.get('.cx-item-list-row .cx-code').should('contain', product.code);
+        cy.get('.cx-summary-total > .cx-summary-amount').should(
+          'contain',
+          orderData.body.totalPrice.formattedValue
+        );
+      });
     });
   });
 
@@ -45,20 +57,26 @@ describe('Order details page', () => {
         orderData.body.code
       );
       cy.visit('/my-account/orders');
-      cy.get('.cx-order-history-code > .cx-order-history-value')
-        .then((el) => {
-          const orderNumber = el.text().match(/\d+/)[0];
-          waitForOrderWithConsignmentToBePlacedRequest(orderNumber);
-          return cy.wrap(el);
-        })
-        .first()
-        .click();
-      cy.get('.cx-item-list-row .cx-link').should('contain', product.name);
-      cy.get('.cx-item-list-row .cx-code').should('contain', product.code);
-      cy.get('.cx-summary-total > .cx-summary-amount').should(
-        'contain',
-        orderData.body.totalPrice.formattedValue
-      );
+      const baseUrl = `${Cypress.env('API_URL')}/${Cypress.env(
+        'OCC_PREFIX'
+      )}/${Cypress.env('BASE_SITE')}`;
+      cy.route('GET', `${baseUrl}/users/current/orders*`).as('orders_request');
+      cy.wait(`@orders_request`).then(() => {
+        cy.get('.cx-order-history-code > .cx-order-history-value')
+          .then((el) => {
+            const orderNumber = el.text().match(/\d+/)[0];
+            waitForOrderWithConsignmentToBePlacedRequest(orderNumber);
+            return cy.wrap(el);
+          })
+          .first()
+          .click();
+        cy.get('.cx-item-list-row .cx-link').should('contain', product.name);
+        cy.get('.cx-item-list-row .cx-code').should('contain', product.code);
+        cy.get('.cx-summary-total > .cx-summary-amount').should(
+          'contain',
+          orderData.body.totalPrice.formattedValue
+        );
+      });
     });
   });
 });
