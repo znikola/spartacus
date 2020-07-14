@@ -1,6 +1,5 @@
 export * from './abstract-component/index';
 export * from './budgets/index';
-export * from './cost-centers/index';
 export * from './fake-tabs/index';
 export * from './order-approval/index';
 export * from './permissions/index';
