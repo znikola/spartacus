@@ -22,7 +22,7 @@ import { OrderApprovalListComponent } from './order-approval-list.component';
         path: null,
         canActivate: [CmsPageGuard],
         component: PageLayoutComponent,
-        data: { cxRoute: 'orderApprovals' },
+        data: { cxRoute: 'orderApprovalList' },
       },
     ]),
     ConfigModule.withConfig(<CmsConfig>{

@@ -20,8 +20,6 @@ import {
 })
 export class OrderApprovalListComponent extends AbstractListingComponent
   implements OnInit {
-  cxRoute = 'orderApprovals';
-
   constructor(
     protected routingService: RoutingService,
     protected orderApprovalService: OrderApprovalService,
