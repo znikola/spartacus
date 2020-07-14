@@ -45,7 +45,7 @@ export class OrderApprovalListComponent extends AbstractListingComponent
               values: orderApprovalList.values.map(
                 (orderApproval: OrderApproval) => ({
                   code: orderApproval.order.code,
-                  POCode: orderApproval.order.purchaseOrderNumber || 'None',
+                  POCode: orderApproval.order.purchaseOrderNumber,
                   placedBy: `${orderApproval.order.orgCustomer.name} ${orderApproval.order.orgCustomer.orgUnit.name}`,
                   date: this.cxDate.transform(orderApproval.order.created),
                   status: `${orderApproval.order.statusDisplay}`,
