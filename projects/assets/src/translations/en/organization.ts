@@ -197,19 +197,6 @@ export const organization = {
     },
     currency: 'Currency',
   },
-  orderApprovalsList: {
-    header: 'Order Approval Dashboard',
-    code: 'Order #',
-    POCode: 'PO #',
-    placedBy: 'Placed by',
-    date: 'Date',
-    status: 'Status',
-    total: 'Total',
-    sorting: {
-      byDate: 'Date',
-      byOrderNumber: 'Order #',
-    },
-  },
   orgUnitsList: {
     orgUnitManagement: 'Units',
     create: 'Create new Unit',
@@ -569,6 +556,19 @@ export const organization = {
         label: 'Comment (maximum 255 characters)',
         placeholder: '',
       },
+    },
+  },
+  orderApprovalList: {
+    header: 'Order Approval Dashboard',
+    code: 'Order #',
+    POCode: 'PO #',
+    placedBy: 'Placed by',
+    date: 'Date',
+    status: 'Status',
+    total: 'Total',
+    sorting: {
+      byDate: 'Date',
+      byOrderNumber: 'Order #',
     },
   },
 };

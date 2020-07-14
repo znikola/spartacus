@@ -87,7 +87,6 @@ export const translationChunksConfig: TranslationChunksConfig = {
     'permissionsList',
     'permissionForm',
     'permission',
-    'orderApprovalsList',
     'orgUnitsList',
     'orgUnitTree',
     'orgUnit',
@@ -120,5 +119,6 @@ export const translationChunksConfig: TranslationChunksConfig = {
     'userApprovers',
     'userAssignApprovers',
     'orderApproval',
+    'orderApprovalList',
   ],
 };
