@@ -33,28 +33,27 @@ export class OrderApprovalListComponent extends AbstractListingComponent
       tap((queryParams: B2BSearchConfig): void =>
         this.orderApprovalService.loadOrderApprovals(queryParams)
       ),
-      switchMap(
-        (
-          queryParams: B2BSearchConfig
-        ): Observable<EntitiesModel<OrderApproval>> =>
-          this.orderApprovalService.getList(queryParams).pipe(
-            filter(Boolean),
-            map((orderApprovalList: EntitiesModel<OrderApproval>) => ({
-              sorts: orderApprovalList.sorts,
-              pagination: orderApprovalList.pagination,
-              values: orderApprovalList.values.map(
-                (orderApproval: OrderApproval) => ({
-                  code: orderApproval.order.code,
-                  POCode: orderApproval.order.purchaseOrderNumber,
-                  placedBy: `${orderApproval.order.orgCustomer.name} ${orderApproval.order.orgCustomer.orgUnit.name}`,
-                  date: this.cxDate.transform(orderApproval.order.created),
-                  status: `${orderApproval.order.statusDisplay}`,
-                  total: orderApproval.order.totalPrice.formattedValue,
-                })
-              ),
-            }))
-          )
+      switchMap((queryParams: B2BSearchConfig) =>
+        this.orderApprovalService.getList(queryParams).pipe(
+          filter(Boolean),
+          map((orderApprovalList: EntitiesModel<OrderApproval>) => ({
+            sorts: orderApprovalList.sorts,
+            pagination: orderApprovalList.pagination,
+            values: orderApprovalList.values.map(
+              (orderApproval: OrderApproval) => ({
+                approvalCode: orderApproval.code,
+                POCode: orderApproval.order.purchaseOrderNumber,
+                placedBy: `${orderApproval.order.orgCustomer.name} ${orderApproval.order.orgCustomer.orgUnit.name}`,
+                date: this.cxDate.transform(orderApproval.order.created),
+                status: `${orderApproval.order.statusDisplay}`,
+                total: orderApproval.order.totalPriceWithTax,
+              })
+            ),
+          }))
+        )
       )
     );
+
+    this.data$.subscribe(console.log);
   }
 }
