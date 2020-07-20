@@ -51,7 +51,7 @@ export class OrderApprovalListComponent extends AbstractListingComponent
                     });
 
                   return {
-                    approvalCode: orderApproval.code,
+                    approvalCode: orderApproval.order.code,
                     POCode: orderApproval.order.purchaseOrderNumber,
                     placedBy: `${orderApproval.order.orgCustomer.name} ${orderApproval.order.orgCustomer.orgUnit.name}`,
                     date: this.cxDate.transform(orderApproval.order.created),
