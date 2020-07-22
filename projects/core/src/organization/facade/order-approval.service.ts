@@ -157,6 +157,10 @@ export class OrderApprovalService {
     this.store.dispatch(new OrderApprovalActions.MakeDecisionReset());
   }
 
+  clearOrderApprovalList() {
+    this.store.dispatch(new OrderApprovalActions.ClearOrderApprovalList());
+  }
+
   private withUserId(callback: (userId: string) => void): void {
     this.authService
       .getOccUserId()

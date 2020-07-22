@@ -38,6 +38,9 @@ export const MAKE_DECISION_SUCCESS =
 export const MAKE_DECISION_RESET =
   '[OrderApproval] Make OrderApproval Decision Reset';
 
+export const CLEAR_ORDER_APPROVAL_LIST =
+  '[OrderApproval] Clear Order Approval List';
+
 export class LoadOrderApproval extends EntityLoadAction {
   readonly type = LOAD_ORDER_APPROVAL;
   constructor(public payload: { userId: string; orderApprovalCode: string }) {
@@ -136,6 +139,10 @@ export class MakeDecisionReset extends StateUtils.EntityLoaderResetAction {
   }
 }
 
+export class ClearOrderApprovalList {
+  readonly type = CLEAR_ORDER_APPROVAL_LIST;
+}
+
 export type OrderApprovalAction =
   | LoadOrderApproval
   | LoadOrderApprovalFail
@@ -146,4 +153,5 @@ export type OrderApprovalAction =
   | MakeDecision
   | MakeDecisionFail
   | MakeDecisionSuccess
-  | MakeDecisionReset;
+  | MakeDecisionReset
+  | ClearOrderApprovalList;

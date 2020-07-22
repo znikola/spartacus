@@ -14,6 +14,9 @@ export function orderApprovalsEntitiesReducer(
       return action.payload;
     case OrderApprovalActions.MAKE_DECISION_SUCCESS:
       return state;
+    case OrderApprovalActions.CLEAR_ORDER_APPROVAL_LIST:
+      console.log('hello world', action.type);
+      return {};
   }
   return state;
 }

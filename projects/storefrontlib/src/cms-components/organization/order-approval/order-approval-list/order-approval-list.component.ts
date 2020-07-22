@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import {
   B2BSearchConfig,
   EntitiesModel,
@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './order-approval-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderApprovalListComponent {
+export class OrderApprovalListComponent implements OnDestroy {
   constructor(
     protected orderApprovalService: OrderApprovalService,
     protected translation: TranslationService
@@ -56,6 +56,10 @@ export class OrderApprovalListComponent {
         };
       })
     );
+  }
+
+  ngOnDestroy() {
+    this.orderApprovalService.clearOrderApprovalList();
   }
 
   protected fetchApprovalListPage(searchConfig: B2BSearchConfig): void {
