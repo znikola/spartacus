@@ -114,7 +114,11 @@ export class CustomSerializer
     const { params } = state;
 
     // we give smartedit preview page a PageContext
-    if (state.url.length > 0 && state.url[0].path === 'cx-preview') {
+    //if (state.url.length > 0 && state.url[0].path === 'cx-preview') {
+    if (
+      state.url.length > 0 &&
+      state.url.findIndex(segment => segment.path === 'cx-preview') > -1
+    ) {
       context = {
         id: 'smartedit-preview',
         type: PageType.CONTENT_PAGE,
