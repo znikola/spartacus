@@ -1,3 +1,5 @@
+import { BREADCRUMB_TITLE_SELECTOR } from './constants/index';
+
 export const productId = '3595723';
 export const productId2 = '4812254';
 export const productName2 = '500D + 18-55mm IS + EF-S 55-250 IS';
@@ -89,7 +91,7 @@ export function addDifferentProducts(isMobile: Boolean = false) {
     cy.get('cx-searchbox input[aria-label="search"]').type('{enter}');
     cy.get('cx-product-list-item').first().get('.cx-product-name').click();
   }
-  cy.get('cx-breadcrumb h1').contains(productName2);
+  cy.get(BREADCRUMB_TITLE_SELECTOR).contains(productName2);
   cy.get('cx-add-to-cart button[type=submit]').click();
 
   // quantity is correctly updated

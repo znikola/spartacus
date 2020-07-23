@@ -1,9 +1,12 @@
+import {
+  ACTIVE_SHIPPING_TAB,
+  ACTIVE_TABS_CONTAINER,
+  BREADCRUMB_TITLE_SELECTOR,
+  TABS_HEADER_LIST,
+} from './constants/index';
+
 export const summaryContainer = `cx-product-summary`;
 export const infoContainer = `cx-product-intro`;
-export const tabsContainer = 'cx-tab-paragraph-container';
-export const tabsHeaderList = `${tabsContainer} > button`;
-export const activeTabContainer = `${tabsContainer} .active .container`;
-export const shippingTabActive = `${tabsContainer} .active cx-paragraph`;
 export const reviewContainer = 'cx-product-reviews';
 export const reviewList = `${reviewContainer} .review`;
 export const writeAReviewButton = `${reviewContainer} .header button`;
@@ -17,14 +20,13 @@ export const header = `cx-page-layout[section="header"]`;
 export const headerCartButton = `${header} cx-mini-cart .count`;
 export const itemCounter = 'cx-item-counter';
 export const itemCounterButtons = `${itemCounter} button`;
-export const breadcrumbContainer = 'cx-breadcrumb';
 export const variantSelectorContainer = '.variant-selector';
 export const variantStyleList = `${variantSelectorContainer} ul.variant-list`;
 
 export const PRODUCT_NAME = 'Battery Video Light';
 
 export function verifyProductDetails() {
-  cy.get(`${breadcrumbContainer} h1`).should('contain', PRODUCT_NAME);
+  cy.get(BREADCRUMB_TITLE_SELECTOR).should('contain', PRODUCT_NAME);
   cy.get(`${infoContainer} .code`).should('contain', 'ID 266685');
   cy.get(`${summaryContainer} .summary`).should(
     'contain',
@@ -33,15 +35,15 @@ export function verifyProductDetails() {
 }
 
 export function verifyCorrectTabs() {
-  cy.get(tabsHeaderList).eq(0).should('contain', 'Product Details');
-  cy.get(tabsHeaderList).eq(1).should('contain', 'Specs');
-  cy.get(tabsHeaderList).eq(2).should('contain', 'Reviews');
-  cy.get(tabsHeaderList).eq(3).should('contain', 'Shipping');
+  cy.get(TABS_HEADER_LIST).eq(0).should('contain', 'Product Details');
+  cy.get(TABS_HEADER_LIST).eq(1).should('contain', 'Specs');
+  cy.get(TABS_HEADER_LIST).eq(2).should('contain', 'Reviews');
+  cy.get(TABS_HEADER_LIST).eq(3).should('contain', 'Shipping');
 }
 
 export function verifyTextInTabs() {
-  cy.get(tabsHeaderList).eq(0).click();
-  cy.get(activeTabContainer)
+  cy.get(TABS_HEADER_LIST).eq(0).click();
+  cy.get(ACTIVE_TABS_CONTAINER)
     .should(
       'contain',
       '20-watt video light compatible with InfoLIYHIUM M-series batteries.'
@@ -51,19 +53,19 @@ export function verifyTextInTabs() {
       'Can be switched to 10-watt or 20-watt settings (NP-FM50 batteries can only be used at 10-watt setting).'
     )
     .should('contain', 'Includes shoe adaptor for increased functionality.');
-  cy.get(tabsHeaderList).eq(1).click();
-  cy.get(activeTabContainer)
+  cy.get(TABS_HEADER_LIST).eq(1).click();
+  cy.get(ACTIVE_TABS_CONTAINER)
     .should('contain', 'Weight & dimensions')
     .should('contain', 'Colour')
     .should('contain', 'Technical details');
-  cy.get(tabsHeaderList).eq(2).click();
-  cy.get(activeTabContainer).should('contain', 'Overall Rating');
-  cy.get(tabsHeaderList).eq(3).click();
-  cy.get(shippingTabActive).should('contain', 'Lorem ipsum dolor sit amet,');
+  cy.get(TABS_HEADER_LIST).eq(2).click();
+  cy.get(ACTIVE_TABS_CONTAINER).should('contain', 'Overall Rating');
+  cy.get(TABS_HEADER_LIST).eq(3).click();
+  cy.get(ACTIVE_SHIPPING_TAB).should('contain', 'Lorem ipsum dolor sit amet,');
 }
 
 export function verifyContentInReviewTab() {
-  cy.get(tabsHeaderList).eq(2).click();
+  cy.get(TABS_HEADER_LIST).eq(2).click();
   cy.get(reviewList).should('have.length', 5);
   cy.get(writeAReviewButton).should('be.visible');
 }

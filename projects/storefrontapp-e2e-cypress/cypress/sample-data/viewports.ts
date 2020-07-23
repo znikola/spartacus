@@ -6,3 +6,5 @@ export const formats = {
     height: 640,
   },
 };
+
+export const isMobile = true;

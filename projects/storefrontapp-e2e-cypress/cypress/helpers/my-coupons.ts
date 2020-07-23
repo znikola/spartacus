@@ -1,5 +1,9 @@
 import { standardUser } from '../sample-data/shared-users';
 import { waitForPage } from './checkout-flow';
+import {
+  BREADCRUMB_SELECTOR,
+  SORTING_OPTION_SELECTOR,
+} from './constants/index';
 import * as alerts from './global-message';
 import { generateMail, randomString } from './user';
 
@@ -31,17 +35,17 @@ export function verifyPagingAndSorting() {
     'contain',
     firstCouponStartDateAscending
   );
-  cy.get('.top cx-sorting .ng-select').ngSelect('Start Date (descending)');
+  cy.get(SORTING_OPTION_SELECTOR).ngSelect('Start Date (descending)');
   cy.get(firstCouponCodeSelector).should(
     'contain',
     firstCouponStartDateDescending
   );
-  cy.get('.top cx-sorting .ng-select').ngSelect('End Date (ascending)');
+  cy.get(SORTING_OPTION_SELECTOR).ngSelect('End Date (ascending)');
   cy.get(firstCouponCodeSelector).should(
     'contain',
     firstCouponEndDateAscending
   );
-  cy.get('.top cx-sorting .ng-select').ngSelect('End Date (descending)');
+  cy.get(SORTING_OPTION_SELECTOR).ngSelect('End Date (descending)');
   cy.get(firstCouponCodeSelector).should(
     'contain',
     firstCouponEndDateDescending
@@ -202,7 +206,7 @@ export function verifyFindProduct(couponCode: string, productNumber: number) {
 
   cy.wait(`@${productSearchPage}`).its('status').should('eq', 200);
 
-  cy.get('cx-breadcrumb').within(() => {
+  cy.get(BREADCRUMB_SELECTOR).within(() => {
     cy.get('span:last a').should('contain', 'My coupons');
     cy.get('h1').should('contain', couponCode);
   });

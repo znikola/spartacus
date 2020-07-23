@@ -16,6 +16,7 @@ import {
   fillShippingAddress,
   PaymentDetails,
 } from './checkout-forms';
+import { BREADCRUMB_SELECTOR } from './constants/index';
 
 export const ELECTRONICS_BASESITE = 'electronics-spa';
 export const ELECTRONICS_CURRENCY = 'USD';
@@ -52,7 +53,7 @@ export function registerUser(
   cy.wait(`@${registerPage}`);
 
   register(sampleUser, giveRegistrationConsent);
-  cy.get('cx-breadcrumb').contains('Login');
+  cy.get(BREADCRUMB_SELECTOR).contains('Login');
   return sampleUser;
 }
 
@@ -79,7 +80,7 @@ export function goToProductDetailsPage() {
   cy.get('cx-product-intro').within(() => {
     cy.get('.code').should('contain', product.code);
   });
-  cy.get('cx-breadcrumb').within(() => {
+  cy.get(BREADCRUMB_SELECTOR).within(() => {
     cy.get('h1').should('contain', product.name);
   });
 }
@@ -233,7 +234,7 @@ export function clickCheapProductDetailsFromHomePage(
   cy.get('cx-product-intro').within(() => {
     cy.get('.code').should('contain', sampleProduct.code);
   });
-  cy.get('cx-breadcrumb').within(() => {
+  cy.get(BREADCRUMB_SELECTOR).within(() => {
     cy.get('h1').should('contain', sampleProduct.name);
   });
 }

@@ -1,5 +1,6 @@
 import * as cart from '../../helpers/cart';
 import { visitHomePage } from '../../helpers/checkout-flow';
+import { BREADCRUMB_TITLE_SELECTOR } from '../../helpers/constants/index';
 import * as alerts from '../../helpers/global-message';
 import { login } from '../../support/utils/login';
 
@@ -147,7 +148,7 @@ describe('Cart', () => {
       });
     });
     cy.visit(`/product/${cart.products[0].code}`);
-    cy.get('cx-breadcrumb h1').contains(cart.products[0].name);
+    cy.get(BREADCRUMB_TITLE_SELECTOR).contains(cart.products[0].name);
     login(
       cart.cartUser.registrationData.email,
       cart.cartUser.registrationData.password,
@@ -222,7 +223,7 @@ describe('Cart', () => {
       });
     });
     cy.visit(`/product/${cart.products[0].code}`);
-    cy.get('cx-breadcrumb h1').contains(cart.products[0].name);
+    cy.get(BREADCRUMB_TITLE_SELECTOR).contains(cart.products[0].name);
     cy.route(
       `${Cypress.env('OCC_PREFIX')}/${Cypress.env(
         'BASE_SITE'
@@ -246,11 +247,11 @@ describe('Cart', () => {
 
   it('should use existing cart when adding new entries', () => {
     cy.visit(`/product/${cart.products[0].code}`);
-    cy.get('cx-breadcrumb h1').contains(cart.products[0].name);
+    cy.get(BREADCRUMB_TITLE_SELECTOR).contains(cart.products[0].name);
     cart.addToCart();
     cart.checkAddedToCartDialog();
     cy.visit(`/product/${cart.products[1].code}`);
-    cy.get('cx-breadcrumb h1').contains(cart.products[1].name);
+    cy.get(BREADCRUMB_TITLE_SELECTOR).contains(cart.products[1].name);
     cart.addToCart();
     cart.checkAddedToCartDialog(2);
 
@@ -273,7 +274,7 @@ describe('Cart', () => {
   it.skip("shouldn't show added to cart dialog when entry couldn't be added", () => {
     cy.server();
     cy.visit(`/product/${cart.products[0].code}`);
-    cy.get('cx-breadcrumb h1').contains(cart.products[0].name);
+    cy.get(BREADCRUMB_TITLE_SELECTOR).contains(cart.products[0].name);
     cy.route({
       url: `${Cypress.env('API_URL')}/${Cypress.env(
         'OCC_PREFIX'

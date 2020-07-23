@@ -9,6 +9,7 @@ import {
   fillShippingAddress,
   PaymentDetails,
 } from './checkout-forms';
+import { BREADCRUMB_TITLE_SELECTOR } from './constants/index';
 import { generateMail, randomString } from './user';
 
 interface TestProduct {
@@ -74,7 +75,7 @@ export function addToWishListAnonymous(product: TestProduct) {
 
   cy.get('cx-add-to-wishlist .button-add-link').click({ force: true });
 
-  cy.get('cx-breadcrumb > h1').should('contain', 'Login');
+  cy.get(BREADCRUMB_TITLE_SELECTOR).should('contain', 'Login');
 
   cy.get('cx-login-form .btn-register').click({ force: true });
 

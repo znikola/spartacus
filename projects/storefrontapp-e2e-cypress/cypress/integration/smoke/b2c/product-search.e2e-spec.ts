@@ -1,4 +1,4 @@
-import * as productSearchFlow from '../../helpers/product-search';
+import * as productSearchFlow from '../../../helpers/commons/product-search/product-search';
 
 function enterProduct() {
   cy.get('cx-searchbox input').type('camera{enter}');

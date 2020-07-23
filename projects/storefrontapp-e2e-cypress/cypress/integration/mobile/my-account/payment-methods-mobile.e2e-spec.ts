@@ -6,38 +6,41 @@ import {
 } from '../../../helpers/payment-methods';
 import { formats } from '../../../sample-data/viewports';
 
-describe(`${formats.mobile.width + 1}p resolution - Payment Methods`, () => {
-  before(() => {
-    cy.window().then((win) => win.sessionStorage.clear());
-    visitHomePage();
-  });
-
-  beforeEach(() => {
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-  });
-
-  describe('Anonymous user', () => {
-    checkAnonymous();
-  });
-
-  describe('Authenticated user', () => {
+describe(
+  `${formats.mobile.width + 1}p resolution - Payment Methods`,
+  {
+    viewportHeight: formats.mobile.width,
+    viewportWidth: formats.mobile.height,
+  },
+  () => {
     before(() => {
-      cy.server();
+      cy.window().then((win) => win.sessionStorage.clear());
       visitHomePage();
     });
 
-    beforeEach(() => {
-      cy.restoreLocalStorage();
+    describe('Anonymous user', () => {
+      checkAnonymous();
     });
 
-    paymentMethodsTest(true);
+    describe('Authenticated user', () => {
+      before(() => {
+        cy.server();
+        visitHomePage();
+      });
 
-    afterEach(() => {
-      cy.saveLocalStorage();
-    });
+      beforeEach(() => {
+        cy.restoreLocalStorage();
+      });
 
-    after(() => {
-      login.signOutUser();
+      paymentMethodsTest(true);
+
+      afterEach(() => {
+        cy.saveLocalStorage();
+      });
+
+      after(() => {
+        login.signOutUser();
+      });
     });
-  });
-});
+  }
+);

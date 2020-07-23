@@ -1,30 +1,31 @@
+import { getAlert } from '../../../helpers/global-message';
 import { waitForHomePage } from '../../../helpers/homepage';
 import * as loginHelper from '../../../helpers/login';
 import { orderHistoryTest } from '../../../helpers/order-history';
 import { formats } from '../../../sample-data/viewports';
-import { getAlert } from '../../../helpers/global-message';
 
-describe(`${
-  formats.mobile.width + 1
-}p resolution - Order History with no orders`, () => {
-  before(() => {
-    cy.window().then((win) => win.sessionStorage.clear());
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-    cy.visit('/');
+describe(
+  `${formats.mobile.width + 1}p resolution - Order History with no orders`,
+  {
+    viewportHeight: formats.mobile.width,
+    viewportWidth: formats.mobile.height,
+  },
+  () => {
+    before(() => {
+      cy.window().then((win) => win.sessionStorage.clear());
 
-    waitForHomePage();
+      cy.visit('/');
 
-    loginHelper.registerUser();
+      waitForHomePage();
 
-    // waiting for post-register alert, so we don't abort register user request
-    getAlert();
-  });
+      loginHelper.registerUser();
 
-  beforeEach(() => {
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-  });
+      // waiting for post-register alert, so we don't abort register user request
+      getAlert();
+    });
 
-  orderHistoryTest.checkRedirectNotLoggedInUser();
-  orderHistoryTest.checkRedirectLoggedInUser();
-  orderHistoryTest.checkStartShoppingButton();
-});
+    orderHistoryTest.checkRedirectNotLoggedInUser();
+    orderHistoryTest.checkRedirectLoggedInUser();
+    orderHistoryTest.checkStartShoppingButton();
+  }
+);

@@ -1,8 +1,8 @@
+import { PAGINATION_SELECTOR } from '../../../constants/index';
 import { verifyTabbingOrder } from '../../tabbing-order';
 import { TabElement } from '../../tabbing-order.model';
 
 const containerSelector = '.StoreFinderPageTemplate';
-const lastPageSelector = 'cx-pagination .end';
 
 export function searchResultsTabbingOrder(config: TabElement[]) {
   cy.server();
@@ -16,7 +16,7 @@ export function searchResultsTabbingOrder(config: TabElement[]) {
 
   cy.wait('@storesList');
 
-  cy.get(lastPageSelector).click();
+  cy.get(`${PAGINATION_SELECTOR} .end`).click();
 
   cy.wait('@storesList');
 

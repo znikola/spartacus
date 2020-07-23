@@ -1,10 +1,11 @@
 import { RoutingConfig } from '@spartacus/core';
+import { BREADCRUMB_TITLE_SELECTOR } from '../../helpers/constants/index';
 import * as login from '../../helpers/login';
 
 const FAQ_HEADING = 'Frequently Asked Questions';
 
 function headingContains(text: string) {
-  cy.get('cx-breadcrumb h1').should('contain', text);
+  cy.get(BREADCRUMB_TITLE_SELECTOR).should('contain', text);
 }
 
 context('Early login', () => {

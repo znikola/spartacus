@@ -1,3 +1,4 @@
+import { BREADCRUMB_SELECTOR } from './constants/index';
 import * as alerts from './global-message';
 
 export const CONSENT_MANAGEMENT = '/my-account/consents';
@@ -8,7 +9,7 @@ export function accessPageAsAnonymous() {
 }
 
 export function verifyConsentManagementPage() {
-  cy.get('cx-breadcrumb').within(() => {
+  cy.get(BREADCRUMB_SELECTOR).within(() => {
     cy.get('h1').should('contain', 'Consent Management');
   });
 }

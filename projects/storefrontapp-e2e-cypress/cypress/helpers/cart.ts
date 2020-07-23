@@ -1,8 +1,13 @@
 import { standardUser } from '../sample-data/shared-users';
 import { login, register } from './auth-forms';
 import { waitForPage } from './checkout-flow';
-import { PRODUCT_LISTING } from './data-configuration';
-import { createProductQuery, QUERY_ALIAS } from './product-search';
+import { createProductQuery } from './commons/product-search/product-search';
+import {
+  BREADCRUMB_TITLE_SELECTOR,
+  PRODUCT_LISTING,
+  SEARCH_ICON_SELECTOR,
+  SEARCH_QUERY_ALIAS,
+} from './constants/index';
 import { generateMail, randomString } from './user';
 
 interface TestProduct {
@@ -76,17 +81,19 @@ function incrementQuantity() {
 function goToFirstProductFromSearch(id: string, mobile: boolean) {
   cy.get('cx-storefront.stop-navigating');
   if (mobile) {
-    cy.get('cx-searchbox cx-icon[aria-label="search"]').click();
+    cy.get(SEARCH_ICON_SELECTOR).click();
 
     createProductQuery(
-      QUERY_ALIAS.PRODUCE_CODE,
+      SEARCH_QUERY_ALIAS.PRODUCE_CODE,
       id,
       PRODUCT_LISTING.PRODUCTS_PER_PAGE
     );
 
     cy.get('cx-searchbox input').clear().type(`${id}{enter}`);
 
-    cy.wait(`@${QUERY_ALIAS.PRODUCE_CODE}`).its('status').should('eq', 200);
+    cy.wait(`@${SEARCH_QUERY_ALIAS.PRODUCE_CODE}`)
+      .its('status')
+      .should('eq', 200);
 
     cy.get('cx-product-list-item .cx-product-name')
       .first()
@@ -109,7 +116,7 @@ function checkMiniCartCount(expectedCount) {
 }
 
 export function validateEmptyCart() {
-  cy.get('cx-breadcrumb h1').should('contain', 'Your Shopping Cart');
+  cy.get(BREADCRUMB_TITLE_SELECTOR).should('contain', 'Your Shopping Cart');
   cy.get('.EmptyCartMiddleContent').should(
     'contain',
     'Your shopping cart is empty'
@@ -267,7 +274,7 @@ export function addProductAsAnonymous() {
   const product = products[2];
 
   createProductQuery(
-    QUERY_ALIAS.PRODUCE_CODE,
+    SEARCH_QUERY_ALIAS.PRODUCE_CODE,
     product.code,
     PRODUCT_LISTING.PRODUCTS_PER_PAGE
   );
@@ -276,7 +283,9 @@ export function addProductAsAnonymous() {
     force: true,
   });
 
-  cy.wait(`@${QUERY_ALIAS.PRODUCE_CODE}`).its('status').should('eq', 200);
+  cy.wait(`@${SEARCH_QUERY_ALIAS.PRODUCE_CODE}`)
+    .its('status')
+    .should('eq', 200);
 
   cy.get('cx-product-list')
     .contains('cx-product-list-item', product.name)
@@ -305,11 +314,11 @@ export function verifyMergedCartWhenLoggedIn() {
     standardUser.registrationData.password
   );
 
-  cy.get('cx-breadcrumb h1').should('contain', '1 result');
+  cy.get(BREADCRUMB_TITLE_SELECTOR).should('contain', '1 result');
 
   checkMiniCartCount(2).click({ force: true });
 
-  cy.get('cx-breadcrumb h1').should('contain', 'Your Shopping Cart');
+  cy.get(BREADCRUMB_TITLE_SELECTOR).should('contain', 'Your Shopping Cart');
 
   checkProductInCart(product0);
   checkProductInCart(product1);

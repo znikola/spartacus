@@ -1,5 +1,6 @@
 import { user } from '../sample-data/checkout-flow';
 import { login } from './auth-forms';
+import { SORTING_OPTION_SELECTOR } from './constants/index';
 import { checkBanner } from './homepage';
 import { switchLanguage } from './language';
 
@@ -78,7 +79,7 @@ export const orderHistoryTest = {
       cy.server();
       cy.route('GET', /sort=byOrderNumber/).as('query_order_asc');
       cy.visit('/my-account/orders');
-      cy.get('.top cx-sorting .ng-select').ngSelect('Order Number');
+      cy.get(SORTING_OPTION_SELECTOR).ngSelect('Order Number');
       cy.wait('@query_order_asc').its('status').should('eq', 200);
       cy.get('.cx-order-history-code > .cx-order-history-value').then(
         ($orders) => {

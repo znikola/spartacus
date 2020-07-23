@@ -1,5 +1,6 @@
 import { product } from '../sample-data/checkout-flow';
 import { config, login, setSessionData } from '../support/utils/login';
+import { BREADCRUMB_SELECTOR } from './constants/index';
 
 export const username = 'test-user-cypress@ydev.hybris.com';
 export const password = 'Password123.';
@@ -93,7 +94,7 @@ export function goToProductPageFromCategory() {
   cy.get('cx-product-intro').within(() => {
     cy.get('.code').should('contain', product.code);
   });
-  cy.get('cx-breadcrumb').within(() => {
+  cy.get(BREADCRUMB_SELECTOR).within(() => {
     cy.get('h1').should('contain', product.name);
   });
 }
@@ -107,7 +108,7 @@ export function addProductToCart() {
     cy.get('.cx-name .cx-link').should('contain', product.name);
     cy.getByText(/view cart/i).click();
   });
-  cy.get('cx-breadcrumb').should('contain', 'Your Shopping Cart');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Your Shopping Cart');
 }
 
 export function addPaymentMethod() {

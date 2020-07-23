@@ -1,5 +1,6 @@
 import { products } from '../../sample-data/apparel-checkout-flow';
 import { addCheapProductToCart } from '../checkout-flow';
+import { BREADCRUMB_SELECTOR } from '../constants/index';
 
 export const APPAREL_BASESITE = 'apparel-uk-spa';
 export const APPAREL_CURRENCY = 'GBP';
@@ -35,7 +36,7 @@ export function visitProductWithoutVariantPage() {
   cy.get('cx-product-intro').within(() => {
     cy.get('.code').should('contain', products[2].code);
   });
-  cy.get('cx-breadcrumb').within(() => {
+  cy.get(BREADCRUMB_SELECTOR).within(() => {
     cy.get('h1').should('contain', products[2].name);
   });
 }

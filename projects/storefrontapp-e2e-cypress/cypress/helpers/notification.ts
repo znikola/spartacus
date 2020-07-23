@@ -1,5 +1,6 @@
 import { standardUser } from '../sample-data/shared-users';
 import { login } from './auth-forms';
+import { SORTING_OPTION_SELECTOR } from './constants/index';
 import { generateMail, randomString } from './user';
 
 export const normalProductCode = '872912';
@@ -220,7 +221,7 @@ export function verifyPagingAndSorting() {
   );
   navigateToMyInterestsPage();
   cy.get(firstProductCodeSelector).should('contain', firstProductAscending);
-  cy.get('.top cx-sorting .ng-select').ngSelect('Name (descending)');
+  cy.get(SORTING_OPTION_SELECTOR).ngSelect('Name (descending)');
   cy.get(firstProductCodeSelector).should('contain', firstProductDescending);
   cy.get('.cx-product-interests-product-item').should('have.length', 10);
   cy.get('cx-pagination:last a').should('have.length', 4);

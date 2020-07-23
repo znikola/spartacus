@@ -2,33 +2,36 @@ import { clickHamburger, waitForHomePage } from '../../helpers/homepage';
 import * as login from '../../helpers/login';
 import { formats } from '../../sample-data/viewports';
 
-describe(`${formats.mobile.width + 1}p resolution - Login`, () => {
-  before(() => {
-    cy.window().then((win) => win.sessionStorage.clear());
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-    cy.visit('/');
+describe(
+  `${formats.mobile.width + 1}p resolution - Login`,
+  {
+    viewportHeight: formats.mobile.width,
+    viewportWidth: formats.mobile.height,
+  },
+  () => {
+    before(() => {
+      cy.window().then((win) => win.sessionStorage.clear());
 
-    waitForHomePage();
+      cy.visit('/');
 
-    login.registerUser();
-  });
+      waitForHomePage();
 
-  beforeEach(() => {
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-  });
+      login.registerUser();
+    });
 
-  it('should login successfully with correct credentials', () => {
-    login.loginUser();
+    it('should login successfully with correct credentials', () => {
+      login.loginUser();
 
-    waitForHomePage();
+      waitForHomePage();
 
-    const tokenRevocationRequestAlias = login.listenForTokenRevocationReqest();
-    login.signOutUser();
-    cy.wait(tokenRevocationRequestAlias).its('status').should('eq', 200);
-  });
+      const tokenRevocationRequestAlias = login.listenForTokenRevocationReqest();
+      login.signOutUser();
+      cy.wait(tokenRevocationRequestAlias).its('status').should('eq', 200);
+    });
 
-  it('login should fail if password is wrong', () => {
-    clickHamburger();
-    login.loginWithBadCredentials();
-  });
-});
+    it('login should fail if password is wrong', () => {
+      clickHamburger();
+      login.loginWithBadCredentials();
+    });
+  }
+);

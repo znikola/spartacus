@@ -1,4 +1,3 @@
-import * as checkout from '../../../helpers/checkout-flow';
 import {
   addMutipleProductWithoutVariantToCart,
   addVariantOfSameProductToCart,
@@ -7,7 +6,8 @@ import {
   APPAREL_DEFAULT_DELIVERY_MODE,
   configureProductWithVariants,
   visitProductWithoutVariantPage,
-} from '../../../helpers/variants/apparel-checkout-flow';
+} from '../../../helpers/apparel/apparel-checkout-flow';
+import * as checkout from '../../../helpers/checkout-flow';
 import {
   cartWithTotalVariantProduct,
   products,

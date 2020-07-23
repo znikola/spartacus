@@ -1,5 +1,6 @@
-import { testProductListUrl, verifyTabbingOrder } from '../tabbing-order';
 import { formats } from '../../../sample-data/viewports';
+import { BREADCRUMB_SELECTOR } from '../../constants/index';
+import { testProductListUrl, verifyTabbingOrder } from '../tabbing-order';
 import { TabElement } from '../tabbing-order.model';
 
 const containerSelector = '.ProductListPageTemplate';
@@ -11,8 +12,8 @@ export function toggleProductView() {
 export function productListTabbingOrderDesktop(config: TabElement[]) {
   cy.visit(testProductListUrl);
 
-  cy.get('cx-breadcrumb').should('contain', 'Home');
-  cy.get('cx-breadcrumb').should('contain', 'Brands');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Home');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Brands');
 
   verifyTabbingOrder(containerSelector, config);
 }
@@ -30,8 +31,8 @@ export function productListTabbingOrderMobile(config: TabElement[]) {
 
   cy.wait('@getComponents');
 
-  cy.get('cx-breadcrumb').should('contain', 'Home');
-  cy.get('cx-breadcrumb').should('contain', 'Brands');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Home');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Brands');
 
   verifyTabbingOrder(containerSelector, config);
 }

@@ -3,6 +3,7 @@ import { standardUser } from '../sample-data/shared-users';
 import { switchSiteContext } from '../support/utils/switch-site-context';
 import { login, register, RegisterUser } from './auth-forms';
 import { waitForPage } from './checkout-flow';
+import { BREADCRUMB_SELECTOR } from './constants/index';
 import { checkBanner } from './homepage';
 import { signOutUser } from './login';
 import { LANGUAGE_DE, LANGUAGE_LABEL } from './site-context-selector';
@@ -76,7 +77,7 @@ export function registerNewUserAndLogin(
   cy.getByText('Register').click();
   cy.wait(`@${registerPage}`).its('status').should('eq', 200);
   register(newUser, giveRegistrationConsent, hiddenConsent);
-  cy.get('cx-breadcrumb').contains('Login');
+  cy.get(BREADCRUMB_SELECTOR).contains('Login');
 
   login(newUser.email, newUser.password);
 }

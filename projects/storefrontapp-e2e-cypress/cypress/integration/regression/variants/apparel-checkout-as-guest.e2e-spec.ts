@@ -1,8 +1,4 @@
 import { assertAddressForm } from '../../../helpers/address-book';
-import { login } from '../../../helpers/auth-forms';
-import * as guestCheckout from '../../../helpers/checkout-as-guest';
-import * as checkout from '../../../helpers/checkout-flow';
-import { validateUpdateProfileForm } from '../../../helpers/update-profile';
 import {
   addMutipleProductWithoutVariantToCart,
   addVariantOfSameProductToCart,
@@ -11,7 +7,11 @@ import {
   APPAREL_DEFAULT_DELIVERY_MODE,
   configureProductWithVariants,
   visitProductWithoutVariantPage,
-} from '../../../helpers/variants/apparel-checkout-flow';
+} from '../../../helpers/apparel/apparel-checkout-flow';
+import { login } from '../../../helpers/auth-forms';
+import * as guestCheckout from '../../../helpers/checkout-as-guest';
+import * as checkout from '../../../helpers/checkout-flow';
+import { validateUpdateProfileForm } from '../../../helpers/update-profile';
 import {
   cartWithSingleVariantProduct,
   cartWithTotalVariantProduct,

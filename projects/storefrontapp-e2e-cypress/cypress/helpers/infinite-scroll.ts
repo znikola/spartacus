@@ -1,5 +1,10 @@
-import { PRODUCT_LISTING } from './data-configuration';
-import { clickFacet, searchUrlPrefix } from './product-search';
+import { clickFacet } from './commons/product-search/product-search';
+import {
+  PAGE_LINK_SELECTOR,
+  PRODUCT_LISTING,
+  ROUTE_SEARCH_URL_PREFIX,
+  SORTING_OPTION_SELECTOR,
+} from './constants/index';
 
 const scrollDuration = 100;
 const defaultNumberOfProducts = 10;
@@ -32,7 +37,7 @@ export function configScroll(
 export function createDefaultQuery() {
   cy.route(
     'GET',
-    `${searchUrlPrefix}?fields=*&query=:relevance:allCategories:816*`
+    `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=:relevance:allCategories:816*`
   ).as(defaultQueryName);
 }
 
@@ -44,11 +49,11 @@ export function assertDefaultNumberOfProducts(view) {
 }
 
 export function isPaginationNotVisible() {
-  cy.get('cx-pagination a').should('not.exist');
+  cy.get(PAGE_LINK_SELECTOR).should('not.exist');
 }
 
 export function isPaginationVisible() {
-  cy.get('cx-pagination a').should('exist');
+  cy.get(PAGE_LINK_SELECTOR).should('exist');
 }
 
 export function backToTopIsVisible(isShowMoreButton?: boolean) {
@@ -110,7 +115,7 @@ export function scrollToFooter(
 }
 
 export function verifySortingResetsList() {
-  cy.get('cx-sorting .ng-select:first').ngSelect(
+  cy.get(SORTING_OPTION_SELECTOR).ngSelect(
     PRODUCT_LISTING.SORTING_TYPES.BY_TOP_RATED
   );
 

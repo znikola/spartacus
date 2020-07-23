@@ -3,36 +3,36 @@ import { product } from '../../../sample-data/checkout-flow';
 import { formats } from '../../../sample-data/viewports';
 import { waitForOrderWithConsignmentToBePlacedRequest } from '../../../support/utils/order-placed';
 
-describe(`${
-  formats.mobile.width + 1
-}p resolution - Order History with orders`, () => {
-  before(() => {
-    cy.window().then((win) => win.sessionStorage.clear());
-    cy.requireLoggedIn();
-  });
+describe(
+  `${formats.mobile.width + 1}p resolution - Order History with orders`,
+  {
+    viewportHeight: formats.mobile.width,
+    viewportWidth: formats.mobile.height,
+  },
+  () => {
+    before(() => {
+      cy.window().then((win) => win.sessionStorage.clear());
+      cy.requireLoggedIn();
+    });
 
-  beforeEach(() => {
-    cy.restoreLocalStorage();
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-  });
+    beforeEach(() => {
+      cy.restoreLocalStorage();
+    });
 
-  afterEach(() => {
-    cy.saveLocalStorage();
-  });
+    afterEach(() => {
+      cy.saveLocalStorage();
+    });
 
-  orderHistoryTest.checkIfOrderIsDisplayed();
-  orderHistoryTest.checkSortingByCode();
-  orderHistoryTest.checkCorrectDateFormat(true);
-});
+    orderHistoryTest.checkIfOrderIsDisplayed();
+    orderHistoryTest.checkSortingByCode();
+    orderHistoryTest.checkCorrectDateFormat(true);
+  }
+);
 
 describe(`${formats.mobile.width + 1}p resolution - Order details page`, () => {
   before(() => {
     cy.window().then((win) => win.sessionStorage.clear());
     cy.requireLoggedIn();
-  });
-
-  beforeEach(() => {
-    cy.viewport(formats.mobile.width, formats.mobile.height);
   });
 
   it('should display order details page', () => {

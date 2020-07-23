@@ -1,3 +1,4 @@
+import { BREADCRUMB_SELECTOR } from '../../constants/index';
 import { testProductUrl, verifyTabbingOrder } from '../tabbing-order';
 import { TabElement } from '../tabbing-order.model';
 
@@ -13,9 +14,9 @@ export function productPageTabbingOrder(config: TabElement[]) {
     )}/products/779841/reviews*`
   ).as('reviews');
 
-  cy.get('cx-breadcrumb').should('contain', 'Home');
-  cy.get('cx-breadcrumb').should('contain', 'Film cameras');
-  cy.get('cx-breadcrumb').should('contain', 'Kodak');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Home');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Film cameras');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Kodak');
 
   // add product and force "minus" button to be active
   cy.get('cx-item-counter button').contains('+').click();

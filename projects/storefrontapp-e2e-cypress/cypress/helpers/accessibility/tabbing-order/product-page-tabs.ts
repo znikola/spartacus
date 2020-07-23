@@ -1,3 +1,4 @@
+import { BREADCRUMB_SELECTOR } from '../../constants/index';
 import { testProductUrl } from '../tabbing-order';
 
 export function productPageTabsTabbingOrder() {
@@ -10,9 +11,9 @@ export function productPageTabsTabbingOrder() {
     )}/products/779841/reviews*`
   ).as('reviews');
 
-  cy.get('cx-breadcrumb').should('contain', 'Home');
-  cy.get('cx-breadcrumb').should('contain', 'Film cameras');
-  cy.get('cx-breadcrumb').should('contain', 'Kodak');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Home');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Film cameras');
+  cy.get(BREADCRUMB_SELECTOR).should('contain', 'Kodak');
 
   cy.get('cx-product-details-tab'); // wait for first tab to render
   cy.get('cx-product-attributes'); // wait for specs to render

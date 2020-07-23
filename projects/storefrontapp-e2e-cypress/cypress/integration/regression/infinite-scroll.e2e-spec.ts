@@ -1,16 +1,16 @@
+import { ROUTE_SEARCH_URL_PREFIX } from '../../helpers/constants/index';
 import {
-  configScroll,
-  isPaginationNotVisible,
   backtoTopIsNotVisible,
-  scrollToFooter,
   backToTopIsVisible,
+  configScroll,
+  createDefaultQuery,
+  isPaginationNotVisible,
   isPaginationVisible,
-  verifySortingResetsList,
+  scrollToFooter,
   verifyFilterResetsList,
   verifyGridResetsList,
-  createDefaultQuery,
+  verifySortingResetsList,
 } from '../../helpers/infinite-scroll';
-import { searchUrlPrefix } from '../../helpers/product-search';
 
 describe('Infinite scroll', () => {
   const testUrl = '/Open-Catalogue/Components/Power-Supplies/c/816';
@@ -32,12 +32,12 @@ describe('Infinite scroll', () => {
 
     cy.route(
       'GET',
-      `${searchUrlPrefix}?fields=*&query=:topRated:allCategories:816:brand:brand_5*`
+      `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=:topRated:allCategories:816:brand:brand_5*`
     ).as('gridQuery');
 
     cy.route(
       'GET',
-      `${searchUrlPrefix}?fields=*&query=:relevance:allCategories:816&*&sort=topRated*`
+      `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=:relevance:allCategories:816&*&sort=topRated*`
     ).as('sortQuery');
 
     cy.wait(defaultQueryAlias).then((waitXHR) => {
