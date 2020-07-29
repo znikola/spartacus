@@ -1,8 +1,8 @@
 import {
   consentManagementTest,
   verifyAsAnonymous,
-} from '../../../helpers/consent-management';
-import * as login from '../../../helpers/login';
+} from '../../../../helpers/consent-management';
+import * as login from '../../../../helpers/login';
 
 describe('My Account - Consent Management', () => {
   before(() => {

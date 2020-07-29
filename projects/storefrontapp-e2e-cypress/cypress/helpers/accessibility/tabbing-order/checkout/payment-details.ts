@@ -2,7 +2,7 @@ import { user } from '../../../../sample-data/checkout-flow';
 import {
   fillBillingAddress,
   fillPaymentDetails,
-} from '../../../checkout-forms';
+} from '../../../commons/checkout/checkout-forms';
 import { checkoutNextStep, verifyTabbingOrder } from '../../tabbing-order';
 import { TabElement } from '../../tabbing-order.model';
 

@@ -5,11 +5,13 @@ export const SEARCH_QUERY_ALIAS = {
   SONY_CLEAR_FACET: 'sony_query_clear_facet',
   PRICE_ASC_FILTER: 'price_query_asc_filter',
   PRICE_DSC_FILTER: 'price_query_dsc_filter',
+  NAME_ASC_FILTER: 'name_query_asc_filter',
   NAME_DSC_FILTER: 'name_query_dsc_filter',
   CATEGORY_FILTER: 'category_query_filter',
   STORE_FILTER: 'store_query_filter',
   COLOR_FILTER: 'color_query_filter',
   TOP_RATED_FILTER: 'topRated_query_filter',
+  RELEVANCE_FILTER: 'relevance_query_filter',
   SONY: 'sony_query',
   DSC_N1: 'dsc_n1_query',
   CANON: 'canon_query',
@@ -23,3 +25,5 @@ export const SEARCH_QUERY_ALIAS = {
 export const ROUTE_SEARCH_URL_PREFIX = `${Cypress.env(
   'OCC_PREFIX'
 )}/${Cypress.env('BASE_SITE')}/products/search`;
+
+export const SEARCH_CAMERA = 'camera';

@@ -1,4 +1,4 @@
-import { getAlert } from '../../../helpers/global-message';
+import { getAlert } from '../../../helpers/commons/global-message';
 import { waitForHomePage } from '../../../helpers/homepage';
 import * as loginHelper from '../../../helpers/login';
 import { orderHistoryTest } from '../../../helpers/order-history';

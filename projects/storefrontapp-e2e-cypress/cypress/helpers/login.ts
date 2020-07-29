@@ -1,6 +1,6 @@
 import { user } from '../sample-data/checkout-flow';
 import { login, register } from './auth-forms';
-import * as alerts from './global-message';
+import * as alerts from './commons/global-message';
 
 export const userGreetSelector = 'cx-login .cx-login-greet';
 export const loginLinkSelector = 'cx-login [role="link"]';

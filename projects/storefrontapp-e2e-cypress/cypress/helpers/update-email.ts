@@ -1,9 +1,9 @@
 import { standardUser } from '../sample-data/shared-users';
 import { login } from './auth-forms';
-import * as alerts from './global-message';
+import * as alerts from './commons/global-message';
 import { checkBanner } from './homepage';
-import { generateMail, randomString } from './user';
 import { signOut } from './register';
+import { generateMail, randomString } from './user';
 export const UPDATE_EMAIL = '/my-account/update-email';
 export const password = 'Password123.';
 

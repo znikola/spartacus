@@ -1,6 +1,6 @@
 import { standardUser } from '../sample-data/shared-users';
 import { login } from './auth-forms';
-import * as alerts from './global-message';
+import * as alerts from './commons/global-message';
 import { generateMail, randomString } from './user';
 
 export const CLOSE_ACCOUNT = '/my-account/close-account';

@@ -1,9 +1,9 @@
 import {
   closeAccountTest,
-  verifyAsAnonymous,
   registerAndLogin,
   verifyAccountClosedTest,
-} from '../../../helpers/close-account';
+  verifyAsAnonymous,
+} from '../../../../helpers/close-account';
 
 describe('My Account - Close Account', () => {
   before(() =>

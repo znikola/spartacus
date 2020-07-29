@@ -9,6 +9,7 @@ import {
   CATEGORY_ID,
   CATEGORY_NAMES,
   PRODUCT_LISTING,
+  PRODUCT_NAMES,
   SEARCH_QUERY_ALIAS,
 } from '../../../helpers/constants/index';
 import { waitForHomePage } from '../../../helpers/homepage';
@@ -47,7 +48,10 @@ context(
           PRODUCT_LISTING.PRODUCTS_PER_PAGE
         );
 
-        clickCategoryFromHeader();
+        clickCategoryFromHeader(
+          PRODUCT_NAMES.DIGITAL_CAMERAS,
+          PRODUCT_NAMES.COMPACT_CAMERAS
+        );
 
         cy.wait(`@${SEARCH_QUERY_ALIAS.CATEGORY_PAGE}`)
           .its('status')

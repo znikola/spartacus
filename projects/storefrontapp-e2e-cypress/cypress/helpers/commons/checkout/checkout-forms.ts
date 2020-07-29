@@ -1,3 +1,8 @@
+import {
+  ADDRESS_BOOK_FORM_SELECTOR,
+  NEW_ADDRESS_DATA,
+} from '../../constants/index';
+
 export interface Address {
   line1: string;
   line2?: string;
@@ -28,10 +33,10 @@ export interface PaymentDetails {
 }
 
 export function fillShippingAddress(
-  shippingAddress: AddressData,
+  shippingAddress: AddressData = NEW_ADDRESS_DATA,
   submitForm: boolean = true
 ) {
-  cy.get('cx-address-form').within(() => {
+  cy.get(ADDRESS_BOOK_FORM_SELECTOR).within(() => {
     cy.get('.country-select[formcontrolname="isocode"]').ngSelect(
       shippingAddress.address.country
     );

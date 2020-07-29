@@ -9,6 +9,7 @@ import {
   CATEGORY_ID,
   CATEGORY_NAMES,
   PRODUCT_LISTING,
+  PRODUCT_NAMES,
   SEARCH_QUERY_ALIAS,
 } from '../../../../helpers/constants/index';
 
@@ -21,6 +22,7 @@ context('Product search pricing flow', () => {
   describe('Product search', () => {
     it('should be able to search product and sort by price', () => {
       cy.server();
+
       createProductQuery(
         SEARCH_QUERY_ALIAS.FIRST_PAGE,
         `:relevance:allCategories:${CATEGORY_ID.DIGITAL_COMPACTS}`,
@@ -35,7 +37,10 @@ context('Product search pricing flow', () => {
         PRODUCT_LISTING.PRODUCTS_PER_PAGE
       );
 
-      clickCategoryFromHeader();
+      clickCategoryFromHeader(
+        PRODUCT_NAMES.DIGITAL_CAMERAS,
+        PRODUCT_NAMES.COMPACT_CAMERAS
+      );
 
       cy.wait(`@${SEARCH_QUERY_ALIAS.CATEGORY_PAGE}`)
         .its('status')

@@ -1,7 +1,7 @@
 import * as cart from '../../helpers/cart';
 import { visitHomePage } from '../../helpers/checkout-flow';
+import * as alerts from '../../helpers/commons/global-message';
 import { BREADCRUMB_TITLE_SELECTOR } from '../../helpers/constants/index';
-import * as alerts from '../../helpers/global-message';
 import { login } from '../../support/utils/login';
 
 describe('Cart', () => {

@@ -1,3 +1,4 @@
+export * from './address-book';
 export * from './breadcrumb';
 export * from './categories';
 export * from './pagination';
@@ -7,3 +8,4 @@ export * from './products';
 export * from './searchbox';
 export * from './sorting';
 export * from './tab-paragraph-container';
+export * from './urls';

@@ -1,9 +1,9 @@
-import { visitHomePage } from '../../../helpers/checkout-flow';
-import * as login from '../../../helpers/login';
+import { visitHomePage } from '../../../../helpers/checkout-flow';
+import * as login from '../../../../helpers/login';
 import {
   checkAnonymous,
   paymentMethodsTest,
-} from '../../../helpers/payment-methods';
+} from '../../../../helpers/payment-methods';
 
 describe('Payment Methods', () => {
   before(() => {

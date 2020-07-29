@@ -12,7 +12,7 @@ import {
   PRODUCT_LISTING,
   ROUTE_SEARCH_URL_PREFIX,
   SEARCH_QUERY_ALIAS,
-} from '../../../helpers/constants';
+} from '../../../helpers/constants/index';
 import { formats, isMobile } from '../../../sample-data/viewports';
 
 context(

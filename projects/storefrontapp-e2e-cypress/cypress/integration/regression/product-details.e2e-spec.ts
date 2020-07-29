@@ -77,23 +77,23 @@ context('Product details', () => {
   });
 });
 
-context(`${formats.mobile.width + 1}p resolution - Product details`, () => {
-  before(() => {
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-  });
-  beforeEach(() => {
-    cy.viewport(formats.mobile.width, formats.mobile.height);
-  });
+context(
+  `${formats.mobile.width + 1}p resolution - Product details`,
+  {
+    viewportHeight: formats.mobile.width,
+    viewportWidth: formats.mobile.height,
+  },
+  () => {
+    describe('Default', () => {
+      before(configureDefaultProduct);
 
-  describe('Default', () => {
-    before(configureDefaultProduct);
+      productDetailsTest();
+    });
 
-    productDetailsTest();
-  });
+    describe('Apparel', () => {
+      before(configureApparelProduct);
 
-  describe('Apparel', () => {
-    before(configureApparelProduct);
-
-    apparelProductDetailsTest();
-  });
-});
+      apparelProductDetailsTest();
+    });
+  }
+);

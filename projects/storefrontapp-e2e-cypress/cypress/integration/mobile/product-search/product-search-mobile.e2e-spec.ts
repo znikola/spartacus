@@ -1,4 +1,5 @@
 import * as productSearchFlow from '../../../helpers/commons/product-search/product-search';
+import { SEARCH_CAMERA } from '../../../helpers/constants/index';
 import { formats, isMobile } from '../../../sample-data/viewports';
 
 function enterProduct() {
@@ -20,7 +21,7 @@ context(
 
     describe('Search results', () => {
       it('should be able to search and get results', () => {
-        productSearchFlow.searchResult();
+        productSearchFlow.searchResult(SEARCH_CAMERA);
       });
     });
 
@@ -46,17 +47,16 @@ context(
 
     describe('Facets', () => {
       it('should filter results using facet filtering', () => {
-        productSearchFlow.filterUsingFacetFiltering(isMobile);
+        productSearchFlow.filterUsingFacetFiltering(isMobile, SEARCH_CAMERA);
       });
 
       it('should be able to clear active facet', () => {
-        productSearchFlow.clearActiveFacet();
+        productSearchFlow.clearActiveFacet(SEARCH_CAMERA);
       });
     });
 
     describe('Sorting', () => {
       before(() => {
-        cy.viewport(formats.mobile.width, formats.mobile.height);
         cy.visit('/');
         enterProduct();
       });

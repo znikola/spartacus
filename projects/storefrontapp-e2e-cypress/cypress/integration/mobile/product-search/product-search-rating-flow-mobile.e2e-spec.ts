@@ -16,7 +16,7 @@ import {
   ROUTE_SEARCH_URL_PREFIX,
   SEARCH_QUERY_ALIAS,
   TABS_HEADER_LIST,
-} from '../../../helpers/constants';
+} from '../../../helpers/constants/index';
 import { formats, isMobile } from '../../../sample-data/viewports';
 
 context(

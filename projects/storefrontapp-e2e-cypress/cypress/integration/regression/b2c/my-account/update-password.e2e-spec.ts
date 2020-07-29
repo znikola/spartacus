@@ -1,9 +1,9 @@
+import * as login from '../../../../helpers/login';
 import {
+  registerAndLogin,
   updatePasswordTest,
   verifyAsAnonymous,
-  registerAndLogin,
-} from '../../../helpers/update-password';
-import * as login from '../../../helpers/login';
+} from '../../../../helpers/update-password';
 
 describe('My Account - Update Password', () => {
   before(() =>

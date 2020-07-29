@@ -1,6 +1,9 @@
-import { doPlaceOrder, orderHistoryTest } from '../../../helpers/order-history';
-import { product } from '../../../sample-data/checkout-flow';
-import { waitForOrderWithConsignmentToBePlacedRequest } from '../../../support/utils/order-placed';
+import {
+  doPlaceOrder,
+  orderHistoryTest,
+} from '../../../../helpers/order-history';
+import { product } from '../../../../sample-data/checkout-flow';
+import { waitForOrderWithConsignmentToBePlacedRequest } from '../../../../support/utils/order-placed';
 
 describe('Order History with orders', () => {
   before(() => {

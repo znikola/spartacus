@@ -1,3 +1,4 @@
+import { ADDRESS_BOOK_FORM_SELECTOR } from '../../../../helpers/constants/index';
 import * as siteContextSelector from '../../../../helpers/site-context-selector';
 import { waitForOrderToBePlacedRequest } from '../../../../support/utils/order-placed';
 
@@ -82,11 +83,11 @@ describe('Language switch - my-account pages', () => {
       cy.get('cx-address-book a').contains('Edit').click({ force: true });
 
       cy.get(
-        'cx-address-form .ng-select[formcontrolname="titleCode"]'
+        `${ADDRESS_BOOK_FORM_SELECTOR} .ng-select[formcontrolname="titleCode"]`
       ).ngSelect(deutschName);
 
       cy.get(
-        'cx-address-form .ng-select[formcontrolname="titleCode"] .ng-value-label'
+        `${ADDRESS_BOOK_FORM_SELECTOR} .ng-select[formcontrolname="titleCode"] .ng-value-label`
       ).should('have.text', deutschName);
     });
   });

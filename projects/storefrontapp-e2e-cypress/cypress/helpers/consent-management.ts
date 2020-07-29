@@ -1,10 +1,10 @@
+import * as alerts from './commons/global-message';
 import { BREADCRUMB_SELECTOR } from './constants/index';
-import * as alerts from './global-message';
 
-export const CONSENT_MANAGEMENT = '/my-account/consents';
+export const CONSENT_MANAGEMENT_PAGE = '/my-account/consents';
 
 export function accessPageAsAnonymous() {
-  cy.visit(CONSENT_MANAGEMENT);
+  cy.visit(CONSENT_MANAGEMENT_PAGE);
   cy.location('pathname').should('contain', '/login');
 }
 

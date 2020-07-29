@@ -1,6 +1,6 @@
-import * as loginHelper from '../../../helpers/login';
-import { orderHistoryTest } from '../../../helpers/order-history';
-import { verifyGlobalMessageAfterRegistration } from '../../../helpers/register';
+import * as loginHelper from '../../../../helpers/login';
+import { orderHistoryTest } from '../../../../helpers/order-history';
+import { verifyGlobalMessageAfterRegistration } from '../../../../helpers/register';
 
 describe('Order History with no orders', () => {
   before(() => {

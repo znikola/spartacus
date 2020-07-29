@@ -1,6 +1,6 @@
-import { checkoutNextStep, verifyTabbingOrder } from '../../tabbing-order';
-import { fillShippingAddress } from '../../../checkout-forms';
 import { user } from '../../../../sample-data/checkout-flow';
+import { fillShippingAddress } from '../../../commons/checkout/checkout-forms';
+import { checkoutNextStep, verifyTabbingOrder } from '../../tabbing-order';
 import { TabElement } from '../../tabbing-order.model';
 
 const containerSelector = '.MultiStepCheckoutSummaryPageTemplate';

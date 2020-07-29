@@ -15,7 +15,7 @@ import {
   fillPaymentDetails,
   fillShippingAddress,
   PaymentDetails,
-} from './checkout-forms';
+} from './commons/checkout/checkout-forms';
 import { BREADCRUMB_SELECTOR } from './constants/index';
 
 export const ELECTRONICS_BASESITE = 'electronics-spa';

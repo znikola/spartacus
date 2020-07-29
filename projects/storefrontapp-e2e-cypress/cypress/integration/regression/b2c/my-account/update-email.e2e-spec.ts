@@ -1,8 +1,8 @@
 import {
+  registerAndLogin,
   updateEmailTest,
   verifyAsAnonymous,
-  registerAndLogin,
-} from '../../../helpers/update-email';
+} from '../../../../helpers/update-email';
 
 describe('My Account - Update Email', () => {
   before(() => {

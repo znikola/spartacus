@@ -1,10 +1,10 @@
 import { standardUser } from '../sample-data/shared-users';
 import { waitForPage } from './checkout-flow';
+import * as alerts from './commons/global-message';
 import {
   BREADCRUMB_SELECTOR,
   SORTING_OPTION_SELECTOR,
 } from './constants/index';
-import * as alerts from './global-message';
 import { generateMail, randomString } from './user';
 
 export const testUser = 'test-user-with-coupons@ydev.hybris.com';

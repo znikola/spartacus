@@ -1,4 +1,4 @@
-import * as alerts from '../../../helpers/global-message';
+import * as alerts from '../../../helpers/commons/global-message';
 
 context('Reset Password Page', () => {
   beforeEach(() => {

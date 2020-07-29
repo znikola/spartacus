@@ -8,7 +8,6 @@ import {
   PRODUCT_LISTING,
   PRODUCT_LIST_ITEM_NAME_SELECTOR,
   PRODUCT_LIST_ITEM_SELECTOR,
-  PRODUCT_NAMES,
   ROUTE_SEARCH_URL_PREFIX,
   SEARCH_ICON_SELECTOR,
   SEARCH_QUERY_ALIAS,
@@ -24,6 +23,13 @@ export function assertFirstProduct() {
     .first()
     .invoke('text')
     .should('match', /\w+/);
+}
+
+export function searchInSearchBox(
+  text: string,
+  options?: Partial<Cypress.TypeOptions>
+) {
+  cy.get('cx-searchbox input[aria-label="search"]').type(text, options);
 }
 
 export function checkDistinctProductName(firstProduct: string) {
@@ -62,15 +68,15 @@ export function verifyProductSearch(
     });
 }
 
-export function searchResult(searchResult: string = 'camera') {
+export function searchResult(results: string) {
   cy.server();
-  createQuery(SEARCH_QUERY_ALIAS.CAMERA);
+  createQuery();
   cy.wait(`@${SEARCH_QUERY_ALIAS.CAMERA}`).then((xhr) => {
     const cameraResults = xhr.response.body.pagination.totalResults;
 
     cy.get(BREADCRUMB_TITLE_SELECTOR).should(
       'contain',
-      `${cameraResults} results for "${searchResult}"`
+      `${cameraResults} results for "${results}"`
     );
     cy.get(PRODUCT_LIST_ITEM_SELECTOR).should(
       'have.length',
@@ -83,8 +89,8 @@ export function searchResult(searchResult: string = 'camera') {
 }
 
 export function clickCategoryFromHeader(
-  firstCategoryName: string = PRODUCT_NAMES.DIGITAL_CAMERAS,
-  secondCategoryName: string = PRODUCT_NAMES.COMPACT_CAMERAS
+  firstCategoryName: string,
+  secondCategoryName: string
 ) {
   cy.get('header').within(() => {
     cy.get('cx-navigation-ui')
@@ -131,12 +137,9 @@ export function viewMode() {
   );
 }
 
-export function filterUsingFacetFiltering(
-  mobile: boolean,
-  searchResult: string = 'camera'
-) {
+export function filterUsingFacetFiltering(mobile: boolean, results: string) {
   cy.server();
-  createFacetFilterQuery(SEARCH_QUERY_ALIAS.FACET);
+  createFacetFilterQuery();
 
   clickFacet('Stores', mobile);
 
@@ -144,37 +147,43 @@ export function filterUsingFacetFiltering(
     const facetResults = xhr.response.body.pagination.totalResults;
     cy.get(BREADCRUMB_TITLE_SELECTOR).should(
       'contain',
-      `${facetResults} results for "${searchResult}"`
+      `${facetResults} results for "${results}"`
     );
   });
 }
 
-export function clearActiveFacet(searchResult: string = 'camera') {
+export function clearActiveFacet(results: string) {
   cy.get('cx-active-facets a:first').click();
   cy.get(BREADCRUMB_TITLE_SELECTOR).should(
     'contain',
-    `results for "${searchResult}"`
+    `results for "${results}"`
   );
 }
 
 export function sortByLowestPrice() {
-  createProductSortQuery('price-asc', 'query_price_asc');
+  createProductSortQuery('price-asc', SEARCH_QUERY_ALIAS.PRICE_ASC_FILTER);
   cy.get(SORTING_OPTION_SELECTOR).ngSelect('Price (lowest first)');
-  cy.wait('@query_price_asc').its('status').should('eq', 200);
+  cy.wait(`@${SEARCH_QUERY_ALIAS.PRICE_ASC_FILTER}`)
+    .its('status')
+    .should('eq', 200);
   cy.get(FIRST_PRODUCT_ITEM_PRICE_SELECTOR).should('contain', '$1.58');
 }
 
 export function sortByHighestPrice() {
-  createProductSortQuery('price-desc', 'query_price_desc');
+  createProductSortQuery('price-desc', SEARCH_QUERY_ALIAS.PRICE_DSC_FILTER);
   cy.get(SORTING_OPTION_SELECTOR).ngSelect('Price (highest first)');
-  cy.wait('@query_price_desc').its('status').should('eq', 200);
+  cy.wait(`@${SEARCH_QUERY_ALIAS.PRICE_DSC_FILTER}`)
+    .its('status')
+    .should('eq', 200);
   cy.get(FIRST_PRODUCT_ITEM_PRICE_SELECTOR).should('contain', '$6,030.71');
 }
 
 export function sortByNameAscending() {
-  createProductSortQuery('name-asc', 'query_name_asc');
+  createProductSortQuery('name-asc', SEARCH_QUERY_ALIAS.NAME_ASC_FILTER);
   cy.get(SORTING_OPTION_SELECTOR).ngSelect('Name (ascending)');
-  cy.wait('@query_name_asc').its('status').should('eq', 200);
+  cy.wait(`@${SEARCH_QUERY_ALIAS.NAME_ASC_FILTER}`)
+    .its('status')
+    .should('eq', 200);
   cy.get(FIRST_PRODUCT_ITEM_NAME_SELECTOR).should(
     'contain',
     '10.2 Megapixel D-SLR'
@@ -182,9 +191,11 @@ export function sortByNameAscending() {
 }
 
 export function sortByNameDescending() {
-  createProductSortQuery('name-desc', 'query_name_desc');
+  createProductSortQuery('name-desc', SEARCH_QUERY_ALIAS.NAME_DSC_FILTER);
   cy.get(SORTING_OPTION_SELECTOR).ngSelect('Name (descending)');
-  cy.wait('@query_name_desc').its('status').should('eq', 200);
+  cy.wait(`@${SEARCH_QUERY_ALIAS.NAME_DSC_FILTER}`)
+    .its('status')
+    .should('eq', 200);
   cy.get(FIRST_PRODUCT_ITEM_NAME_SELECTOR).should(
     'contain',
     'Wide Strap for EOS 450D'
@@ -192,9 +203,11 @@ export function sortByNameDescending() {
 }
 
 export function sortByRelevance() {
-  createProductSortQuery('relevance', 'query_relevance');
+  createProductSortQuery('relevance', SEARCH_QUERY_ALIAS.RELEVANCE_FILTER);
   cy.get(SORTING_OPTION_SELECTOR).ngSelect('Relevance');
-  cy.wait('@query_relevance').its('status').should('eq', 200);
+  cy.wait(`@${SEARCH_QUERY_ALIAS.RELEVANCE_FILTER}`)
+    .its('status')
+    .should('eq', 200);
   cy.get(FIRST_PRODUCT_ITEM_NAME_SELECTOR).should('not.be.empty');
 }
 
@@ -240,27 +253,23 @@ export function clearSelectedFacet() {
   cy.get('cx-product-facet-navigation cx-active-facets a').first().click();
 }
 
-function createQuery(alias: string, query: string = 'camera'): void {
-  cy.route('GET', `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=${query}*`).as(
-    alias
+function createQuery(): void {
+  cy.route('GET', `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=*`).as(
+    SEARCH_QUERY_ALIAS.CAMERA
   );
 }
 
-function createFacetFilterQuery(alias: string, query: string = 'camera'): void {
+function createFacetFilterQuery(): void {
   cy.route(
     'GET',
-    `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=${query}:relevance:availableInStores*`
-  ).as(alias);
+    `${ROUTE_SEARCH_URL_PREFIX}?fields=*&query=*:relevance:availableInStores*`
+  ).as(SEARCH_QUERY_ALIAS.FACET);
 }
 
 export function createProductSortQuery(sort: string, alias: string): void {
   cy.route('GET', `${ROUTE_SEARCH_URL_PREFIX}?fields=*&sort=${sort}*`).as(
     alias
   );
-}
-
-export function createAllProductQuery(alias: string): void {
-  cy.route('GET', `${ROUTE_SEARCH_URL_PREFIX}*`).as(alias);
 }
 
 export function createProductQuery(
@@ -286,7 +295,7 @@ export function createProductFacetQuery(
   ).as(alias);
 }
 
-export function assertNumberOfProducts(alias: string, searchResult: string) {
+export function assertNumberOfProducts(alias: string, results: string) {
   cy.get(alias).then((xhr) => {
     const body = xhr.response.body;
     const paginationTotalresults: number = body.pagination.totalResults;
@@ -295,7 +304,7 @@ export function assertNumberOfProducts(alias: string, searchResult: string) {
 
     cy.get(BREADCRUMB_TITLE_SELECTOR).should(
       'contain',
-      `${paginationTotalresults} results for ${searchResult}`
+      `${paginationTotalresults} results for ${results}`
     );
 
     cy.get(PRODUCT_LIST_ITEM_SELECTOR).should(

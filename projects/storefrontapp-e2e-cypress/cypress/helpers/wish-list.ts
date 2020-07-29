@@ -8,7 +8,7 @@ import {
   fillPaymentDetails,
   fillShippingAddress,
   PaymentDetails,
-} from './checkout-forms';
+} from './commons/checkout/checkout-forms';
 import { BREADCRUMB_TITLE_SELECTOR } from './constants/index';
 import { generateMail, randomString } from './user';
 

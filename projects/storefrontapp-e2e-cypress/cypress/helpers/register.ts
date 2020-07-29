@@ -1,5 +1,5 @@
 import { register } from './auth-forms';
-import * as alerts from './global-message';
+import * as alerts from './commons/global-message';
 
 export const loginLink = 'cx-login [role="link"]';
 

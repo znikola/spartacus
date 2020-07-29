@@ -1,4 +1,4 @@
-import * as alerts from './global-message';
+import * as alerts from './commons/global-message';
 import { checkBanner } from './homepage';
 export const UPDATE_PROFILE_URL = '/my-account/update-profile';
 export const newTitle = 'dr';

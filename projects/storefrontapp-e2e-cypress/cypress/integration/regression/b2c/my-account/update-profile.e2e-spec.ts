@@ -1,8 +1,8 @@
+import * as login from '../../../../helpers/login';
 import {
   updateProfileTest,
   verifyAsAnonymous,
-} from '../../../helpers/update-profile';
-import * as login from '../../../helpers/login';
+} from '../../../../helpers/update-profile';
 
 describe('My Account - Update Profile', () => {
   before(() => {
