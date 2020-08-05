@@ -1,11 +1,5 @@
 import * as productSearchFlow from '../../../helpers/commons/product-search/product-search';
-import { SEARCH_CAMERA } from '../../../helpers/constants/index';
 import { formats, isMobile } from '../../../sample-data/viewports';
-
-function enterProduct() {
-  productSearchFlow.clickSearchIcon();
-  cy.get('cx-searchbox input[aria-label="search"]').type('camera{enter}');
-}
 
 context(
   `${formats.mobile.width + 1}p resolution - Product search`,
@@ -15,13 +9,19 @@ context(
   },
   () => {
     before(() => {
-      cy.visit('/');
-      enterProduct();
+      cy.fixture('b2c/product-search/product-search.json').then((data) => {
+        this.data = data;
+        cy.visit('/');
+      });
     });
 
     describe('Search results', () => {
       it('should be able to search and get results', () => {
-        productSearchFlow.searchResult(SEARCH_CAMERA);
+        productSearchFlow.clickSearchIcon();
+        cy.get('cx-searchbox input[aria-label="search"]').type(
+          `${this.data.searchQuery}{enter}`
+        );
+        productSearchFlow.searchResult(this.data.searchQuery);
       });
     });
 
@@ -47,18 +47,25 @@ context(
 
     describe('Facets', () => {
       it('should filter results using facet filtering', () => {
-        productSearchFlow.filterUsingFacetFiltering(isMobile, SEARCH_CAMERA);
+        productSearchFlow.filterUsingFacetFiltering(
+          isMobile,
+          this.data.searchQuery
+        );
       });
 
       it('should be able to clear active facet', () => {
-        productSearchFlow.clearActiveFacet(SEARCH_CAMERA);
+        productSearchFlow.clearActiveFacet(this.data.searchQuery);
       });
     });
 
     describe('Sorting', () => {
       before(() => {
         cy.visit('/');
-        enterProduct();
+        productSearchFlow.clickSearchIcon();
+        cy.get('cx-searchbox input[aria-label="search"]').type(
+          `${this.data.searchQuery}{enter}`
+        );
+        productSearchFlow.searchResult(this.data.searchQuery);
       });
 
       beforeEach(() => {

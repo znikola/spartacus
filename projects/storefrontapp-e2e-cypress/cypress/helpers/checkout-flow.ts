@@ -217,9 +217,7 @@ export function clickAddNewPayment() {
   cy.getByText('Add New Payment').click();
 }
 
-export function goToCheapProductDetailsPage(
-  sampleProduct: SampleProduct = cheapProduct
-) {
+export function goToCheapProductDetailsPage(sampleProduct: SampleProduct) {
   visitHomePage();
   clickCheapProductDetailsFromHomePage(sampleProduct);
 }
@@ -241,7 +239,7 @@ export function clickCheapProductDetailsFromHomePage(
 
 export function addCheapProductToCartAndLogin(
   sampleUser: SampleUser = user,
-  sampleProduct: SampleProduct = cheapProduct
+  sampleProduct: SampleProduct
 ) {
   addCheapProductToCart(sampleProduct);
   const loginPage = waitForPage('/login', 'getLoginPage');
@@ -289,7 +287,7 @@ export function addCheapProductToCart(
 }
 
 export function fillAddressFormWithCheapProduct(
-  shippingAddressData: AddressData = user,
+  shippingAddressData: AddressData,
   cartData: SampleCartProduct = cartWithCheapProduct
 ) {
   cy.get('.cx-checkout-title').should('contain', 'Shipping Address');
@@ -306,9 +304,9 @@ export function fillAddressFormWithCheapProduct(
 }
 
 export function fillPaymentFormWithCheapProduct(
-  paymentDetailsData: PaymentDetails = user,
-  billingAddress?: AddressData,
-  cartData: SampleCartProduct = cartWithCheapProduct
+  paymentDetailsData: PaymentDetails,
+  cartData: SampleCartProduct,
+  billingAddress?: AddressData
 ) {
   cy.get('.cx-checkout-title').should('contain', 'Payment');
   cy.get('cx-order-summary .cx-summary-partials .cx-summary-total')
@@ -320,9 +318,9 @@ export function fillPaymentFormWithCheapProduct(
 }
 
 export function placeOrderWithCheapProduct(
-  sampleUser: SampleUser = user,
-  cartData: SampleCartProduct = cartWithCheapProduct,
-  currency: string = 'USD'
+  sampleUser: SampleUser,
+  cartData: SampleCartProduct,
+  currency: string
 ) {
   verifyReviewOrderPage();
   cy.get('.cx-review-summary-card')
@@ -366,10 +364,10 @@ export function placeOrderWithCheapProduct(
 }
 
 export function verifyOrderConfirmationPageWithCheapProduct(
-  sampleUser: SampleUser = user,
-  sampleProduct: SampleProduct = cheapProduct,
-  cartData: SampleCartProduct = cartWithCheapProduct,
-  isApparel: boolean = false
+  sampleUser: SampleUser,
+  sampleProduct: SampleProduct,
+  cartData: SampleCartProduct,
+  isApparel: boolean
 ) {
   cy.get('.cx-page-title').should('contain', 'Confirmation of Order');
   cy.get('h2').should('contain', 'Thank you for your order!');
@@ -402,9 +400,7 @@ export function verifyOrderConfirmationPageWithCheapProduct(
   );
 }
 
-export function viewOrderHistoryWithCheapProduct(
-  cartData: SampleCartProduct = cartWithCheapProduct
-) {
+export function viewOrderHistoryWithCheapProduct(cartData: SampleCartProduct) {
   const orderHistoryPage = waitForPage(
     '/my-account/orders',
     'getOrderHistoryPage'

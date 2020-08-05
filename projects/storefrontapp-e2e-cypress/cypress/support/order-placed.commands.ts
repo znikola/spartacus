@@ -24,7 +24,7 @@ declare global {
 
 Cypress.Commands.add(
   'waitForOrderToBePlacedRequest',
-  (contentCatalog = 'electronics-spa', currency = 'USD', orderNumber) => {
+  (contentCatalog, currency, orderNumber) => {
     waitForOrderToBePlacedRequest(orderNumber, contentCatalog, currency);
   }
 );

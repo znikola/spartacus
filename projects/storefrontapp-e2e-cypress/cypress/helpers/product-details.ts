@@ -42,7 +42,6 @@ export function verifyCorrectTabs() {
 }
 
 export function verifyTextInTabs() {
-  cy.get(TABS_HEADER_LIST).eq(0).click();
   cy.get(ACTIVE_TABS_CONTAINER)
     .should(
       'contain',

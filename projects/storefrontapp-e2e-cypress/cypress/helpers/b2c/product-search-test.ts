@@ -1,14 +1,11 @@
-import * as productSearchFlow from '../../../../helpers/commons/product-search/product-search';
-import { SEARCH_CAMERA } from '../../../../helpers/constants/index';
+import * as productSearchFlow from '../commons/product-search/product-search';
 
-export function productSearchTest(data, isMobile) {
-  describe('Search results', () => {
-    it('should be able to search and get results', () => {
-      console.log('why not', this.data);
-      productSearchFlow.searchResult(SEARCH_CAMERA);
-    });
+export function whyOkay(data) {
+  it('should be able to search and get results', () => {
+    productSearchFlow.searchResult(data.searchQuery);
   });
-
+}
+export function productSearchTest(data, isMobile) {
   describe('Pagination', () => {
     it('should navigate to the next page and display results', () => {
       productSearchFlow.verifyNextPage(2);
@@ -31,18 +28,18 @@ export function productSearchTest(data, isMobile) {
 
   describe('Facets', () => {
     it('should filter results using facet filtering', () => {
-      productSearchFlow.filterUsingFacetFiltering(!isMobile, SEARCH_CAMERA);
+      productSearchFlow.filterUsingFacetFiltering(!isMobile, data.searchQuery);
     });
 
     it('should be able to clear active facet', () => {
-      productSearchFlow.clearActiveFacet(SEARCH_CAMERA);
+      productSearchFlow.clearActiveFacet(data.searchQuery);
     });
   });
 
   describe('Sorting', () => {
     before(() => {
       cy.visit('/');
-      cy.get('cx-searchbox input').type('camera{enter}');
+      cy.get('cx-searchbox input').type(`${data.searchQuery}{enter}`);
     });
 
     beforeEach(() => {
