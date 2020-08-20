@@ -245,7 +245,7 @@ export function deleteShippingAddress() {
     method: 'GET',
     url: `${Cypress.env('API_URL')}/${Cypress.env('OCC_PREFIX')}/${Cypress.env(
       'BASE_SITE'
-    )}/users/test-user-cypress@ydev.hybris.com/addresses?lang=en&curr=USD`,
+    )}/users/current/addresses?lang=en&curr=USD`,
     headers: {
       Authorization: `bearer ${
         JSON.parse(localStorage.getItem('spartacus-local-data')).auth.userToken
@@ -266,7 +266,7 @@ export function deleteShippingAddress() {
           'OCC_PREFIX'
         )}/${Cypress.env(
           'BASE_SITE'
-        )}/users/test-user-cypress@ydev.hybris.com/addresses/${id}?lang=en&curr=USD`,
+        )}/users/current/addresses/${id}?lang=en&curr=USD`,
         headers: {
           Authorization: `bearer ${
             JSON.parse(localStorage.getItem('spartacus-local-data')).auth
@@ -284,7 +284,7 @@ export function deletePaymentCard() {
     method: 'GET',
     url: `${Cypress.env('API_URL')}/${Cypress.env('OCC_PREFIX')}/${Cypress.env(
       'BASE_SITE'
-    )}/users/test-user-cypress@ydev.hybris.com/paymentdetails?saved=true&lang=en&curr=USD`,
+    )}/users/current/paymentdetails?saved=true&lang=en&curr=USD`,
     headers: {
       Authorization: `bearer ${
         JSON.parse(localStorage.getItem('spartacus-local-data')).auth.userToken
@@ -305,7 +305,7 @@ export function deletePaymentCard() {
           'OCC_PREFIX'
         )}/${Cypress.env(
           'BASE_SITE'
-        )}/users/test-user-cypress@ydev.hybris.com/paymentdetails/${id}?lang=en&curr=USD`,
+        )}/users/current/paymentdetails/${id}?lang=en&curr=USD`,
         headers: {
           Authorization: `bearer ${
             JSON.parse(localStorage.getItem('spartacus-local-data')).auth

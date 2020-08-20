@@ -372,17 +372,26 @@ export function verifyOrderConfirmationPageWithCheapProduct(
 ) {
   cy.get('.cx-page-title').should('contain', 'Confirmation of Order');
   cy.get('h2').should('contain', 'Thank you for your order!');
-  cy.get('.cx-order-review-summary .row').within(() => {
-    cy.get('.col-lg-3:nth-child(1) .cx-card').within(() => {
+  cy.get('.cx-order-review-summary .container').within(() => {
+    cy.get('.summary-card:nth-child(1) .cx-card').within(() => {
       cy.contains(sampleUser.fullName);
       cy.contains(sampleUser.address.line1);
     });
-    cy.get('.col-lg-3:nth-child(2) .cx-card').within(() => {
+    cy.get('.summary-card:nth-child(2) .cx-card').within(() => {
       cy.contains(sampleUser.fullName);
       cy.contains(sampleUser.address.line1);
     });
-    cy.get('.col-lg-3:nth-child(3) .cx-card').within(() => {
+    cy.get('.summary-card:nth-child(3) .cx-card').within(() => {
       cy.contains('Standard Delivery');
+    });
+    cy.get('.summary-card:nth-child(4) .cx-card').within(() => {
+      cy.contains(sampleUser.fullName);
+      cy.contains('************1111');
+      cy.contains(
+        `Expires: ${sampleUser.payment.expires.month.substring(1)}/${
+          sampleUser.payment.expires.year
+        }`
+      );
     });
   });
   if (!isApparel) {
