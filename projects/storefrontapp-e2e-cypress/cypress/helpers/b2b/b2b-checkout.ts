@@ -30,6 +30,19 @@ export function enterPONumber() {
   });
 }
 
+export function selectAccountPayment() {
+  cy.get('cx-payment-type').within(() => {
+    cy.getByText('Account').click({ force: true });
+  });
+
+  const shippingPage = waitForPage(
+    '/checkout/shipping-address',
+    'getShippingPage'
+  );
+  cy.get('button.btn-primary').click({ force: true });
+  cy.wait(`@${shippingPage}`).its('status').should('eq', 200);
+}
+
 export function selectCreditCardPayment() {
   cy.get('cx-payment-type').within(() => {
     cy.getByText('Credit Card').click({ force: true });
@@ -41,4 +54,13 @@ export function selectCreditCardPayment() {
   );
   cy.get('button.btn-primary').click({ force: true });
   cy.wait(`@${shippingPage}`).its('status').should('eq', 200);
+}
+
+export function selectAccountShippingAddress() {
+  cy.get('.cx-checkout-title').should('contain', 'Shipping Address');
+  cy.get('cx-order-summary .cx-summary-partials .cx-summary-row')
+    .first()
+    .find('.cx-summary-amount')
+    .should('not.be.empty');
+  cy.get('.card-header').should('contain', 'Selected');
 }
