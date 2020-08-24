@@ -50,7 +50,7 @@ context('B2B - Account Checkout flow', () => {
   });
 
   it('should enter shipping address', () => {
-    checkout.fillAddressFormWithCheapProduct(user, cartWithB2bProduct);
+    b2bCheckout.selectAccountShippingAddress();
   });
 
   it('should select delivery mode', () => {

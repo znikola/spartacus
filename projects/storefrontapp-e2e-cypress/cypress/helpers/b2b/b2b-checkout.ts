@@ -62,5 +62,27 @@ export function selectAccountShippingAddress() {
     .first()
     .find('.cx-summary-amount')
     .should('not.be.empty');
-  cy.get('.card-header').should('contain', 'Selected');
+
+  cy.server();
+
+  cy.route(
+    'GET',
+    `${Cypress.env('OCC_PREFIX')}/${Cypress.env(
+      'BASE_SITE'
+    )}/users/current/carts/*`
+  ).as('getCart');
+  cy.get('cx-card').within(() => {
+    cy.get('.cx-card-label-bold').should('not.be.empty');
+    cy.get('.cx-card-actions .cx-card-link').click({ force: true });
+  });
+
+  cy.wait('@getCart');
+  cy.get('cx-card .card-header').should('contain', 'Selected');
+
+  const deliveryPage = waitForPage(
+    '/checkout/delivery-mode',
+    'getDeliveryPage'
+  );
+  cy.get('button.btn-primary').click({ force: true });
+  cy.wait(`@${deliveryPage}`).its('status').should('eq', 200);
 }
