@@ -31,6 +31,7 @@ context('B2B - Credit Card Checkout flow', () => {
       b2bUser.registrationData.email,
       b2bUser.registrationData.password
     ).then((res) => {
+      expect(res.status).to.eq(200);
       if (res.status === 200) {
         // User is already registered - only set session in localStorage
         setSessionData({ ...res.body, userId: b2bUser.registrationData.email });

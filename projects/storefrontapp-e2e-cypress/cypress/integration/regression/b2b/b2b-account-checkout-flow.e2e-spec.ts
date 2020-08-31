@@ -1,7 +1,6 @@
 import {
   cartWithB2bProduct,
   POWERTOOLS_BASESITE,
-  POWERTOOLS_DEFAULT_DELIVERY_MODE,
   products,
 } from '../../../helpers/b2b/b2b';
 import * as b2bCheckout from '../../../helpers/b2b/b2b-checkout';
@@ -31,6 +30,7 @@ context('B2B - Account Checkout flow', () => {
       b2bUser.registrationData.email,
       b2bUser.registrationData.password
     ).then((res) => {
+      expect(res.status).to.eq(200);
       if (res.status === 200) {
         // User is already registered - only set session in localStorage
         setSessionData({ ...res.body, userId: b2bUser.registrationData.email });
@@ -54,19 +54,11 @@ context('B2B - Account Checkout flow', () => {
   });
 
   it('should select delivery mode', () => {
-    checkout.verifyDeliveryMethod(POWERTOOLS_DEFAULT_DELIVERY_MODE);
-  });
-
-  it('should enter payment method', () => {
-    checkout.fillPaymentFormWithCheapProduct(
-      user,
-      undefined,
-      cartWithB2bProduct
-    );
+    b2bCheckout.selectAccountDeliveryMode();
   });
 
   it('should review and place order', () => {
-    checkout.placeOrderWithCheapProduct(user, cartWithB2bProduct);
+    b2bCheckout.placeAccountOrder(user, cartWithB2bProduct);
   });
 
   it('should display summary page', () => {
