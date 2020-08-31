@@ -1,15 +1,33 @@
-import { SampleCartProduct, SampleUser } from '../../sample-data/checkout-flow';
+import {
+  b2bAccountShipToUser,
+  b2bProduct,
+  b2bUnit,
+  b2bUser,
+  costCenter,
+  poNumber,
+  POWERTOOLS_BASESITE,
+  POWERTOOLS_DEFAULT_DELIVERY_MODE,
+  products,
+} from '../../sample-data/b2b-checkout';
+import {
+  SampleCartProduct,
+  SampleProduct,
+  SimpleUser,
+  user,
+} from '../../sample-data/checkout-flow';
 import {
   addCheapProductToCart,
   verifyReviewOrderPage,
   waitForPage,
 } from '../checkout-flow';
-import {
-  poNumber,
-  POWERTOOLS_BASESITE,
-  POWERTOOLS_DEFAULT_DELIVERY_MODE,
-  products,
-} from './b2b';
+import { generateMail, randomString } from '../user';
+
+export function loginB2bUser() {
+  b2bUser.registrationData.email = generateMail(randomString(), true);
+  cy.requireLoggedIn(b2bUser);
+  cy.visit('/');
+  cy.get('.cx-login-greet').should('contain', user.fullName);
+}
 
 export function addB2bProductToCartAndCheckout() {
   cy.visit(`${POWERTOOLS_BASESITE}/en/USD/product/${products[0].code}`);
@@ -108,15 +126,15 @@ export function selectAccountDeliveryMode(
 }
 
 export function placeAccountOrder(
-  user: SampleUser,
+  user: SimpleUser = b2bAccountShipToUser,
   cartData: SampleCartProduct
 ) {
   verifyReviewOrderPage();
   cy.get('.cx-review-summary-card')
-    .contains('cx-card', 'Purchase order Number')
+    .contains('cx-card', 'Purchase Order Number')
     .find('.cx-card-container')
     .within(() => {
-      cy.getByText('None');
+      cy.getByText(poNumber);
     });
   cy.get('.cx-review-summary-card')
     .contains('cx-card', 'Method of Payment')
@@ -128,8 +146,8 @@ export function placeAccountOrder(
     .contains('cx-card', 'Cost Center')
     .find('.cx-card-container')
     .within(() => {
-      cy.getByText('Custom Retail');
-      cy.getByText('(Custom Retail)');
+      cy.getByText(costCenter);
+      cy.getByText(`(${b2bUnit})`);
     });
   cy.get('.cx-review-summary-card')
     .contains('cx-card', 'Ship To')
@@ -137,7 +155,6 @@ export function placeAccountOrder(
     .within(() => {
       cy.getByText(user.fullName);
       cy.getByText(user.address.line1);
-      cy.getByText(user.address.line2);
     });
   cy.get('.cx-review-summary-card')
     .contains('cx-card', 'Shipping Method')
@@ -169,4 +186,33 @@ export function placeAccountOrder(
   );
   cy.get('cx-place-order button.btn-primary').click();
   cy.wait(`@${orderConfirmationPage}`).its('status').should('eq', 200);
+}
+
+export function reviewUserAccountConfirmation(
+  sampleUser: SimpleUser = b2bAccountShipToUser,
+  sampleProduct: SampleProduct = b2bProduct,
+  cartData: SampleCartProduct
+) {
+  cy.get('.cx-page-title').should('contain', 'Confirmation of Order');
+  cy.get('h2').should('contain', 'Thank you for your order!');
+  cy.get('.cx-order-review-summary .container').within(() => {
+    cy.get('.summary-card:nth-child(1) .cx-card').within(() => {
+      cy.contains(sampleUser.fullName);
+      cy.contains(sampleUser.address.line1);
+    });
+    cy.get('.summary-card:nth-child(2) .cx-card').within(() => {
+      cy.contains('Standard Delivery');
+    });
+    cy.get('.summary-card:nth-child(3) .cx-card').within(() => {
+      cy.contains('Pay by Account');
+      cy.contains(`Purchase Order #: ${poNumber}`);
+      cy.contains(`Cost Center: ${costCenter}`);
+      cy.contains(`Unit: ${b2bUnit}`);
+    });
+  });
+  cy.get('cx-cart-item .cx-code').should('contain', sampleProduct.code);
+  cy.get('cx-order-summary .cx-summary-amount').should(
+    'contain',
+    cartData.totalAndShipping
+  );
 }
