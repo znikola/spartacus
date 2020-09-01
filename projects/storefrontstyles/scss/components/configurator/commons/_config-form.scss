@@ -1,17 +1,19 @@
 %cx-config-form {
   .cx-config-attribute-header {
-    margin-right: 17px;
-    margin-left: 17px;
+    margin-inline-end: 17px;
+    margin-inline-start: 17px;
   }
 
   .cx-config-attribute-footer {
-    margin-right: 17px;
-    margin-left: 17px;
+    margin-inline-end: 17px;
+    margin-inline-start: 17px;
   }
 
   .cx-config-attribute-value {
-    margin-left: 17px;
-    padding: 10px 34px 0 0;
+    margin-inline-start: 17px;
+    padding-top: 10px;
+    padding-inline-end: 34px;
+    /*padding: 10px 34px 0 0;*/
     clear: both;
     display: block;
   }

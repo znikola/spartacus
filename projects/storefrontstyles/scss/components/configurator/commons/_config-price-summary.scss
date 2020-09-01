@@ -14,11 +14,11 @@
       clear: both;
     }
 
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-inline-start: 15px;
+    padding-inline-end: 15px;
 
     width: 400px;
-    float: right;
+    /*float: right;*/
 
     .cx-summary-row {
       padding-top: 10px;
@@ -47,8 +47,8 @@
         content: '';
         border-top: 1px solid var(--cx-color-light);
         width: 100%;
-        margin-right: 15px;
-        margin-left: 15px;
+        margin-inline-end: 15px;
+        margin-inline-start: 15px;
       }
     }
   }

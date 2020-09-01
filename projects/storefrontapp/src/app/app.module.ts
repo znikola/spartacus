@@ -8,8 +8,9 @@ import {
   BrowserTransferStateModule,
 } from '@angular/platform-browser';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { TestConfigModule } from '@spartacus/core';
+import { ConfigModule, TestConfigModule } from '@spartacus/core';
 import {
+  DirectionConfig,
   JsonLdBuilderModule,
   StorefrontComponent,
 } from '@spartacus/storefront';
@@ -57,6 +58,11 @@ if (environment.cdc) {
     TestOutletModule, // custom usages of cxOutletRef only for e2e testing
     TestConfigModule.forRoot({ cookie: 'cxConfigE2E' }), // Injects config dynamically from e2e tests. Should be imported after other config modules.
 
+    ConfigModule.withConfig({
+      direction: {
+        rtlLanguages: ['de'],
+      },
+    } as DirectionConfig),
     ...devImports,
   ],
 

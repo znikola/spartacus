@@ -56,20 +56,20 @@
     }
 
     a.cx-config-toogle-details-link {
-      float: right;
+      align-content: flex-start;
       cursor: pointer;
       display: inline-flex;
       color: var(--cx-color-text);
       font-weight: normal;
       margin-top: -25px;
-      margin-right: 5px;
+      margin-inline-end: 5px;
 
       &:hover {
         text-decoration: none;
       }
 
       cx-icon {
-        margin-left: 5px;
+        margin-inline-start: 5px;
       }
 
       @include media-breakpoint-down(xs) {

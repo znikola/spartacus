@@ -1,9 +1,10 @@
 %cx-config-previous-next-buttons {
   .cx-config-previous-next-btns {
     padding: 1rem 10px;
-    justify-content: space-between;
+    justify-content: stretch;
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
 
     @include media-breakpoint-down(md) {
       padding: 1.25rem 10px;

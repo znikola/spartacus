@@ -8,8 +8,8 @@
     .cx-config-attribute-value-img-dummy {
       padding: 3px;
       display: block;
-      margin-left: auto;
-      margin-right: auto;
+      margin-inline-start: auto;
+      margin-inline-end: auto;
       max-width: 75%;
       border-radius: 2px;
       border: transparent 3px solid;
@@ -29,7 +29,7 @@
     input.form-input {
       -webkit-appearance: none;
       visibility: hidden;
-      left: 25px;
+      /*left: 25px;*/
     }
 
     .cx-config-attribute-value-label {

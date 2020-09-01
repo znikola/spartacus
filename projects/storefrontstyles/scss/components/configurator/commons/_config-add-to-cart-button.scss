@@ -14,9 +14,12 @@
       clear: both;
     }
 
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-inline-end: 15px;
+    padding-inline-start: 15px;
     width: 400px;
-    float: right;
+
+    align-content: flex-end;
+    display: flex;
+    /*float: right; */
   }
 }

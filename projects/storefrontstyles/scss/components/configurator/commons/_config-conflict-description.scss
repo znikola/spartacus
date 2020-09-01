@@ -2,11 +2,19 @@
   .cx-config-conflict-description-container {
     background-color: mix(#ffffff, theme-color('warning'), 78%);
     padding: 5px;
-    margin: 0 -10px 15px -10px;
+
+    margin-inline-start: -10px;
+    margin-inline-end: -10px;
+    margin-bottom: -15px;
+    /* margin: 0 -10px 15px -10px;*/
     display: flex;
 
     .cx-config-conflict-icon-container {
-      padding: 5px 15px 5px 15px;
+      /*padding: 5px 15px 5px 15px;*/
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-inline-start: 15px;
+      padding-inline-end: 15px;
       align-self: center;
     }
 

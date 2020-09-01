@@ -2,7 +2,12 @@
   .cx-config-conflict-suggestion {
     padding: 15px;
     background-color: mix(#ffffff, theme-color('light'), 90%);
-    margin: 0 -20px 15px -20px;
+    /*margin: 0 -20px 15px -20px;*/
+
+    margin-inline-start: -20px;
+    margin-inline-end: -20px;
+    margin-bottom: -15px;
+
     border-width: 1px;
     border-style: solid;
     border-color: var(--cx-color-light);
