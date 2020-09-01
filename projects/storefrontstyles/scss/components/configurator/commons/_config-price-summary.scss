@@ -1,6 +1,7 @@
 %cx-config-price-summary {
   padding: 15px;
   margin-top: 15px;
+  display: flex;
   justify-content: flex-end;
   width: 100%;
 
@@ -26,7 +27,7 @@
 
       .cx-summary-amount {
         word-wrap: break-word;
-        text-align: right;
+        text-align: end;
       }
     }
 
