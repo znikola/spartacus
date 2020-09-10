@@ -196,18 +196,30 @@ export function reviewUserAccountConfirmation(
   cy.get('.cx-page-title').should('contain', 'Confirmation of Order');
   cy.get('h2').should('contain', 'Thank you for your order!');
   cy.get('.cx-order-review-summary .container').within(() => {
-    cy.get('.summary-card:nth-child(1) .cx-card').within(() => {
-      cy.contains(sampleUser.fullName);
-      cy.contains(sampleUser.address.line1);
+    cy.get('.summary-card:nth-child(1)').within(() => {
+      cy.get('cx-card:nth-child(1)').within(() => {
+        cy.get('.cx-card-title').should('contain', 'Order Number');
+        cy.get('.cx-card-label').should('not.be.empty');
+      });
+      cy.get('cx-card:nth-child(2)').within(() => {
+        cy.get('.cx-card-title').should('contain', 'Placed on');
+        cy.get('.cx-card-label').should('not.be.empty');
+      });
+      cy.get('cx-card:nth-child(3)').within(() => {
+        cy.get('.cx-card-title').should('contain', 'Status');
+        cy.get('.cx-card-label').should('not.be.empty');
+      });
     });
     cy.get('.summary-card:nth-child(2) .cx-card').within(() => {
-      cy.contains('Standard Delivery');
+      cy.contains('Account');
+      cy.contains(poNumber);
+      cy.contains(costCenter);
+      cy.contains(`(${b2bUnit})`);
     });
     cy.get('.summary-card:nth-child(3) .cx-card').within(() => {
-      cy.contains('Pay by Account');
-      cy.contains(`Purchase Order #: ${poNumber}`);
-      cy.contains(`Cost Center: ${costCenter}`);
-      cy.contains(`Unit: ${b2bUnit}`);
+      cy.contains(sampleUser.fullName);
+      cy.contains(sampleUser.address.line1);
+      cy.contains('Standard Delivery');
     });
   });
   cy.get('cx-cart-item .cx-code').should('contain', sampleProduct.code);
