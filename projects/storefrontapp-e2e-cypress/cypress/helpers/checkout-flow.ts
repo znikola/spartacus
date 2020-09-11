@@ -174,29 +174,6 @@ export function placeOrder() {
   cy.get('cx-place-order button.btn-primary').click();
 }
 
-export function verifyOrderConfirmationPage() {
-  cy.get('.cx-page-title').should('contain', 'Confirmation of Order');
-  cy.get('h2').should('contain', 'Thank you for your order!');
-  cy.get('.cx-order-review-summary .row').within(() => {
-    cy.get('.col-lg-3:nth-child(1) .cx-card').within(() => {
-      cy.contains(user.fullName);
-      cy.contains(user.address.line1);
-    });
-    cy.get('.col-lg-3:nth-child(2) .cx-card').within(() => {
-      cy.contains(user.fullName);
-      cy.contains(user.address.line1);
-    });
-    cy.get('.col-lg-3:nth-child(3) .cx-card').within(() => {
-      cy.contains('Standard Delivery');
-    });
-  });
-  cy.get('cx-cart-item .cx-code').should('contain', product.code);
-  cy.get('cx-order-summary .cx-summary-amount').should(
-    'contain',
-    cart.totalAndShipping
-  );
-}
-
 export function viewOrderHistory() {
   cy.selectUserMenuOption({
     option: 'Order History',
@@ -373,25 +350,28 @@ export function verifyOrderConfirmationPageWithCheapProduct(
   cy.get('.cx-page-title').should('contain', 'Confirmation of Order');
   cy.get('h2').should('contain', 'Thank you for your order!');
   cy.get('.cx-order-review-summary .container').within(() => {
-    cy.get('.summary-card:nth-child(1) .cx-card').within(() => {
-      cy.contains(sampleUser.fullName);
-      cy.contains(sampleUser.address.line1);
+    cy.get('.summary-card:nth-child(1)').within(() => {
+      cy.get('cx-card:nth-child(1)').within(() => {
+        cy.get('.cx-card-title').should('contain', 'Order Number');
+        cy.get('.cx-card-label').should('not.be.empty');
+      });
+      cy.get('cx-card:nth-child(2)').within(() => {
+        cy.get('.cx-card-title').should('contain', 'Placed on');
+        cy.get('.cx-card-label').should('not.be.empty');
+      });
+      cy.get('cx-card:nth-child(3)').within(() => {
+        cy.get('.cx-card-title').should('contain', 'Status');
+        cy.get('.cx-card-label').should('not.be.empty');
+      });
     });
     cy.get('.summary-card:nth-child(2) .cx-card').within(() => {
       cy.contains(sampleUser.fullName);
       cy.contains(sampleUser.address.line1);
-    });
-    cy.get('.summary-card:nth-child(3) .cx-card').within(() => {
       cy.contains('Standard Delivery');
     });
-    cy.get('.summary-card:nth-child(4) .cx-card').within(() => {
+    cy.get('.summary-card:nth-child(3) .cx-card').within(() => {
       cy.contains(sampleUser.fullName);
-      cy.contains('************1111');
-      cy.contains(
-        `Expires: ${sampleUser.payment.expires.month.substring(1)}/${
-          sampleUser.payment.expires.year
-        }`
-      );
+      cy.contains(sampleUser.address.line1);
     });
   });
   if (!isApparel) {
