@@ -8,7 +8,6 @@ import {
 } from './order.model';
 import { CostCenter } from './org-unit.model';
 import { Price, Promotion } from './product.model';
-import { CostCenter } from './org-unit.model';
 
 export interface PromotionResult {
   consumedEntries?: PromotionOrderEntryConsumed[];
