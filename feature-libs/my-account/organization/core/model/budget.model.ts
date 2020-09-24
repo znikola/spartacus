@@ -12,3 +12,8 @@ export interface Budget {
   costCenters?: CostCenter[];
   selected?: boolean;
 }
+
+export enum LoadStatus {
+  SUCCESS,
+  ERROR,
+}

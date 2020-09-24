@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { RoutingService } from '@spartacus/core';
 import {
-  Budget,
   UserGroup,
   UserGroupService,
 } from '@spartacus/my-account/organization/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { OrganizationItemService } from '../../shared/organization-item.service';
 import { UserGroupFormService } from '../form/user-group-form.service';
 import { CurrentUserGroupService } from './current-user-group.service';
+import { LoadStatus } from '../../../core/model/budget.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,16 +23,17 @@ export class UserGroupItemService extends OrganizationItemService<UserGroup> {
     super(currentItemService, routingService, formService);
   }
 
-  load(code: string): Observable<Budget> {
+  load(code: string): Observable<UserGroup> {
     this.userGroupService.load(code);
     return this.userGroupService.get(code);
   }
 
-  update(code, value: Budget) {
+  update(code, value: UserGroup): Observable<LoadStatus> {
     this.userGroupService.update(code, value);
+    return of(LoadStatus.ERROR);
   }
 
-  protected create(value: Budget) {
+  protected create(value: UserGroup) {
     this.userGroupService.create(value);
   }
 

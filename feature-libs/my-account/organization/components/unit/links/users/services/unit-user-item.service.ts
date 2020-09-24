@@ -4,10 +4,11 @@ import {
   B2BUserService,
   OrgUnitService,
 } from '@spartacus/my-account/organization/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { OrganizationItemService } from '../../../../shared/organization-item.service';
 import { UnitUserRolesFormService } from '../roles/unit-user-roles-form.service';
 import { CurrentUnitUserService } from './current-unit-user.service';
+import { LoadStatus } from '../../../../../core/model/budget.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +27,9 @@ export class UnitUserItemService extends OrganizationItemService<B2BUser> {
     return this.b2bUserService.get(unitUid);
   }
 
-  update(_customerId: string, _user: B2BUser) {}
+  update(_customerId: string, _user: B2BUser): Observable<LoadStatus> {
+    return of(LoadStatus.ERROR);
+  }
 
   protected create(_customerId: B2BUser): void {}
 

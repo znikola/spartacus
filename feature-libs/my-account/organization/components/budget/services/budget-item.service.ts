@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { OrganizationItemService } from '../../shared/organization-item.service';
 import { BudgetFormService } from '../form/budget-form.service';
 import { CurrentBudgetService } from './current-budget.service';
+import { LoadStatus } from '../../../core/model/budget.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +31,9 @@ export class BudgetItemService extends OrganizationItemService<Budget> {
     return this.budgetService.get(code);
   }
 
-  update(code, value: Budget) {
+  update(code, value: Budget): Observable<LoadStatus> {
     this.budgetService.update(code, value);
+    return this.budgetService.getLoadingStatus(code);
   }
 
   protected create(value: Budget) {

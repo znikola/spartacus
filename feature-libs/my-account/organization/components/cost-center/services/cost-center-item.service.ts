@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CostCenter, RoutingService } from '@spartacus/core';
-import {
-  Budget,
-  CostCenterService,
-} from '@spartacus/my-account/organization/core';
-import { Observable } from 'rxjs';
+import { CostCenterService } from '@spartacus/my-account/organization/core';
+import { Observable, of } from 'rxjs';
 import { OrganizationItemService } from '../../shared/organization-item.service';
 import { CostCenterFormService } from '../form/cost-center-form.service';
 import { CurrentCostCenterService } from './current-cost-center.service';
+import { LoadStatus } from '../../../core/model/budget.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +25,12 @@ export class CostCenterItemService extends OrganizationItemService<CostCenter> {
     return this.costCenterService.get(code);
   }
 
-  update(code, value: Budget) {
+  update(code, value: CostCenter): Observable<LoadStatus> {
     this.costCenterService.update(code, value);
+    return of(LoadStatus.ERROR);
   }
 
-  protected create(value: Budget) {
+  protected create(value: CostCenter) {
     this.costCenterService.create(value);
   }
 

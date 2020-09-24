@@ -8,8 +8,8 @@ import {
   StateWithProcess,
 } from '@spartacus/core';
 import { Observable, queueScheduler } from 'rxjs';
-import { filter, map, observeOn, take, tap } from 'rxjs/operators';
-import { Budget } from '../model/budget.model';
+import { filter, map, observeOn, pairwise, take, tap } from 'rxjs/operators';
+import { Budget, LoadStatus } from '../model/budget.model';
 import { B2BSearchConfig } from '../model/search-config';
 import { BudgetActions, StateWithOrganization } from '../store/index';
 import { getBudget, getBudgetList } from '../store/selectors/budget.selector';
@@ -55,6 +55,21 @@ export class BudgetService {
       }),
       filter((state) => state.success || state.error),
       map((state) => state.value)
+    );
+  }
+
+  getLoadingStatus(budgetCode: string): Observable<LoadStatus> {
+    return this.getBudget(budgetCode).pipe(
+      observeOn(queueScheduler),
+      pairwise(),
+      filter(([previousState]) => previousState.loading),
+      map(([_previousState, currentState]) => {
+        return currentState.success
+          ? LoadStatus.SUCCESS
+          : currentState.error
+          ? LoadStatus.ERROR
+          : null;
+      })
     );
   }
 

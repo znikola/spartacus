@@ -94,7 +94,9 @@ export class ToggleStatusComponent<T extends BaseItem> implements OnDestroy {
   }
 
   protected update(item: T): void {
-    this.itemService.update(item[this.key], this.getPatchedItem(item));
+    this.itemService
+      .update(item[this.key], this.getPatchedItem(item))
+      .subscribe(console.log); // // LoadStatus.SUCCESS (0) or LoadStatus.ERROR (1)
   }
 
   protected getPatchedItem(item: T): T {
