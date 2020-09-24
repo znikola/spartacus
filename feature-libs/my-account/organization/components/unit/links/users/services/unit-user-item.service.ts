@@ -28,6 +28,7 @@ export class UnitUserItemService extends OrganizationItemService<B2BUser> {
   }
 
   update(_customerId: string, _user: B2BUser): Observable<LoadStatus> {
+    // TODO:
     return of(LoadStatus.ERROR);
   }
 

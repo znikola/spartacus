@@ -28,6 +28,7 @@ export class UserItemService extends OrganizationItemService<Permission> {
   update(code, value: B2BUser): Observable<LoadStatus> {
     delete value.approvers;
     this.userService.update(code, value);
+    // TODO:
     return of(LoadStatus.ERROR);
   }
 
