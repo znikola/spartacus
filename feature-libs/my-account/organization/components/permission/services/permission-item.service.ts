@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Permission, RoutingService } from '@spartacus/core';
-import {
-  Budget,
-  PermissionService,
-} from '@spartacus/my-account/organization/core';
+import { PermissionService } from '@spartacus/my-account/organization/core';
 import { Observable, of } from 'rxjs';
 import { OrganizationItemService } from '../../shared/organization-item.service';
 import { PermissionFormService } from '../form/permission-form.service';
@@ -23,18 +20,18 @@ export class PermissionItemService extends OrganizationItemService<Permission> {
     super(currentItemService, routingService, formService);
   }
 
-  load(code: string): Observable<Budget> {
+  load(code: string): Observable<Permission> {
     this.permissionService.loadPermission(code);
     return this.permissionService.get(code);
   }
 
-  update(code, value: Budget): Observable<LoadStatus> {
+  update(code, value: Permission): Observable<LoadStatus> {
     this.permissionService.update(code, value);
     // TODO:
     return of(LoadStatus.ERROR);
   }
 
-  protected create(value: Budget) {
+  protected create(value: Permission) {
     this.permissionService.create(value);
   }
 
