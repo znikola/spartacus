@@ -12,7 +12,9 @@ import { translationChunksConfig, translations } from '@spartacus/assets';
 import { ConfigModule, TestConfigModule } from '@spartacus/core';
 import {
   JsonLdBuilderModule,
+  LayoutConfig,
   StorefrontComponent,
+  StorefrontConfig,
 } from '@spartacus/storefront';
 import { b2bFeature } from '../environments/b2b/b2b.feature';
 import { b2cFeature } from '../environments/b2c/b2c.feature';
@@ -20,6 +22,17 @@ import { cdcFeature } from '../environments/cdc/cdc.feature';
 import { cdsFeature } from '../environments/cds/cds.feature';
 import { environment } from '../environments/environment';
 import { TestOutletModule } from '../test-outlets/test-outlet.module';
+
+// demonstrates type safe custom breakpoints
+declare module '@spartacus/storefront' {
+  export enum BREAKPOINT {
+    xxs = 'xxs',
+    /**
+     * custom xxl
+     */
+    xxl = 'xxl',
+  }
+}
 
 registerLocaleData(localeDe);
 registerLocaleData(localeJa);
@@ -46,12 +59,22 @@ if (environment.cdc) {
   additionalImports = [...additionalImports, ...cdcFeature.imports];
 }
 
+export const c: LayoutConfig = {
+  breakpoints: {
+    xxs: 10,
+    xxl: 1200,
+  },
+};
+
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'spartacus-app' }),
     BrowserTransferStateModule,
     JsonLdBuilderModule,
     ConfigModule.withConfig({
+      breakpoints: {
+        xxl: 100,
+      },
       backend: {
         occ: {
           baseUrl: environment.occBaseUrl,
@@ -78,7 +101,10 @@ if (environment.cdc) {
       features: {
         level: '2.1',
       },
-    }),
+    } as StorefrontConfig),
+
+    ConfigModule.withConfig(c),
+
     ...additionalImports,
     TestOutletModule, // custom usages of cxOutletRef only for e2e testing
     TestConfigModule.forRoot({ cookie: 'cxConfigE2E' }), // Injects config dynamically from e2e tests. Should be imported after other config modules.
