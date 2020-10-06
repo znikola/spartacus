@@ -3,6 +3,7 @@ import {
   ActiveCartService,
   AuthService,
   Cart,
+  MultiCartService,
   OrderEntry,
   PromotionLocation,
   PromotionResult,
@@ -34,7 +35,8 @@ export class CartDetailsComponent implements OnInit {
     protected promotionService: PromotionService,
     protected selectiveCartService: SelectiveCartService,
     protected authService: AuthService,
-    protected routingService: RoutingService
+    protected routingService: RoutingService,
+    protected multiCartService: MultiCartService
   ) {}
 
   ngOnInit() {
@@ -74,5 +76,9 @@ export class CartDetailsComponent implements OnInit {
     } else {
       this.routingService.go({ cxRoute: 'login' });
     }
+  }
+
+  saveCart(cardId: string) {
+    this.activeCartService.saveCart(cardId, 'just saved 🔥');
   }
 }

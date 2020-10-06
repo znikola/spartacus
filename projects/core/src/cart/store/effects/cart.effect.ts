@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
+import { normalizeHttpError } from 'projects/core/src/util';
 import { from, Observable, of } from 'rxjs';
 import {
   catchError,
@@ -19,6 +20,7 @@ import { SiteContextActions } from '../../../site-context/store/actions/index';
 import { makeErrorSerializable } from '../../../util/serialization-utils';
 import { withdrawOn } from '../../../util/withdraw-on';
 import { CartConnector } from '../../connectors/cart/cart.connector';
+import { SaveCartConnector } from '../../connectors/save-cart';
 import { getCartIdByUserId, isCartNotFoundError } from '../../utils/utils';
 import { CartActions } from '../actions/index';
 import { StateWithMultiCart } from '../multi-cart-state';
@@ -329,9 +331,45 @@ export class CartEffects {
     )
   );
 
+  @Effect()
+  saveCart$: Observable<
+    CartActions.SaveCartSuccess | CartActions.SaveCartFail
+  > = this.actions$.pipe(
+    ofType(CartActions.SAVE_CART),
+    map((action: CartActions.SaveCart) => action.payload),
+    mergeMap((payload) =>
+      this.saveCartConnector
+        .saveCart(
+          payload.userId,
+          payload.cartId,
+          payload.name,
+          payload.description
+        )
+        .pipe(
+          mergeMap(() => {
+            return [
+              new CartActions.SaveCartSuccess({
+                ...payload,
+              }),
+            ];
+          }),
+          catchError((error) =>
+            from([
+              new CartActions.SaveCartFail({
+                ...payload,
+                error: normalizeHttpError(error),
+              }),
+            ])
+          )
+        )
+    ),
+    withdrawOn(this.contextChange$)
+  );
+
   constructor(
     private actions$: Actions,
     private cartConnector: CartConnector,
+    private saveCartConnector: SaveCartConnector,
     private store: Store<StateWithMultiCart>
   ) {}
 }

@@ -23,6 +23,7 @@ import {
 } from '../../occ/utils/occ-constants';
 import { ProcessesLoaderState } from '../../state/utils/processes-loader/processes-loader-state';
 import { EMAIL_PATTERN } from '../../util/regex-pattern';
+import { CartActions } from '../store';
 import { StateWithMultiCart } from '../store/multi-cart-state';
 import { MultiCartSelectors } from '../store/selectors/index';
 import { getCartIdByUserId, isTempCartId } from '../utils/utils';
@@ -402,6 +403,18 @@ export class ActiveCartService implements OnDestroy {
     cartEntries.forEach((entry) => {
       this.addEntry(entry.product.code, entry.quantity);
     });
+  }
+
+  saveCart(cartId: string, name?: string, description?: string) {
+    // Put it in multi an call from here?
+    this.store.dispatch(
+      new CartActions.SaveCart({
+        userId: this.userId,
+        cartId,
+        name,
+        description,
+      })
+    );
   }
 
   private isEmail(str: string): boolean {
