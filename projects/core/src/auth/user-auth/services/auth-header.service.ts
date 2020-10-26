@@ -94,7 +94,7 @@ export class AuthHeaderService {
   public handleExpiredRefreshToken(): void {
     // Logout user
     this.authService.logout();
-    this.routingService.go({ cxRoute: 'login' });
+    // this.routingService.go({ cxRoute: 'login' });
     this.globalMessageService.add(
       {
         key: 'httpHandlers.sessionExpired',

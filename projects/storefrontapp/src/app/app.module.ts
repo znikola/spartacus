@@ -89,23 +89,49 @@ if (environment.cdc) {
     //   authentication: {
     //     client_id: 'client4kyma',
     //     client_secret: 'secret',
+    //     OAuthLibConfig: {
+    //       responseType: 'id_token',
+    //       scope: 'openid',
+    //       customTokenParameters: ['token_type', 'id_token'],
+    //     },
     //   },
     // }),
     // *Auth demo - Implicit Flow
     // *Add `implicit` in backoffice OAuth client
     // *Set redirect url in the backoffice OAuth client (check if that could be dynamic and support every redirect link)
+    // ConfigModule.withConfig({
+    //   authentication: {
+    //     client_id: 'client4kyma',
+    //     client_secret: 'secret',
+    //     OAuthLibConfig: {
+    //       responseType: 'token',
+    //     },
+    //   },
+    // }),
+    // *Auth demo - Authorization Code
+    // *Add `authorization_code` in backoffice OAuth client
+    // *Set redirect url in the backoffice OAuth client (check if that could be dynamic and support every redirect link)
+    // ConfigModule.withConfig({
+    //   authentication: {
+    //     client_id: 'client4kyma',
+    //     client_secret: 'secret',
+    //     OAuthLibConfig: {
+    //       responseType: 'code',
+    //     },
+    //   },
+    // }),
+    // *Auth demo - external IdP
     ConfigModule.withConfig({
       authentication: {
-        client_id: 'client4kyma',
-        client_secret: 'secret',
+        client_id: '9l0A897QpniDYiUYzZ2NH5YCVumQRiQG',
+        client_secret:
+          'PxWIyyDR3FMx_-fn6n5BjpaBr9_KL2EUWoVQ7iCD9GDkNy-lJPdyCake7mnu_hMw',
+        baseUrl: 'https://divante-spartacus.eu.auth0.com',
         OAuthLibConfig: {
           responseType: 'token',
         },
       },
     }),
-    // *Auth demo - Authorization Code
-    // *Auth demo - id token
-    // *Auth demo - external IdP
     ...devImports,
   ],
 

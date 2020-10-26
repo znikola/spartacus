@@ -73,7 +73,7 @@ export class OAuthLibWrapperService {
         .revokeTokenAndLogout()
         .catch(() => {
           // when there would be some kind of error during revocation we can't do anything else, so at least we logout user.
-          this.oAuthService.logOut();
+          this.oAuthService.logOut(true);
         })
         .finally(() => {
           resolve();
@@ -85,7 +85,7 @@ export class OAuthLibWrapperService {
    * Clear tokens in library state (no revocation).
    */
   logout(): void {
-    this.oAuthService.logOut();
+    this.oAuthService.logOut(true);
   }
 
   /**
@@ -108,7 +108,7 @@ export class OAuthLibWrapperService {
    * Tries to login user based on `code` or `token` present in the url.
    */
   tryLogin() {
-    return this.oAuthService.tryLogin({
+    return this.oAuthService.loadDiscoveryDocumentAndTryLogin({
       // We don't load discovery document, because it doesn't contain revoke endpoint information
       disableOAuth2StateCheck: true,
     });
