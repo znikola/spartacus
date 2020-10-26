@@ -2,6 +2,7 @@
 
 // Always bump to the latest (breaking) styles during development.
 $useLatestStyles: true;
+$styleVersion: 3.2;
 
 @import 'storefrontstyles/index';
 @import 'organization';
