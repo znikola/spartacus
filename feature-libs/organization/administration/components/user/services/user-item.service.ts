@@ -5,6 +5,7 @@ import {
   OrganizationItemStatus,
 } from '@spartacus/organization/administration/core';
 import { Observable } from 'rxjs';
+import { delay, startWith } from 'rxjs/operators';
 import { OrganizationItemService } from '../../shared/organization-item.service';
 import { UserFormService } from '../form/user-form.service';
 import { CurrentUserService } from './current-user.service';
@@ -24,7 +25,7 @@ export class UserItemService extends OrganizationItemService<B2BUser> {
 
   load(code: string): Observable<B2BUser> {
     this.userService.load(code);
-    return this.userService.get(code);
+    return this.userService.get(code).pipe(delay(5000), startWith({}));
   }
 
   update(code, value: B2BUser): Observable<OrganizationItemStatus<B2BUser>> {

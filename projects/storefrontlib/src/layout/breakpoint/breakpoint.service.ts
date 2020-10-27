@@ -179,7 +179,7 @@ export class BreakpointService {
    */
   protected getBreakpoint(windowWidth: number): BREAKPOINT {
     return (
-      this.breakpoints.find((br) => windowWidth <= this.getSize(br)) ??
+      this.breakpoints.find((br) => windowWidth < this.getSize(br)) ??
       this.breakpoints?.[this.breakpoints.length - 1]
     );
   }
