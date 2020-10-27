@@ -6,9 +6,9 @@ import {
   Injector,
   Type,
 } from '@angular/core';
-import { LazyModulesService } from './lazy-modules.service';
 import { Observable } from 'rxjs';
 import { filter, map, scan, startWith } from 'rxjs/operators';
+import { LazyModulesService } from './lazy-modules.service';
 
 const NOT_FOUND_SYMBOL: any = {};
 
@@ -67,14 +67,10 @@ export class UnifiedInjector {
    *
    * @param token
    */
-  getMulti<T>(
-    token: Type<T> | InjectionToken<T> | AbstractType<T>
-  ): Observable<T[]>;
-  getMulti<T>(token: any): Observable<T>;
-  getMulti<T>(
-    token: Type<T> | InjectionToken<T> | AbstractType<T> | any
-  ): Observable<T[]> {
-    return this.get(token, []).pipe(
+  getMulti<T, K extends GetMultiParams<T>>(
+    token: K
+  ): Observable<GetMultiReturnType<T, K>> {
+    return this.get(token as any, []).pipe(
       filter((instances) => {
         if (!Array.isArray(instances)) {
           throw new Error(
@@ -84,6 +80,24 @@ export class UnifiedInjector {
         return instances.length > 0;
       }),
       scan((acc, services) => [...acc, ...services], [])
-    );
+    ) as any;
   }
 }
+
+/**
+ * Possible params in getMulti function.
+ */
+type GetMultiParams<T> = Type<T> | InjectionToken<T> | AbstractType<T>;
+
+/**
+ * Return type of getMulti function. This type is not 100% correct, but works nicely in common use cases.
+ */
+type GetMultiReturnType<T, K> = K extends Type<infer Res>
+  ? Res[]
+  : K extends InjectionToken<infer Res>
+  ? Res extends Array<any>
+    ? Res
+    : Res[]
+  : K extends AbstractType<infer Res>
+  ? Res[]
+  : T;
