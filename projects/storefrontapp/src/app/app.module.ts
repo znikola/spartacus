@@ -13,6 +13,7 @@ import { ConfigModule, TestConfigModule } from '@spartacus/core';
 import {
   JsonLdBuilderModule,
   StorefrontComponent,
+  StorefrontConfig,
 } from '@spartacus/storefront';
 import { b2bFeature } from '../environments/b2b/b2b.feature';
 import { b2cFeature } from '../environments/b2c/b2c.feature';
@@ -68,6 +69,20 @@ if (environment.cdc) {
         },
       },
 
+      featureModules: {
+        lazyBastard: {
+          module: () =>
+            import('./lazy-bastard/lazy-bastard.module').then(
+              (m) => m.LazyBastardModule
+            ),
+          cmsComponents: ['SimpleBannerComponent'],
+        },
+      },
+
+      cmsComponents: {
+        SimpleBannerComponent: null,
+      },
+
       // we bring in static translations to be up and running soon right away
       i18n: {
         resources: translations,
@@ -78,7 +93,7 @@ if (environment.cdc) {
       features: {
         level: '2.1',
       },
-    }),
+    } as StorefrontConfig),
     ...additionalImports,
     TestOutletModule, // custom usages of cxOutletRef only for e2e testing
     TestConfigModule.forRoot({ cookie: 'cxConfigE2E' }), // Injects config dynamically from e2e tests. Should be imported after other config modules.
