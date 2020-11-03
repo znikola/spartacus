@@ -17,4 +17,4 @@ import { ConfigModule } from '@spartacus/core';
   ],
   exports: [MyBannerComponent],
 })
-export class LazyBastardModule {}
+export class LazyFeatureModule {}

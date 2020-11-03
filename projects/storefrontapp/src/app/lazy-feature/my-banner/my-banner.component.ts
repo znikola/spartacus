@@ -2,14 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cx-my-banner',
-  templateUrl: './my-banner.component.html',
-  styleUrls: ['./my-banner.component.css']
+  template: '<h1>Lazy Banner</h1>',
 })
 export class MyBannerComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

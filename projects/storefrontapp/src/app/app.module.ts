@@ -72,8 +72,8 @@ if (environment.cdc) {
       featureModules: {
         lazyBastard: {
           module: () =>
-            import('./lazy-bastard/lazy-bastard.module').then(
-              (m) => m.LazyBastardModule
+            import('./lazy-feature/lazy-feature.module').then(
+              (m) => m.LazyFeatureModule
             ),
           cmsComponents: ['SimpleBannerComponent'],
         },
