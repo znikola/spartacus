@@ -4,6 +4,7 @@ import { combineLatest, Observable, of, queueScheduler, using } from 'rxjs';
 import {
   catchError,
   filter,
+  map,
   observeOn,
   pluck,
   shareReplay,
@@ -83,18 +84,42 @@ export class CmsService {
     return component[context] as Observable<T>;
   }
 
+  public getCurrentPageContext(): Observable<PageContext> {
+    return this.getCurrentPage().pipe(
+      filter((currentPage) => currentPage !== undefined),
+      map((currentPage) => {
+        return {
+          id: currentPage.pageId,
+          type: currentPage.type,
+        } as PageContext;
+      })
+    );
+  }
+
   private createComponentData<T extends CmsComponent>(
     uid: string,
     pageContext?: PageContext
   ): Observable<T> {
     if (!pageContext) {
-      return this.routingService.getPageContext().pipe(
-        filter((currentContext) => !!currentContext),
-        switchMap((currentContext) =>
-          this.getComponentData<T>(uid, currentContext)
+      // console.log(
+      //   'pla: createComponentData, NO CONTEXT, calling this.getComponentData again.',
+      //   uid,
+      //   pageContext
+      // );
+
+      // return this.routingService.getPageContext().pipe(
+      //   filter((currentContext) => !!currentContext),
+      //   switchMap((currentContext) =>
+      //     this.getComponentData<T>(uid, currentContext)
+      //   )
+      // );
+      return this.getCurrentPageContext().pipe(
+        switchMap((currentPageContext) =>
+          this.getComponentData<T>(uid, currentPageContext)
         )
       );
     }
+    // console.log('pla: createComponentData.', uid, pageContext);
 
     const context = serializePageContext(pageContext, true);
 

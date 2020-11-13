@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { catchError, filter, map, mergeMap, take } from 'rxjs/operators';
-import { RoutingService } from '../../../routing/index';
+import { catchError, map, mergeMap, take } from 'rxjs/operators';
 import { makeErrorSerializable } from '../../../util/serialization-utils';
 import { CmsComponentConnector } from '../../connectors/component/cms-component.connector';
+import { CmsService } from '../../facade/cms.service';
 import { CmsActions } from '../actions/index';
 
 @Injectable()
@@ -24,10 +24,14 @@ export class NavigationEntryItemEffects {
     }),
     mergeMap((data) => {
       if (data.ids.componentIds.length > 0) {
-        return this.routingService.getRouterState().pipe(
-          filter((routerState) => routerState !== undefined),
-          map((routerState) => routerState.state.context),
+        return this.cmsService.getCurrentPageContext().pipe(
           take(1),
+          // tap((pageContext) =>
+          //   console.log(
+          //     'pla: NavigationEntryItemEffects.loadNavigationItems$',
+          //     pageContext
+          //   )
+          // ),
           mergeMap((pageContext) =>
             // download all items in one request
             this.cmsComponentConnector
@@ -91,6 +95,7 @@ export class NavigationEntryItemEffects {
   constructor(
     private actions$: Actions,
     private cmsComponentConnector: CmsComponentConnector,
-    private routingService: RoutingService
+    //private routingService: RoutingService,
+    private cmsService: CmsService
   ) {}
 }

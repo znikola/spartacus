@@ -40,6 +40,10 @@ export class ComponentsEffects {
         mergeMap((actionGroup) =>
           actionGroup.pipe(
             bufferDebounceTime(debounce, scheduler),
+            // tap((actiongroup) =>
+            //   console.log('pla: loadComponent$: ', actiongroup)
+            // ),
+
             mergeMap((actions) =>
               this.loadComponentsEffect(
                 actions.map((action) => action.payload.uid),
@@ -59,6 +63,8 @@ export class ComponentsEffects {
     | CmsActions.LoadCmsComponentSuccess<CmsComponent>
     | CmsActions.LoadCmsComponentFail
   > {
+    // console.log('pla: ComponentsEffects.loadComponentsEffect:');
+
     return this.cmsComponentConnector.getList(componentUids, pageContext).pipe(
       switchMap((components) => {
         const actions: (
