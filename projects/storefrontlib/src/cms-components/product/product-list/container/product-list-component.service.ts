@@ -31,8 +31,7 @@ import { ProductListRouteParams, SearchCriteria } from './product-list.model';
  */
 @Injectable({ providedIn: 'root' })
 export class ProductListComponentService {
-  // TODO: make it configurable
-  protected defaultPageSize = 10;
+  defaultPageSize: number;
 
   protected readonly RELEVANCE_ALLCATEGORIES = ':relevance:allCategories:';
 
@@ -100,6 +99,10 @@ export class ProductListComponentService {
     this.searchByRouting$,
   ]).pipe(pluck(0), shareReplay({ bufferSize: 1, refCount: true }));
 
+  getItems(pageSize: number) {
+    this.defaultPageSize = pageSize;
+    return this.model$;
+  }
   /**
    * Expose the `SearchCriteria`. The search criteria are driven by the route parameters.
    *
@@ -112,7 +115,7 @@ export class ProductListComponentService {
   ): SearchCriteria {
     return {
       query: queryParams.query || this.getQueryFromRouteParams(routeParams),
-      pageSize: queryParams.pageSize || this.defaultPageSize,
+      pageSize: queryParams.pageSize ?? this.defaultPageSize,
       currentPage: queryParams.currentPage,
       sortCode: queryParams.sortCode,
     };

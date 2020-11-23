@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
-import { CmsComponentData } from '../../model/cms-component-data';
 import { CmsComponent, CmsService } from '@spartacus/core';
 import { CmsComponentsService } from '../../../services/cms-components.service';
+import { CmsComponentData } from '../../model/cms-component-data';
 
 /**
  * Used to prepare injector for CMS components.
@@ -20,6 +20,7 @@ export class CmsInjectorService {
 
   private getCmsData<T extends CmsComponent>(
     uid: string,
+    type: string,
     parentInjector?: Injector
   ): CmsComponentData<T> {
     return {
@@ -27,6 +28,7 @@ export class CmsInjectorService {
       data$: (parentInjector ?? this.injector)
         .get(CmsService)
         .getComponentData<T>(uid),
+      configuration: this.cmsComponentsService.getComponentConfiguration(type),
     };
   }
 
@@ -42,7 +44,7 @@ export class CmsInjectorService {
       providers: [
         {
           provide: CmsComponentData,
-          useValue: this.getCmsData(uid),
+          useValue: this.getCmsData(uid, type),
         },
         ...configProviders,
       ],

@@ -21,6 +21,7 @@ export interface StandardCmsComponentConfig {
   ProductReferencesComponent?: CmsComponentMapping;
   CMSTabParagraphComponent?: CmsComponentMapping;
   LoginComponent?: CmsComponentMapping;
+  SearchResultsListComponent?: CmsComponentMapping<>;
 }
 
 export interface JspIncludeCmsComponentConfig {
@@ -50,13 +51,19 @@ export interface CmsComponentChildRoutesConfig {
   children?: Route[];
 }
 
-export interface CmsComponentMapping {
+export interface CmsComponentMapping<C> {
   component?: any;
   providers?: StaticProvider[];
   childRoutes?: Route[] | CmsComponentChildRoutesConfig;
   disableSSR?: boolean;
   i18nKeys?: string[];
   guards?: any[];
+
+  /**
+   * Component specific configurations can be added statically in the application
+   * to drive component logic.
+   */
+  config?: C;
 
   /**
    * DeferLoading can be specified globally, but also per component.

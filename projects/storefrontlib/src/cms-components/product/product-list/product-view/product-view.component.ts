@@ -6,11 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { ICON_TYPE } from '../../../misc/icon/icon.model';
-
-export enum ViewModes {
-  Grid = 'grid',
-  List = 'list',
-}
+import { ViewModes } from '../container/product-list.model';
 
 @Component({
   selector: 'cx-product-view',

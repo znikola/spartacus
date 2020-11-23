@@ -2,7 +2,7 @@
   <section class="cx-page-section">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-lg-12" *ngIf="viewMode$ | async as viewMode">
+        <div class="col-12 col-lg-12">
           <div class="cx-sorting top">
             <div class="row">
               <div class="col-12 col-lg-4 mr-auto">
@@ -32,7 +32,7 @@
               <div class="col-auto ml-auto ml-lg-0">
                 <cx-product-view
                   (modeChange)="setViewMode($event)"
-                  [mode]="viewMode"
+                  [mode]="model.viewMode"
                 ></cx-product-view>
               </div>
             </div>
@@ -40,7 +40,7 @@
           <div class="cx-product-container">
             <!-- Product list when using pagination -->
             <ng-container *ngIf="!isInfiniteScroll; else infiniteScroll">
-              <ng-container *ngIf="viewMode === ViewModes.Grid">
+              <ng-container *ngIf="model.viewMode === ViewModes.Grid">
                 <div class="row">
                   <cx-product-grid-item
                     *ngFor="let product of model?.products"
@@ -50,7 +50,7 @@
                 </div>
               </ng-container>
 
-              <ng-container *ngIf="viewMode === ViewModes.List">
+              <ng-container *ngIf="model.viewMode === ViewModes.List">
                 <cx-product-list-item
                   *ngFor="let product of model?.products"
                   [product]="product"
@@ -64,7 +64,7 @@
               <cx-product-scroll
                 [scrollConfig]="scrollConfig"
                 [model]="model"
-                [inputViewMode]="viewMode"
+                [inputViewMode]="model.viewMode"
               ></cx-product-scroll>
             </ng-template>
           </div>
@@ -98,7 +98,7 @@
               <div class="col-auto ml-auto ml-lg-0">
                 <cx-product-view
                   (modeChange)="setViewMode($event)"
-                  [mode]="viewMode"
+                  [mode]="model.viewMode"
                 ></cx-product-view>
               </div>
             </div>

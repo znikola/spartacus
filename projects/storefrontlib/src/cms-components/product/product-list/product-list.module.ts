@@ -23,6 +23,7 @@ import { IconModule } from '../../misc/icon/index';
 import { defaultScrollConfig } from '../config/default-scroll-config';
 import { ProductVariantsModule } from '../product-variants/product-variants.module';
 import { ProductListComponent } from './container/product-list.component';
+import { ViewModes } from './container/product-list.model';
 import { ProductScrollComponent } from './container/product-scroll/product-scroll.component';
 import { ProductFacetNavigationComponent } from './product-facet-navigation/product-facet-navigation.component';
 import { ProductGridItemComponent } from './product-grid-item/product-grid-item.component';
@@ -53,12 +54,26 @@ import { ProductViewComponent } from './product-view/product-view.component';
       cmsComponents: {
         CMSProductListComponent: {
           component: ProductListComponent,
+          config: {
+            isProductListing: true,
+            pageSize: 9,
+            viewMode: ViewModes.List,
+          },
         },
         ProductGridComponent: {
           component: ProductListComponent,
+          config: {
+            isProductListing: true,
+            pageSize: 9,
+            viewMode: ViewModes.Grid,
+          },
         },
         SearchResultsListComponent: {
           component: ProductListComponent,
+          config: {
+            pageSize: 9,
+            viewMode: ViewModes.List,
+          },
         },
       },
     }),

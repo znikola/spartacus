@@ -1,3 +1,4 @@
+import { ViewModes } from '@spartacus/storefront';
 import { PaginationModel, SortModel } from './misc.model';
 import { Product } from './product.model';
 
@@ -70,6 +71,7 @@ export interface ProductSearchPage {
   products?: Product[];
   sorts?: SortModel[];
   spellingSuggestion?: SpellingSuggestion;
+  viewMode?: ViewModes;
 }
 
 export interface Suggestion {

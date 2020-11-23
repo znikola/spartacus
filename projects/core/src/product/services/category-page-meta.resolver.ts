@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
+import { CmsConfig } from '../../cms';
 import { CmsService } from '../../cms/facade/cms.service';
 import { BreadcrumbMeta, Page } from '../../cms/model/page.model';
 import { PageMetaResolver } from '../../cms/page/page-meta.resolver';
@@ -8,6 +9,7 @@ import {
   PageBreadcrumbResolver,
   PageTitleResolver,
 } from '../../cms/page/page.resolvers';
+import { ConfigurationService } from '../../config/services/configuration.service';
 import { TranslationService } from '../../i18n/translation.service';
 import { PageType } from '../../model/cms.model';
 import { ProductSearchPage } from '../../model/product-search.model';
@@ -41,7 +43,8 @@ export class CategoryPageMetaResolver
   constructor(
     protected productSearchService: ProductSearchService,
     protected cms: CmsService,
-    protected translation: TranslationService
+    protected translation: TranslationService,
+    protected config: ConfigurationService
   ) {
     super();
     this.pageType = PageType.CATEGORY_PAGE;
@@ -101,11 +104,11 @@ export class CategoryPageMetaResolver
   protected hasProductListComponent(page: Page): boolean {
     return !!Object.keys(page.slots).find(
       (key) =>
-        !!page.slots[key].components?.find(
-          (comp) =>
-            comp.typeCode === 'CMSProductListComponent' ||
-            comp.typeCode === 'ProductGridComponent'
-        )
+        !!page.slots[key].components?.find((comp) => {
+          return (this.config.config as CmsConfig).cmsComponents?.[
+            comp.typeCode
+          ]?.config?.isProductListing;
+        })
     );
   }
 }

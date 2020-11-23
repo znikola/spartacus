@@ -157,6 +157,13 @@ export class CmsComponentsService {
   }
 
   /**
+   * Return a static configuration for the component.
+   */
+  getComponentConfiguration(componentType: string): any {
+    return this.config.cmsComponents?.[componentType]?.config;
+  }
+
+  /**
    * Get cms driven child routes for components
    */
   getChildRoutes(componentTypes: string[]): CmsComponentChildRoutesConfig {
