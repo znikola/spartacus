@@ -1,32 +1,22 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { UpdateEmailService } from './update-email.service';
-import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'cx-update-email',
   templateUrl: './update-email.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UpdateEmailComponent implements OnInit, OnDestroy {
-  constructor(
-    protected updateEmailService: UpdateEmailService
-  ) {
-  }
-  updateEmailForm: FormGroup;
-  isLoading$: Observable<boolean>;
+export class UpdateEmailComponent implements OnDestroy {
+  constructor(protected service: UpdateEmailService) {}
 
-  ngOnInit() {
-    this.updateEmailService.resetUpdateEmailResultState();
-    this.isLoading$ = this.updateEmailService.getUpdateEmailResultLoading();
-    this.updateEmailForm = this.updateEmailService.form;
-  }
+  form = this.service.form;
+
+  isUpdating$ = this.service.isUpdating$;
+
+  save = () => this.service.save();
 
   ngOnDestroy() {
-    this.updateEmailForm.reset();
-  }
-
-  onSubmit(): void {
-    this.updateEmailService.onFormSubmit();
+    // TODO: add an explanation why this is needed
+    this.service.reset();
   }
 }
