@@ -17,6 +17,14 @@ export class EntityPathService {
     if (routeParts[0] === '/') {
       routeParts.shift();
     }
-    return this.router.isActive(this.router.createUrlTree(routeParts), true);
+    const routeSegments = this.router.createUrlTree(routeParts).root.children
+      .primary.segments;
+    const currentUrlSegments = this.router.createUrlTree(
+      this.router.url.split('/')
+    ).root.children.primary.segments;
+
+    return routeSegments.every((s) => {
+      return currentUrlSegments.find(({ path }) => s.path === path);
+    });
   }
 }
