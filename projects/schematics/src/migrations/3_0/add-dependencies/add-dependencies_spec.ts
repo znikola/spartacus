@@ -9,7 +9,7 @@ import * as shx from 'shelljs';
 import { ANGULAR_OAUTH2_OIDC } from '../../../shared';
 import { runMigration, writeFile } from '../../../shared/utils/test-utils';
 
-const MIGRATION_SCRIPT_NAME = 'migration-v3-add-dependencies-08';
+const MIGRATION_SCRIPT_NAME = 'migration-v3-add-dependencies-09';
 
 describe('add dependencies migration', () => {
   let host: TempScopedNodeJsSyncHost;

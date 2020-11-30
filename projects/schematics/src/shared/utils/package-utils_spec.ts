@@ -93,6 +93,11 @@ describe('Package utils', () => {
       const majorVersion = getMajorVersionNumber(testVersion);
       expect(majorVersion).toEqual(9);
     });
+    it('should return the major number even if the version contains two digits', () => {
+      const testVersion = '~10.0.0';
+      const majorVersion = getMajorVersionNumber(testVersion);
+      expect(majorVersion).toEqual(10);
+    });
   });
 
   describe('getSpartacusSchematicsVersion', () => {

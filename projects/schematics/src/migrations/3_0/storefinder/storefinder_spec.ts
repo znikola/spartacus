@@ -8,7 +8,7 @@ import {
 import * as shx from 'shelljs';
 import { runMigration, writeFile } from '../../../shared/utils/test-utils';
 
-const MIGRATION_SCRIPT_NAME = 'migration-v3-storefinder-07';
+const MIGRATION_SCRIPT_NAME = 'migration-v3-storefinder-08';
 
 const STORE_FINDER_MODULE_IMPORTED_TEST = `
 import { NgModule } from '@angular/core';

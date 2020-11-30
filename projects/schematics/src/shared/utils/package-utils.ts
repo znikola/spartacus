@@ -36,6 +36,12 @@ export function getMajorVersionNumber(versionString: string): number {
     majorVersion = versionString.charAt(1);
   }
 
+  if (Number(majorVersion) < 4) {
+    majorVersion += isNaN(Number(versionString.charAt(2)))
+      ? ''
+      : versionString.charAt(2);
+  }
+
   return Number(majorVersion);
 }
 
