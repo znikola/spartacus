@@ -48,7 +48,7 @@
 
     "migration-v3-validate-01": {
       "version": "3.0.0-next.6",
-      "factory": "./3_0/validate#validate",
+      "factory": "./3_0/validate/validate#validate",
       "description": "Performs some validations before proceeding to upgrade Spartacus to v3"
     },
     "migration-v3-component-deprecations-02": {

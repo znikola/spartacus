@@ -20,7 +20,6 @@ export function validate(): Rule {
 
 export function validateAngularVersion(angularVersion: string): void {
   const majorVersion = getMajorVersionNumber(angularVersion);
-  console.log('MAJOR VERSION', majorVersion);
   if (majorVersion < 10) {
     throw new SchematicsException(
       `Spartacus requires angular version 10.
