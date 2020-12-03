@@ -1,0 +1,20 @@
+$contentCatalog=electronics-spaContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+
+## product service page (/checkout/product-service)
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+;;CheckoutProductService;Checkout Product Service Page;MultiStepCheckoutSummaryPageTemplate;/checkout/product-service
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;cmsComponents(uid, $contentCV)
+;;BodyContentSlot-checkoutProductService;Checkout Product Service Slot;CheckoutProgressComponent,CheckoutProgressMobileTopComponent,CheckoutProductServiceComponent,CheckoutProgressMobileBottomComponent
+;;SideContentSlot-checkoutProductService;Order Summary Slot;CheckoutOrderSummaryComponent
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;BodyContent-checkoutProductService;BodyContent;CheckoutProductService;BodyContentSlot-checkoutProductService
+;;SideContent-checkoutProductService;SideContent;CheckoutProductService;SideContentSlot-checkoutProductService
+
+INSERT_UPDATE CMSFlexComponent;$contentCV[unique=true];uid[unique=true];name;flexType
+;;CheckoutProgressComponent;Checkout Progress Component;CheckoutProgress
+;;CheckoutProgressMobileTopComponent;Checkout Progress Mobile Top Component;CheckoutProgressMobileTop
+;;CheckoutProductServiceComponent;Checkout Product Service Component;CheckoutProductService
+;;CheckoutProgressMobileBottomComponent;Checkout Progress Mobile Bottom Component;CheckoutProgressMobileBottom

@@ -8,6 +8,7 @@ export * from './misc/index';
 export * from './myaccount/index';
 export * from './navigation/index';
 export * from './order-confirmation/index';
+export * from './product-service/index';
 export * from './product/index';
 export * from './user/index';
 export * from './wish-list/index';
