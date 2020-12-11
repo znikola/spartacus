@@ -16,13 +16,10 @@
 ></a>
 
 <div class="cx-product-rating">
-  <cx-star-rating
-    *ngIf="product.averageRating"
-    [rating]="product?.averageRating"
-  ></cx-star-rating>
-  <div *ngIf="!product.averageRating">
+  <cx-star-rating [rating]="product?.averageRating"></cx-star-rating>
+  <!-- <div *ngIf="!product.averageRating">
     {{ 'productDetails.noReviews' | cxTranslate }}
-  </div>
+  </div> -->
 </div>
 <div class="cx-product-price-container">
   <div class="cx-product-price" aria-label="Product price">

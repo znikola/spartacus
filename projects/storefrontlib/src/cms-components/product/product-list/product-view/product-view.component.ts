@@ -5,8 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { ViewModes } from '@spartacus/core';
 import { ICON_TYPE } from '../../../misc/icon/icon.model';
-import { ViewModes } from '../container/product-list.model';
 
 @Component({
   selector: 'cx-product-view',

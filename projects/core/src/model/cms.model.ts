@@ -159,3 +159,13 @@ export interface CmsProductFacetNavigationComponent extends CmsComponent {
   searchResult?: string;
   minPerFacet?: string;
 }
+
+export interface CmsProductListComponent extends CmsComponent {
+  isProductListing?: boolean;
+  pageSize?: number;
+  viewMode?: ViewModes;
+}
+export enum ViewModes {
+  Grid = 'grid',
+  List = 'list',
+}

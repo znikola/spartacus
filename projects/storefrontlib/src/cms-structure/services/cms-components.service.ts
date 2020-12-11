@@ -159,8 +159,12 @@ export class CmsComponentsService {
   /**
    * Return a static configuration for the component.
    */
-  getComponentConfiguration(componentType: string): any {
-    return this.config.cmsComponents?.[componentType]?.config;
+  // getComponentConfiguration(componentType: string): any {
+  //   return this.config.cmsComponents?.[componentType]?.config;
+  // }
+
+  getGhost(componentType: string): any {
+    return this.config.cmsComponents?.[componentType]?.ghost;
   }
 
   /**

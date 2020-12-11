@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { CmsComponent, CmsService } from '@spartacus/core';
+import { map, startWith } from 'rxjs/operators';
 import { CmsComponentsService } from '../../../services/cms-components.service';
 import { CmsComponentData } from '../../model/cms-component-data';
 
@@ -20,15 +21,22 @@ export class CmsInjectorService {
 
   private getCmsData<T extends CmsComponent>(
     uid: string,
-    type: string,
-    parentInjector?: Injector
+    parentInjector?: Injector,
+    type?: string
   ): CmsComponentData<T> {
+    const ghostData = this.cmsComponentsService.getGhost(type);
     return {
       uid: uid,
       data$: (parentInjector ?? this.injector)
         .get(CmsService)
-        .getComponentData<T>(uid),
-      configuration: this.cmsComponentsService.getComponentConfiguration(type),
+        .getComponentData<T>(uid)
+        .pipe(
+          startWith(ghostData),
+          map((data) => ({
+            ...ghostData,
+            ...data,
+          }))
+        ),
     };
   }
 
@@ -44,7 +52,7 @@ export class CmsInjectorService {
       providers: [
         {
           provide: CmsComponentData,
-          useValue: this.getCmsData(uid, type),
+          useValue: this.getCmsData(uid, undefined, type),
         },
         ...configProviders,
       ],

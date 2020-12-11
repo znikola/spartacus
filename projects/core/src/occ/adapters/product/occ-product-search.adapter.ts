@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { delay, pluck, startWith, tap } from 'rxjs/operators';
 import {
   ProductSearchPage,
   Suggestion,
@@ -31,9 +31,13 @@ export class OccProductSearchAdapter implements ProductSearchAdapter {
     query: string,
     searchConfig: SearchConfig = DEFAULT_SEARCH_CONFIG
   ): Observable<ProductSearchPage> {
-    return this.http
-      .get(this.getSearchEndpoint(query, searchConfig))
-      .pipe(this.converter.pipeable(PRODUCT_SEARCH_PAGE_NORMALIZER));
+    return this.http.get(this.getSearchEndpoint(query, searchConfig)).pipe(
+      delay(15000),
+      // TODO: move mock to appropriate layer
+      startWith({ products: [{}, {}, {}] } as ProductSearchPage),
+      this.converter.pipeable(PRODUCT_SEARCH_PAGE_NORMALIZER),
+      tap((response) => console.log(response))
+    );
   }
 
   loadSuggestions(

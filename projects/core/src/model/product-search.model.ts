@@ -1,4 +1,4 @@
-import { ViewModes } from '@spartacus/storefront';
+import { ViewModes } from '@spartacus/core';
 import { PaginationModel, SortModel } from './misc.model';
 import { Product } from './product.model';
 

@@ -5,7 +5,7 @@ import {
   RouterState,
   RoutingService,
 } from '@spartacus/core';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProductListComponentService } from '../../container/product-list-component.service';
 import { FacetList } from '../facet.model';
 import { ProductFacetService } from './product-facet.service';

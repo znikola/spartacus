@@ -1,5 +1,3 @@
-import { CmsComponent } from '@spartacus/core';
-
 /**
  * Contains specific route parameters for the product listing page.
  */
@@ -45,17 +43,4 @@ export interface SearchCriteria {
    */
   // TODO: Should we change it it `sort`?
   sortCode?: string;
-}
-
-export interface CmsProductListComponent extends CmsComponent {}
-
-export interface CmsProductListComponentConfiguration {
-  isProductListing: boolean;
-  pageSize: number;
-  viewMode: ViewModes;
-}
-
-export enum ViewModes {
-  Grid = 'grid',
-  List = 'list',
 }

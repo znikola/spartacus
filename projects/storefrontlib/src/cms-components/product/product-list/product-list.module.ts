@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
+  CmsProductListComponent,
   FeaturesConfigModule,
   I18nModule,
   provideDefaultConfig,
   UrlModule,
+  ViewModes,
 } from '@spartacus/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ViewConfig } from '../../../shared/config/view-config';
@@ -23,7 +25,6 @@ import { IconModule } from '../../misc/icon/index';
 import { defaultScrollConfig } from '../config/default-scroll-config';
 import { ProductVariantsModule } from '../product-variants/product-variants.module';
 import { ProductListComponent } from './container/product-list.component';
-import { ViewModes } from './container/product-list.model';
 import { ProductScrollComponent } from './container/product-scroll/product-scroll.component';
 import { ProductFacetNavigationComponent } from './product-facet-navigation/product-facet-navigation.component';
 import { ProductGridItemComponent } from './product-grid-item/product-grid-item.component';
@@ -50,19 +51,19 @@ import { ProductViewComponent } from './product-view/product-view.component';
   ],
   providers: [
     provideDefaultConfig(<ViewConfig>defaultScrollConfig),
-    provideDefaultConfig(<CmsConfig>{
+    provideDefaultConfig(<CmsConfig<CmsProductListComponent>>{
       cmsComponents: {
         CMSProductListComponent: {
           component: ProductListComponent,
-          config: {
+          ghost: {
             isProductListing: true,
-            pageSize: 9,
+            pageSize: 3,
             viewMode: ViewModes.List,
           },
         },
         ProductGridComponent: {
           component: ProductListComponent,
-          config: {
+          ghost: {
             isProductListing: true,
             pageSize: 9,
             viewMode: ViewModes.Grid,
@@ -70,8 +71,8 @@ import { ProductViewComponent } from './product-view/product-view.component';
         },
         SearchResultsListComponent: {
           component: ProductListComponent,
-          config: {
-            pageSize: 9,
+          ghost: {
+            pageSize: 3,
             viewMode: ViewModes.List,
           },
         },

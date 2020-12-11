@@ -1,51 +1,34 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ProductSearchPage } from '@spartacus/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { CmsComponentData } from '../../../../cms-structure/page/index';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { CmsProductListComponent, ViewModes } from '@spartacus/core';
+import { switchMap, tap } from 'rxjs/operators';
+import { CmsComponentData } from '../../../../cms-structure/page/model/cms-component-data';
 import { ViewConfig } from '../../../../shared/config/view-config';
 import { ProductListComponentService } from './product-list-component.service';
-import {
-  CmsProductListComponent,
-  CmsProductListComponentConfiguration,
-  ViewModes,
-} from './product-list.model';
 
 @Component({
   selector: 'cx-product-list',
   templateUrl: './product-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductListComponent implements OnInit, OnDestroy {
-  private subscription = new Subscription();
-
+export class ProductListComponent implements OnInit {
   isInfiniteScroll: boolean;
 
-  pageSize = this.cmsComponentData.configuration?.pageSize;
-
-  viewMode$ = new BehaviorSubject<ViewModes>(
-    this.cmsComponentData.configuration?.viewMode ?? ViewModes.Grid
-  );
-
-  model$: Observable<ProductSearchPage> = this.viewMode$.pipe(
-    switchMap((viewMode) =>
-      this.productListComponentService.getItems(this.pageSize).pipe(
-        map((items) => ({
-          ...items,
-          viewMode,
-        }))
-      )
-    )
+  model$ = this.cmsComponentData.data$.pipe(
+    tap((data) => {
+      this.service.viewMode = data.viewMode;
+      this.service.pageSize = data.pageSize;
+      console.log(data);
+    }),
+    switchMap(() => this.service.model2$),
+    tap((data) => console.log(data))
   );
 
   ViewModes = ViewModes;
 
   constructor(
-    private productListComponentService: ProductListComponentService,
+    private service: ProductListComponentService,
     public scrollConfig: ViewConfig,
-    protected cmsComponentData: CmsComponentData<
-      CmsProductListComponent,
-      CmsProductListComponentConfiguration
-    >
+    protected cmsComponentData: CmsComponentData<CmsProductListComponent>
   ) {}
 
   ngOnInit(): void {
@@ -53,14 +36,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   sortList(sortCode: string): void {
-    this.productListComponentService.sort(sortCode);
+    this.service.sort(sortCode);
   }
 
   setViewMode(mode: ViewModes): void {
-    this.viewMode$.next(mode);
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.service.viewMode = mode;
   }
 }

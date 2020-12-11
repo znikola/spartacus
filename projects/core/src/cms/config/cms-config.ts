@@ -1,36 +1,42 @@
 import { Injectable, StaticProvider } from '@angular/core';
 import { Route } from '@angular/router';
 import { Config } from '../../config/config-tokens';
+import { CmsComponent } from '../../model/cms.model';
 import { OccConfig } from '../../occ/config/occ-config';
 
-export interface StandardCmsComponentConfig {
-  CMSSiteContextComponent?: CmsComponentMapping;
-  CMSLinkComponent?: CmsComponentMapping;
-  SimpleResponsiveBannerComponent?: CmsComponentMapping;
-  SimpleBannerComponent?: CmsComponentMapping;
-  BannerComponent?: CmsComponentMapping;
-  CMSParagraphComponent?: CmsComponentMapping;
-  BreadcrumbComponent?: CmsComponentMapping;
-  NavigationComponent?: CmsComponentMapping;
-  FooterNavigationComponent?: CmsComponentMapping;
-  CategoryNavigationComponent?: CmsComponentMapping;
-  ProductAddToCartComponent?: CmsComponentMapping;
-  MiniCartComponent?: CmsComponentMapping;
-  ProductCarouselComponent?: CmsComponentMapping;
-  SearchBoxComponent?: CmsComponentMapping;
-  ProductReferencesComponent?: CmsComponentMapping;
-  CMSTabParagraphComponent?: CmsComponentMapping;
-  LoginComponent?: CmsComponentMapping;
-  SearchResultsListComponent?: CmsComponentMapping<>;
+export interface CMSComponentConfig<T = CmsComponent>
+  extends StandardCmsComponentConfig<T>,
+    JspIncludeCmsComponentConfig<T> {
+  [componentType: string]: CmsComponentMapping<T>;
 }
 
-export interface JspIncludeCmsComponentConfig {
-  AccountAddressBookComponent?: CmsComponentMapping;
-  ForgotPasswordComponent?: CmsComponentMapping;
-  ResetPasswordComponent?: CmsComponentMapping;
-  ProductDetailsTabComponent?: CmsComponentMapping;
-  ProductSpecsTabComponent?: CmsComponentMapping;
-  ProductReviewsTabComponent?: CmsComponentMapping;
+export interface StandardCmsComponentConfig<T> {
+  CMSSiteContextComponent?: CmsComponentMapping<T>;
+  CMSLinkComponent?: CmsComponentMapping<T>;
+  SimpleResponsiveBannerComponent?: CmsComponentMapping<T>;
+  SimpleBannerComponent?: CmsComponentMapping<T>;
+  BannerComponent?: CmsComponentMapping<T>;
+  CMSParagraphComponent?: CmsComponentMapping<T>;
+  BreadcrumbComponent?: CmsComponentMapping<T>;
+  NavigationComponent?: CmsComponentMapping<T>;
+  FooterNavigationComponent?: CmsComponentMapping<T>;
+  CategoryNavigationComponent?: CmsComponentMapping<T>;
+  ProductAddToCartComponent?: CmsComponentMapping<T>;
+  MiniCartComponent?: CmsComponentMapping<T>;
+  ProductCarouselComponent?: CmsComponentMapping<T>;
+  SearchBoxComponent?: CmsComponentMapping<T>;
+  ProductReferencesComponent?: CmsComponentMapping<T>;
+  CMSTabParagraphComponent?: CmsComponentMapping<T>;
+  LoginComponent?: CmsComponentMapping<T>;
+  SearchResultsListComponent?: CmsComponentMapping<T>;
+}
+export interface JspIncludeCmsComponentConfig<T> {
+  AccountAddressBookComponent?: CmsComponentMapping<T>;
+  ForgotPasswordComponent?: CmsComponentMapping<T>;
+  ResetPasswordComponent?: CmsComponentMapping<T>;
+  ProductDetailsTabComponent?: CmsComponentMapping<T>;
+  ProductSpecsTabComponent?: CmsComponentMapping<T>;
+  ProductReviewsTabComponent?: CmsComponentMapping<T>;
 }
 
 export const JSP_INCLUDE_CMS_COMPONENT_TYPE = 'JspIncludeComponent';
@@ -51,7 +57,7 @@ export interface CmsComponentChildRoutesConfig {
   children?: Route[];
 }
 
-export interface CmsComponentMapping<C> {
+export interface CmsComponentMapping<T = CmsComponent> {
   component?: any;
   providers?: StaticProvider[];
   childRoutes?: Route[] | CmsComponentChildRoutesConfig;
@@ -59,11 +65,7 @@ export interface CmsComponentMapping<C> {
   i18nKeys?: string[];
   guards?: any[];
 
-  /**
-   * Component specific configurations can be added statically in the application
-   * to drive component logic.
-   */
-  config?: C;
+  ghost?: T;
 
   /**
    * DeferLoading can be specified globally, but also per component.
@@ -79,12 +81,6 @@ export enum DeferLoadingStrategy {
   DEFER = 'DEFERRED-LOADING',
   /** Renders the DOM instantly without being concerned with the view port */
   INSTANT = 'INSTANT-LOADING',
-}
-
-export interface CMSComponentConfig
-  extends StandardCmsComponentConfig,
-    JspIncludeCmsComponentConfig {
-  [componentType: string]: CmsComponentMapping;
 }
 
 export interface FeatureModuleConfig {
@@ -106,7 +102,7 @@ export interface FeatureModuleConfig {
   providedIn: 'root',
   useExisting: Config,
 })
-export abstract class CmsConfig extends OccConfig {
+export abstract class CmsConfig<T = CmsComponent> extends OccConfig {
   featureModules?: { [featureName: string]: FeatureModuleConfig };
-  cmsComponents?: CMSComponentConfig;
+  cmsComponents?: CMSComponentConfig<T>;
 }

@@ -11,7 +11,7 @@ import {
 } from '../../cms/page/page.resolvers';
 import { ConfigurationService } from '../../config/services/configuration.service';
 import { TranslationService } from '../../i18n/translation.service';
-import { PageType } from '../../model/cms.model';
+import { CmsProductListComponent, PageType } from '../../model/cms.model';
 import { ProductSearchPage } from '../../model/product-search.model';
 import { ProductSearchService } from '../facade/product-search.service';
 
@@ -23,8 +23,7 @@ import { ProductSearchService } from '../facade/product-search.service';
 @Injectable({
   providedIn: 'root',
 })
-export class CategoryPageMetaResolver
-  extends PageMetaResolver
+export class CategoryPageMetaResolver extends PageMetaResolver
   implements PageTitleResolver, PageBreadcrumbResolver {
   // reusable observable for search page data
   protected searchPage$: Observable<
@@ -105,9 +104,8 @@ export class CategoryPageMetaResolver
     return !!Object.keys(page.slots).find(
       (key) =>
         !!page.slots[key].components?.find((comp) => {
-          return (this.config.config as CmsConfig).cmsComponents?.[
-            comp.typeCode
-          ]?.config?.isProductListing;
+          return (this.config.config as CmsConfig<CmsProductListComponent>)
+            .cmsComponents?.[comp.typeCode]?.ghost?.isProductListing;
         })
     );
   }

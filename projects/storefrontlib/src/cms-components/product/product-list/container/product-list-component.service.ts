@@ -8,8 +8,9 @@ import {
   ProductSearchService,
   RouterState,
   RoutingService,
+  ViewModes,
 } from '@spartacus/core';
-import { combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -31,7 +32,8 @@ import { ProductListRouteParams, SearchCriteria } from './product-list.model';
  */
 @Injectable({ providedIn: 'root' })
 export class ProductListComponentService {
-  defaultPageSize: number;
+  protected viewMode$ = new BehaviorSubject<ViewModes>(ViewModes.Grid);
+  protected pageSize$ = new BehaviorSubject<number>(9);
 
   protected readonly RELEVANCE_ALLCATEGORIES = ':relevance:allCategories:';
 
@@ -84,7 +86,6 @@ export class ProductListComponentService {
       this.search(criteria);
     })
   );
-
   /**
    * This stream is used for the Product Listing and Product Facets.
    *
@@ -99,10 +100,18 @@ export class ProductListComponentService {
     this.searchByRouting$,
   ]).pipe(pluck(0), shareReplay({ bufferSize: 1, refCount: true }));
 
-  getItems(pageSize: number) {
-    this.defaultPageSize = pageSize;
-    return this.model$;
-  }
+  readonly model2$: Observable<{
+    searchResult: ProductSearchPage;
+    viewMode: ViewModes;
+    pageSize: number;
+  }> = combineLatest([this.viewMode$, this.pageSize$, this.model$]).pipe(
+    map(([viewMode, pageSize, searchResult]) => ({
+      searchResult,
+      viewMode,
+      pageSize,
+    }))
+  );
+
   /**
    * Expose the `SearchCriteria`. The search criteria are driven by the route parameters.
    *
@@ -115,10 +124,22 @@ export class ProductListComponentService {
   ): SearchCriteria {
     return {
       query: queryParams.query || this.getQueryFromRouteParams(routeParams),
-      pageSize: queryParams.pageSize ?? this.defaultPageSize,
+      pageSize: queryParams.pageSize ?? this.pageSize$.value,
       currentPage: queryParams.currentPage,
       sortCode: queryParams.sortCode,
     };
+  }
+
+  set viewMode(mode: ViewModes) {
+    if (mode && mode !== this.viewMode$.value) {
+      this.viewMode$.next(mode);
+    }
+  }
+
+  set pageSize(size: number) {
+    if (size && size !== this.pageSize$.value) {
+      this.pageSize$.next(size);
+    }
   }
 
   /**
