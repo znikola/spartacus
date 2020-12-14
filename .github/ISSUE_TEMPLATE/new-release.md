@@ -81,7 +81,7 @@ To keep track of spartacussampledata releases, we keep a `latest` branch on each
     - [ ] `npm run release:schematics:with-changelog`
     - [ ] `npm run release:setup:with-changelog` (needed since `3.0.0-next.1`)
     - [ ] `npm run release:organization:with-changelog` (needed since `3.0.0-next.1`)
-    - [ ] `npm run release:misc:with-changelog` (needed since `3.0.0-rc.0`)
+    - [ ] `npm run release:storefinder:with-changelog` (needed since `3.0.0-rc.0`)
     - [ ] `npm run release:cdc:with-changelog` (since 2.1.0-next.0 - publish under `0.<packages-version>.0` eg. `0.201.0-next.0` for first `2.1.0-next.0` release)
       - [ ] before the script set the spartacus peerDependencies manually (as we publish it under 0.201.0-next.0 version)
 - [ ] Check that the release notes are populated on github (if they are not, update them)
@@ -91,17 +91,18 @@ To keep track of spartacussampledata releases, we keep a `latest` branch on each
   - You can leave `rc` tag until we release stable release.
   - Use `npm view @spartacus/NAME@VERSION` (ie. `npm view @spartacus/cdc@next`) instead of clicking thru the `npmjs.org` website (which is much slower)
   - Use `npm dist-tag` command for tag updates.
-- [ ] Test the released libraries from a new shell app; change the `scripts/install/config.sh` to test npm tag (next/latest/rc) at the same time:
+- [ ] Test the released libraries from a new shell app
+  - [ ] Change the `scripts/install/config.sh` to test npm tag (next/latest/rc) at the same time:
 
     ```bash
     SPARTACUS_VERSION=`next` # or `latest`, `rc`; still, you can set it to a specific one, ie `x.y.z` (or leave the config file unchanged)
     ```
 
-    Run the installation script:
+  - [ ] Run the installation script to make sure you can create a shell app with the latest imported libraries with no errors:
 
     ```bash
     cd scripts/install && run.sh install_npm
     ```
 
-- [ ]  Merge release branch (PR from release/x.y.z) to maintenance branch
-- [ ]  Announce the new release on tribe channel
+- [ ] Merge release branch (PR from release/x.y.z) to the maintenance branch
+- [ ] Announce the new release on tribe channel
