@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   CmsConfig,
+  CmsSearchBoxComponent,
   I18nModule,
   provideDefaultConfig,
   UrlModule,
 } from '@spartacus/core';
-import { IconModule } from '../../misc/icon/icon.module';
 import { MediaModule } from '../../../shared/components/media/media.module';
+import { IconModule } from '../../misc/icon/icon.module';
 import { HighlightPipe } from './highlight.pipe';
 import { SearchBoxComponent } from './search-box.component';
 
@@ -22,10 +23,15 @@ import { SearchBoxComponent } from './search-box.component';
     I18nModule,
   ],
   providers: [
-    provideDefaultConfig(<CmsConfig>{
+    provideDefaultConfig(<CmsConfig<CmsSearchBoxComponent>>{
       cmsComponents: {
         SearchBoxComponent: {
           component: SearchBoxComponent,
+          data: {
+            displayProductImages: false,
+            displayProducts: true,
+            maxProducts: 10,
+          },
         },
       },
     }),

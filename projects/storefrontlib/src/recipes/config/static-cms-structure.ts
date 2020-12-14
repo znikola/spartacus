@@ -10,4 +10,8 @@ export const defaultCmsContentProviders: ValueProvider[] = [
     componentId: 'LoginComponent',
     pageSlotPosition: 'SiteLogin',
   }),
+  provideCmsStructure({
+    componentId: 'SearchBoxComponent',
+    pageSlotPosition: 'SiteLogin',
+  }),
 ];
