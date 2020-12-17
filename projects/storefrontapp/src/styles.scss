@@ -1,9 +1,4 @@
-// Spartacus Application styles
-
 // Always bump to the latest (breaking) styles during development.
 $useLatestStyles: true;
 
-@import '~@spartacus/styles/index';
-@import 'product';
-@import 'product-configurator';
-@import 'organization';
+@import '@spartacus/styles';
