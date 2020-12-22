@@ -1,6 +1,10 @@
 %VariantConfigurationTemplate {
   @include cx-configurator-template();
 
+  cx-page-slot.VariantConfigHeader {
+    display: contents;
+  }
+
   cx-page-slot.VariantConfigContent,
   cx-page-slot.VariantConfigMenu {
     height: fit-content;
