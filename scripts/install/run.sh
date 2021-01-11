@@ -67,20 +67,18 @@ function update_projects_versions {
     fi
     for i in $projects
         do
-            (cd "${CLONE_DIR}/projects/${i}" && pwd && sed -i -E 's/"version": "[^"]+/"version": "'"${SPARTACUS_VERSION}"'/g' package.json);
+            (cd "${CLONE_DIR}/${i}" && pwd && sed -i -E 's/"version": "[^"]+/"version": "'"${SPARTACUS_VERSION}"'/g' package.json);
         done
 }
 
 function npm_install {
     pre_install
 
-    clone_repo
-
     create_apps
 }
 
 function create_app {
-    ( cd ${INSTALLATION_DIR} && ng new $1 --style=scss --routing=true )
+    ( cd ${INSTALLATION_DIR} && ng new $1 --style=scss --routing=false)
 }
 
 function create_csr {
@@ -92,19 +90,31 @@ function create_ssr {
 }
 
 function create_ssr_pwa {
-    create_app ssr_pwa
+    create_app ssr-pwa
 }
 
 function add_spartacus_csr {
-    ( cd ${INSTALLATION_DIR} && cd csr && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} )
+    ( cd ${INSTALLATION_DIR} && cd csr && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false
+        if [ "$ADD_B2B_LIBS" = true ] ; then
+            ng add @spartacus/organization@${SPARTACUS_VERSION} --interactive false
+        fi
+    )
 }
 
 function add_spartacus_ssr {
-    ( cd ${INSTALLATION_DIR} && cd ssr && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr )
+    ( cd ${INSTALLATION_DIR} && cd ssr && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false
+        if [ "$ADD_B2B_LIBS" = true ] ; then
+            ng add @spartacus/organization@${SPARTACUS_VERSION} --interactive false
+        fi
+    )
 }
 
 function add_spartacus_ssr_pwa {
-    ( cd ${INSTALLATION_DIR} && cd ssr_pwa && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr --pwa )
+    ( cd ${INSTALLATION_DIR} && cd ssr-pwa && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr --pwa && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false
+        if [ "$ADD_B2B_LIBS" = true ] ; then
+            ng add @spartacus/organization@${SPARTACUS_VERSION} --interactive false
+        fi
+    )
 }
 
 function create_apps {
@@ -171,6 +181,18 @@ function local_install {
     printh "Creating schematics npm package"
     ( cd ${CLONE_DIR}/projects/schematics && yarn && yarn build && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
 
+    printh "Creating cds npm package"
+    ( cd ${CLONE_DIR}/dist/cds && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
+
+    printh "Creating setup npm package"
+    ( cd ${CLONE_DIR}/dist/setup && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
+
+    printh "Creating organization npm package"
+    ( cd ${CLONE_DIR}/dist/organization && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
+
+    printh "Creating storefinder npm package"
+    ( cd ${CLONE_DIR}/dist/storefinder && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
+
     create_apps
 
     sleep 5
@@ -186,7 +208,7 @@ function prestart_csr {
         echo "Skipping prestart csr script"
     else
         printh "Prestart setup for csr app"
-        ( cd ${INSTALLATION_DIR}/csr && yarn build )
+        ( cd ${INSTALLATION_DIR}/csr && yarn build --prod )
     fi
 }
 
@@ -204,7 +226,7 @@ function prestart_ssr_pwa {
         echo "Skipping prestart ssr script (with pwa support)"
     else
         printh "Prestart setup for ssr app (with pwa support)"
-        ( cd ${INSTALLATION_DIR}/ssr_pwa && yarn build && yarn build:ssr )
+        ( cd ${INSTALLATION_DIR}/ssr-pwa && yarn build && yarn build:ssr )
     fi
 }
 
@@ -234,7 +256,7 @@ function start_ssr_pwa_unix {
     else
         prestart_ssr_pwa
         printh "Starting ssr app (with pwa support)"
-        ( cd ${INSTALLATION_DIR}/ssr_pwa && export PORT=${SSR_PWA_PORT} && export NODE_TLS_REJECT_UNAUTHORIZED=0 && pm2 start --name "ssr_pwa-${SSR_PWA_PORT}" dist/ssr/server/main.js )
+        ( cd ${INSTALLATION_DIR}/ssr-pwa && export PORT=${SSR_PWA_PORT} && export NODE_TLS_REJECT_UNAUTHORIZED=0 && pm2 start --name "ssr-pwa-${SSR_PWA_PORT}" dist/ssr/server/main.js )
     fi
 }
 
@@ -260,7 +282,7 @@ function start_apps {
 function stop_apps {
     pm2 stop "csr-${CSR_PORT}"
     pm2 stop "ssr-${SSR_PORT}"
-    pm2 stop "ssr_pwa-${SSR_PORT}"
+    pm2 stop "ssr-pwa-${SSR_PORT}"
 }
 
 function run_e2e_tests {

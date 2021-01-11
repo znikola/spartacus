@@ -5,7 +5,7 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { I18nTestingModule, ProductSearchPage } from '@spartacus/core';
@@ -19,7 +19,7 @@ import { ProductListComponentService } from '../product-list-component.service';
 import { ProductScrollComponent } from './product-scroll.component';
 
 import createSpy = jasmine.createSpy;
-import { MockFeatureLevelDirective } from 'projects/storefrontlib/src/shared/test/mock-feature-level-directive';
+import { MockFeatureLevelDirective } from '../../../../../shared/test/mock-feature-level-directive';
 
 const mockModel1: ProductSearchPage = {
   breadcrumbs: [
@@ -160,33 +160,35 @@ describe('ProductScrollComponent', () => {
   let fixture: ComponentFixture<ProductScrollComponent>;
   let el: DebugElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        ProductScrollComponent,
-        ProductGridItemComponent,
-        MockProductListItemComponent,
-        MockUrlPipe,
-        MediaComponent,
-        MockStarRatingComponent,
-        MockAddToCartComponent,
-        MockStyleIconsComponent,
-        MockFeatureLevelDirective,
-      ],
-      imports: [
-        InfiniteScrollModule,
-        I18nTestingModule,
-        SpinnerModule,
-        RouterTestingModule,
-      ],
-      providers: [
-        {
-          provide: ProductListComponentService,
-          useClass: MockProductListComponentService,
-        },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          ProductScrollComponent,
+          ProductGridItemComponent,
+          MockProductListItemComponent,
+          MockUrlPipe,
+          MediaComponent,
+          MockStarRatingComponent,
+          MockAddToCartComponent,
+          MockStyleIconsComponent,
+          MockFeatureLevelDirective,
+        ],
+        imports: [
+          InfiniteScrollModule,
+          I18nTestingModule,
+          SpinnerModule,
+          RouterTestingModule,
+        ],
+        providers: [
+          {
+            provide: ProductListComponentService,
+            useClass: MockProductListComponentService,
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductScrollComponent);

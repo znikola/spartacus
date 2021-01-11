@@ -4,6 +4,7 @@
   @each $color, $value in $theme-colors {
     --cx-color-#{$color}: #{$value};
   }
+  --cx-page-width-max: 1140px;
 
   @each $radius, $value in $btn-radius {
     --cx-buttons-border-#{$radius}: #{$value};
