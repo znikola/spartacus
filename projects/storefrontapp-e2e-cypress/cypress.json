@@ -2,13 +2,17 @@
   "defaultCommandTimeout": 10000,
   "baseUrl": "http://localhost:4200",
   "requestTimeout": 15000,
-  "retries": {
+  "projectId": "k3nmep",
+  "Oldretries": {
     "runMode": 2
   },
+  "projectId": "k3nmep",
+  "experimentalStudio": true,
   "env": {
     "CLIENT_ID": "mobile_android",
     "CLIENT_SECRET": "secret",
     "API_URL": "https://spartacus-devci767.eastus.cloudapp.azure.com:9002",
+    "API_URL_OLD": "https://spartacus-dev0.eastus.cloudapp.azure.com",
     "OCC_PREFIX": "/occ/v2",
     "OCC_PREFIX_USER_ENDPOINT": "users",
     "OCC_PREFIX_ORDER_ENDPOINT": "orders",
