@@ -34,20 +34,22 @@ context('Homepage', () => {
       cy.get('input').click();
       cy.get('input').type('camera');
       cy.get('[href="/electronics-spa/en/USD/product/CONF_CAMERA_SL/Digital%20Camera"]').click();
+      cy.wait(1000);
       /* ==== End Cypress Studio ==== */
     });
   
     /* === Test Created with Cypress Studio === */
-    it.skip('should display banner page', function() {
+    it('should display banner page', function() {
       cy.visit('/');
       /* ==== Generated with Cypress Studio ==== */
       cy.get('.btn-primary').click();
       cy.get('.Section1 > :nth-child(1) > cx-generic-link > a > .is-initialized > img').click();
+      cy.wait(1000);
       /* ==== End Cypress Studio ==== */
     });
   
     /* === Test Created with Cypress Studio === */
-    it.skip('should display small banner page', function() {
+    it('should display small banner page', function() {
       cy.visit('/');
       /* ==== Generated with Cypress Studio ==== */
       cy.get('.btn-primary').click();
@@ -61,42 +63,37 @@ context('Homepage', () => {
     });
   
     /* === Test Created with Cypress Studio === */
-    it.skip('should link to store finder', function() {
+    it('should link to store finder', function() {
       /* ==== Generated with Cypress Studio ==== */
       cy.get('.btn-primary').click();
       cy.get('.SiteLinks > :nth-child(1) > cx-generic-link > a').click();
       cy.get('.row > :nth-child(2) > .btn').click();
+      cy.wait(1000);
       /* ==== End Cypress Studio ==== */
     });
   
     /* === Test Created with Cypress Studio === */
-    it.skip('should link to contact us page', function() {
+    it('should link to contact us page', function() {
       /* ==== Generated with Cypress Studio ==== */
       cy.get('.SiteLinks > :nth-child(2) > cx-generic-link > a').click();
+      cy.wait(1000);
       /* ==== End Cypress Studio ==== */
     });
   
     /* === Test Created with Cypress Studio === */
-    it.skip('should link to help faq page', function() {
+    it('should link to help faq page', function() {
       /* ==== Generated with Cypress Studio ==== */
       cy.get('.SiteLinks > :nth-child(3) > cx-generic-link > a').click();
+      cy.wait(1000);
       /* ==== End Cypress Studio ==== */
     });
-  
-    /* === Test Created with Cypress Studio === */
-    it.skip('should link footer to sap commerce cloud', function() {
-      /* ==== Generated with Cypress Studio ==== */
-      cy.get('.btn-primary').click();
-      cy.get('cx-navigation-ui > :nth-child(1) > .wrapper > .childs > :nth-child(1) > cx-generic-link > a').click();
-      /* ==== End Cypress Studio ==== */
-    });
-  
+
     /* === Test Created with Cypress Studio === */
     it('should update product slider upon user action', function() {
       /* ==== Generated with Cypress Studio ==== */
       cy.get('.btn-primary').click();
       cy.get(':nth-child(1) > cx-carousel > .carousel-panel > .next > .cx-icon').click();
-      cy.wait(1000);
+      cy.wait(1000); // added manually
       cy.get(':nth-child(1) > cx-carousel > .carousel-panel > .next > .cx-icon').click();
       cy.wait(1000);
       cy.get(':nth-child(1) > cx-carousel > .carousel-panel > .previous > .cx-icon').click();
@@ -110,5 +107,13 @@ context('Homepage', () => {
       cy.get(':nth-child(2) > cx-carousel > .indicators > [disabled=""] > .cx-icon').click();
       /* ==== End Cypress Studio ==== */
     });
+
+    /* === Test Created with Cypress Studio === */
+    it('should link footer to sap commerce cloud', function() {
+        /* ==== Generated with Cypress Studio ==== */
+        cy.get('.btn-primary').click();
+        cy.get('cx-navigation-ui > :nth-child(1) > .wrapper > .childs > :nth-child(1) > cx-generic-link > a').click();
+        /* ==== End Cypress Studio ==== */
+      });    
   });
   
