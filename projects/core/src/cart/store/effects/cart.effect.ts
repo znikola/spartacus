@@ -10,6 +10,7 @@ import {
   map,
   mergeMap,
   switchMap,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import { CheckoutActions } from '../../../checkout/store/actions';
@@ -23,6 +24,8 @@ import { getCartIdByUserId, isCartNotFoundError } from '../../utils/utils';
 import { CartActions } from '../actions/index';
 import { StateWithMultiCart } from '../multi-cart-state';
 import { getCartHasPendingProcessesSelectorFactory } from '../selectors/multi-cart.selector';
+import { GlobalMessageService } from '../../../global-message/facade/global-message.service';
+import { GlobalMessageType } from '../../../global-message/models/global-message.model';
 
 @Injectable()
 export class CartEffects {
@@ -246,6 +249,20 @@ export class CartEffects {
     )
   );
 
+  @Effect({ dispatch: false })
+  notfyAfterRemove$ = this.actions$.pipe(
+    ofType(CartActions.CART_REMOVE_ENTRY_SUCCESS),
+    tap(({ payload }) => {
+      this.globalMessageService.add(
+        {
+          key: 'addToCart.removeConfirmation',
+          params: { param: payload.entryNumber },
+        },
+        GlobalMessageType.MSG_TYPE_CONFIRMATION
+      );
+    })
+  );
+
   @Effect()
   resetCartDetailsOnSiteContextChange$: Observable<
     CartActions.ResetCartDetails
@@ -332,6 +349,7 @@ export class CartEffects {
   constructor(
     private actions$: Actions,
     private cartConnector: CartConnector,
-    private store: Store<StateWithMultiCart>
+    private store: Store<StateWithMultiCart>,
+    private globalMessageService: GlobalMessageService
   ) {}
 }

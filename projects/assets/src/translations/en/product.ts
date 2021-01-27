@@ -62,6 +62,7 @@ export const product = {
     outOfStock: 'Out of stock',
     inStock: 'In stock',
     selectStyleAndSize: 'Select style and size to check stock',
+    removeConfirmation: 'item {{ param }} has been removed',
   },
   TabPanelContainer: {
     tabs: {
