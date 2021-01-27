@@ -1,0 +1,13 @@
+<cx-carousel
+  [items]="storybookItems$ | async"
+  [template]="storybookItem"
+  itemWidth="33%"
+>
+</cx-carousel>
+
+<ng-template #storybookItem let-item="item">
+  <ng-container
+    *ngIf="getContent(item) | async as contentComponent"
+    [cxComponentWrapper]="contentComponent"
+  ></ng-container>
+</ng-template>

@@ -1,0 +1,7 @@
+<ng-container *ngIf="content">
+  <img [src]="content.url || content.imageUrl" />
+  <div class="overlay" *ngIf="content.headline || content.subHeadline">
+    <h3 *ngIf="content.headline" [innerText]="content.headline"></h3>
+    <h4 *ngIf="content.subHeadline" [innerText]="content.subHeadline"></h4>
+  </div>
+</ng-container>

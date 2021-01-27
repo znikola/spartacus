@@ -77,7 +77,7 @@ export class PageSlotComponent implements OnInit, OnDestroy {
 
   components: ContentSlotComponentData[];
 
-  protected slot$: Observable<ContentSlotData> = this.position$.pipe(
+  slot$: Observable<ContentSlotData> = this.position$.pipe(
     switchMap((position) => this.cmsService.getContentSlot(position)),
     distinctUntilChanged(this.isDistinct)
   );

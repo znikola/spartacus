@@ -9,6 +9,6 @@ import { CarouselComponent } from './carousel.component';
 @NgModule({
   imports: [CommonModule, RouterModule, IconModule, MediaModule, UrlModule],
   declarations: [CarouselComponent],
-  exports: [CarouselComponent],
+  exports: [CarouselComponent, MediaModule],
 })
 export class CarouselModule {}

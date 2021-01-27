@@ -1,0 +1,9 @@
+<ng-container *ngIf="product$ | async as product">
+  <upscale-aspect-ratio-image
+    [content]="{
+      url: product.images.PRIMARY?.product.url,
+      headline: product.name,
+      subHeadline: product.price.formattedValue
+    }"
+  ></upscale-aspect-ratio-image>
+</ng-container>

@@ -20,6 +20,7 @@ import { cdcFeature } from '../environments/cdc/cdc.feature';
 import { cdsFeature } from '../environments/cds/cds.feature';
 import { environment } from '../environments/environment';
 import { TestOutletModule } from '../test-outlets/test-outlet.module';
+import { UpscaleCmsModule } from './upscale/upscale-cms.module';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeJa);
@@ -84,6 +85,8 @@ if (environment.cdc) {
     TestConfigModule.forRoot({ cookie: 'cxConfigE2E' }), // Injects config dynamically from e2e tests. Should be imported after other config modules.
 
     ...devImports,
+
+    UpscaleCmsModule,
   ],
 
   bootstrap: [StorefrontComponent],

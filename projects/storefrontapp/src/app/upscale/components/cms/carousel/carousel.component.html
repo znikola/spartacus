@@ -1,0 +1,12 @@
+<cx-carousel
+  [items]="items$ | async"
+  [template]="carouselItem"
+  itemWidth="100%"
+>
+</cx-carousel>
+
+<ng-template #carouselItem let-item="item">
+  <upscale-aspect-ratio-image
+    [content]="getContent(item) | async"
+  ></upscale-aspect-ratio-image>
+</ng-template>

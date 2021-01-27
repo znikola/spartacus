@@ -1,0 +1,8 @@
+<ng-container *ngIf="article$ | async as article">
+  <upscale-aspect-ratio-image
+    [content]="{
+      url: article.heroImageUrl,
+      headline: article.headline
+    }"
+  ></upscale-aspect-ratio-image>
+</ng-container>

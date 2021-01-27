@@ -1,0 +1,11 @@
+<ng-container *ngFor="let category$ of categories$ | async">
+  <ng-container *ngFor="let category of (category$ | async)?.content">
+    <upscale-aspect-ratio-image
+      [title]="category | json"
+      [content]="{
+        url: category.media,
+        headline: category.name
+      }"
+    ></upscale-aspect-ratio-image>
+  </ng-container>
+</ng-container>
