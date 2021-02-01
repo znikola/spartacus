@@ -1,8 +1,15 @@
-<label class="searchbox" [class.dirty]="!!searchInput.value">
+<label
+  class="searchbox"
+  [class.dirty]="!!searchInput.value"
+  role="combobox"
+  aria-expanded="false"
+  aria-owns=""
+  aria-haspopup="listbox"
+>
   <input
+    aria-autocomplete="list"
     #searchInput
     [placeholder]="'searchBox.placeholder' | cxTranslate"
-    aria-label="search"
     (focus)="open()"
     (input)="search(searchInput.value)"
     (blur)="close($event)"
@@ -17,6 +24,7 @@
   <cx-icon
     [type]="iconTypes.RESET"
     aria-label="reset"
+    role="button"
     (mousedown)="clear(searchInput)"
     (keydown.enter)="clear(searchInput)"
     class="reset"
@@ -26,6 +34,7 @@
   <cx-icon
     [type]="iconTypes.SEARCH"
     aria-label="search"
+    role="button"
     class="search"
     (mousedown)="avoidReopen($event)"
     (keydown.enter)="avoidReopen($event)"
@@ -44,7 +53,11 @@
     [innerHTML]="result.message"
   ></div>
 
-  <div class="suggestions">
+  <div
+    class="suggestions"
+    role="listbox"
+    aria-roledescription="Search Suggestions"
+  >
     <a
       *ngFor="let suggestion of result.suggestions"
       [innerHTML]="suggestion | cxHighlight: searchInput.value"
@@ -59,11 +72,17 @@
       (keydown.enter)="close($event, true)"
       (keydown.escape)="close($event, true)"
       (blur)="close($event)"
+      role="option"
     >
     </a>
   </div>
 
-  <div class="products" *ngIf="result.products">
+  <div
+    class="products"
+    *ngIf="result.products"
+    role="listbox"
+    aria-roledescription="Product Suggestions"
+  >
     <a
       *ngFor="let product of result.products"
       [routerLink]="
@@ -78,6 +97,7 @@
       (keydown.enter)="close($event, true)"
       (keydown.escape)="close($event, true)"
       (blur)="close($event)"
+      role="option"
     >
       <cx-media
         *ngIf="config.displayProductImages"
