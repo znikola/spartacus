@@ -1,12 +1,12 @@
 <label
   class="searchbox"
   [class.dirty]="!!searchInput.value"
-  role="combobox"
+  role="search"
   aria-expanded="false"
-  aria-owns=""
   aria-haspopup="listbox"
 >
   <input
+    aria-label="suggestions available when typing, use down arrow."
     aria-autocomplete="list"
     #searchInput
     [placeholder]="'searchBox.placeholder' | cxTranslate"
@@ -23,7 +23,7 @@
 
   <cx-icon
     [type]="iconTypes.RESET"
-    aria-label="reset"
+    aria-label="reset search box values"
     role="button"
     (mousedown)="clear(searchInput)"
     (keydown.enter)="clear(searchInput)"
@@ -33,12 +33,10 @@
 
   <cx-icon
     [type]="iconTypes.SEARCH"
-    aria-label="search"
-    role="button"
+    aria-hidden="true"
     class="search"
     (mousedown)="avoidReopen($event)"
     (keydown.enter)="avoidReopen($event)"
-    tabindex="0"
   ></cx-icon>
 </label>
 
