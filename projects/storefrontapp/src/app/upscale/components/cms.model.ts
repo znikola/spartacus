@@ -13,9 +13,15 @@ export interface ContentComponentModel extends UpscaleCmsComponent {
 }
 
 // tslint:disable-next-line: no-empty-interface
-export interface ImageComponentModel extends ContentComponentModel {}
+export interface ImageComponentModel extends ContentComponentModel {
+  url?: string;
+  imageUrl?: string;
+}
 // tslint:disable-next-line: no-empty-interface
 export interface CarouselComponentModel extends ContentComponentModel {}
+
+// tslint:disable-next-line: no-empty-interface
+export interface NextSellComponentModel extends ContentComponentModel {}
 
 export interface DisplayBlock {
   name: string;
@@ -26,7 +32,6 @@ export interface BrowseComponentModel extends UpscaleCmsComponent {
 }
 
 // tslint:disable-next-line: no-empty-interface
-export interface StorybookComponentModel extends ContentComponentModel {}
 
 export interface SellingTreeComponentModel extends ContentComponentModel {
   link?: {

@@ -16,6 +16,7 @@ export class ArticleContentComponent {
     switchMap((content) =>
       this.cmsService.getComponentData(content.link?.value)
     )
+    // tap((a) => console.log('article', a))
   );
 
   constructor(

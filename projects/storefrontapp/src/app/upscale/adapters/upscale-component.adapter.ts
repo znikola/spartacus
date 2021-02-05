@@ -7,6 +7,7 @@ import {
 } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UpscaleConfig } from '../config/upscale.config';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ import { map } from 'rxjs/operators';
 export class UpscaleCmsComponentAdapter implements CmsComponentAdapter {
   protected headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, protected config: UpscaleConfig) {}
 
   load<T extends CmsComponent>(
     _id: string,
@@ -37,13 +38,9 @@ export class UpscaleCmsComponentAdapter implements CmsComponentAdapter {
     _pageSize = ids.length,
     _sort?: string
   ): Observable<CmsComponent[]> {
-    // const baseUrl =
-    //   'https://qa-prod-approuter-caas2-sap.cfapps.us10.hana.ondemand.com';
-    const baseUrl =
-      'https://cxlive19a-approuter-caas2-sap.cfapps.us10.hana.ondemand.com';
-    const endpoint = `${baseUrl}/consumer/content-repository/contents?pageNumber=1&ids=${ids.join(
-      ','
-    )}`;
+    const endpoint = `${
+      this.config.upscale.baseUrl
+    }/consumer/content-repository/contents?pageNumber=1&ids=${ids.join(',')}`;
 
     return this.http
       .get(endpoint, { headers: this.headers })

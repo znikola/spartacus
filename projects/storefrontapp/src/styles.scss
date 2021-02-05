@@ -14,6 +14,8 @@ upscale-aspect-ratio-image {
   padding-bottom: 56%;
   overflow: hidden;
 
+  height: 100%;
+
   img {
     object-fit: cover;
     height: 100%;
@@ -66,6 +68,37 @@ cx-carousel {
     }
     .next {
       right: 0;
+    }
+  }
+}
+
+upscale-storybook {
+  .story {
+    display: grid;
+    grid-template: repeat(2, 160px) / 1fr 250px;
+    // grid-template: repeat(2, 18vh) / 1fr 30vh;
+    gap: 14px 14px;
+    margin-bottom: 14px;
+    .story-content {
+      overflow: hidden;
+      upscale-aspect-ratio-image .overlay {
+        background: rgba(255, 255, 255, 0.3);
+        padding: 12px;
+        color: #000;
+      }
+    }
+
+    &:nth-child(odd) .story-content:first-child {
+      grid-column: 1;
+      grid-row: 1/3;
+    }
+
+    &:nth-child(even) {
+      grid-template-columns: 250px 1fr;
+      .story-content:last-child {
+        grid-column: 2/3;
+        grid-row: 1/3;
+      }
     }
   }
 }

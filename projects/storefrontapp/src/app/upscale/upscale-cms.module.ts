@@ -3,31 +3,34 @@ import {
   CmsComponentAdapter,
   CmsPageAdapter,
   ProductAdapter,
+  provideConfig,
 } from '@spartacus/core';
-import { UpscaleCmsPageAdapter } from './adapters/upscale-cms.adapter';
+import { CarouselModule } from '@spartacus/storefront';
+import { UpscaleCmsPageAdapter } from './adapters/upscale-cms-page.adapter';
 import { UpscaleCmsComponentAdapter } from './adapters/upscale-component.adapter';
 import { UpscaleProductAdapter } from './adapters/upscale-product.adapter';
 import { ArticleContentModule } from './components/cms/article-content/article-content.module';
-import { CarouselModule } from './components/cms/carousel/carousel.module';
+import { BrowseModule } from './components/cms/browse/browse.module';
 import { ImageModule } from './components/cms/image/image.module';
+import { NextSellModule } from './components/cms/next-sell/next-sell.module';
 import { ProductContentModule } from './components/cms/product-content/product-content.module';
 import { SellingTreeModule } from './components/cms/selling-tree/selling-tree.module';
 import { StorybookModule } from './components/cms/storybook/storybook.module';
-
-// https://prod-qa-checkout-pwa.cfapps.us10.hana.ondemand.com/
+import { defaultUpscaleConfig } from './config/default-upscale.config';
 
 @NgModule({
   imports: [
-    // BrowseModule,
-
+    BrowseModule,
     StorybookModule,
     ImageModule,
     CarouselModule,
     SellingTreeModule,
     ProductContentModule,
     ArticleContentModule,
+    NextSellModule,
   ],
   providers: [
+    provideConfig(defaultUpscaleConfig),
     {
       provide: CmsPageAdapter,
       useExisting: UpscaleCmsPageAdapter,

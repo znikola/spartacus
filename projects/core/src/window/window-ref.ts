@@ -35,6 +35,7 @@ export class WindowRef {
    */
   get resize$(): Observable<any> {
     if (!this.nativeWindow) {
+      console.log('no native window');
       return of(null);
     } else {
       return fromEvent(this.nativeWindow, 'resize').pipe(

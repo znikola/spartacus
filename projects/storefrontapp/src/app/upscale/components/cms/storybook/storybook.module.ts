@@ -5,9 +5,15 @@ import {
   CarouselModule as SpartacusCarouselModule,
   PageComponentModule,
 } from '@spartacus/storefront';
+import { AspectRatioImageModule } from '../../shared/aspect-ration-image/aspect-ratio-image.module';
 import { StorybookComponent } from './storybook.component';
 @NgModule({
-  imports: [CommonModule, PageComponentModule, SpartacusCarouselModule],
+  imports: [
+    CommonModule,
+    PageComponentModule,
+    SpartacusCarouselModule,
+    AspectRatioImageModule,
+  ],
   providers: [
     provideDefaultConfig(<CmsConfig>{
       cmsComponents: {

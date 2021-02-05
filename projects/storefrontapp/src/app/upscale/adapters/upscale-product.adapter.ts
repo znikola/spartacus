@@ -3,20 +3,16 @@ import { Injectable } from '@angular/core';
 import { ImageType, Product, ProductAdapter } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UpscaleConfig } from '../config/upscale.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UpscaleProductAdapter implements ProductAdapter {
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, protected config: UpscaleConfig) {}
 
   load(productCode: string, _scope?: string): Observable<Product> {
-    const baseUrl =
-      'https://cxlive19a-approuter-caas2-sap.cfapps.us10.hana.ondemand.com';
-    // const baseUrl = 'https://qa-prod-approuter-caas2-sap.cfapps.us10.hana.ondemand.com'
-    // https://qa-prod-approuter-caas2-sap.cfapps.us10.hana.ondemand.com/consumer/product-content/products/46063
-
-    const endpoint = `${baseUrl}/consumer/product-content/products/${productCode}`;
+    const endpoint = `${this.config.upscale.baseUrl}/consumer/product-content/products/${productCode}`;
 
     return this.http
       .get(endpoint)
