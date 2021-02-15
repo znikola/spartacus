@@ -25,7 +25,7 @@ describe(`${
   orderHistoryTest.checkCorrectDateFormat(true);
 });
 
-describe(`${formats.mobile.width + 1}p resolution - Order details page`, () => {
+describe.skip(`${formats.mobile.width + 1}p resolution - Order details page`, () => {
   before(() => {
     cy.window().then((win) => win.sessionStorage.clear());
     cy.requireLoggedIn();

@@ -96,11 +96,16 @@ export const orderHistoryTest = {
   },
   checkSortingByCode() {
     it('should sort the orders table by given code', () => {
-      cy.server();
-      cy.route('GET', /sort=byOrderNumber/).as('query_order_asc');
+      // cy.intercept('GET', /^.*\/orders((?!(byOrderNumber)).)*$/).as('orders_response');
+      cy.intercept('GET', /sort=byOrderNumber/).as('query_order_asc');
       cy.visit('/my-account/orders');
+
+      // cy.wait('@orders_response').its('response.statusCode').should('eq', 200);
+      // debugger
       cy.get('.top cx-sorting .ng-select').ngSelect('Order Number');
-      cy.wait('@query_order_asc').its('status').should('eq', 200);
+
+      cy.wait('@query_order_asc').its('response.statusCode').should('eq', 200);
+
       cy.get('.cx-order-history-code > .cx-order-history-value').then(
         ($orders) => {
           expect(parseInt($orders[0].textContent, 10)).to.be.lessThan(
@@ -112,13 +117,7 @@ export const orderHistoryTest = {
   },
   checkCorrectDateFormat(isMobile?: boolean) {
     it('should show correct date format', () => {
-      cy.server();
-      cy.route(
-        'GET',
-        `${Cypress.env('OCC_PREFIX')}/${Cypress.env(
-          'BASE_SITE'
-        )}/cms/pages?*/my-account/orders*`
-      ).as('getOrderHistoryPage');
+      cy.intercept('GET', /cms\/pages.*my-account\/orders.*/).as('getOrderHistoryPage');
 
       // to compare two dates (EN and DE) we have to compare day numbers
       // EN: "June 15, 2019"
@@ -127,9 +126,9 @@ export const orderHistoryTest = {
       const getDayNumber = (element: any) =>
         element.text().replace(',', '').replace('.', '').split(' ');
       let dayNumberEN: string;
-      cy.visit('/my-account/orders');
-      cy.wait('@getOrderHistoryPage').its('status').should('eq', 200);
-      switchLanguage('en', isMobile);
+      cy.visit('/en/USD/my-account/orders');
+      cy.wait('@getOrderHistoryPage').its('response.statusCode').should('eq', 200);
+      // switchLanguage('en', isMobile);
 
       cy.get('.cx-order-history-placed > .cx-order-history-value')
         .first()
