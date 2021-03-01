@@ -1,4 +1,5 @@
 <div *ngIf="hasHeader" class="d-none d-md-block d-lg-block d-xl-block">
+  
   <div class="cx-item-list-header row">
     <div class="cx-item-list-desc col-md-5 col-lg-5 col-xl-6">
       {{ 'cartItems.description' | cxTranslate }}
@@ -28,6 +29,11 @@
         : control.get('quantity').dirty
     "
   >
+    <div>
+      <button (click)="addToActiveCart()"> test add </button>
+      <input type="checkbox" id="add-to-active" (click)="addToActive(item)"/>
+    </div>
+
     <cx-cart-item
       [item]="item"
       [quantityControl]="control.get('quantity')"

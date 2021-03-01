@@ -7,6 +7,7 @@ import { SavedCartListModule } from './list/saved-cart-list.module';
 import { savedCartFormConfig } from './saved-cart-form/saved-cart-form.config';
 import { SavedCartFormModule } from './saved-cart-form/saved-cart-form.module';
 import { savedCartRoutingConfig } from './saved-cart.config';
+import { SavedCartDetailsModule } from './details/saved-cart-details.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { savedCartRoutingConfig } from './saved-cart.config';
     AddToSavedCartModule,
     SavedCartFormModule,
     SavedCartListModule,
+    SavedCartDetailsModule
   ],
   providers: [
     provideDefaultConfig(savedCartRoutingConfig),
