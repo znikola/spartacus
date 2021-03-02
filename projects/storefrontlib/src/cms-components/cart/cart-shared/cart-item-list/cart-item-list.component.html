@@ -29,11 +29,6 @@
         : control.get('quantity').dirty
     "
   >
-    <div>
-      <button (click)="addToActiveCart()"> test add </button>
-      <input type="checkbox" id="add-to-active" (click)="addToActive(item)"/>
-    </div>
-
     <cx-cart-item
       [item]="item"
       [quantityControl]="control.get('quantity')"

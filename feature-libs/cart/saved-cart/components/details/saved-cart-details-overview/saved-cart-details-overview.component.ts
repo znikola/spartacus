@@ -6,6 +6,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SavedCartDetailsOverviewComponent implements OnInit {
 
+  cart: any = {
+    net: "",
+    totalDiscounts: {
+      value: "sadasd"
+    }
+  }
+
   constructor() { }
 
   ngOnInit(): void {

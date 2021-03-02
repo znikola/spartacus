@@ -29,8 +29,6 @@ export class CartItemListComponent {
 
   private _items: OrderEntry[] = [];
 
-  private itemsToAdd: Map<string, OrderEntry> = new Map()
-
   form: FormGroup = this.featureConfigService?.isLevel('3.1')
     ? new FormGroup({})
     : undefined;
@@ -145,26 +143,5 @@ export class CartItemListComponent {
       }),
       map(() => <FormGroup>this.form.get(this.getControlName(item)))
     );
-  }
-
-  addToActive(item: OrderEntry){
-    const id: any = item.product?.code;
-
-    if(this.itemsToAdd.has(id)){
-      this.itemsToAdd.delete(id);
-      alert("Removed");
-    }else{
-      this.itemsToAdd.set(id, item);
-      alert("Added");
-    }
-
-    const items = Array.from(this.itemsToAdd.values());
-    console.log({items});
-  }
-
-  addToActiveCart(){
-    const items: OrderEntry[] = Array.from(this.itemsToAdd.values());
-    console.log({items});
-    alert("All Items to move");
   }
 }
