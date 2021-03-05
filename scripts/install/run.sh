@@ -91,7 +91,7 @@ function add_b2b {
 }
 
 function add_spartacus_csr {
-    ( cd ${INSTALLATION_DIR}/${1} && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false
+    ( cd ${INSTALLATION_DIR}/${1} && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false && npm i @spartacus/tracking@${SPARTACUS_VERSION}
     add_b2b
     if [ "$ADD_PRODUCT_CONFIGURATOR" = true ] ; then
         ng add @spartacus/product-configurator@${SPARTACUS_VERSION} --interactive false
@@ -100,7 +100,7 @@ function add_spartacus_csr {
 }
 
 function add_spartacus_ssr {
-    ( cd ${INSTALLATION_DIR}/${1} && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false
+    ( cd ${INSTALLATION_DIR}/${1} && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false && npm i @spartacus/tracking@${SPARTACUS_VERSION}
     add_b2b
     if [ "$ADD_PRODUCT_CONFIGURATOR" = true ] ; then
         ng add @spartacus/product-configurator@${SPARTACUS_VERSION} --interactive false
@@ -109,7 +109,7 @@ function add_spartacus_ssr {
 }
 
 function add_spartacus_ssr_pwa {
-    ( cd ${INSTALLATION_DIR}/${1} && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr --pwa && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false
+    ( cd ${INSTALLATION_DIR}/${1} && ng add @spartacus/schematics@${SPARTACUS_VERSION} --overwriteAppComponent true --baseUrl ${BACKEND_URL} --occPrefix ${OCC_PREFIX} --ssr --pwa && ng add @spartacus/storefinder@${SPARTACUS_VERSION} --interactive false && npm i @spartacus/tracking@${SPARTACUS_VERSION}
     add_b2b
     if [ "$ADD_PRODUCT_CONFIGURATOR" = true ] ; then
         ng add @spartacus/product-configurator@${SPARTACUS_VERSION} --interactive false
@@ -195,6 +195,9 @@ function install_from_sources {
 
     printh "Creating product-configurator npm package"
     ( cd ${CLONE_DIR}/dist/product-configurator && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
+
+    printh "Creating tracking npm package"
+    ( cd ${CLONE_DIR}/dist/tracking && yarn publish --new-version=${SPARTACUS_VERSION} --registry=http://localhost:4873/ --no-git-tag-version )
 
     create_apps
 
