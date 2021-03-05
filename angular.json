@@ -241,7 +241,7 @@
       "prefix": "cx",
       "architect": {
         "build": {
-          "builder": "./tools/build-lib:augmented-types",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/core/tsconfig.lib.json",
             "project": "projects/core/ng-package.json"
@@ -661,7 +661,7 @@
       "prefix": "cx",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "feature-libs/tracking/tsconfig.lib.json",
             "project": "feature-libs/tracking/ng-package.json"
