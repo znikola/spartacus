@@ -152,6 +152,12 @@ export class CpqConfiguratorOverviewNormalizer
   }
 
   protected calculateTotalNumberOfIssues(source: Cpq.Configuration): number {
-    return source.incompleteAttributes.length + source.numberOfConflicts;
+    return (
+      source.incompleteAttributes.length +
+      source.incompleteMessages.length +
+      source.invalidMessages.length +
+      source.failedValidations.length +
+      source.errorMessages.length
+    );
   }
 }

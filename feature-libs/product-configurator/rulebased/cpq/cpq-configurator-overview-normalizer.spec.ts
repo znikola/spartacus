@@ -144,7 +144,7 @@ describe('CpqConfiguratorOverviewNormalizer', () => {
   });
 
   it('should calculate total number of issues', () => {
-    expect(serviceUnderTest.convert(input).totalNumberOfIssues).toBe(3);
+    expect(serviceUnderTest.convert(input).totalNumberOfIssues).toBe(6);
   });
 
   it('should prepare price summary', () => {
