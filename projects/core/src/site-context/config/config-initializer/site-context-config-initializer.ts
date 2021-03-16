@@ -3,9 +3,9 @@ import {
   CONFIG_INITIALIZER,
 } from '../../../config/config-initializer/config-initializer';
 import { FeatureConfigService } from '../../../features-config/services/feature-config.service';
-import { SiteContextConfigLoaderService } from './../../config/config-loader/site-context-config-loader.service';
-import { SiteContextConfig } from './../../config/site-context-config';
-import { BASE_SITE_CONTEXT_ID } from './../../providers/context-ids';
+import { BASE_SITE_CONTEXT_ID } from '../../providers/context-ids';
+import { SiteContextConfig } from '../site-context-config';
+import { SiteContextConfigLoaderService } from './site-context-config-loader.service';
 
 /**
  * Initializes the site context config

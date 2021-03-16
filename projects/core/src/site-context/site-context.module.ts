@@ -3,7 +3,7 @@ import { provideDefaultConfigFactory } from '../config/config-providers';
 import { provideConfigValidator } from '../config/config-validator/config-validator';
 import { StateModule } from '../state/index';
 import { baseSiteConfigValidator } from './config/base-site-config-validator';
-import { siteContextConfigInitializer } from './config/config-loader/site-context-config-initializer';
+import { siteContextConfigInitializer } from './config/config-initializer/site-context-config-initializer';
 import { defaultSiteContextConfigFactory } from './config/default-site-context-config';
 import { SiteContextEventModule } from './events/site-context-event.module';
 import { contextServiceMapProvider } from './providers/context-service-map';
