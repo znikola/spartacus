@@ -9,6 +9,7 @@ import { LoginRegisterModule } from './login-register/login-register.module';
 import { LoginRouteModule } from './login-route/login-route.module';
 import { LoginModule } from './login/login.module';
 import { LogoutModule } from './logout/logout.module';
+import { OAuthCallbackModule } from './oauth-callback/oauth-callback.module';
 import { RegisterComponentModule } from './register/register.module';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { RegisterComponentModule } from './register/register.module';
     LoginRegisterModule,
     LogoutModule,
     LoginRouteModule,
+    OAuthCallbackModule,
     CheckoutLoginModule,
     ReactiveFormsModule,
     RouterModule,

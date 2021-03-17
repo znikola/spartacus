@@ -37,7 +37,7 @@ export class OAuthLibWrapperService {
       redirectUri:
         this.authConfigService.getOAuthLibConfig()?.redirectUri ?? !isSSR
           ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            this.winRef.nativeWindow!.location.origin
+            this.winRef.nativeWindow!.location.origin + '/oauth/callback'
           : '',
       ...this.authConfigService.getOAuthLibConfig(),
     });

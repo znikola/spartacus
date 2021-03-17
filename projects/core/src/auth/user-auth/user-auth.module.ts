@@ -60,12 +60,12 @@ export class UserAuthModule {
           deps: [AuthStatePersistenceService],
           multi: true,
         },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: checkOAuthParamsInUrl,
-          deps: [AuthService, ConfigInitializerService],
-          multi: true,
-        },
+        // {
+        //   provide: APP_INITIALIZER,
+        //   useFactory: checkOAuthParamsInUrl,
+        //   deps: [AuthService, ConfigInitializerService],
+        //   multi: true,
+        // },
       ],
     };
   }

@@ -12,6 +12,7 @@ export const defaultStorefrontRoutesConfig: RoutesConfig = {
   resetPassword: { paths: ['login/pw/change'], protected: false },
   logout: { paths: ['logout'], protected: false },
   checkoutLogin: { paths: ['checkout-login'] },
+  oAuthCallback: { paths: ['oauth/callback'] },
 
   checkout: { paths: ['checkout'] },
   checkoutPaymentType: { paths: ['checkout/payment-type'] },
