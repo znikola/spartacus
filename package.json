@@ -7,6 +7,8 @@
     "node": ">=12 <16"
   },
   "scripts": {
+    "build:libs-sequential": "yarn ngcc:lock:remove && ng build core --prod && ng build storefrontlib --prod && yarn build:schematics && yarn build:asm && yarn build:organization && yarn build:product && yarn build:product-configurator && yarn build:storefinder && yarn build:smartedit && yarn build:qualtrics && yarn build:assets && yarn build:incubator && yarn build:cdc && yarn build:cds && yarn build:setup && yarn build:tracking",
+    "build:libs-parllel": "yarn ngcc:lock:remove && ng build core --prod && ng build storefrontlib --prod && yarn build:schematics && yarn build:asm && concurrently --kill-others-on-fail -m 4 yarn:build:organization yarn:build:product yarn:build:product-configurator yarn:build:storefinder yarn:build:smartedit yarn:build:qualtrics yarn:build:assets yarn:build:incubator yarn:build:cdc yarn:build:cds yarn:build:setup yarn:build:tracking",
     "build": "env-cmd --no-override -e dev,b2c,$SPA_ENV ng build storefrontapp --prod",
     "build:asm": "ng build asm --prod",
     "build:assets": "yarn --cwd ./projects/assets build",
