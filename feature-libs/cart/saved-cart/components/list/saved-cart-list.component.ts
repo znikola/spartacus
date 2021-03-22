@@ -4,8 +4,16 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Cart, RoutingService, TranslationService } from '@spartacus/core';
+import {
+  Cart,
+  MultiCartService,
+  RoutingService,
+  TranslationService,
+  UserIdService,
+} from '@spartacus/core';
 import { Observable, Subscription } from 'rxjs';
+import { ImportExportService } from '../../core/services';
+import { ImportToCartService } from '../../core/services/import-to-cart.service';
 import { SavedCartService } from '../../core/services/saved-cart.service';
 
 @Component({
@@ -15,13 +23,18 @@ import { SavedCartService } from '../../core/services/saved-cart.service';
 })
 export class SavedCartListComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
+  selectedFile: FileList;
 
   savedCarts$: Observable<Cart[]> = this.savedCartService.getList();
 
   constructor(
     protected routing: RoutingService,
     protected translation: TranslationService,
-    protected savedCartService: SavedCartService
+    protected savedCartService: SavedCartService,
+    protected userIdService: UserIdService,
+    protected multiCartService: MultiCartService,
+    protected importExportService: ImportExportService,
+    protected importToCartService: ImportToCartService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +45,12 @@ export class SavedCartListComponent implements OnInit, OnDestroy {
         .getRestoreSavedCartProcessSuccess()
         .subscribe((success) => this.onSuccess(success))
     );
+  }
+
+  importProducts(file: FileList): void {
+    this.importExportService
+      .importFile(file)
+      .then((data) => this.importToCartService.addProductsToCart(data));
   }
 
   goToSavedCartDetails(cart: Cart): void {

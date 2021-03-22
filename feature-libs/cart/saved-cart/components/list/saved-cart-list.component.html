@@ -7,6 +7,11 @@
         }}
       </h3>
     </div>
+    <div>
+      <label class="btn btn-default">
+        <input type="file" (change)="importProducts($event.target.files)" />
+      </label>
+    </div>
 
     <ng-container *ngIf="savedCarts?.length; else noSavedCarts">
       <table class="table cx-saved-cart-list-table">
