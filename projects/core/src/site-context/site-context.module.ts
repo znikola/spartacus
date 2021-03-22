@@ -1,10 +1,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { CONFIG_INITIALIZER } from '../config/config-initializer/config-initializer';
 import { provideDefaultConfigFactory } from '../config/config-providers';
 import { provideConfigValidator } from '../config/config-validator/config-validator';
 import { StateModule } from '../state/index';
 import { baseSiteConfigValidator } from './config/base-site-config-validator';
-import { siteContextConfigInitializer } from './config/config-initializer/site-context-config-initializer';
 import { defaultSiteContextConfigFactory } from './config/default-site-context-config';
+import { SiteContextConfigInitializer } from './config/site-context-config-initializer';
 import { SiteContextEventModule } from './events/site-context-event.module';
 import { contextServiceMapProvider } from './providers/context-service-map';
 import { contextServiceProviders } from './providers/context-service-providers';
@@ -24,7 +25,11 @@ export class SiteContextModule {
         ...contextServiceProviders,
         ...siteContextParamsProviders,
         provideConfigValidator(baseSiteConfigValidator),
-        siteContextConfigInitializer,
+        {
+          provide: CONFIG_INITIALIZER,
+          useExisting: SiteContextConfigInitializer,
+          multi: true,
+        },
       ],
     };
   }

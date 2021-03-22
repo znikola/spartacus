@@ -8,20 +8,24 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { BaseSite } from '../../../model/misc.model';
-import { JavaRegExpConverter } from '../../../util/java-reg-exp-converter/java-reg-exp-converter';
-import { SERVER_REQUEST_URL } from '../../../util/ssr.tokens';
-import { BaseSiteService } from '../../facade/base-site.service';
+import { ConfigInitializer } from '../../config/config-initializer/config-initializer';
+import { BaseSite } from '../../model/misc.model';
+import { JavaRegExpConverter } from '../../util/java-reg-exp-converter/java-reg-exp-converter';
+import { SERVER_REQUEST_URL } from '../../util/ssr.tokens';
+import { BaseSiteService } from '../facade/base-site.service';
 import {
   BASE_SITE_CONTEXT_ID,
   CURRENCY_CONTEXT_ID,
   LANGUAGE_CONTEXT_ID,
   THEME_CONTEXT_ID,
-} from '../../providers/context-ids';
-import { SiteContextConfig } from '../site-context-config';
+} from '../providers/context-ids';
+import { SiteContextConfig } from './site-context-config';
 
 @Injectable({ providedIn: 'root' })
-export class SiteContextConfigLoaderService {
+export class SiteContextConfigInitializer implements ConfigInitializer {
+  readonly scopes = ['context'];
+  readonly configFactory = () => this.resolveConfig().toPromise();
+
   constructor(
     protected baseSiteService: BaseSiteService,
     protected javaRegExpConverter: JavaRegExpConverter,
@@ -45,9 +49,11 @@ export class SiteContextConfigLoaderService {
   }
 
   /**
-   * Emits the site context config basing on the current base site data. Completes after emitting the value.
+   * Emits the site context config basing on the current base site data.
+   *
+   * Completes after emitting the value.
    */
-  loadConfig(): Observable<SiteContextConfig> {
+  protected resolveConfig(): Observable<SiteContextConfig> {
     return this.baseSiteService.getAll().pipe(
       map((baseSites) =>
         baseSites?.find((site) => this.isCurrentBaseSite(site))
@@ -65,20 +71,20 @@ export class SiteContextConfigLoaderService {
     );
   }
 
-  protected getConfig(source: BaseSite): SiteContextConfig {
+  protected getConfig(baseSite: BaseSite): SiteContextConfig {
     const result = {
       context: {
-        urlParameters: this.getUrlParams(source.urlEncodingAttributes),
-        [BASE_SITE_CONTEXT_ID]: [source.uid],
+        urlParameters: this.getUrlParams(baseSite.urlEncodingAttributes),
+        [BASE_SITE_CONTEXT_ID]: [baseSite.uid],
         [LANGUAGE_CONTEXT_ID]: this.getIsoCodes(
-          source.baseStore?.languages,
-          source.defaultLanguage || source.baseStore?.defaultLanguage
+          baseSite.baseStore?.languages,
+          baseSite.defaultLanguage || baseSite.baseStore?.defaultLanguage
         ),
         [CURRENCY_CONTEXT_ID]: this.getIsoCodes(
-          source.baseStore?.currencies,
-          source.baseStore?.defaultCurrency
+          baseSite.baseStore?.currencies,
+          baseSite.baseStore?.defaultCurrency
         ),
-        [THEME_CONTEXT_ID]: [source.theme],
+        [THEME_CONTEXT_ID]: [baseSite.theme],
       },
     } as SiteContextConfig;
 

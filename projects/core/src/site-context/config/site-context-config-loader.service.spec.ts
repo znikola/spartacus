@@ -4,7 +4,7 @@ import { SERVER_REQUEST_URL } from '@spartacus/core';
 import { Observable, of } from 'rxjs';
 import { BaseSite } from '../../../model/misc.model';
 import { BaseSiteService } from '../../facade/base-site.service';
-import { SiteContextConfigLoaderService } from './site-context-config-loader.service';
+import { SiteContextConfigLoaderService } from './site-context-config-initializer';
 
 describe(`SiteContextConfigLoaderService`, () => {
   let service: SiteContextConfigLoaderService;
