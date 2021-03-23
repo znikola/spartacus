@@ -120,7 +120,7 @@ export class SavedCartService {
       map(([carts, user]) =>
         carts.filter(
           (cart) =>
-            cart?.name !== getWishlistName(user?.customerId) && cart?.saveTime
+            cart?.name !== getWishlistName(user?.customerId || '') && cart?.saveTime
         )
       )
     );

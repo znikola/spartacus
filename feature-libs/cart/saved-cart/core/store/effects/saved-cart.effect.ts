@@ -87,11 +87,11 @@ export class SavedCartEffects {
     switchMap(([{ userId, cartId }, activeCart]) => {
       const actions: any[] = [];
 
-      if (activeCart?.entries?.length > 0) {
+      if (activeCart.entries && activeCart.entries.length > 0) {
         actions.push(
           new SavedCartActions.EditSavedCart({
             userId,
-            cartId: activeCart.code,
+            cartId: activeCart.code || '',
             saveCartName: '',
             saveCartDescription: '',
           })
@@ -103,7 +103,7 @@ export class SavedCartEffects {
           this.globalMessageService.add(
             {
               key:
-                activeCart?.entries?.length > 0
+                (activeCart.entries && activeCart?.entries?.length > 0)
                   ? 'savedCartList.swapCartWithActiveCart'
                   : 'savedCartList.swapCartNoActiveCart',
               params: {
