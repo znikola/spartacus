@@ -87,11 +87,11 @@ export class SavedCartEffects {
     switchMap(([{ userId, cartId }, activeCart]) => {
       const actions: any[] = [];
 
-      if (activeCart.entries && activeCart.entries.length > 0) {
+      if (activeCart.code && activeCart.entries && activeCart.entries.length > 0) {
         actions.push(
           new SavedCartActions.EditSavedCart({
             userId,
-            cartId: activeCart.code || '',
+            cartId: activeCart.code,
             saveCartName: '',
             saveCartDescription: '',
           })

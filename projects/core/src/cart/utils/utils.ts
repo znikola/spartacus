@@ -5,7 +5,7 @@ import { OCC_USER_ID_ANONYMOUS } from '../../occ/utils/occ-constants';
 /**
  * Extract cart identifier for current user. Anonymous calls use `guid` and for logged users `code` is used.
  */
-export function getCartIdByUserId(cart: Cart, userId: string): string {
+export function getCartIdByUserId(cart: Cart, userId: string): string | undefined {
   if (userId === OCC_USER_ID_ANONYMOUS) {
     return cart.guid;
   }
@@ -38,7 +38,7 @@ export function isCartNotFoundError(error: ErrorModel): boolean {
 /**
  * Compute wishlist cart name for customer.
  */
-export function getWishlistName(customerId: string): string {
+export function getWishlistName(customerId: string | undefined): string {
   return `wishlist${customerId}`;
 }
 

@@ -72,7 +72,7 @@ export class SavedCartService {
           this.loadSavedCart(cartId);
         }
       }),
-      filter(([state]) => state.success || state.error),
+      filter(([state]) => Boolean(state.success || state.error)),
       map(([state]) => state.value)
     );
   }
@@ -120,7 +120,7 @@ export class SavedCartService {
       map(([carts, user]) =>
         carts.filter(
           (cart) =>
-            cart?.name !== getWishlistName(user?.customerId || '') && cart?.saveTime
+            cart?.name !== getWishlistName(user?.customerId) && cart?.saveTime
         )
       )
     );
