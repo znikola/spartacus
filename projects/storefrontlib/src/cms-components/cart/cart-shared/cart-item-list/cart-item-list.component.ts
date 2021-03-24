@@ -78,7 +78,25 @@ export class CartItemListComponent {
         return entry;
       });
     } else {
-      this._items = items;
+      // We'd like to avoid the unnecessary re-renders of unchanged cart items after the data reload.
+      // OCC cart entries don't have any unique identifier that we could use in Angular `trackBy`.
+      // So we update each array element to the new object only when it's any different to the previous one.
+      if (this.featureConfigService?.isLevel('3.1')) {
+        for (let i = 0; i < Math.max(items.length, this._items.length); i++) {
+          if (JSON.stringify(this._items?.[i]) !== JSON.stringify(items[i])) {
+            if (this._items[i] && this.form) {
+              this.form.removeControl(this.getControlName(this._items[i]));
+            }
+            if (!items[i]) {
+              this._items.splice(i, 1);
+            } else {
+              this._items[i] = items[i];
+            }
+          }
+        }
+      } else {
+        this._items = items;
+      }
     }
   }
 
