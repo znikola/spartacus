@@ -1,6 +1,9 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine as engine } from '@nguniversal/express-engine';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { SERVER_REQUEST_ORIGIN } from '@spartacus/core';
 import { NgExpressEngineDecorator } from '@spartacus/setup/ssr';
+import { Request } from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import 'zone.js/dist/zone-node';
@@ -10,11 +13,38 @@ import { AppServerModule } from './src/main.server';
 // And we need to use esModuleInterop option in ssr dev mode, because i18next enforce usage of this option for cjs module.
 const express = require('express');
 
-const ngExpressEngine = NgExpressEngineDecorator.get(engine);
+const ngExpressEngine = NgExpressEngineDecorator.get(engine, null);
+
+function getRequestOrigin(request: Request): string {
+  console.log('hostName', request?.hostname);
+  console.log('originalUrl', request?.originalUrl);
+  console.log(
+    'serverUrl',
+    request?.protocol + '://' + request?.hostname + request?.originalUrl
+  );
+  console.log('X-Forwarded-Host', request?.get('X-Forwarded-Host'));
+  console.log('host', request?.get('host'));
+  console.log(
+    'serverUrl',
+    request?.get('X-Forwarded-Proto') +
+      '://' +
+      request?.get('X-Forwarded-Host') +
+      request?.originalUrl
+  );
+  console.log('X-Forwarded-Host:' + request?.get('X-Forwarded-Host') + '.');
+  console.log('X-Forwarded-Proto:' + request?.get('X-Forwarded-Proto') + '.');
+  console.log('X-Forwarded-Port:' + request?.get('X-Forwarded-Port') + '.');
+
+  const result = request.protocol + '://' + request.hostname; //request.get('host');
+  console.log('RESULT', result);
+  return result;
+}
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
+  server.set('trust proxy', 'loopback');
+
   const distFolder = join(process.cwd(), 'dist/storefrontapp');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
@@ -25,6 +55,13 @@ export function app() {
     'html',
     ngExpressEngine({
       bootstrap: AppServerModule,
+      providers: [
+        {
+          provide: SERVER_REQUEST_ORIGIN,
+          useFactory: getRequestOrigin,
+          deps: [REQUEST],
+        },
+      ],
     })
   );
 

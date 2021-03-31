@@ -26,6 +26,10 @@ export function i18nextInit(
         },
       };
       if (config.i18n.backend) {
+        //spike new idea:
+        // i18next.use(serverRequestOrigin ? i18nextFsBackend : i18nextXhrBackend);
+
+        //spike old:
         i18next.use(i18nextXhrBackend);
         const loadPath = getLoadPath(
           config.i18n.backend.loadPath,
@@ -93,7 +97,10 @@ export function i18nextGetHttpClient(
   return (url: string, _options: object, callback: Function, _data: object) => {
     httpClient.get(url, { responseType: 'text' }).subscribe(
       (data) => callback(data, { status: 200 }),
-      (error) => callback(null, { status: error.status })
+      (error) => {
+        console.error('i18n assets loading error', error);
+        callback(null, { status: error.status });
+      }
     );
   };
 }

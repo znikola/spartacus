@@ -9,6 +9,7 @@
       "@ngrx/store": "store",
       "i18next": "i18next",
       "i18next-xhr-backend": "i18nextXhrBackend",
+      "i18next-fs-backend": "i18nextFsBackend",
       "angular-oauth2-oidc": "angularOAuth2Oidc"
     }
   }
