@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CmsComponentData } from '@spartacus/storefront';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CarouselComponentModel } from '../../cms.model';
 import { ContentService } from '../../content.service';
 @Component({
@@ -10,10 +10,12 @@ import { ContentService } from '../../content.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarouselComponent {
+  // TODO: get a dynamic carousel item
+  width = '100%';
+
   items$: Observable<Observable<string>[]> = this.component.data$.pipe(
     map((data) => data.contentIds),
-    map((ids) => ids.map((id) => of(id))),
-    tap(console.log)
+    map((ids) => ids.map((id) => of(id)))
   );
 
   constructor(

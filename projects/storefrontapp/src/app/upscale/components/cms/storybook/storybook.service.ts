@@ -6,13 +6,7 @@ import {
   CmsComponentData,
 } from '@spartacus/storefront';
 import { Observable, of } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { StorybookComponentModel, StoryData } from './storybook.model';
 import { chunkArray } from './storybook.utils';
 
@@ -21,11 +15,11 @@ export class StorybookService {
   public data$ = this.component.data$;
 
   protected layout$ = this.breakpointService.breakpoint$.pipe(
-    tap((breakpoint) => console.log('breakpoint', breakpoint)),
+    // tap((breakpoint) => console.log('breakpoint', breakpoint)),
     switchMap((breakpoint) =>
       this.component.data$.pipe(
         filter((data) => Boolean(data)),
-        tap((d) => console.log('d', d)),
+        // tap((d) => console.log('layout', d)),
         map((data) => ({
           layoutType: data.layoutType,
           layoutBehaviorStyle:
@@ -34,6 +28,7 @@ export class StorybookService {
               ? 'SLIDER'
               : data.layoutBehaviorStyle,
           layoutOptionStyle: data.layoutOptionStyle,
+          articleDisplayBlocks: data.articleDisplayBlocks,
         }))
       )
     ),
@@ -77,7 +72,7 @@ export class StorybookService {
           chunkLength = 3;
         }
 
-        console.log(id, layout);
+        // console.log(id, layout);
         return chunkLength
           ? chunkArray(content.contentIds, chunkLength)
           : content.contentIds;
@@ -87,7 +82,6 @@ export class StorybookService {
 
   getContent(id: string) {
     return this.cmsService.getComponentData(id);
-    // .pipe(tap((content) => console.log('getComponentData', id, content)));
   }
 
   protected getType(content) {

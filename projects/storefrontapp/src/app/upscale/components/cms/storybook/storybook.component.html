@@ -1,6 +1,6 @@
 <ng-container *ngIf="layout$ | async as layout">
   <ng-container
-    *ngFor="let storybookId of getStoryBooks() | async"
+    *ngFor="let storybookId of storybooks$ | async"
     [ngTemplateOutlet]="layout.template"
     [ngTemplateOutletContext]="{
       $implicit: { storybookId: storybookId, layout: layout }
@@ -9,17 +9,16 @@
   </ng-container>
 </ng-container>
 
-<!-- TODO: process layout -->
 <ng-template #stacked let-data>
   <div
     class="story"
     *ngFor="let storyData of getStories(data.storybookId, data.layout) | async"
   >
-    <ng-container
-      *ngFor="let storyId of storyData"
-      [ngTemplateOutlet]="storyTmpl"
-      [ngTemplateOutletContext]="{ $implicit: storyId }"
-    ></ng-container>
+    <upscale-storybook-content
+      *ngFor="let contentId of storyData"
+      [id]="contentId"
+      [layout]="data.layout"
+    ></upscale-storybook-content>
   </div>
 </ng-template>
 
@@ -32,33 +31,9 @@
   </cx-carousel>
 
   <ng-template #sliderItem let-item="item">
-    <ng-container
-      [ngTemplateOutlet]="storyTmpl"
-      [ngTemplateOutletContext]="{ $implicit: item }"
-    ></ng-container>
+    <upscale-storybook-content
+      [id]="item"
+      [layout]="layout"
+    ></upscale-storybook-content>
   </ng-template>
 </ng-template>
-
-<!-- TODO: implement storybook content -->
-<ng-template #storyTmpl let-storyId>
-  <!-- <div class="story-content">{{ storyId }}</div> -->
-  <!-- {{ getContent(storyId) | async }} -->
-  <div class="story-content">
-    <!-- {{ getContent(storyId) | async | json }} -->
-    <upscale-aspect-ratio-image
-      [content]="getStoryContent(storyId) | async"
-    ></upscale-aspect-ratio-image>
-  </div>
-</ng-template>
-
-<!-- <ng-template #other let-book>
-  <ng-container *ngFor="let item$ of book | async">
-    <ng-container *ngIf="item$ | async as item">
-      <ng-container
-        *ngIf="getContent(item) | async as content"
-        [ngTemplateOutlet]="storybookContent"
-        [ngTemplateOutletContext]="{ $implicit: content }"
-      ></ng-container>
-    </ng-container>
-  </ng-container>
-</ng-template> -->

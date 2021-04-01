@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { CmsComponentData } from '@spartacus/storefront';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { ImageComponentModel } from '../../cms.model';
 @Component({
   selector: 'upscale-image',
@@ -14,13 +13,7 @@ import { ImageComponentModel } from '../../cms.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageComponent implements OnInit {
-  componentData$: Observable<ImageComponentModel> = this.component.data$.pipe(
-    tap((imageData) => {
-      if (!imageData.url || !imageData.imageUrl) {
-        console.log();
-      }
-    })
-  );
+  componentData$: Observable<ImageComponentModel> = this.component.data$;
 
   @Input() contentId: string;
 

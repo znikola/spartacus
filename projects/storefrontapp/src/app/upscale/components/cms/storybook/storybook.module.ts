@@ -6,6 +6,7 @@ import {
   PageComponentModule,
 } from '@spartacus/storefront';
 import { AspectRatioImageModule } from '../../shared/aspect-ration-image/aspect-ratio-image.module';
+import { StorybookContentComponent } from './storybook-content/storybook-content.component';
 import { StorybookComponent } from './storybook.component';
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { StorybookComponent } from './storybook.component';
       },
     }),
   ],
-  declarations: [StorybookComponent],
+  declarations: [StorybookComponent, StorybookContentComponent],
 })
 export class StorybookModule {}

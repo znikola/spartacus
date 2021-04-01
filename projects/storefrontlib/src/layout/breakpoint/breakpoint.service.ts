@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { WindowRef } from '@spartacus/core';
 import { Observable, of } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 import {
   BreakPoint,
   BREAKPOINT,
@@ -33,9 +33,10 @@ export class BreakpointService {
 
   breakpoint$: Observable<BREAKPOINT> = isPlatformBrowser(this.platform)
     ? this.winRef.resize$.pipe(
-        tap((ev) => console.log('ev', ev)),
+        // tap((ev) => console.log('ev', ev)),
         map((event) => this.getBreakpoint((<Window>event.target).innerWidth)),
-        distinctUntilChanged()
+        distinctUntilChanged(),
+        shareReplay({ bufferSize: 1, refCount: true })
       )
     : of(this.fallbackBreakpoint);
 

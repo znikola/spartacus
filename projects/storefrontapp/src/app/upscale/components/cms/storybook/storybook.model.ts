@@ -25,6 +25,11 @@ export interface StorybookComponentModel extends ContentComponentModel {
   layoutBehaviorStyle?: StoryBookLayoutBehaviorStyle;
   layoutOptionStyle?: StoryBookLayoutOptionStyle;
   showAsSliderOnMobile?: boolean;
+
+  articleDisplayBlocks?: {
+    name: string;
+    show: boolean;
+  }[];
 }
 
 export declare enum StoryBookLayoutType {

@@ -114,7 +114,6 @@ export class CmsService {
         const couldBeLoadedWithPageData = nextContext
           ? serializePageContext(nextContext, true) === context
           : false;
-
         if (!attemptedLoad && !couldBeLoadedWithPageData) {
           this.store.dispatch(
             new CmsActions.LoadCmsComponent({ uid, pageContext })

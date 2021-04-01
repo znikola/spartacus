@@ -101,7 +101,7 @@ export class UpscaleCmsPageAdapter implements CmsPageAdapter {
         } as CmsComponent);
       }
     });
-    console.log(components);
+    // console.log(components);
     return components;
   }
 

@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -45,15 +46,15 @@ export class CarouselComponent implements OnInit {
   items: Observable<any>[];
   @Input('items')
   set setItems(inputItems: Observable<any>[]) {
-    console.log('carousel items', inputItems);
+    // console.log('carousel setItems', inputItems);
     this.items = inputItems;
-    //Reset slider when changing products
+    // Reset slider when changing products
     this.activeSlide = 0;
   }
 
   /**
    * The template is rendered for each item, so that the actual
-   * view can be given by the compoent that uses the `CarouselComponent`.
+   * view can be given by the component that uses the `CarouselComponent`.
    */
   @Input() template: TemplateRef<any>;
 
@@ -78,7 +79,11 @@ export class CarouselComponent implements OnInit {
   activeSlide: number;
   size$: Observable<number>;
 
-  constructor(protected el: ElementRef, protected service: CarouselService) {}
+  constructor(
+    protected el: ElementRef,
+    protected service: CarouselService,
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     if (!this.template && isDevMode()) {
