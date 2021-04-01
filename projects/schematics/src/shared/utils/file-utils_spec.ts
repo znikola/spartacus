@@ -11,7 +11,7 @@ import {
 } from '@schematics/angular/utility/change';
 import * as path from 'path';
 import * as ts from 'typescript';
-import { COMPONENT_DEPRECATION_DATA } from '../../migrations/2_0/component-deprecations/component-deprecations';
+import { COMPONENT_DEPRECATION_DATA } from '../../migrations/test/component-deprecations/component-deprecations';
 import {
   ANGULAR_CORE,
   ANONYMOUS_CONSENTS,
@@ -968,7 +968,8 @@ describe('File utils', () => {
       };
 
       const nodes = getSourceNodes(source);
-      const constructorNode = findConstructor(nodes);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const constructorNode = findConstructor(nodes)!;
       const changes = removeInjectImports(
         source,
         constructorNode,
@@ -1000,7 +1001,8 @@ describe('File utils', () => {
       };
 
       const nodes = getSourceNodes(source);
-      const constructorNode = findConstructor(nodes);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const constructorNode = findConstructor(nodes)!;
       const changes = removeInjectImports(
         source,
         constructorNode,
@@ -1022,7 +1024,8 @@ describe('File utils', () => {
         true
       );
       const nodes = getSourceNodes(source);
-      const constructorNode = findConstructor(nodes);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const constructorNode = findConstructor(nodes)!;
       expect(shouldRemoveDecorator(constructorNode, 'Inject')).toEqual(true);
     });
 
@@ -1034,7 +1037,8 @@ describe('File utils', () => {
         true
       );
       const nodes = getSourceNodes(source);
-      const constructorNode = findConstructor(nodes);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const constructorNode = findConstructor(nodes)!;
       const res = shouldRemoveDecorator(constructorNode, 'Inject');
       expect(res).toEqual(false);
     });
