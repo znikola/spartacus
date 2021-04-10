@@ -2,31 +2,31 @@ import { NgModule } from '@angular/core';
 import {
   CmsComponentAdapter,
   CmsPageAdapter,
+  CMS_COMPONENT_NORMALIZER,
+  CMS_PAGE_NORMALIZER,
   ProductAdapter,
   provideConfig,
 } from '@spartacus/core';
+import { UpscaleCmsPageNormalizer } from './adapters/converters/upscale-cms-page.normalizer';
+import { UpscaleCmsComponentNormalizer } from './adapters/converters/upscale.cms-component.normalizer';
 import { UpscaleCmsPageAdapter } from './adapters/upscale-cms-page.adapter';
 import { UpscaleCmsComponentAdapter } from './adapters/upscale-component.adapter';
 import { UpscaleProductAdapter } from './adapters/upscale-product.adapter';
-import { ArticleContentModule } from './components/cms/article-content/article-content.module';
-import { CarouselModule } from './components/cms/carousel/carousel.module';
+import { ContainerModule } from './components/cms/container/container.module';
 import { ImageModule } from './components/cms/image/image.module';
-import { NextSellModule } from './components/cms/next-sell/next-sell.module';
-import { ProductContentModule } from './components/cms/product-content/product-content.module';
-import { SellingTreeModule } from './components/cms/selling-tree/selling-tree.module';
-import { StorybookModule } from './components/cms/storybook/storybook.module';
 import { defaultUpscaleConfig } from './config/default-upscale.config';
 
 @NgModule({
   imports: [
+    ContainerModule,
     // BrowseModule,
-    StorybookModule,
+    // StorybookModule,
     ImageModule,
-    CarouselModule,
-    SellingTreeModule,
-    ProductContentModule,
-    ArticleContentModule,
-    NextSellModule,
+    // CarouselModule,
+    // SellingTreeModule,
+    // ProductContentModule,
+    // ArticleContentModule,
+    // NextSellModule,
   ],
   providers: [
     provideConfig(defaultUpscaleConfig),
@@ -34,6 +34,22 @@ import { defaultUpscaleConfig } from './config/default-upscale.config';
       provide: CmsPageAdapter,
       useExisting: UpscaleCmsPageAdapter,
     },
+    {
+      provide: UpscaleCmsPageNormalizer,
+      useClass: UpscaleCmsPageNormalizer,
+    },
+    {
+      provide: CMS_PAGE_NORMALIZER,
+      useExisting: UpscaleCmsPageNormalizer,
+      multi: true,
+    },
+
+    {
+      provide: CMS_COMPONENT_NORMALIZER,
+      useExisting: UpscaleCmsComponentNormalizer,
+      multi: true,
+    },
+
     {
       provide: CmsComponentAdapter,
       useExisting: UpscaleCmsComponentAdapter,

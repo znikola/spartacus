@@ -6,13 +6,28 @@ import {
   CmsComponentData,
 } from '@spartacus/storefront';
 import { Observable, of } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { StorybookComponentModel, StoryData } from './storybook.model';
 import { chunkArray } from './storybook.utils';
 
 @Injectable()
 export class StorybookService {
-  public data$ = this.component.data$;
+  public data$ = this.component.data$.pipe(tap(console.log));
+
+  headline$ = this.data$.pipe(
+    filter((data) => data?.showComponentHeadline),
+    map((data) => data.headline)
+  );
+  subHeadline$ = this.data$.pipe(
+    filter((data) => data?.showComponentSubHeadline),
+    map((data) => data.subHeadline)
+  );
 
   protected layout$ = this.breakpointService.breakpoint$.pipe(
     // tap((breakpoint) => console.log('breakpoint', breakpoint)),

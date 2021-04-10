@@ -1,3 +1,9 @@
-<ng-container *ngIf="componentData$ | async as image">
-  <upscale-aspect-ratio-image [content]="image"></upscale-aspect-ratio-image>
+<ng-container *ngIf="image$ | async as content">
+  <img [src]="content.url || content.imageUrl || content.heroImageUrl" />
+
+  <div class="overlay" *ngIf="content.headline || content.subHeadline">
+    <h3 *ngIf="content.headline" [innerText]="content.headline"></h3>
+    <h4 *ngIf="content.subHeadline" [innerText]="content.subHeadline"></h4>
+  </div>
 </ng-container>
+<!-- <upscale-aspect-ratio-image [content]="image"></upscale-aspect-ratio-image> -->

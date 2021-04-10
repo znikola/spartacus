@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CmsComponentData } from '@spartacus/storefront';
 import { Observable } from 'rxjs';
 import { ImageComponentModel } from '../../cms.model';
@@ -12,25 +7,11 @@ import { ImageComponentModel } from '../../cms.model';
   templateUrl: './image.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImageComponent implements OnInit {
-  componentData$: Observable<ImageComponentModel> = this.component.data$;
-
-  @Input() contentId: string;
-
+export class ImageComponent {
   constructor(protected component: CmsComponentData<ImageComponentModel>) {}
 
-  ngOnInit() {
-    // // console.log(this.contentId);
-    // if (this.contentId) {
-    //   // this.componentData$ = this.contentService
-    //   //   .get(this.contentId)
-    //   //   .pipe(tap((content) => console.log('input image', content)));
-    // } else {
-    //   this.componentData$ = this.component.data$;
-    // }
-  }
-
-  // getContent(contentId: string): Observable<any> {
-  //   return this.contentService.get(contentId);
-  // }
+  /**
+   * exposes the image data set whenever there's an image to be rendered.
+   */
+  image$: Observable<ImageComponentModel> = this.component.data$.pipe();
 }

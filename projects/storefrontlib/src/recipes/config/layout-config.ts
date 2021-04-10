@@ -18,6 +18,10 @@ export const layoutConfig: LayoutConfig = {
   //   intersectionMargin: '50px',
   // },
   layoutSlots: {
+    virtualTemplate: {
+      slots: ['virtualSlot'],
+    },
+
     header: {
       lg: {
         slots: [

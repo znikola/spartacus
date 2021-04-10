@@ -66,6 +66,9 @@ export class StorybookComponent implements AfterViewInit {
 
   // public storybookItems$ = this.storybookService.getStorybookItems();
 
+  headline$ = this.storybookService.headline$;
+  subHeadline$ = this.storybookService.subHeadline$;
+
   storybooks$ = this.storybookService.getStoryBooks();
 
   constructor(protected storybookService: StorybookService) {}

@@ -3,12 +3,6 @@
   [cxOutletContext]="{ components$: components$ }"
   *ngIf="slot$ | async as slotData"
 >
-  <h2 *ngIf="slotData.headline as headline" [innerHTML]="headline"></h2>
-  <h3
-    *ngIf="slotData.subHeadline as subHeadline"
-    [innerHTML]="subHeadline"
-  ></h3>
-
   <ng-template
     *ngFor="let component of components"
     [cxOutlet]="component.flexType"

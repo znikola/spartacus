@@ -6,6 +6,7 @@ import {
   PageComponentModule,
 } from '@spartacus/storefront';
 import { AspectRatioImageModule } from '../../shared/aspect-ration-image/aspect-ratio-image.module';
+import { HeadlineModule } from '../shared/headline/headline.module';
 import { StorybookContentComponent } from './storybook-content/storybook-content.component';
 import { StorybookComponent } from './storybook.component';
 @NgModule({
@@ -14,6 +15,8 @@ import { StorybookComponent } from './storybook.component';
     PageComponentModule,
     SpartacusCarouselModule,
     AspectRatioImageModule,
+
+    HeadlineModule,
   ],
   providers: [
     provideDefaultConfig(<CmsConfig>{
