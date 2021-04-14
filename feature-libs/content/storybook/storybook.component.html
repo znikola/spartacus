@@ -1,0 +1,42 @@
+storybook...
+
+<!-- <cx-headline></cx-headline> -->
+<ng-container *ngIf="layout$ | async as layout">
+  <ng-container
+    *ngFor="let storybookId of storybooks$ | async"
+    [ngTemplateOutlet]="layout.template"
+    [ngTemplateOutletContext]="{
+      $implicit: { storybookId: storybookId, layout: layout }
+    }"
+  >
+  </ng-container>
+</ng-container>
+
+<ng-template #stacked let-data>
+  <div
+    class="story"
+    *ngFor="let storyData of getStories(data.storybookId, data.layout) | async"
+  >
+    <upscale-storybook-content
+      *ngFor="let contentId of storyData"
+      [id]="contentId"
+      [layout]="data.layout"
+    ></upscale-storybook-content>
+  </div>
+</ng-template>
+
+<ng-template #slider let-data>
+  <cx-carousel
+    [items]="getSliderItems(data.storybookId) | async"
+    [template]="sliderItem"
+    itemWidth="33%"
+  >
+  </cx-carousel>
+
+  <ng-template #sliderItem let-item="item">
+    <upscale-storybook-content
+      [id]="item"
+      [layout]="layout"
+    ></upscale-storybook-content>
+  </ng-template>
+</ng-template>

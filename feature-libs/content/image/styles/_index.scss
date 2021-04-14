@@ -1,0 +1,54 @@
+cx-template-slot {
+  --image-sizing: cover;
+  &[type='IMAGE'] {
+    --image-height: 100%;
+
+    &[aspect-ratio='RATIO_4_3'] {
+      .image-wrapper {
+        --image-height: 75%;
+      }
+    }
+
+    &[aspect-ratio='RATIO_16_9'] {
+      .image-wrapper {
+        --image-height: 56.2%;
+      }
+    }
+  }
+}
+
+%cx-image {
+  .image-wrapper {
+    display: block;
+    position: relative;
+
+    margin-top: var(--image-margin-top);
+    margin-inline-start: var(--image-margin-start);
+    margin-inline-end: var(--image-margin-end);
+    margin-bottom: var(--image-margin-bottom);
+
+    @include media-breakpoint-up(xs) {
+      padding-bottom: var(--image-height-xs, var(--image-height));
+    }
+    @include media-breakpoint-up(md) {
+      padding-bottom: var(--image-height-md, var(--image-height));
+    }
+    @include media-breakpoint-up(lg) {
+      padding-bottom: var(--image-height);
+    }
+
+    img {
+      position: absolute;
+      object-fit: var(--image-sizing);
+      width: 100%;
+      height: 100%;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      padding: 48px;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { CmsComponent } from '@spartacus/core';
 
 export interface UpscaleCmsComponent extends CmsComponent {
+  id: string;
   headline?: string;
   subHeadline?: string;
 
@@ -32,6 +33,8 @@ export interface UpscaleCmsComponent extends CmsComponent {
    */
   imageHandling: string;
 
+  heroImageTitleDisplayPosition: string;
+
   /**
    * Indicates whether there's max width for the image size.
    */
@@ -45,23 +48,25 @@ export enum Alignment {
   CENTER = 'CENTER',
 }
 
-export interface ContentComponentModel extends UpscaleCmsComponent {
-  type: string;
-  contentIds: string[];
+// export interface ContentComponentModel extends UpscaleCmsComponent {
+//   id: string;
+//   type: string;
+//   contentIds: string[];
 
-  containerType: string;
-}
+//   containerType: string;
 
-// tslint:disable-next-line: no-empty-interface
-export interface ImageComponentModel extends ContentComponentModel {
-  url?: string;
-  imageUrl?: string;
-}
-// tslint:disable-next-line: no-empty-interface
-export interface CarouselComponentModel extends ContentComponentModel {}
+//   link?: {
+//     type: string;
+//     value: unknown;
+//     behavior: LinkBehavior;
+//   };
+// }
 
-// tslint:disable-next-line: no-empty-interface
-export interface NextSellComponentModel extends ContentComponentModel {}
+// // tslint:disable-next-line: no-empty-interface
+// export interface CarouselComponentModel extends ContentComponentModel {}
+
+// // tslint:disable-next-line: no-empty-interface
+// export interface NextSellComponentModel extends ContentComponentModel {}
 
 export interface DisplayBlock {
   name: string;
@@ -73,22 +78,19 @@ export interface BrowseComponentModel extends UpscaleCmsComponent {
 
 // tslint:disable-next-line: no-empty-interface
 
-export interface SellingTreeComponentModel extends ContentComponentModel {
-  link?: {
-    value?: {
-      sellingTreeId: string;
-      categoryPath: string[];
-    }[];
-  };
-}
+// export interface SellingTreeComponentModel extends ContentComponentModel {
+//   link: {
+//     value: {
+//       sellingTreeId: string;
+//       categoryPath: string[];
+//     }[];
+
+//     type: string;
+//     behavior: LinkBehavior;
+//   };
+// }
 
 export interface ProductContentComponentModel extends UpscaleCmsComponent {
-  link?: {
-    value?: string;
-  };
-}
-
-export interface ArticleContentComponentModel extends UpscaleCmsComponent {
   link?: {
     value?: string;
   };

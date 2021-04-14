@@ -5,6 +5,9 @@ export const defaultStorefrontRoutesConfig: RoutesConfig = {
   notFound: { paths: ['not-found'] },
   cart: { paths: ['cart'] },
 
+  // TMP
+  ARTICLE_CONTENT: { paths: ['article/:value'], protected: false },
+
   // semantic links for login related pages
   login: { paths: ['login'], protected: false },
   register: { paths: ['login/register'], protected: false },

@@ -1,0 +1,10 @@
+<ng-container *ngIf="data$ | async as data" [cxSlotLayout]="data">
+  <h1 cxHeading="subHeadline"></h1>
+  <h2 cxHeading="headline"></h2>
+
+  <ng-container
+    *ngFor="let component of getComponents(data)"
+    [cxComponentWrapper]="component"
+  >
+  </ng-container>
+</ng-container>

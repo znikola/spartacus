@@ -75,6 +75,8 @@ import { AsmFeatureModule } from './features/asm-feature.module';
 import { BulkPricingFeatureModule } from './features/bulk-pricing-feature.module';
 import { CdcFeatureModule } from './features/cdc-feature.module';
 import { CdsFeatureModule } from './features/cds-feature.module';
+import { ContentFeatureModule } from './features/content-feature.module';
+import { LayoutFeatureModule } from './features/layout-feature.module';
 import { OrderApprovalFeatureModule } from './features/order-approval-feature.module';
 import { QualtricsFeatureModule } from './features/qualtrics-feature.module';
 import { SavedCartFeatureModule } from './features/saved-cart-feature.module';
@@ -204,6 +206,11 @@ if (environment.cds) {
     SmartEditFeatureModule,
     TrackingFeatureModule,
     VariantsFeatureModule,
+
+    // upscale
+    LayoutFeatureModule,
+    ContentFeatureModule,
+
     ...featureModules,
   ],
 })

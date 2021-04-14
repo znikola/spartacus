@@ -1,0 +1,67 @@
+[title-position='OVER'] cx-article-content {
+  .image-card {
+    --cx-height: 40px;
+    &::after {
+      content: '';
+      background-color: rgba(0, 0, 0, 0.65);
+      height: var(--cx-height);
+      width: 100%;
+      display: block;
+      left: 0;
+      position: absolute;
+      bottom: 0;
+    }
+    h1 {
+      height: var(--cx-height);
+      line-height: var(--cx-height);
+
+      font-size: 1.8rem;
+      vertical-align: middle;
+
+      color: #fff;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: calc(var(--cx-height) * -1);
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+%cx-article-content {
+  --cx-max-width: min(900px, 100%);
+  --cx-margin: auto; //0 190px;
+
+  .image-card {
+    display: block;
+    position: relative;
+    img {
+      width: 100%;
+      height: 650px;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+
+  h1,
+  article {
+    width: var(--cx-max-width);
+    max-width: var(--cx-max-width);
+    margin: var(--cx-margin);
+
+    font-size: 22px;
+    // margin: 0 190px;
+    // max-width: 900px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

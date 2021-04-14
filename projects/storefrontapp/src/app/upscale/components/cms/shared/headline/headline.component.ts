@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CmsComponentData } from '@spartacus/storefront';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Alignment } from '../../../cms.model';
-import { StorybookComponentModel } from '../../storybook/storybook.model';
 import { Heading, HeadingStyle } from './headline.model';
 
 /**
@@ -28,12 +27,16 @@ import { Heading, HeadingStyle } from './headline.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeadlineComponent {
-  constructor(protected component: CmsComponentData<StorybookComponentModel>) {}
+  constructor(protected component: CmsComponentData<any>) {}
+
+  protected data$ = this.component.data$.pipe(
+    filter((headline) => Boolean(headline))
+  );
 
   /**
    * Returns the `Heading` for the main headline.
    */
-  headline$: Observable<Heading | undefined> = this.component.data$.pipe(
+  headline$: Observable<Heading | undefined> = this.data$.pipe(
     map((data) =>
       !!data.showComponentHeadline && data.headline
         ? {
@@ -49,7 +52,7 @@ export class HeadlineComponent {
   /**
    * Returns the `Heading` for the sub headline.
    */
-  subHeadline$: Observable<Heading | undefined> = this.component.data$.pipe(
+  subHeadline$: Observable<Heading | undefined> = this.data$.pipe(
     map((data) =>
       !!data.showComponentSubHeadline && data.subHeadline
         ? {

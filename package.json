@@ -8,6 +8,8 @@
   },
   "scripts": {
     "build": "env-cmd --no-override -e dev,b2c,$SPA_ENV ng build storefrontapp --prod",
+    "build:layout": "ng build layout --prod",
+    "build:content": "ng build content --prod",
     "build:user": "ng build user --prod",
     "build:asm": "ng build asm --prod",
     "build:assets": "yarn --cwd ./projects/assets build",

@@ -12,22 +12,10 @@ import { UpscaleCmsComponentNormalizer } from './adapters/converters/upscale.cms
 import { UpscaleCmsPageAdapter } from './adapters/upscale-cms-page.adapter';
 import { UpscaleCmsComponentAdapter } from './adapters/upscale-component.adapter';
 import { UpscaleProductAdapter } from './adapters/upscale-product.adapter';
-import { ContainerModule } from './components/cms/container/container.module';
-import { ImageModule } from './components/cms/image/image.module';
 import { defaultUpscaleConfig } from './config/default-upscale.config';
 
 @NgModule({
-  imports: [
-    ContainerModule,
-    // BrowseModule,
-    // StorybookModule,
-    ImageModule,
-    // CarouselModule,
-    // SellingTreeModule,
-    // ProductContentModule,
-    // ArticleContentModule,
-    // NextSellModule,
-  ],
+  imports: [],
   providers: [
     provideConfig(defaultUpscaleConfig),
     {

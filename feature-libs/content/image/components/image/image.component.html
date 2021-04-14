@@ -1,0 +1,12 @@
+<a
+  *ngIf="image$ | async as image"
+  [routerLink]="getRouteCommands(image) | cxUrl"
+  class="image-wrapper"
+>
+  <img [src]="image.url || image.imageUrl" />
+
+  <div class="overlay" *ngIf="image.headline || image.subHeadline">
+    <h3 *ngIf="image.headline" [innerText]="image.headline"></h3>
+    <h4 *ngIf="image.subHeadline" [innerText]="image.subHeadline"></h4>
+  </div>
+</a>

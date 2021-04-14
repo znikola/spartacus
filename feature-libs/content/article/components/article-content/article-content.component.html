@@ -1,0 +1,13 @@
+<ng-container *ngIf="article$ | async as article">
+  <div class="image-card">
+    <img [src]="article.heroImageUrl" [attr.alt]="article.headline" />
+    <h1 [innerHTML]="article.headline"></h1>
+  </div>
+  <!-- <upscale-aspect-ratio-image
+    [content]="{
+      url: article.heroImageUrl,
+      headline: article.headline
+    }"
+  ></upscale-aspect-ratio-image> -->
+  <article [innerHTML]="article.text"></article>
+</ng-container>

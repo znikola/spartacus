@@ -20,7 +20,9 @@ export class UpscaleCmsPageNormalizer
   }
 
   protected normalizePage(source: UpscalePage): CmsStructureModel {
-    const template = source.content[0];
+    const template = source.content?.[0];
+    console.error('source', source);
+
     const components = this.findComponents(template);
     console.log(this.findComponentRefs(template));
     return {
@@ -43,7 +45,7 @@ export class UpscaleCmsPageNormalizer
   protected findComponentRefs(
     template: UpscaleTemplate
   ): ContentSlotComponentData[] {
-    return template.components.map((component) => {
+    return template.components?.map((component) => {
       const typeCode = this.getComponentType(component);
       return {
         uid: component.id,
@@ -54,9 +56,14 @@ export class UpscaleCmsPageNormalizer
   }
 
   protected getComponentType(component: UpscaleComponent): string {
-    if (component.type === 'IMAGE') {
-      return 'CONTAINER';
+    if (['IMAGE', 'STORYBOOK'].includes(component.type)) {
+      return 'TEMPLATE_SLOT';
     }
+
+    return 'TEMPLATE_SLOT';
+
+    // console.log('comp type', component.type);
+    // return 'CONTAINER';
     return component.type;
   }
 

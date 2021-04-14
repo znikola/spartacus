@@ -65,6 +65,10 @@
               {
                 "input": "projects/storefrontapp/src/styles/lib-user.scss",
                 "bundleName": "user"
+              },
+              {
+                "input": "projects/storefrontapp/src/styles/lib-content.scss",
+                "bundleName": "content"
               }
             ],
             "stylePreprocessorOptions": {
@@ -842,6 +846,80 @@
             "lintFilePatterns": [
               "feature-libs/user/**/*.ts",
               "feature-libs/user/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "content": {
+      "projectType": "library",
+      "root": "feature-libs/content",
+      "sourceRoot": "feature-libs/content",
+      "prefix": "cx",
+      "architect": {
+        "build": {
+          "builder": "./tools/build-lib:augmented-types",
+          "options": {
+            "tsConfig": "feature-libs/content/tsconfig.lib.json",
+            "project": "feature-libs/content/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "feature-libs/content/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "feature-libs/content/test.ts",
+            "tsConfig": "feature-libs/content/tsconfig.spec.json",
+            "karmaConfig": "feature-libs/content/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "feature-libs/content/**/*.ts",
+              "feature-libs/content/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "layout": {
+      "projectType": "library",
+      "root": "feature-libs/layout",
+      "sourceRoot": "feature-libs/layout",
+      "prefix": "cx",
+      "architect": {
+        "build": {
+          "builder": "./tools/build-lib:augmented-types",
+          "options": {
+            "tsConfig": "feature-libs/layout/tsconfig.lib.json",
+            "project": "feature-libs/layout/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "feature-libs/layout/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "feature-libs/layout/test.ts",
+            "tsConfig": "feature-libs/layout/tsconfig.spec.json",
+            "karmaConfig": "feature-libs/layout/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "feature-libs/layout/**/*.ts",
+              "feature-libs/layout/**/*.html"
             ]
           }
         }
