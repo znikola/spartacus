@@ -215,6 +215,19 @@
       ],
       "@spartacus/content/article": ["feature-libs/content/article/public_api"],
 
+      "@spartacus/content/storybook/components": [
+        "feature-libs/content/storybook/components/public_api"
+      ],
+      "@spartacus/content/storybook/core": [
+        "feature-libs/content/storybook/core/public_api"
+      ],
+      "@spartacus/content/storybook/root": [
+        "feature-libs/content/storybook/root/public_api"
+      ],
+      "@spartacus/content/storybook": [
+        "feature-libs/content/storybook/public_api"
+      ],
+
       "@spartacus/content/image/components": [
         "feature-libs/content/image/components/public_api"
       ],

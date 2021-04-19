@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { filter, map, take, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, take } from 'rxjs/operators';
 import { UpscaleConfig } from '../../../../projects/storefrontapp/src/app/upscale/config/upscale.config';
 
 @Injectable({
@@ -17,15 +17,12 @@ export class StylingConnectorService {
       `${this.config.upscale?.baseUrl}/consumer/content-repository/experiences/${this.config.upscale?.experienceId}?expand=`
       // components
     )
-    .pipe(
-      take(1)
-      // tap((style) => console.log(style))
-    );
+    .pipe(take(1));
 
   styling$ = this.tmp$.pipe(
-    tap(console.log),
     filter((data) => Boolean(data)),
-    map((experience: any) => experience.stylingAttributes)
+    map((experience: any) => experience.stylingAttributes),
+    shareReplay(1)
   );
 
   load() {

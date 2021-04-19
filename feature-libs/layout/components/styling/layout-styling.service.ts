@@ -3,7 +3,7 @@ import { EventService } from '@spartacus/core';
 import { LayoutStylingFacade } from '@spartacus/layout/root';
 import { ComponentCreateEvent } from '@spartacus/storefront';
 import { Subscription } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { concatMap, filter, map, takeWhile, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -25,14 +25,15 @@ export class LayoutStylingService implements OnDestroy {
       this.eventService
         .get(ComponentCreateEvent)
         .pipe(
-          tap(console.log),
-          filter((event) => this.componentStyles.includes(event.typeCode)),
-          tap((event) => {
-            // we only want a one time usage here
-            const index = this.componentStyles.indexOf(event.typeCode);
-            this.componentStyles = this.componentStyles.splice(index, 1);
+          tap((ev) => console.log('event', ev)),
+          takeWhile(() => this.componentStyles.length > 0),
+          map((event) => event.typeCode),
+          filter((typeCode) => this.componentStyles.includes(typeCode)),
+          tap((typeCode) => {
+            const index = this.componentStyles.indexOf(typeCode);
+            this.componentStyles.splice(index, 1);
           }),
-          switchMap((event) => this.layoutStylingFacade.load(event.typeCode))
+          concatMap((typeCode) => this.layoutStylingFacade.load(typeCode))
         )
         .subscribe()
     );

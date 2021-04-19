@@ -6,11 +6,11 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, queueScheduler } from 'rxjs';
 import { filter, observeOn, switchMap, tap } from 'rxjs/operators';
-import { StorybookComponentModel } from '../storybook.model';
-import { StorybookService } from '../storybook.service';
+import { StorybookComponentModel } from '../../core/model';
+import { StorybookService } from '../storybook/storybook.service';
 
 @Component({
-  selector: 'upscale-storybook-content',
+  selector: 'cx-storybook-content',
   templateUrl: 'storybook-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

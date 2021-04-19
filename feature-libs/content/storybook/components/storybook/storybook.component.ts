@@ -12,18 +12,13 @@ import { StoryData } from './storybook.model';
 import { StorybookService } from './storybook.service';
 
 @Component({
-  selector: 'upscale-storybook',
+  selector: 'cx-storybook',
   templateUrl: 'storybook.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [StorybookService],
 })
 export class StorybookComponent implements AfterViewInit {
-  constructor(
-    protected storybookService: StorybookService
-  ) // we currently inject this service to only generate the styles for images
-  // when needed ideally we move to an event based approach
-  // protected storyBookStylesService: StoryBookStylesService
-  {}
+  constructor(protected storybookService: StorybookService) {}
 
   ready$ = new BehaviorSubject(false);
   template: TemplateRef<any>;

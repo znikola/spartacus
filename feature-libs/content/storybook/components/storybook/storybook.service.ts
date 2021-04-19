@@ -13,7 +13,8 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { StorybookComponentModel, StoryData } from './storybook.model';
+import { StorybookComponentModel } from '../../core/model';
+import { StoryData } from './storybook.model';
 import { chunkArray } from './storybook.utils';
 
 @Injectable()

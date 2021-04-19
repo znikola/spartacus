@@ -18,7 +18,6 @@ export class LayoutStylingService implements LayoutStylingFacade {
    */
   load(type: string): Observable<unknown> {
     return this.stylingServices.styling$.pipe(
-      tap((styles) => console.log('styles', type, styles)),
       map((styles) => styles.components[type]),
       filter((styles) => Boolean(styles)),
       tap((styles) => this.build(styles, type))

@@ -7,11 +7,19 @@ import {
   ContentImageRootModule,
   IMAGE_FEATURE,
 } from '@spartacus/content/image/root';
+import {
+  ContentStorybookRootModule,
+  STORYBOOK_FEATURE,
+} from '@spartacus/content/storybook/root';
 import { provideConfig } from '@spartacus/core';
 
 @NgModule({
   declarations: [],
-  imports: [ContentArticleRootModule, ContentImageRootModule],
+  imports: [
+    ContentArticleRootModule,
+    ContentImageRootModule,
+    ContentStorybookRootModule,
+  ],
   providers: [
     provideConfig({
       featureModules: {
@@ -25,6 +33,12 @@ import { provideConfig } from '@spartacus/core';
           module: () =>
             import('@spartacus/content/image').then(
               (m) => m.ContentImageModule
+            ),
+        },
+        [STORYBOOK_FEATURE]: {
+          module: () =>
+            import('@spartacus/content/storybook').then(
+              (m) => m.ContentStorybookModule
             ),
         },
       },

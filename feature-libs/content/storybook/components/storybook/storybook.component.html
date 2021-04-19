@@ -17,11 +17,11 @@ storybook...
     class="story"
     *ngFor="let storyData of getStories(data.storybookId, data.layout) | async"
   >
-    <upscale-storybook-content
+    <cx-storybook-content
       *ngFor="let contentId of storyData"
       [id]="contentId"
       [layout]="data.layout"
-    ></upscale-storybook-content>
+    ></cx-storybook-content>
   </div>
 </ng-template>
 
@@ -34,9 +34,6 @@ storybook...
   </cx-carousel>
 
   <ng-template #sliderItem let-item="item">
-    <upscale-storybook-content
-      [id]="item"
-      [layout]="layout"
-    ></upscale-storybook-content>
+    <cx-storybook-content [id]="item" [layout]="layout"></cx-storybook-content>
   </ng-template>
 </ng-template>
