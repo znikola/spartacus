@@ -20,6 +20,7 @@ export class ArticleContentComponent {
   ) {}
 
   protected articleCode$ = this.route.params.pipe(
+    tap((params) => console.log(params)),
     map((params) => params['value']),
     // TODO: map article code from route
     map(() => 'efce73fe-12cc-4d98-96e4-ef51f87f768e')

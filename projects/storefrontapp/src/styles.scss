@@ -1,35 +1,12 @@
 // Always bump to the latest (breaking) styles during development.
 $useLatestStyles: true;
 
-// @import '@spartacus/styles';
+@import '@spartacus/styles';
 
 // upscale styles
 
 html {
   font-size: 62.5%;
-}
-
-.heading {
-  max-width: 1500px;
-  margin: auto;
-
-  color: rgb(0, 0, 0);
-  font-family: Roboto;
-  font-weight: 700;
-  font-size: 3.6rem;
-  line-height: 1.22;
-
-  // h1,
-  // h2 {
-  &.start {
-    text-align: start;
-  }
-  &.center {
-    text-align: center;
-  }
-  &.end {
-    text-align: end;
-  }
 }
 
 cx-template-slot {

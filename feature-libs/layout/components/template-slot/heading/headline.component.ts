@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CmsComponentData } from '@spartacus/storefront';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Alignment } from '../../../cms.model';
+import { Alignment } from '../model';
 import { Heading, HeadingStyle } from './headline.model';
 
 /**
@@ -11,22 +11,24 @@ import { Heading, HeadingStyle } from './headline.model';
  * The component data is read from the injection tree, so that any
  */
 @Component({
-  selector: 'cx-headline',
+  selector: 'cx-template-slot-heading',
   template: `
     <h1
       *ngIf="headline$ | async as header"
       [innerHtml]="header.text"
+      class="componentHeadline"
       [class]="header.style"
     ></h1>
     <h2
       *ngIf="subHeadline$ | async as header"
       [innerHtml]="header.text"
+      class="componentSubHeadline"
       [class]="header.style"
     ></h2>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeadlineComponent {
+export class HeadingComponent {
   constructor(protected component: CmsComponentData<any>) {}
 
   protected data$ = this.component.data$.pipe(

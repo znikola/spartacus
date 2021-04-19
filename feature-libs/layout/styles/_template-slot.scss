@@ -1,0 +1,22 @@
+%cx-template-slot {
+  cx-template-slot-heading {
+    max-width: 1500px;
+    margin: auto;
+
+    color: rgb(0, 0, 0);
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 3.6rem;
+    line-height: 1.22;
+
+    .start {
+      text-align: start;
+    }
+    .center {
+      text-align: center;
+    }
+    .end {
+      text-align: end;
+    }
+  }
+}

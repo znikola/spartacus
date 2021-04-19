@@ -1,9 +1,9 @@
 @import '~@spartacus/styles/scss/core';
 
-@import './template/styles/index';
+@import './styles/index';
 
 $skipComponentStyles: () !default;
-$selectors: () !default;
+$selectors: cx-template-slot !default;
 
 @each $selector in $selectors {
   #{$selector} {

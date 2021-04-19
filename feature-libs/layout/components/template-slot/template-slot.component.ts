@@ -20,13 +20,10 @@ export { TemplateSlot } from './model';
 export class TemplateSlotComponent {
   constructor(
     protected component: CmsComponentData<TemplateSlot>,
-    protected layout: TemplateSlotComponentService // protected elementRef: ElementRef
+    protected layout: TemplateSlotComponentService
   ) {}
 
-  data$ = this.component.data$
-    .pipe
-    // filter((data) => data.contentIds?.length > 0)
-    ();
+  data$ = this.component.data$;
 
   getComponents(data: TemplateSlot): ContentSlotComponentData[] {
     // some components do not have contentIds... ARTICLE_DETAILS for example
@@ -38,6 +35,7 @@ export class TemplateSlotComponent {
     return data.contentIds.map((uid) => ({
       uid,
       type: data.containerType,
+      typeCode: data.containerType,
       flexType: data.containerType,
     }));
   }

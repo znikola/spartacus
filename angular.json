@@ -69,6 +69,10 @@
               {
                 "input": "projects/storefrontapp/src/styles/lib-content.scss",
                 "bundleName": "content"
+              },
+              {
+                "input": "projects/storefrontapp/src/styles/lib-layout.scss",
+                "bundleName": "layout"
               }
             ],
             "stylePreprocessorOptions": {

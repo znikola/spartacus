@@ -5,6 +5,17 @@ export interface TemplateSlot extends CmsComponent {
   type: string;
   containerType: string;
 
+  headline?: string;
+  subHeadline?: string;
+
+  showComponentHeadline?: boolean;
+  showComponentSubHeadline?: boolean;
+
+  headlineAlignment?: Alignment;
+  subHeadlineAlignment?: Alignment;
+  componentHeadlineAlignment?: Alignment;
+  componentSubHeadlineAlignment?: Alignment;
+
   contentIds: string[];
   imageSizing: string;
   maxWidth: number;
@@ -20,4 +31,11 @@ export interface TemplateSlot extends CmsComponent {
   rightMargin: number;
   bottomMargin: number;
   leftMargin: number;
+}
+
+export enum Alignment {
+  // TODO: make it start / end
+  RIGHT = 'RIGHT',
+  LEFT = 'LEFT',
+  CENTER = 'CENTER',
 }

@@ -2,16 +2,6 @@ import { CmsComponent } from '@spartacus/core';
 
 export interface UpscaleCmsComponent extends CmsComponent {
   id: string;
-  headline?: string;
-  subHeadline?: string;
-
-  showComponentHeadline?: boolean;
-  showComponentSubHeadline?: boolean;
-
-  headlineAlignment?: Alignment;
-  subHeadlineAlignment?: Alignment;
-  componentHeadlineAlignment?: Alignment;
-  componentSubHeadlineAlignment?: Alignment;
 
   aspectRatio: string;
 
@@ -39,13 +29,6 @@ export interface UpscaleCmsComponent extends CmsComponent {
    * Indicates whether there's max width for the image size.
    */
   maxWidth: string;
-}
-
-export enum Alignment {
-  // TODO: make it start / end
-  RIGHT = 'RIGHT',
-  LEFT = 'LEFT',
-  CENTER = 'CENTER',
 }
 
 // export interface ContentComponentModel extends UpscaleCmsComponent {

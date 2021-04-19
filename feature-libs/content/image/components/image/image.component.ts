@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LayoutStylingFacade } from '@spartacus/layout/root';
 import { CmsComponentData } from '@spartacus/storefront';
 import { Observable } from 'rxjs';
 import { ImageComponentModel } from '../../core/model';
@@ -10,15 +9,7 @@ import { ImageComponentModel } from '../../core/model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageComponent {
-  constructor(
-    protected component: CmsComponentData<ImageComponentModel>,
-    // We currently inject this service to generate the global image styles
-    // that are given by the backend. We like to move to an event based approach
-    // to move this logic out of the component implementation.
-    protected layoutStylingService: LayoutStylingFacade
-  ) {
-    this.layoutStylingService.load('IMAGE').subscribe();
-  }
+  constructor(protected component: CmsComponentData<ImageComponentModel>) {}
 
   image$: Observable<ImageComponentModel> = this.component.data$;
 

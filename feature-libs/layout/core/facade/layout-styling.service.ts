@@ -55,8 +55,8 @@ export class LayoutStylingService implements LayoutStylingFacade {
    */
   protected mapSelector(type: string, selector: string) {
     const mapping = new Map()
-      .set('componentHeadline', 'h1')
-      .set('componentSubHeadline', 'h2')
+      // .set('componentHeadline', 'h1')
+      // .set('componentSubHeadline', 'h2')
       .set('contentHeadline', 'h3')
       .set('contentSubHeadline', 'h4')
       .set('overlayColor', '.overlay');

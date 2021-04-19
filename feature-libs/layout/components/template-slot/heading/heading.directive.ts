@@ -8,7 +8,7 @@ import {
 import { CmsComponentData } from '@spartacus/storefront';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Alignment, ContentComponentModel } from '../../../cms.model';
+import { Alignment, TemplateSlot } from '../model';
 import { HeadingStyle } from './headline.model';
 
 export enum headline {
@@ -39,7 +39,7 @@ export class HeadingDirective implements OnDestroy {
     this.data$.subscribe((data) => this.resolve(data))
   );
 
-  protected resolve(data: ContentComponentModel) {
+  protected resolve(data: TemplateSlot) {
     if (
       (this.cxHeading === headline.HEADLINE ||
         this.elementRef.nativeElement.tagName === 'H1') &&
