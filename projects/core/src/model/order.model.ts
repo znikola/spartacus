@@ -35,7 +35,7 @@ export interface OrderEntry {
 }
 
 export interface OrderEntries {
-  orderEntries: OrderEntry[];
+  orderEntries: { quantity: number; product: { code: number } }[];
 }
 
 export interface CancelOrReturnRequestEntryInput {

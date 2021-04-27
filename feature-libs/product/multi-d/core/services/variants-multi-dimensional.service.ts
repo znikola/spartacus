@@ -52,6 +52,10 @@ export class VariantsMultiDimensionalService {
     return this.variants;
   }
 
+  getVariantCategories(): string[] {
+    return this.variantCategories;
+  }
+
   getVariantOptions(): Observable<GridVariantOption[]> {
     return of(this.variantOptions);
   }
@@ -149,6 +153,7 @@ export class VariantsMultiDimensionalService {
 
         if (variant) {
           variant.variantData = elementVariantTypes;
+
           list.push(variant);
         }
       }
