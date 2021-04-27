@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CartEntryAdapter } from './cart-entry.adapter';
 import { CartModification } from '../../../model/cart.model';
+import { OrderEntries } from '@spartacus/core';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,14 @@ export class CartEntryConnector {
     quantity?: number
   ): Observable<CartModification> {
     return this.adapter.add(userId, cartId, productCode, quantity);
+  }
+
+  public addMany(
+    userId: string,
+    cartId: string,
+    entries: OrderEntries
+  ): Observable<any> {
+    return this.adapter.addMany(userId, cartId, entries);
   }
 
   public update(

@@ -1,3 +1,4 @@
+import { OrderEntries } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { CartModification } from '../../../model/cart.model';
 
@@ -16,6 +17,19 @@ export abstract class CartEntryAdapter {
     productCode: string,
     quantity?: number
   ): Observable<CartModification>;
+
+  /**
+   * Abstract method used to add multimple entries to cart
+   *
+   * @param userId
+   * @param cartId
+   * @param entries
+   */
+  abstract addMany(
+    userId: string,
+    cartId: string,
+    entries: OrderEntries
+  ): Observable<any>;
 
   /**
    * Abstract method used to update entry in cart

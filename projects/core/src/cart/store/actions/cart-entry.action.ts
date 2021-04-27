@@ -1,4 +1,4 @@
-import { OrderEntry } from '../../../model/order.model';
+import { OrderEntries, OrderEntry } from '../../../model/order.model';
 import {
   EntityProcessesDecrementAction,
   EntityProcessesIncrementAction,
@@ -8,6 +8,12 @@ import { MULTI_CART_DATA } from '../multi-cart-state';
 export const CART_ADD_ENTRY = '[Cart-entry] Add Entry';
 export const CART_ADD_ENTRY_SUCCESS = '[Cart-entry] Add Entry Success';
 export const CART_ADD_ENTRY_FAIL = '[Cart-entry] Add Entry Fail';
+
+export const CART_ADD_MANY_ENTRIES = '[Cart-entry] Add Many Entries';
+export const CART_ADD_MANY_ENTRIES_SUCCESS =
+  '[Cart-entry] Add Many Entries Success';
+export const CART_ADD_MANY_ENTRIES_FAIL = '[Cart-entry] Add Many Entries Fail';
+
 export const CART_REMOVE_ENTRY = '[Cart-entry] Remove Entry';
 export const CART_REMOVE_ENTRY_SUCCESS = '[Cart-entry] Remove Entry Success';
 export const CART_REMOVE_ENTRY_FAIL = '[Cart-entry] Remove Entry Fail';
@@ -60,6 +66,36 @@ export class CartAddEntryFail extends EntityProcessesDecrementAction {
       error: any;
     }
   ) {
+    super(MULTI_CART_DATA, payload.cartId);
+  }
+}
+
+export class CartAddManyEntries extends EntityProcessesIncrementAction {
+  readonly type = CART_ADD_MANY_ENTRIES;
+  constructor(
+    public payload: {
+      cartId: string;
+      userId: string;
+      entries: OrderEntries;
+    }
+  ) {
+    super(MULTI_CART_DATA, payload.cartId);
+  }
+}
+
+export class CartAddManyEntriesSuccess extends EntityProcessesDecrementAction {
+  readonly type = CART_ADD_ENTRY_SUCCESS;
+  constructor(
+    // TODO
+    public payload: any
+  ) {
+    super(MULTI_CART_DATA, payload.cartId);
+  }
+}
+
+export class CartAddManyEntriesFail extends EntityProcessesDecrementAction {
+  readonly type = CART_ADD_ENTRY_FAIL;
+  constructor(public payload: any) {
     super(MULTI_CART_DATA, payload.cartId);
   }
 }
@@ -143,6 +179,9 @@ export type CartEntryAction =
   | CartAddEntry
   | CartAddEntrySuccess
   | CartAddEntryFail
+  | CartAddManyEntries
+  | CartAddManyEntriesSuccess
+  | CartAddManyEntriesFail
   | CartRemoveEntry
   | CartRemoveEntrySuccess
   | CartRemoveEntryFail

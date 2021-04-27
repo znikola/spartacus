@@ -4,7 +4,7 @@ import { EMPTY, Observable, timer } from 'rxjs';
 import { debounce, distinctUntilChanged, map } from 'rxjs/operators';
 import { UserIdService } from '../../auth/user-auth/facade/index';
 import { Cart } from '../../model/cart.model';
-import { OrderEntry } from '../../model/order.model';
+import { OrderEntries, OrderEntry } from '../../model/order.model';
 import { ProcessesLoaderState } from '../../state/utils/processes-loader/processes-loader-state';
 import { CartActions } from '../store/actions/index';
 import { StateWithMultiCart } from '../store/multi-cart-state';
@@ -238,6 +238,23 @@ export class MultiCartService {
         })
       );
     });
+  }
+
+  /**
+   * Add multiple entries to cart for B2B
+   *
+   * @param userId
+   * @param cartId
+   * @param entries
+   */
+  addManyEntries(userId: string, cartId: string, entries: OrderEntries): void {
+    this.store.dispatch(
+      new CartActions.CartAddManyEntries({
+        userId,
+        cartId,
+        entries,
+      })
+    );
   }
 
   /**

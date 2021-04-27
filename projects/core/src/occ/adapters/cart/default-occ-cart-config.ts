@@ -12,6 +12,7 @@ export const defaultOccCartConfig: OccConfig = {
         createCart:
           'users/${userId}/carts?fields=DEFAULT,potentialProductPromotions,appliedProductPromotions,potentialOrderPromotions,appliedOrderPromotions,entries(totalPrice(formattedValue),product(images(FULL),stock(FULL)),basePrice(formattedValue,value),updateable),totalPrice(formattedValue),totalItems,totalPriceWithTax(formattedValue),totalDiscounts(value,formattedValue),subTotal(formattedValue),deliveryItemsQuantity,deliveryCost(formattedValue),totalTax(formattedValue, value),pickupItemsQuantity,net,appliedVouchers,productDiscounts(formattedValue),user',
         addEntries: 'users/${userId}/carts/${cartId}/entries',
+        addManyEntries: 'orgUsers/${userId}/carts/${cartId}/entries/',
         updateEntries: 'users/${userId}/carts/${cartId}/entries/${entryNumber}',
         removeEntries: 'users/${userId}/carts/${cartId}/entries/${entryNumber}',
         addEmail: 'users/${userId}/carts/${cartId}/email',

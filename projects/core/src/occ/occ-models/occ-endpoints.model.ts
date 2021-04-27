@@ -98,6 +98,12 @@ export interface OccEndpoints {
    */
   addEntries?: string | OccEndpoint;
   /**
+   * Adds multiple products to the cart
+   *
+   * @member {string} [addManyEntries]
+   */
+  addManyEntries?: string | OccEndpoint;
+  /**
    * Update quantity and store the details of a cart entry
    *
    * @member {string} [updateEntries]

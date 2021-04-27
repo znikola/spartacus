@@ -34,6 +34,10 @@ export interface OrderEntry {
   cancellableQuantity?: number;
 }
 
+export interface OrderEntries {
+  orderEntries: OrderEntry[];
+}
+
 export interface CancelOrReturnRequestEntryInput {
   orderEntryNumber?: number;
   quantity?: number;

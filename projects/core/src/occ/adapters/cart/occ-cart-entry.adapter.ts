@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { OrderEntries } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { CartEntryAdapter } from '../../../cart/connectors/entry/cart-entry.adapter';
 import { CART_MODIFICATION_NORMALIZER } from '../../../cart/connectors/entry/converters';
@@ -39,6 +40,25 @@ export class OccCartEntryAdapter implements CartEntryAdapter {
 
     return this.http
       .post<CartModification>(url, toAdd, { headers })
+      .pipe(this.converterService.pipeable(CART_MODIFICATION_NORMALIZER));
+  }
+
+  public addMany(
+    userId: string,
+    cartId: string,
+    entries: OrderEntries
+  ): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    const url = this.occEndpointsService.getUrl('addManyEntries', {
+      userId,
+      cartId,
+    });
+
+    return this.http
+      .post<any>(url, entries, { headers })
       .pipe(this.converterService.pipeable(CART_MODIFICATION_NORMALIZER));
   }
 

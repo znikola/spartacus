@@ -60,6 +60,42 @@ export class CartEntryEffects {
   );
 
   @Effect()
+  addManyEntries$: Observable<
+    | CartActions.CartAddManyEntriesSuccess
+    | CartActions.CartAddManyEntriesFail
+    | CartActions.LoadCart
+  > = this.actions$.pipe(
+    ofType(CartActions.CART_ADD_MANY_ENTRIES),
+    map((action: CartActions.CartAddManyEntries) => action.payload),
+    concatMap((payload) => {
+      return this.cartEntryConnector
+        .addMany(payload.userId, payload.cartId, payload.entries)
+        .pipe(
+          map(
+            (data: any) =>
+              new CartActions.CartAddManyEntriesSuccess({
+                ...payload,
+                ...(data as Required<any>),
+              })
+          ),
+          catchError((error) =>
+            from([
+              new CartActions.CartAddManyEntriesFail({
+                ...payload,
+                error: normalizeHttpError(error),
+              }),
+              new CartActions.LoadCart({
+                cartId: payload.cartId,
+                userId: payload.userId,
+              }),
+            ])
+          )
+        );
+    }),
+    withdrawOn(this.contextChange$)
+  );
+
+  @Effect()
   removeEntry$: Observable<
     | CartActions.CartRemoveEntrySuccess
     | CartActions.CartRemoveEntryFail
