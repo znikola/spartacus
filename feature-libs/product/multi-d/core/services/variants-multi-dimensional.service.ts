@@ -154,13 +154,6 @@ export class VariantsMultiDimensionalService {
 
         if (variant) {
           variant.variantData = elementVariantTypes;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/epic/multi-d
-=======
->>>>>>> feature/GH-12160
           list.push(variant);
         }
       }

@@ -73,13 +73,13 @@ export class OrderGridComponent {
         {
           quantity: 2,
           product: {
-            code: 26002000_1,
+            code: '26002000_1',
           },
         },
         {
           quantity: 3,
           product: {
-            code: 26002000_9,
+            code: '26002000_9',
           },
         }
       );
