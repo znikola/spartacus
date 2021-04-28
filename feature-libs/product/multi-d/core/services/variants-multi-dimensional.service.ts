@@ -52,10 +52,6 @@ export class VariantsMultiDimensionalService {
     return this.variants;
   }
 
-  getVariantCategories(): string[] {
-    return this.variantCategories;
-  }
-
   getVariantOptions(): Observable<GridVariantOption[]> {
     return of(this.variantOptions);
   }
@@ -153,7 +149,10 @@ export class VariantsMultiDimensionalService {
 
         if (variant) {
           variant.variantData = elementVariantTypes;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/epic/multi-d
           list.push(variant);
         }
       }

@@ -1,6 +1,6 @@
 <ng-container *ngIf="product">
   <div class="variant-generic-selector">
-    <ng-container *ngFor="let variant of multiDimensionalService.getVariants()">
+    <ng-container *ngFor="let variant of getVariants()">
       <label>{{ variant[0].parentVariantCategory.name }}</label>
 
       <div
@@ -9,12 +9,15 @@
       >
         <!-- TO DO check 3 element for image -->
         <cx-media
-          *ngFor="let cat of variant"
-          (click)="changeVariant(cat.variantOption.code)"
+          *ngFor="let category of variant"
+          (click)="changeVariant(category.variantOption.code)"
           [container]="
-            getVariantOptionImages(cat.variantOption?.variantOptionQualifiers)
+            getVariantOptionImages(
+              category.variantOption?.variantOptionQualifiers
+            )
           "
-          [title]="cat.variantValueCategory.name"
+          [ngClass]="{ active: category.variantOption.code === product.code }"
+          [title]="category.variantValueCategory.name"
           class="image-variant"
         >
         </cx-media>
