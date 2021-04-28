@@ -93,8 +93,7 @@ cx-order-grid {
 
   .cx-order-grid-list-quantity,
   .cx-order-grid-list-availability,
-  .cx-order-grid-list-item-price,
-  .cx-order-grid-list-total-price {
+  .cx-order-grid-list-item-price {
     text-align: center;
 
     @include media-breakpoint-down(md) {
@@ -119,6 +118,15 @@ cx-order-grid {
     @include media-breakpoint-down(md) {
       font-size: var(--cx-font-size, 1rem);
       font-weight: $font-weight-normal;
+    }
+  }
+
+  .cx-order-grid-summary {
+    justify-content: flex-end;
+    margin: 2rem 0;
+
+    .cx-order-grid-summary-label {
+      padding: 0 15px;
     }
   }
 

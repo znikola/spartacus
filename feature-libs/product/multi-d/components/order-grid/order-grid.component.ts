@@ -5,8 +5,12 @@ import {
   OrderEntries,
   UserIdService,
 } from '@spartacus/core';
-import { combineLatest } from 'rxjs';
-import { VariantsMultiDimensionalService } from '../../core/services/variants-multi-dimensional.service';
+import { combineLatest, Observable } from 'rxjs';
+import { OrderGridEntry } from '../../core/model/order-grid-entry.model';
+import {
+  GridVariantOption,
+  VariantsMultiDimensionalService,
+} from '../../core/services/variants-multi-dimensional.service';
 
 @Component({
   selector: 'cx-order-grid',
@@ -14,12 +18,47 @@ import { VariantsMultiDimensionalService } from '../../core/services/variants-mu
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderGridComponent {
+  product$ = this.multiDimensionalService.product$;
+
+  private entries: OrderGridEntry[] = [];
+
   constructor(
-    public multiDimensionalService: VariantsMultiDimensionalService,
+    protected multiDimensionalService: VariantsMultiDimensionalService,
     protected multiCartService: MultiCartService,
     protected userIdService: UserIdService,
     protected activeCartService: ActiveCartService
   ) {}
+
+  getVariantOptions(): Observable<GridVariantOption[]> {
+    return this.multiDimensionalService.getVariantOptions();
+  }
+
+  getVariantCategories(): string[] {
+    return this.multiDimensionalService.getVariantCategories();
+  }
+
+  getAllEnriesQuantity(): number {
+    return this.entries.reduce((prev, current) => {
+      return prev + current.quantity;
+    }, 0);
+  }
+
+  updateEntries(entry: OrderGridEntry): void {
+    const entryIndex = this.entries.findIndex(
+      (element: OrderGridEntry) => element.product.code === entry.product.code
+    );
+
+    if (entryIndex === -1) {
+      const element: OrderGridEntry = {
+        quantity: entry.quantity,
+        product: entry.product,
+      };
+
+      this.entries.push(element);
+    } else {
+      this.entries[entryIndex].quantity = entry.quantity;
+    }
+  }
 
   addAllToCart(): void {
     // TODO
@@ -53,5 +92,11 @@ export class OrderGridComponent {
 
       this.multiCartService.addManyEntries(userId, cartId, entries);
     });
+
+    this.clearEntries();
+  }
+
+  clearEntries(): void {
+    this.entries = [];
   }
 }
