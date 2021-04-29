@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import {
   ActiveCartService,
   MultiCartService,
@@ -11,6 +11,7 @@ import {
   GridVariantOption,
   VariantsMultiDimensionalService,
 } from '../../core/services/variants-multi-dimensional.service';
+import { OrderGridCounterComponent } from './order-grid-counter/order-grid-counter.component';
 
 @Component({
   selector: 'cx-order-grid',
@@ -19,6 +20,7 @@ import {
 })
 export class OrderGridComponent {
   product$ = this.multiDimensionalService.product$;
+  hasEntries: boolean = false;
 
   private entries: OrderGridEntry[] = [];
 
@@ -49,15 +51,18 @@ export class OrderGridComponent {
     );
 
     if (entryIndex === -1) {
-      const element: OrderGridEntry = {
-        quantity: entry.quantity,
-        product: entry.product,
-      };
+      if (entry.quantity > 0) {
+        const element: OrderGridEntry = {
+          quantity: entry.quantity,
+          product: entry.product,
+        };
 
-      this.entries.push(element);
+        this.entries.push(element);
+      }
     } else {
       this.entries[entryIndex].quantity = entry.quantity;
     }
+    this.hasEntries = !!this.entries.length;
   }
 
   addAllToCart(): void {
