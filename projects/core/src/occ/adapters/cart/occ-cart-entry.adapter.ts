@@ -63,7 +63,7 @@ export class OccCartEntryAdapter implements CartEntryAdapter {
     entries: OrderEntries
   ): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     });
 
     const url = this.occEndpointsService.getUrl('addManyEntries', {

@@ -64,9 +64,8 @@ export class OrderGridComponent {
     // TODO
     combineLatest([
       this.userIdService.getUserId(),
-      this.activeCartService.getActive(),
-    ]).subscribe(([userId, cart]) => {
-      let cartId: string = cart.code || '';
+      this.activeCartService.getActiveCartId(),
+    ]).subscribe(([userId, cartId]) => {
       let entries: OrderEntries = { orderEntries: [] };
 
       entries.orderEntries.push(
@@ -84,11 +83,12 @@ export class OrderGridComponent {
         }
       );
 
-      if ('anonymous' === userId && cart.guid) {
-        cartId = cart.guid;
+      // TODO
+      if ('anonymous' === userId) {
+        return;
       }
 
-      console.log('addAllToCart', userId, cart, cartId, entries);
+      console.log('3 addAllToCart', userId, cartId, cartId, entries);
 
       this.multiCartService.addManyEntries(userId, cartId, entries);
     });
