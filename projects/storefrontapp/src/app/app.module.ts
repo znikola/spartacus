@@ -13,12 +13,20 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { translationChunksConfig, translations } from '@spartacus/assets';
 import {
+  BaseSiteService,
+  BASE_SITE_CONTEXT_ID,
   ConfigModule,
+  ContextServiceMap,
+  CurrencyService,
+  CURRENCY_CONTEXT_ID,
   FeaturesConfig,
   I18nConfig,
+  LanguageService,
+  LANGUAGE_CONTEXT_ID,
   OccConfig,
   provideConfig,
   RoutingConfig,
+  SiteContextConfig,
   TestConfigModule,
 } from '@spartacus/core';
 import { configuratorTranslations } from '@spartacus/product-configurator/common/assets';
@@ -28,6 +36,9 @@ import { StorefrontComponent } from '@spartacus/storefront';
 import { environment } from '../environments/environment';
 import { TestOutletModule } from '../test-outlets/test-outlet.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuxLangService } from './aux-lang.service';
+import { CountryService } from './country.service';
+import { CustomLanguageService } from './custom-language.service';
 import { SpartacusModule } from './spartacus/spartacus.module';
 
 registerLocaleData(localeDe);
@@ -61,6 +72,16 @@ const ruleBasedFeatureConfiguration = environment.cpq
   ? ruleBasedCpqFeatureConfiguration
   : ruleBasedVcFeatureConfiguration;
 // PRODUCT CONFIGURATOR END
+
+export function serviceMapFactory() {
+  return {
+    [LANGUAGE_CONTEXT_ID]: LanguageService,
+    [CURRENCY_CONTEXT_ID]: CurrencyService,
+    [BASE_SITE_CONTEXT_ID]: BaseSiteService,
+    country: CountryService,
+    auxLang: AuxLangService,
+  };
+}
 
 @NgModule({
   imports: [
@@ -98,6 +119,20 @@ const ruleBasedFeatureConfiguration = environment.cpq
     ...devImports,
   ],
   providers: [
+    provideConfig(<SiteContextConfig>{
+      context: {
+        // SPIKE custom: we assume that language iso consists of 2 letters: country and auxLang
+        urlParameters: ['baseSite', 'country', 'auxLang', 'currency'],
+        country: ['e', 'z', 'd', 'j'],
+        auxLang: ['n', 'h', 'e', 'a'],
+      },
+    }),
+    { provide: LanguageService, useClass: CustomLanguageService },
+    {
+      provide: ContextServiceMap,
+      useFactory: serviceMapFactory,
+    },
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     provideConfig(<OccConfig>{
       backend: {
         occ: {
