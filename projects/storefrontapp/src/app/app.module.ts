@@ -4,10 +4,7 @@ import localeDe from '@angular/common/locales/de';
 import localeJa from '@angular/common/locales/ja';
 import localeZh from '@angular/common/locales/zh';
 import { NgModule } from '@angular/core';
-import {
-  BrowserModule,
-  BrowserTransferStateModule,
-} from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -20,22 +17,23 @@ import {
   OccConfig,
   provideConfig,
   RoutingConfig,
-  TestConfigModule,
+  TestConfigModule
 } from '@spartacus/core';
 import { configuratorTranslations } from '@spartacus/product-configurator/common/assets';
 import {
   PRODUCT_CONFIGURATOR_RULEBASED_FEATURE,
-  RulebasedConfiguratorRootModule,
+  RulebasedConfiguratorRootModule
 } from '@spartacus/product-configurator/rulebased/root';
 import {
   PRODUCT_CONFIGURATOR_TEXTFIELD_FEATURE,
-  TextfieldConfiguratorRootModule,
+  TextfieldConfiguratorRootModule
 } from '@spartacus/product-configurator/textfield/root';
 import { StorefrontComponent } from '@spartacus/storefront';
 import { environment } from '../environments/environment';
 import { TestOutletModule } from '../test-outlets/test-outlet.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SpartacusModule } from './spartacus/spartacus.module';
+import { TestModuleModule } from './test-module/test-module.module';
 
 registerLocaleData(localeDe);
 registerLocaleData(localeJa);
@@ -82,6 +80,7 @@ const ruleBasedFeatureConfiguration = environment.cpq
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     SpartacusModule,
+    TestModuleModule,
 
     // PRODUCT CONFIGURATOR
     // TODO(#10883): Move product configurator to a separate feature module
