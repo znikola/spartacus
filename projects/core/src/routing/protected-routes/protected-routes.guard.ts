@@ -20,7 +20,10 @@ export class ProtectedRoutesGuard implements CanActivate {
     // For the root path `/` ActivatedRoute contains an empty array of segments:
     urlSegments = urlSegments.length ? urlSegments : [''];
 
-    if (this.service.isUrlProtected(urlSegments)) {
+    if (
+      this.service.shouldProtect &&
+      this.service.isUrlProtected(urlSegments)
+    ) {
       return this.authGuard.canActivate();
     }
     return of(true);

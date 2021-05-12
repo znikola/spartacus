@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RoutingConfig } from '../configurable-routes/config/routing-config';
+import { UrlParsingService } from '../configurable-routes/url-translation/url-parsing.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProtectedRoutesService {
@@ -15,26 +16,27 @@ export class ProtectedRoutesService {
    * @returns boolean
    */
   public get shouldProtect(): boolean {
-    return this.routingConfig.protected;
+    return !!this.routingConfig?.protected;
   }
 
-  constructor(protected config: RoutingConfig) {
-    if (this.shouldProtect) {
-      // pre-process config for performance:
-      this.nonProtectedPaths = this.getNonProtectedPaths().map((path) =>
-        this.getSegments(path)
-      );
-    }
+  constructor(
+    protected config: RoutingConfig,
+    protected urlParsingService: UrlParsingService
+  ) {
+    // pre-process config for performance:
+    this.nonProtectedPaths = this.getNonProtectedPaths().map((path) =>
+      this.getSegments(path)
+    );
   }
 
   /**
    * Tells if the url is protected
    */
-  isUrlProtected(urlSegments: string[]): boolean {
-    return (
-      this.shouldProtect &&
-      !this.matchAnyPath(urlSegments, this.nonProtectedPaths)
-    );
+  isUrlProtected(urlSegments: string[] | string): boolean {
+    if (typeof urlSegments === 'string') {
+      urlSegments = this.urlParsingService.getPrimarySegments(urlSegments);
+    }
+    return !this.matchAnyPath(urlSegments, this.nonProtectedPaths);
   }
 
   /**

@@ -1,8 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Event, NavigationStart, Router } from '@angular/router';
+import { UrlParsingService } from 'projects/core/src/routing/configurable-routes/url-translation/url-parsing.service';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { RoutingService } from '../../../routing/facade/routing.service';
+import { ProtectedRoutesService } from '../../../routing/protected-routes/protected-routes.service';
 import { AuthRedirectStorageService } from './auth-redirect-storage.service';
 
 /**
@@ -29,17 +31,14 @@ export class AuthRedirectService implements OnDestroy {
   constructor(
     protected routing: RoutingService,
     protected router: Router,
-    protected authRedirectStorageService: AuthRedirectStorageService
+    protected authRedirectStorageService: AuthRedirectStorageService,
+    protected protectedRoutesService: ProtectedRoutesService,
+    protected urlParsingService: UrlParsingService
   ) {
     this.init();
   }
 
   private subscription: Subscription;
-
-  /**
-   * Array of candidates for being the redirect URL.
-   */
-  private redirectUrlCandidates: string[] = [];
 
   /**
    * Redirect to saved url (homepage if nothing is saved).
@@ -60,10 +59,7 @@ export class AuthRedirectService implements OnDestroy {
 
   /**
    * Initializes the subscription to the NavigationStart Router events. Based on those events,
-   * we remember possible redirect URL candidates.
-   *
-   * During the phase of evaluating guards the candidate being might be abandoned,
-   * when some guard calls the method `reportNotAuthGuard()`.
+   * we remember possible redirect URL.
    */
   protected init() {
     if (this.subscription) {
@@ -72,12 +68,7 @@ export class AuthRedirectService implements OnDestroy {
 
     this.subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        this.redirectUrlCandidates.push(event.url); // current candidate
-      }
-
-      if (event instanceof NavigationEnd) {
-        // drop the history of old candidates, when navigation ends. Leave only the last one:
-        this.redirectUrlCandidates = this.redirectUrlCandidates.slice(-1);
+        this.saveRedirectUrl(event.url);
       }
     });
   }
@@ -88,41 +79,27 @@ export class AuthRedirectService implements OnDestroy {
   reportAuthGuard() {}
 
   /**
+   * @deprecated since 4.0, the method is not needed anymore
+   */
+  reportNotAuthGuard() {}
+
+  /**
    * Saves the last redirect URL candidate as the actual redirect URL.
+   */
+  private saveRedirectUrl(url: string) {
+    if (this.shouldSaveRedirectUrl(url)) {
+      this.authRedirectStorageService.setRedirectUrl(url);
+    }
+  }
+
+  /**
+   * Returns true if URL is restricted only for not-authenticated users.
    *
-   * It doesn't treat the current navigation URL as a candidate.
+   * Such a restriction can be configured by setting `protected: false` for specific routes
+   * in Spartacus routing configuration.
    */
-  reportNotAuthGuard() {
-    this.excludeCurrentNavigationCandidate();
-    this.saveRedirectUrl();
-  }
-
-  /**
-   * Removes the the current navigation URL from the candidates array
-   */
-  private excludeCurrentNavigationCandidate() {
-    const navigation = this.router.getCurrentNavigation();
-    if (!navigation?.finalUrl) {
-      throw new Error(
-        'AuthRedirectService.reportNotAuthGuard method can be called only during the router navigation phase.'
-      );
-    }
-    const currentNavigationUrl = this.router.serializeUrl(navigation.finalUrl);
-    this.redirectUrlCandidates = this.redirectUrlCandidates.filter(
-      (url) => url !== currentNavigationUrl
-    );
-  }
-
-  /**
-   * Saves the last redirect URL candidate as the actual redirect URL.
-   */
-  private saveRedirectUrl() {
-    const [lastCandidate] = this.redirectUrlCandidates.slice(-1);
-
-    // there might be no last candidate URL, especially when it's the initial navigation
-    if (lastCandidate) {
-      this.authRedirectStorageService.setRedirectUrl(lastCandidate);
-    }
+  private shouldSaveRedirectUrl(url: string): boolean {
+    return !this.protectedRoutesService.isUrlProtected(url);
   }
 
   ngOnDestroy() {
