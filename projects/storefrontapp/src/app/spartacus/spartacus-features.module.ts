@@ -4,6 +4,8 @@ import {
   AuthModule,
   CartModule,
   CartOccModule,
+  CheckoutModule,
+  CheckoutOccModule,
   CostCenterOccModule,
   ExternalRoutesModule,
   ProductModule,
@@ -21,6 +23,8 @@ import {
   CartComponentModule,
   CartPageEventModule,
   CategoryNavigationModule,
+  CheckoutComponentModule,
+  CheckoutLoginModule,
   CmsParagraphModule,
   ConsentManagementModule,
   FooterNavigationModule,
@@ -36,6 +40,7 @@ import {
   NavigationModule,
   NotificationPreferenceModule,
   OrderCancellationModule,
+  OrderConfirmationModule,
   OrderDetailsModule,
   OrderHistoryModule,
   OrderReturnModule,
@@ -51,6 +56,7 @@ import {
   ProductReferencesModule,
   ProductSummaryModule,
   ProductTabsModule,
+  ReplenishmentOrderConfirmationModule,
   ReplenishmentOrderDetailsModule,
   ReplenishmentOrderHistoryModule,
   ReturnRequestDetailModule,
@@ -67,7 +73,6 @@ import { AsmFeatureModule } from './features/asm-feature.module';
 import { BulkPricingFeatureModule } from './features/bulk-pricing-feature.module';
 import { CdcFeatureModule } from './features/cdc-feature.module';
 import { CdsFeatureModule } from './features/cds-feature.module';
-import { CheckoutFeatureModule } from './features/checkout-feature.module';
 import { CpqFeatureModule } from './features/cpq-feature.module';
 import { OrderApprovalFeatureModule } from './features/order-approval-feature.module';
 import { QualtricsFeatureModule } from './features/qualtrics-feature.module';
@@ -160,8 +165,14 @@ if (environment.cpq) {
     CartComponentModule,
     WishListModule,
 
-    // Cost Center
+    // Checkout Core
+    CheckoutModule.forRoot(),
+    CheckoutOccModule,
     CostCenterOccModule,
+    // Checkout UI
+    CheckoutLoginModule,
+    CheckoutComponentModule,
+    OrderConfirmationModule,
 
     // Order
     OrderHistoryModule,
@@ -172,6 +183,7 @@ if (environment.cpq) {
     ReturnRequestDetailModule,
     ReplenishmentOrderHistoryModule,
     ReplenishmentOrderDetailsModule,
+    ReplenishmentOrderConfirmationModule,
 
     // Page Events
     NavigationEventModule,
@@ -186,7 +198,6 @@ if (environment.cpq) {
 
     /************************* External features *************************/
     UserFeatureModule,
-    CheckoutFeatureModule,
     AsmFeatureModule,
     StorefinderFeatureModule,
     QualtricsFeatureModule,
