@@ -6,6 +6,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "declarationMap": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "target": "es5",
