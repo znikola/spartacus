@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   ActiveCartService,
   MultiCartService,
@@ -11,7 +11,6 @@ import {
   GridVariantOption,
   VariantsMultiDimensionalService,
 } from '../../core/services/variants-multi-dimensional.service';
-import { OrderGridCounterComponent } from './order-grid-counter/order-grid-counter.component';
 
 @Component({
   selector: 'cx-order-grid',
