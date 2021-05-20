@@ -51,6 +51,158 @@ const GET_COMPONENT_STATE_TEST_CLASS = `
         return CmsSelectors.getComponentState;
       }
     }`;
+
+const CONFIGURATOR_ATTRIBUTE_DROP_DOWN_SUB_COMPONENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorAttributeDropDownComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorAttributeDropDownComponent {
+    constructor() {
+      super();
+
+      onSelect(): void {         
+      }
+ 
+      myMethod(): void {
+        this.onSelect();
+      }
+    }
+  }
+}`;
+
+const CONFIGURATOR_ATTRIBUTE_DROP_DOWN_SUB_COMPONENT_WITH_COMMENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorAttributeDropDownComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorAttributeDropDownComponent {
+    constructor() {
+      super();
+
+// TODO:Spartacus - Method 'onSelect' was removed from 'ConfiguratorAttributeDropDownComponent'. Instead use new method 'onSelect' from 'ConfiguratorAttributeSingleSelectionBaseComponent'.
+      onSelect(): void {         
+      }
+ 
+      myMethod(): void {
+// TODO:Spartacus - Method 'onSelect' was removed from 'ConfiguratorAttributeDropDownComponent'. Instead use new method 'onSelect' from 'ConfiguratorAttributeSingleSelectionBaseComponent'.
+        this.onSelect();
+      }
+    }
+  }
+}`;
+
+const CONFIGURATOR_NUMERIC_INPUT_FIELD_SUB_COMPONENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorAttributeNumericInputFieldComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorAttributeNumericInputFieldComponent {
+    constructor() {
+      super(); 
+    }
+    myMethod():void{
+      this.createEventFromInput();
+      doSomething();
+    }
+  }
+}`;
+
+const CONFIGURATOR_NUMERIC_INPUT_FIELD_SUB_COMPONENT_WITH_COMMENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorAttributeNumericInputFieldComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorAttributeNumericInputFieldComponent {
+    constructor() {
+      super(); 
+    }
+    myMethod():void{
+// TODO:Spartacus - Method 'createEventFromInput' was removed from 'ConfiguratorAttributeNumericInputFieldComponent'. It is no longer used.
+      this.createEventFromInput();
+      doSomething();
+    }
+  }
+}`;
+
+const CONFIGURATOR_RADIO_BUTTON_SUB_COMPONENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorAttributeRadioButtonComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorAttributeRadioButtonComponent {
+    constructor() {
+      super(); 
+    }
+    myMethod():void{
+      this.onDeselect();
+      doSomething();
+    }
+  }
+}`;
+
+const CONFIGURATOR_RADIO_BUTTON_SUB_COMPONENT_WITH_COMMENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorAttributeRadioButtonComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorAttributeRadioButtonComponent {
+    constructor() {
+      super(); 
+    }
+    myMethod():void{
+// TODO:Spartacus - Method 'onDeselect' was removed from 'ConfiguratorAttributeRadioButtonComponent'. It is no longer used.
+      this.onDeselect();
+      doSomething();
+    }
+  }
+}`;
+
+const CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorProductTitleComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorProductTitleComponent {
+    constructor() {
+      super(); 
+    }
+
+    myMethod(event):void{
+      this.clickOnEnter(event);
+      doSomething();
+    }
+
+    getProductImageURL(product: Product): string {
+      return product.images?.PRIMARY?.['thumbnail']?.url;
+    }    
+
+    getProductImageAlt(product: Product): string {
+      return product.images?.PRIMARY?.['thumbnail']?.altText;
+    }    
+  }
+}`;
+
+const CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT_WITH_COMMENTS = `
+  import { CartItemContext } from '@spartacus/storefront';
+  import { ConfiguratorProductTitleComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorProductTitleComponent {
+    constructor() {
+      super(); 
+    }
+
+    myMethod(event):void{
+// TODO:Spartacus - Method 'clickOnEnter' was removed from 'ConfiguratorProductTitleComponent'. It is no longer used.
+      this.clickOnEnter(event);
+      doSomething();
+    }
+
+// TODO:Spartacus - Method 'getProductImageURL' was removed from 'ConfiguratorProductTitleComponent'. It is no longer used.
+    getProductImageURL(product: Product): string {
+      return product.images?.PRIMARY?.['thumbnail']?.url;
+    }    
+
+// TODO:Spartacus - Method 'getProductImageAlt' was removed from 'ConfiguratorProductTitleComponent'. It is no longer used.
+    getProductImageAlt(product: Product): string {
+      return product.images?.PRIMARY?.['thumbnail']?.altText;
+    }    
+  }
+}`;
+
 const GET_COMPONENT_ENTITIES_TEST_CLASS = `
     import { MemoizedSelector, select, Store } from '@ngrx/store';
     import { CmsSelectors, StateWithCms } from '@spartacus/core';
@@ -340,5 +492,116 @@ describe('updateCmsComponentState migration', () => {
       content.match(cmsGetComponentFromPageRegex) || []
     ).length;
     expect(cmsGetComponentFromPageRegexOccurrences).toEqual(1);
+  });
+
+  describe('configurator related migration', () => {
+    let host: TempScopedNodeJsSyncHost;
+    let appTree = Tree.empty() as UnitTestTree;
+    let schematicRunner: SchematicTestRunner;
+    let tmpDirPath: string;
+    let previousWorkingDir: string;
+
+    beforeEach(() => {
+      schematicRunner = new SchematicTestRunner(
+        'test',
+        require.resolve('../../test/migrations-test.json')
+      );
+      host = new TempScopedNodeJsSyncHost();
+      appTree = new UnitTestTree(new HostTree(host));
+
+      writeFile(
+        host,
+        '/tsconfig.json',
+        JSON.stringify({
+          compilerOptions: {
+            lib: ['es2015'],
+          },
+        })
+      );
+      writeFile(
+        host,
+        '/angular.json',
+        JSON.stringify({
+          projects: {
+            'spartacus-test': {
+              sourceRoot: 'src',
+              test: {
+                architect: {
+                  build: { options: { tsConfig: './tsconfig.json' } },
+                },
+              },
+            },
+          },
+        })
+      );
+
+      previousWorkingDir = shx.pwd();
+      tmpDirPath = getSystemPath(host.root);
+
+      // Switch into the temporary directory path. This allows us to run
+      // the schematic against our custom unit test tree.
+      shx.cd(tmpDirPath);
+    });
+
+    afterEach(() => {
+      shx.cd(previousWorkingDir);
+      shx.rm('-r', tmpDirPath);
+    });
+
+    it('should add comments to drop down component', async () => {
+      writeFile(
+        host,
+        '/src/index.ts',
+        CONFIGURATOR_ATTRIBUTE_DROP_DOWN_SUB_COMPONENT
+      );
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(
+        CONFIGURATOR_ATTRIBUTE_DROP_DOWN_SUB_COMPONENT_WITH_COMMENT
+      );
+    });
+
+    it('should add comments to numeric input field component', async () => {
+      writeFile(
+        host,
+        '/src/index.ts',
+        CONFIGURATOR_NUMERIC_INPUT_FIELD_SUB_COMPONENT
+      );
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(
+        CONFIGURATOR_NUMERIC_INPUT_FIELD_SUB_COMPONENT_WITH_COMMENT
+      );
+    });
+
+    it('should add comments to radio button component', async () => {
+      writeFile(host, '/src/index.ts', CONFIGURATOR_RADIO_BUTTON_SUB_COMPONENT);
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(
+        CONFIGURATOR_RADIO_BUTTON_SUB_COMPONENT_WITH_COMMENT
+      );
+    });
+
+    it('should add comments to product title component', async () => {
+      writeFile(
+        host,
+        '/src/index.ts',
+        CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT
+      );
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(
+        CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT_WITH_COMMENTS
+      );
+    });
   });
 });
