@@ -1,14 +1,12 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { ConfigDeprecation } from '../../../shared/utils/file-utils';
 import { migrateConfigDeprecation } from '../../mechanism/config-deprecations/config-deprecation';
-import { ANONYMOUS_CONSENTS_FEATURE_FLAG_MIGRATION } from './data/anonymous-consents-flag.migration';
 import { PRODUCT_CONFIGURATOR_RULEBASED_FEATURE_MIGRATION } from './data/product-configurator-rulebased-feature.migration';
 import { PRODUCT_CONFIGURATOR_TEXTFIELD_FEATURE_MIGRATION } from './data/product-configurator-textfield-feature.migration';
 
 export const CONFIG_DEPRECATION_DATA: ConfigDeprecation[] = [
-  ANONYMOUS_CONSENTS_FEATURE_FLAG_MIGRATION,
-  PRODUCT_CONFIGURATOR_RULEBASED_FEATURE_MIGRATION,
   PRODUCT_CONFIGURATOR_TEXTFIELD_FEATURE_MIGRATION,
+  PRODUCT_CONFIGURATOR_RULEBASED_FEATURE_MIGRATION,
 ];
 
 export function migrate(): Rule {
