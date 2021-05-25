@@ -6,38 +6,115 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as shx from 'shelljs';
-import { ANONYMOUS_CONSENTS, TODO_SPARTACUS } from '../../../shared/constants';
 import { runMigration, writeFile } from '../../../shared/utils/test-utils';
 
 const MIGRATION_SCRIPT_NAME = 'migration-v2-config-deprecations-09';
 const TEST_CLASS = `
-const config = {
-  features: {
-    level: '1.5',
-    anonymousConsents: true
-  }
-};
-
 @NgModule({
+  declarations: [
+    AppComponent
+  ],
   imports: [
+    BrowserModule,
     B2cStorefrontModule.withConfig({
+      featureModules: {
+        textfield: {
+        module: () => import('@spartacus/product-configurator/textfield').then(
+          (m) => m.TextfieldConfiguratorModule
+        ),
+        },
+        rulebased: {
+          module: () => import('@spartacus/product-configurator/rulebased').then(
+          (m) => m.RulebasedConfiguratorModule
+        ),
+        },
+      },
+      backend: {
+        occ: {
+          baseUrl: 'https://spartacus-devci767.eastus.cloudapp.azure.com:9002'
+        }
+      },
+      context: {
+        currency: ['USD'],
+        language: ['en'],
+      },
+      i18n: {
+        resources: translations,
+        chunks: translationChunksConfig,
+        fallbackLang: 'en'
+      },
       features: {
-        level: '1.5',
-        anonymousConsents: true
+        level: '3.1'
       }
     }),
+    RulebasedConfiguratorRootModule,
+    TextfieldConfiguratorRootModule
   ],
   providers: [
-    provideConfig(config),
     provideConfig({
+      i18n: {
+        resources: configuratorTranslations,
+        chunks: configuratorTranslationChunksConfig,
+      },
+    })],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+`;
+
+const TEST_CLASS_AFTER_MIGRATION = `
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    B2cStorefrontModule.withConfig({
+      featureModules: {
+// TODO:Spartacus - 'textfield' has been has been replaced with 'productConfiguratorTextfield' .
+        textfield: {
+        module: () => import('@spartacus/product-configurator/textfield').then(
+          (m) => m.TextfieldConfiguratorModule
+        ),
+        },
+// TODO:Spartacus - 'rulebased' has been has been replaced with 'productConfiguratorRulebased' .
+        rulebased: {
+          module: () => import('@spartacus/product-configurator/rulebased').then(
+          (m) => m.RulebasedConfiguratorModule
+        ),
+        },
+      },
+      backend: {
+        occ: {
+          baseUrl: 'https://spartacus-devci767.eastus.cloudapp.azure.com:9002'
+        }
+      },
+      context: {
+        currency: ['USD'],
+        language: ['en'],
+      },
+      i18n: {
+        resources: translations,
+        chunks: translationChunksConfig,
+        fallbackLang: 'en'
+      },
       features: {
-        level: '1.5',
-        anonymousConsents: true
+        level: '3.1'
       }
     }),
-  ]
+    RulebasedConfiguratorRootModule,
+    TextfieldConfiguratorRootModule
+  ],
+  providers: [
+    provideConfig({
+      i18n: {
+        resources: configuratorTranslations,
+        chunks: configuratorTranslationChunksConfig,
+      },
+    })],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
 `;
 
 describe('config deprecations migration', () => {
@@ -100,11 +177,7 @@ describe('config deprecations migration', () => {
     await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
 
     const content = appTree.readContent('/src/index.ts');
-    const regex = new RegExp(
-      `// ${TODO_SPARTACUS} '${ANONYMOUS_CONSENTS}' has been removed, as this feature is now enabled by default.\n`,
-      'g'
-    );
-    const commentOccurrences = (content.match(regex) || []).length;
-    expect(commentOccurrences).toEqual(3);
+
+    expect(content).toEqual(TEST_CLASS_AFTER_MIGRATION);
   });
 });
