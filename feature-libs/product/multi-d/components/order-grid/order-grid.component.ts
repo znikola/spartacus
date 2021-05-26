@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import {
   ActiveCartService,
   MultiCartService,
   OrderEntries,
   UserIdService,
 } from '@spartacus/core';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { OrderGridEntry } from '../../core/model/order-grid-entry.model';
 import {
   GridVariantOption,
@@ -17,11 +17,12 @@ import {
   templateUrl: './order-grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderGridComponent {
+export class OrderGridComponent implements OnDestroy {
   product$ = this.multiDimensionalService.product$;
   hasEntries: boolean = false;
 
   private entries: OrderGridEntry[] = [];
+  private subscription = new Subscription();
 
   constructor(
     protected multiDimensionalService: VariantsMultiDimensionalService,
@@ -65,42 +66,49 @@ export class OrderGridComponent {
   }
 
   addAllToCart(): void {
+    console.log('addAllToCart');
     // TODO
-    combineLatest([
-      this.userIdService.getUserId(),
-      this.activeCartService.getActiveCartId(),
-    ]).subscribe(([userId, cartId]) => {
-      let entries: OrderEntries = { orderEntries: [] };
+    this.subscription.add(
+      combineLatest([
+        this.userIdService.getUserId(),
+        this.activeCartService.getActiveCartId(),
+      ]).subscribe(([userId, cartId]) => {
+        let entries: OrderEntries = { orderEntries: [] };
 
-      entries.orderEntries.push(
-        {
-          quantity: 2,
-          product: {
-            code: '26002000_1',
+        entries.orderEntries.push(
+          {
+            quantity: 2,
+            product: {
+              code: '26002000_1',
+            },
           },
-        },
-        {
-          quantity: 3,
-          product: {
-            code: '26002000_9',
-          },
+          {
+            quantity: 3,
+            product: {
+              code: '26002000_9',
+            },
+          }
+        );
+
+        // TODO
+        if ('anonymous' === userId) {
+          return;
         }
-      );
 
-      // TODO
-      if ('anonymous' === userId) {
-        return;
-      }
+        console.log('3 addAllToCart', userId, cartId, cartId, entries);
 
-      console.log('3 addAllToCart', userId, cartId, cartId, entries);
-
-      this.multiCartService.addManyEntries(userId, cartId, entries);
-    });
+        this.multiCartService.addManyEntries(userId, cartId, entries);
+      })
+    );
 
     this.clearEntries();
   }
 
   clearEntries(): void {
     this.entries = [];
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
