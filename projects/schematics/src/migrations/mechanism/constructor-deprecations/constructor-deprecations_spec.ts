@@ -276,22 +276,44 @@ export class Test extends PageMetaService {
 `;
 
 const ADD_AND_REMOVE_PARAMETER_VALID_TEST_CLASS = `
-    import { Store } from '@ngrx/store';
-    import { StateWithCheckout, CheckoutService, CartDataService } from '@spartacus/core';
-    export class InheritingService extends CheckoutService {
-      constructor(store: Store<StateWithCheckout>, cartDataService: CartDataService) {
-        super(store, cartDataService);
-      }
-    }
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { CommonConfigurator } from '@spartacus/product-configurator/common';
+import { KeyboardFocusService } from '@spartacus/storefront';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { ConfiguratorGroupsService, ConfiguratorStorefrontUtilsService } from '@spartacus/product-configurator/rulebased';
+ 
+
+
+export class myClass extends ConfiguratorStorefrontUtilsService {
+  constructor(
+    protected configuratorGroupsService: ConfiguratorGroupsService,
+    @Inject(PLATFORM_ID) protected platformId: any
+  ) {
+    super(configuratorGroupsService , platformId);
+  }
 `;
 const ADD_AND_REMOVE_PARAMETER_EXPECTED_CLASS = `
-    import { Store } from '@ngrx/store';
-    import { StateWithCheckout, CheckoutService,  AuthService, ActiveCartService } from '@spartacus/core';
-    export class InheritingService extends CheckoutService {
-      constructor(store: Store<StateWithCheckout> , authService: AuthService, activeCartService: ActiveCartService) {
-        super(store , authService, activeCartService);
-      }
-    }
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { CommonConfigurator } from '@spartacus/product-configurator/common';
+import { KeyboardFocusService } from '@spartacus/storefront';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { ConfiguratorGroupsService, ConfiguratorStorefrontUtilsService } from '@spartacus/product-configurator/rulebased';
+ 
+
+
+export class myClass extends ConfiguratorStorefrontUtilsService {
+  constructor(
+    protected configuratorGroupsService: ConfiguratorGroupsService,
+    @Inject(PLATFORM_ID) protected platformId: any, keyboardFocusService: KeyboardFocusService
+  ) {
+    super(configuratorGroupsService , platformId, keyboardFocusService);
+  }
 `;
 const CART_PAGE_LAYOUT_HANDLER = `
     import { CartPageLayoutHandler } from '@spartacus/storefront';
