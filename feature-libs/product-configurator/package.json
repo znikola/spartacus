@@ -28,10 +28,10 @@
     "@ng-select/ng-select": "^5.0.9",
     "@ngrx/effects": "^10.0.0",
     "@ngrx/store": "^10.0.0",
-    "@spartacus/core": "3.2.0-next.2",
-    "@spartacus/schematics": "3.2.0-next.2",
-    "@spartacus/storefront": "3.2.0-next.2",
-    "@spartacus/styles": "3.2.0-next.2",
+    "@spartacus/core": "4.0.0",
+    "@spartacus/schematics": "4.0.0",
+    "@spartacus/storefront": "4.0.0",
+    "@spartacus/styles": "4.0.0",
     "rxjs": "^6.6.0"
   },
   "publishConfig": {

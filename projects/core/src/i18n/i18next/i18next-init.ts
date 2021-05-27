@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { i18n, InitOptions } from 'i18next';
-import i18nextXhrBackend from 'i18next-xhr-backend';
+import i18nextXhrBackend from 'i18next-http-backend';
 import { Subscription } from 'rxjs';
 import { ConfigInitializerService } from '../../config/config-initializer/config-initializer.service';
 import { LanguageService } from '../../site-context/facade/language.service';
