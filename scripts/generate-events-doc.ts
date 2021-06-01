@@ -1,11 +1,5 @@
 import fs from 'fs';
-import { Project, PropertyDeclaration, SyntaxKind } from 'ts-morph';
-
-interface EventDoc {
-  name: string;
-  parent: string;
-  properties: PropertyDeclaration[];
-}
+import { Project, SyntaxKind } from 'ts-morph';
 
 const project = new Project({
   tsConfigFilePath: './tsconfig.json',
