@@ -1,8 +1,6 @@
 import fs from 'fs';
 import { Project, PropertyDeclaration, SyntaxKind } from 'ts-morph';
 
-// [name, path]
-
 interface EventDoc {
   name: string;
   parent: string;
@@ -15,6 +13,10 @@ const project = new Project({
 
 reportProgress('Reading files');
 
+/**
+ * Find "parent" events
+ * - Events extended in other files
+ */
 const cxEvent = project.getSourceFileOrThrow(
   'projects/core/src/event/cx-event.ts'
 );
@@ -23,6 +25,7 @@ const pageEvent = project.getSourceFileOrThrow(
   'projects/storefrontlib/src/events/page/page.events.ts'
 );
 
+// Scanning ts files in the source code excluding tests and schematics
 const files = project.getSourceFiles([
   'projects/core/**/*.ts',
   'projects/storefrontlib/**/*.ts',
@@ -43,42 +46,31 @@ const pageEventName = pageEvent
   .getChildrenOfKind(SyntaxKind.Identifier)[0]
   .getText();
 
-let superEvents = [cxEventName, pageEventName];
-let events = new Array<EventDoc>();
+// Array of all events that can be extended
+let parentEvents = [cxEventName, pageEventName];
 
 let content = '';
 
 reportProgress('Cataloging events');
 
-console.log(getSpartacusRepo());
-
+// Check in each file if it contains an event
 files.forEach((sourceFile) => {
+  // Check all classes in the file and see if they extend an Event (CxEvent or child of)
   sourceFile.getClasses().forEach((classDeclaration) => {
     const supperClass = classDeclaration
       .getHeritageClauseByKind(SyntaxKind.ExtendsKeyword)
       ?.getTypeNodes()[0];
 
     if (supperClass) {
-      // Dig on the parent until it has no parents and check if CxEvent
-      if (superEvents.includes(supperClass?.getExpression()?.getText())) {
-        // Get JsDocs
-        // if (classDeclaration.getJsDocs()[0]?.getText())
-        //   addToContent(classDeclaration.getJsDocs()[0]?.getText());
-
+      // The class extends a known event class it is an event
+      if (parentEvents.includes(supperClass?.getExpression()?.getText())) {
         addToContent([
           classDeclaration.getName() as string,
-          removeFirstSlash(
-            sourceFile.getFilePath().split(getSpartacusRepo())[1]
-          ),
+          getRelativeFilePath(sourceFile.getFilePath()),
         ]);
 
-        superEvents.push(classDeclaration.getName() as string);
+        parentEvents.push(classDeclaration.getName() as string);
       }
-      events.push({
-        name: classDeclaration.getName() as string,
-        parent: supperClass.getExpression()?.getText(),
-        properties: classDeclaration.getProperties(),
-      });
     }
   });
 });
@@ -93,16 +85,27 @@ function addToContent(newText: string[]): void {
   content += '\n' + newText;
 }
 
+/**
+ * Writes content to file
+ * @param fileContent
+ */
 function writeToFile(fileContent: string) {
   reportProgress('Writing to file');
-  fs.writeFileSync('events.md', fileContent);
+  fs.writeFileSync('events.csv', fileContent);
 }
 
-function getSpartacusRepo(): string {
+/**
+ * Finds the name of the folder where the repository was cloned
+ */
+function getSpartacusRepoName(): string {
   const filePath = __filename.split('/scripts')[0].split('/');
   return filePath[filePath.length - 1];
 }
 
+/**
+ * Removes trailing slash if there is one
+ * @param pathToUpdate
+ */
 function removeFirstSlash(pathToUpdate: string): string {
   if (pathToUpdate.startsWith('/'))
     return pathToUpdate.substring(1, pathToUpdate.length);
@@ -110,44 +113,20 @@ function removeFirstSlash(pathToUpdate: string): string {
 }
 
 /**
+ * Takes the absolute file path and returns the file path relative to the project root
+ *
+ * @param rawPath
+ * @returns cleaned up path
+ */
+function getRelativeFilePath(rawPath: string): string {
+  return removeFirstSlash(rawPath.split(getSpartacusRepoName())[1]);
+}
+
+/**
  * Log script step
  *
  * @param message step to log
  */
-export function reportProgress(message: string): void {
+function reportProgress(message: string): void {
   console.log(`\n${message}`);
 }
-
-// else if (
-//   !!(supperClass
-//     .getExpression()
-//     .getSymbol()
-//     ?.getDeclarations()[0] as ClassDeclaration).getHeritageClauseByKind
-// ) {
-//   if (
-//     superEvents.includes(
-//       (supperClass
-//         .getExpression()
-//         .getSymbol()
-//         ?.getDeclarations()[0] as ClassDeclaration)
-//         .getHeritageClauseByKind(SyntaxKind.ExtendsKeyword)
-//         ?.getTypeNodes()[0]
-//         .getExpression()
-//         ?.getText() as string
-//     )
-//   ) {
-//     console.log(
-//       'OCBLIFE',
-//       classDeclaration.getName(),
-//       (supperClass
-//         .getExpression()
-//         .getSymbol()
-//         ?.getDeclarations()[0] as ClassDeclaration)
-//         .getHeritageClauseByKind(SyntaxKind.ExtendsKeyword)
-//         ?.getTypeNodes()[0]
-//         .getExpression()
-//         ?.getText()
-//     );
-//     superEvents.push(classDeclaration.getName() as string);
-//   }
-// }
