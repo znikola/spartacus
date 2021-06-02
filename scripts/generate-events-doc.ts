@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Project, SyntaxKind } from 'ts-morph';
+import { ClassDeclaration, Project, SourceFile, SyntaxKind } from 'ts-morph';
 
 const project = new Project({
   tsConfigFilePath: './tsconfig.json',
@@ -48,9 +48,9 @@ let content = '';
 reportProgress('Cataloging events');
 
 // Check in each file if it contains an event
-files.forEach((sourceFile) => {
+files.forEach((sourceFile: SourceFile) => {
   // Check all classes in the file and see if they extend an Event (CxEvent or child of)
-  sourceFile.getClasses().forEach((classDeclaration) => {
+  sourceFile.getClasses().forEach((classDeclaration: ClassDeclaration) => {
     const supperClass = classDeclaration
       .getHeritageClauseByKind(SyntaxKind.ExtendsKeyword)
       ?.getTypeNodes()[0];
