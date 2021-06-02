@@ -21,7 +21,7 @@ export class MultiCartInitializer {
     this.subscription = this.configInit
       .getStable('context')
       .pipe(
-        switchMap(() => this.multiCartStatePersistenceService.readCookie()),
+        // switchMap(() => this.multiCartStatePersistenceService.readCookie()),
         switchMap(() => this.multiCartStatePersistenceService.initSync())
       )
       .subscribe();

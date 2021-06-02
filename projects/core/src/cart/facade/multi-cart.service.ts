@@ -348,4 +348,18 @@ export class MultiCartService {
       )
     );
   }
+
+  /**
+   * Tells whether the value of the active currency has been already initialized
+   * 
+   * @param cartId
+   */
+  isInitialized(cartId: string): boolean {
+    let valueInitialized = false;
+    this.getCart(cartId)
+      .subscribe(() => (valueInitialized = true))
+      .unsubscribe();
+
+    return valueInitialized;
+  }
 }
