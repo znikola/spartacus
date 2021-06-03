@@ -51,13 +51,13 @@ reportProgress('Cataloging events');
 files.forEach((sourceFile: SourceFile) => {
   // Check all classes in the file and see if they extend an Event (CxEvent or child of)
   sourceFile.getClasses().forEach((classDeclaration: ClassDeclaration) => {
-    const supperClass = classDeclaration
+    const superClass = classDeclaration
       .getHeritageClauseByKind(SyntaxKind.ExtendsKeyword)
       ?.getTypeNodes()[0];
 
-    if (supperClass) {
+    if (superClass) {
       // The class extends a known event class it is an event
-      if (parentEvents.includes(supperClass?.getExpression()?.getText())) {
+      if (parentEvents.includes(superClass?.getExpression()?.getText())) {
         addToContent([
           classDeclaration.getName() as string,
           getRelativeFilePath(sourceFile.getFilePath()),
@@ -85,7 +85,7 @@ function addToContent(newText: string[]): void {
  */
 function writeToFile(fileContent: string) {
   reportProgress('Writing to file');
-  const textToWrite = 'events,path' + fileContent;
+  const textToWrite = 'name,path' + fileContent;
   fs.writeFileSync('events.csv', textToWrite);
 }
 
