@@ -85,7 +85,8 @@ function addToContent(newText: string[]): void {
  */
 function writeToFile(fileContent: string) {
   reportProgress('Writing to file');
-  fs.writeFileSync('events.csv', fileContent);
+  const textToWrite = 'events,path' + fileContent;
+  fs.writeFileSync('events.csv', textToWrite);
 }
 
 /**
