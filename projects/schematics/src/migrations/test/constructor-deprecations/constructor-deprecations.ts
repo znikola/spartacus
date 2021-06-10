@@ -14,6 +14,8 @@ import { PRODUCT_PAGE_META_RESOLVER_MIGRATION } from './data/page-resolvers/prod
 import { PAGE_SLOT_COMPONENT_MIGRATION } from './data/page-slot.component.migration';
 import { SELECTIVE_CART_SERVICE_MIGRATION } from './data/selective-cart.service.migration';
 import { USER_ADDRESS_SERVICE_MIGRATION } from './data/user-address.service.migration';
+import { CONFIGURATOR_FORM_COMPONENT_MIGRATION } from './data/configurator-form.component.migration';
+import { CONFIGURATOR_STOREFRONT_UTILS_SERVICE_MIGRATION } from './data/configurator-storefront-utils.service.migration';
 
 export const CONSTRUCTOR_DEPRECATION_DATA: ConstructorDeprecation[] = [
   USER_ADDRESS_SERVICE_MIGRATION,
@@ -29,6 +31,8 @@ export const CONSTRUCTOR_DEPRECATION_DATA: ConstructorDeprecation[] = [
   DYNAMIC_ATTRIBUTE_SERVICE_MIGRATION,
   SELECTIVE_CART_SERVICE_MIGRATION,
   CONFIGURATOR_ATTRIBUTE_CHECKBOX_LIST_COMPONENT_MIGRATION,
+  CONFIGURATOR_FORM_COMPONENT_MIGRATION,
+  CONFIGURATOR_STOREFRONT_UTILS_SERVICE_MIGRATION,
 ];
 
 export function migrate(): Rule {

@@ -60,9 +60,9 @@ const CONFIGURATOR_ATTRIBUTE_DROP_DOWN_SUB_COMPONENT = `
     constructor() {
       super();
 
-      onSelect(): void {         
+      onSelect(): void {
       }
- 
+
       myMethod(): void {
         this.onSelect();
       }
@@ -79,9 +79,9 @@ const CONFIGURATOR_ATTRIBUTE_DROP_DOWN_SUB_COMPONENT_WITH_COMMENT = `
       super();
 
 // TODO:Spartacus - Method 'onSelect' was removed from 'ConfiguratorAttributeDropDownComponent'. Instead use new method 'onSelect' from 'ConfiguratorAttributeSingleSelectionBaseComponent'.
-      onSelect(): void {         
+      onSelect(): void {
       }
- 
+
       myMethod(): void {
 // TODO:Spartacus - Method 'onSelect' was removed from 'ConfiguratorAttributeDropDownComponent'. Instead use new method 'onSelect' from 'ConfiguratorAttributeSingleSelectionBaseComponent'.
         this.onSelect();
@@ -96,7 +96,7 @@ const CONFIGURATOR_NUMERIC_INPUT_FIELD_SUB_COMPONENT = `
 
   export class InheritingService extends ConfiguratorAttributeNumericInputFieldComponent {
     constructor() {
-      super(); 
+      super();
     }
     myMethod():void{
       this.createEventFromInput();
@@ -111,7 +111,7 @@ const CONFIGURATOR_NUMERIC_INPUT_FIELD_SUB_COMPONENT_WITH_COMMENT = `
 
   export class InheritingService extends ConfiguratorAttributeNumericInputFieldComponent {
     constructor() {
-      super(); 
+      super();
     }
     myMethod():void{
 // TODO:Spartacus - Method 'createEventFromInput' was removed from 'ConfiguratorAttributeNumericInputFieldComponent'. It is no longer used.
@@ -127,7 +127,7 @@ const CONFIGURATOR_RADIO_BUTTON_SUB_COMPONENT = `
 
   export class InheritingService extends ConfiguratorAttributeRadioButtonComponent {
     constructor() {
-      super(); 
+      super();
     }
     myMethod():void{
       this.onDeselect();
@@ -142,7 +142,7 @@ const CONFIGURATOR_RADIO_BUTTON_SUB_COMPONENT_WITH_COMMENT = `
 
   export class InheritingService extends ConfiguratorAttributeRadioButtonComponent {
     constructor() {
-      super(); 
+      super();
     }
     myMethod():void{
 // TODO:Spartacus - Method 'onDeselect' was removed from 'ConfiguratorAttributeRadioButtonComponent'. It is no longer used.
@@ -158,7 +158,7 @@ const CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT = `
 
   export class InheritingService extends ConfiguratorProductTitleComponent {
     constructor() {
-      super(); 
+      super();
     }
 
     myMethod(event):void{
@@ -168,11 +168,11 @@ const CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT = `
 
     getProductImageURL(product: Product): string {
       return product.images?.PRIMARY?.['thumbnail']?.url;
-    }    
+    }
 
     getProductImageAlt(product: Product): string {
       return product.images?.PRIMARY?.['thumbnail']?.altText;
-    }    
+    }
   }
 }`;
 
@@ -182,7 +182,7 @@ const CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT_WITH_COMMENTS = `
 
   export class InheritingService extends ConfiguratorProductTitleComponent {
     constructor() {
-      super(); 
+      super();
     }
 
     myMethod(event):void{
@@ -194,12 +194,58 @@ const CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT_WITH_COMMENTS = `
 // TODO:Spartacus - Method 'getProductImageURL' was removed from 'ConfiguratorProductTitleComponent'. It is no longer used.
     getProductImageURL(product: Product): string {
       return product.images?.PRIMARY?.['thumbnail']?.url;
-    }    
+    }
 
 // TODO:Spartacus - Method 'getProductImageAlt' was removed from 'ConfiguratorProductTitleComponent'. It is no longer used.
     getProductImageAlt(product: Product): string {
       return product.images?.PRIMARY?.['thumbnail']?.altText;
-    }    
+    }
+  }
+}`;
+
+const CONFIGURATOR_GROUP_MENU_SUB_COMPONENT = `
+  import { ConfiguratorGroupMenuComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorGroupMenuComponent {
+    constructor() {
+      super();
+    }
+
+    clickOnEnter(event: KeyboardEvent, group: Configurator.Group): void {
+      if (event.code === 'Enter' || event.code === 'Space') {
+        this.click(group);
+      }
+    }
+
+    navigateUpOnEnter(event: KeyboardEvent): void {
+      if (event.code === 'Space' || event.code === 'Enter') {
+        this.navigateUp();
+      }
+    }
+  }
+}`;
+
+const CONFIGURATOR_GROUP_MENU_SUB_COMPONENT_WITH_COMMENT = `
+  import { ConfiguratorGroupMenuComponent } from '@spartacus/product-configurator/rulebased';
+
+  export class InheritingService extends ConfiguratorGroupMenuComponent {
+    constructor() {
+      super();
+    }
+
+// TODO:Spartacus - Method 'clickOnEnter' was removed from 'ConfiguratorGroupMenuComponent'. It is no longer used.
+    clickOnEnter(event: KeyboardEvent, group: Configurator.Group): void {
+      if (event.code === 'Enter' || event.code === 'Space') {
+        this.click(group);
+      }
+    }
+
+// TODO:Spartacus - Method 'navigateUpOnEnter' was removed from 'ConfiguratorGroupMenuComponent'. It is no longer used.
+    navigateUpOnEnter(event: KeyboardEvent): void {
+      if (event.code === 'Space' || event.code === 'Enter') {
+        this.navigateUp();
+      }
+    }
   }
 }`;
 
@@ -601,6 +647,17 @@ describe('updateCmsComponentState migration', () => {
       const content = appTree.readContent('/src/index.ts');
       expect(content).toEqual(
         CONFIGURATOR_PRODUCT_TITLE_SUB_COMPONENT_WITH_COMMENTS
+      );
+    });
+
+    it('should add comments to configurator group menu component', async () => {
+      writeFile(host, '/src/index.ts', CONFIGURATOR_GROUP_MENU_SUB_COMPONENT);
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(
+        CONFIGURATOR_GROUP_MENU_SUB_COMPONENT_WITH_COMMENT
       );
     });
   });

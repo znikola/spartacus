@@ -180,7 +180,7 @@ const REMOVE_PARAMETER_EXPECTED_CLASS = `
 import { Dummy } from '@angular/core';
 import {
   CmsService,
-  
+
   PageMetaResolver,
   PageMetaService
 } from '@spartacus/core';
@@ -188,7 +188,7 @@ export class Test extends PageMetaService {
   constructor(
     resolvers: PageMetaResolver[],
     cms: CmsService
-    
+
   ) {
     super(resolvers, cms );
   }
@@ -218,7 +218,7 @@ const REMOVE_PARAMETER_WITH_ADDITIONAL_INJECTED_SERVICE_EXPECTED_CLASS = `
 import { ActionsSubject } from '@ngrx/store';
 import {
   CmsService,
-  
+
   PageMetaResolver,
   PageMetaService
 } from '@spartacus/core';
@@ -300,6 +300,69 @@ const ADD_AND_REMOVE_PARAMETER_EXPECTED_CLASS = `
       }
     }
 `;
+
+const CONFIGURATOR_FORM_COMPONENT_VALID_TEST_CLASS = `
+    import { LanguageService } from '@spartacus/core';
+    import { ConfiguratorFormComponent, ConfiguratorCommonsService, ConfiguratorGroupsService, ConfiguratorRouterExtractorService} from '@spartacus/product-configurator/rulebased';
+
+    export class InheritingService extends ConfiguratorFormComponent {
+      constructor(
+        protected configuratorCommonsService: ConfiguratorCommonsService,
+        protected configuratorGroupsService: ConfiguratorGroupsService,
+        protected configRouterExtractorService: ConfiguratorRouterExtractorService,
+        protected languageService: LanguageService
+      ) {
+        super(configuratorCommonsService, configuratorGroupsService, configRouterExtractorService, languageService);
+      }
+    }
+`;
+
+const CONFIGURATOR_FORM_COMPONENT_EXPECTED_CLASS = `
+    import { LanguageService } from '@spartacus/core';
+    import { ConfiguratorFormComponent, ConfiguratorCommonsService, ConfiguratorGroupsService, ConfiguratorRouterExtractorService, ConfiguratorStorefrontUtilsService} from '@spartacus/product-configurator/rulebased';
+
+    export class InheritingService extends ConfiguratorFormComponent {
+      constructor(
+        protected configuratorCommonsService: ConfiguratorCommonsService,
+        protected configuratorGroupsService: ConfiguratorGroupsService,
+        protected configRouterExtractorService: ConfiguratorRouterExtractorService,
+        protected languageService: LanguageService, configuratorStorefrontUtilsService: ConfiguratorStorefrontUtilsService
+      ) {
+        super(configuratorCommonsService, configuratorGroupsService, configRouterExtractorService, languageService, configuratorStorefrontUtilsService);
+      }
+    }
+`;
+
+const CONFIGURATOR_STOREFRONT_UTILS_SERVICE_VALID_TEST_CLASS = `
+    import { Inject, PLATFORM_ID } from '@angular/core';
+    import { ConfiguratorStorefrontUtilsService, ConfiguratorGroupsService } from '@spartacus/product-configurator/rulebased';
+
+    export class InheritingService extends ConfiguratorStorefrontUtilsService {
+      constructor(
+        protected configuratorGroupsService: ConfiguratorGroupsService,
+        @Inject(PLATFORM_ID) protected platformId: any
+      ) {
+        super(configuratorGroupsService, platformId);
+      }
+    }
+`;
+
+const CONFIGURATOR_STOREFRONT_UTILS_SERVICE_EXPECTED_CLASS = `
+    import { Inject,  } from '@angular/core';
+    import { ConfiguratorStorefrontUtilsService, ConfiguratorGroupsService } from '@spartacus/product-configurator/rulebased';
+import { WindowRef } from '@spartacus/core';
+import { KeyboardFocusService } from '@spartacus/storefront';
+
+    export class InheritingService extends ConfiguratorStorefrontUtilsService {
+      constructor(
+        protected configuratorGroupsService: ConfiguratorGroupsService
+        , windowRef: WindowRef, keyboardFocusService: KeyboardFocusService
+      ) {
+        super(configuratorGroupsService , windowRef, keyboardFocusService);
+      }
+    }
+`;
+
 const CART_PAGE_LAYOUT_HANDLER = `
     import { CartPageLayoutHandler } from '@spartacus/storefront';
     import { CartService } from '@spartacus/core';
@@ -369,7 +432,7 @@ import {
   Renderer2, ChangeDetectorRef,
 } from '@angular/core';
 import {
-  
+
   CmsService,
   ContentSlotData,
   DynamicAttributeService,
@@ -429,7 +492,7 @@ import {
   PageMetaService,
   PageMetaResolver,
   CmsService,
-  
+
 } from '@spartacus/core';
 import {Injectable, Inject} from '@angular/core';
 @Injectable({})
@@ -438,7 +501,7 @@ export class CustomPageMetaService extends PageMetaService {
       @Inject(PageMetaResolver)
       protected resolvers: PageMetaResolver[],
       protected cms: CmsService
-      
+
   ) {
       super(resolvers, cms );
   }
@@ -698,18 +761,35 @@ describe('constructor migrations', () => {
     });
   });
 
-  describe('when all the pre-conditions are valid for adding and removing parameters', () => {
+  describe('when all the pre-conditions are valid for adding new dependency', () => {
     it('should make the required changes', async () => {
       writeFile(
         host,
         '/src/index.ts',
-        ADD_AND_REMOVE_PARAMETER_VALID_TEST_CLASS
+        CONFIGURATOR_FORM_COMPONENT_VALID_TEST_CLASS
       );
 
       await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
 
       const content = appTree.readContent('/src/index.ts');
-      expect(content).toEqual(ADD_AND_REMOVE_PARAMETER_EXPECTED_CLASS);
+      expect(content).toEqual(CONFIGURATOR_FORM_COMPONENT_EXPECTED_CLASS);
+    });
+  });
+
+  describe('when all the pre-conditions are valid for removing and adding new dependencies', () => {
+    it('should make the required changes', async () => {
+      writeFile(
+        host,
+        '/src/index.ts',
+        CONFIGURATOR_STOREFRONT_UTILS_SERVICE_VALID_TEST_CLASS
+      );
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(
+        CONFIGURATOR_STOREFRONT_UTILS_SERVICE_EXPECTED_CLASS
+      );
     });
   });
 
