@@ -18,6 +18,7 @@ import {
   GlobalMessageType,
   Region,
   Title,
+  TranslationService,
   UserAddressService,
   UserService,
 } from '@spartacus/core';
@@ -66,6 +67,8 @@ export class AddressFormComponent implements OnInit, OnDestroy {
   @Output()
   backToAddress = new EventEmitter<any>();
 
+  noneTitle: Title;
+
   addressVerifySub: Subscription;
   regionsSub: Subscription;
   suggestedAddressModalRef: ModalRef;
@@ -94,7 +97,8 @@ export class AddressFormComponent implements OnInit, OnDestroy {
     protected userService: UserService,
     protected userAddressService: UserAddressService,
     protected globalMessageService: GlobalMessageService,
-    protected modalService: ModalService
+    protected modalService: ModalService,
+    protected translation: TranslationService
   ) {}
 
   ngOnInit() {
@@ -107,12 +111,24 @@ export class AddressFormComponent implements OnInit, OnDestroy {
       })
     );
 
+    // Fetching noneTitle text
+    this.translation
+      .translate('addressForm.noneTitle')
+      .pipe(
+        map((noneTitleText) => ({
+          code: '',
+          name: noneTitleText,
+        }))
+      )
+      .subscribe((noneTitle) => {
+        this.noneTitle = noneTitle;
+      });
+
     // Fetching titles
     this.titles$ = this.userService.getTitles().pipe(
       map((titles) => {
         titles.sort(sortTitles);
-        const noneTitle = { code: '', name: 'Title' };
-        return [noneTitle, ...titles];
+        return [this.noneTitle, ...titles];
       })
     );
 
