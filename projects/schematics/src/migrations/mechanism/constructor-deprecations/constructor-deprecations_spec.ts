@@ -3,11 +3,11 @@ import { TempScopedNodeJsSyncHost } from '@angular-devkit/core/node/testing';
 import { HostTree, Tree } from '@angular-devkit/schematics';
 import {
   SchematicTestRunner,
-  UnitTestTree,
+  UnitTestTree
 } from '@angular-devkit/schematics/testing';
 import {
   getSourceNodes,
-  isImported,
+  isImported
 } from '@schematics/angular/utility/ast-utils';
 import * as shx from 'shelljs';
 import ts from 'typescript';
@@ -16,7 +16,7 @@ import {
   getConstructor,
   getParams,
   runMigration,
-  writeFile,
+  writeFile
 } from '../../../shared/utils/test-utils';
 
 const MIGRATION_SCRIPT_NAME = 'migration-v2-constructor-deprecations-03';
@@ -438,6 +438,53 @@ export class CustomPageMetaService extends PageMetaService {
 }
 `;
 
+const UPDATE_MESSAGE_VALID_TEST_CLASS = `
+    import {
+      ConfiguratorUpdateMessageComponent,
+      ConfiguratorStorefrontUtilsService,
+      MessageConfig
+    } from '@spartacus/product-configurator/rulebased';
+    import { 
+      ConfiguratorCommonsService,
+      ConfiguratorRouterExtractorService
+    } from '@spartacus/product-configurator/common';  
+    export class InheritedService extends ConfiguratorUpdateMessageComponent {
+      constructor(
+        protected configCommonsService: ConfiguratorCommonsService,
+        protected configRouterExtractorService: ConfiguratorRouterExtractorService,
+        protected messageConfig: MessageConfig,
+      ) {
+        super(
+          configCommonsService, 
+          configRouterExtractorService,
+          messageConfig );
+      }
+    }
+`;
+
+const UPDATE_MESSAGE_EXPECTED_TEST_CLASS = `
+    import {
+      ConfiguratorUpdateMessageComponent,
+      ConfiguratorStorefrontUtilsService, ConfiguratorMessageConfig
+    } from '@spartacus/product-configurator/rulebased';
+    import { 
+      ConfiguratorCommonsService,
+      ConfiguratorRouterExtractorService
+    } from '@spartacus/product-configurator/common';  
+    export class InheritedService extends ConfiguratorUpdateMessageComponent {
+      constructor(
+        protected configCommonsService: ConfiguratorCommonsService,
+        protected configRouterExtractorService: ConfiguratorRouterExtractorService,
+        protected messageConfig: ConfiguratorMessageConfig
+      ) {
+        super(
+          configCommonsService, 
+          configRouterExtractorService,
+          messageConfig );
+      }
+    }
+`;
+
 describe('constructor migrations', () => {
   let host: TempScopedNodeJsSyncHost;
   let appTree = Tree.empty() as UnitTestTree;
@@ -547,6 +594,17 @@ describe('constructor migrations', () => {
       expect(content).toEqual(CALL_EXPRESSION_NO_SUPER);
     });
   });
+
+  describe('configurator group menu migration', () => {
+    it('should make the required changes', async () => {
+      writeFile(host, '/src/index.ts', UPDATE_MESSAGE_VALID_TEST_CLASS);
+
+      await runMigration(appTree, schematicRunner, MIGRATION_SCRIPT_NAME);
+
+      const content = appTree.readContent('/src/index.ts');
+      expect(content).toEqual(UPDATE_MESSAGE_EXPECTED_TEST_CLASS);
+    }); 
+  });  
 
   describe('when all the pre-conditions are valid for adding a parameter', () => {
     it('should just append the missing parameters', async () => {

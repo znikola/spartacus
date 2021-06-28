@@ -6,25 +6,25 @@ import {
   findNodes,
   getSourceNodes,
   insertImport,
-  isImported,
+  isImported
 } from '@schematics/angular/utility/ast-utils';
 import {
   Change,
   InsertChange,
   NoopChange,
   RemoveChange,
-  ReplaceChange,
+  ReplaceChange
 } from '@schematics/angular/utility/change';
 import ts from 'typescript';
 import {
   ANGULAR_CORE,
   INJECT_DECORATOR,
   TODO_SPARTACUS,
-  UTF_8,
+  UTF_8
 } from '../constants';
 import {
   getAngularJsonFile,
-  getDefaultProjectNameFromWorkspace,
+  getDefaultProjectNameFromWorkspace
 } from './workspace-utils';
 
 export enum InsertDirection {
@@ -359,7 +359,10 @@ export function isCandidateForConstructorDeprecation(
   if (!isInheriting(nodes, constructorDeprecation.class)) {
     return false;
   }
-
+  const doLogging = constructorDeprecation.class === 'ConfiguratorUpdateMessageComponent';
+  if (doLogging){
+    console.log("isCandidateForConstructorDeprecation");
+  }
   if (
     !isImported(
       source,
@@ -369,14 +372,22 @@ export function isCandidateForConstructorDeprecation(
   ) {
     return false;
   }
-
+  if (doLogging){
+    console.log("has been imported");
+  }
   if (!checkImports(source, constructorDeprecation.deprecatedParams)) {
     return false;
   }
-
+  if (doLogging){
+    console.log("deprecatedParams ok");
+  }
   const constructorNode = findConstructor(nodes);
   if (!constructorNode) {
     return false;
+  }
+
+  if (doLogging){
+    console.log("found constructor");
   }
 
   if (
@@ -387,6 +398,10 @@ export function isCandidateForConstructorDeprecation(
   ) {
     return false;
   }
+
+  if (doLogging){
+    console.log("checkConstructorParameters ok");
+  }  
 
   if (!checkSuper(constructorNode, constructorDeprecation.deprecatedParams)) {
     return false;
