@@ -359,10 +359,7 @@ export function isCandidateForConstructorDeprecation(
   if (!isInheriting(nodes, constructorDeprecation.class)) {
     return false;
   }
-  const doLogging = constructorDeprecation.class === 'ConfiguratorUpdateMessageComponent';
-  if (doLogging){
-    console.log("isCandidateForConstructorDeprecation");
-  }
+ 
   if (
     !isImported(
       source,
@@ -372,23 +369,17 @@ export function isCandidateForConstructorDeprecation(
   ) {
     return false;
   }
-  if (doLogging){
-    console.log("has been imported");
-  }
+  
   if (!checkImports(source, constructorDeprecation.deprecatedParams)) {
     return false;
   }
-  if (doLogging){
-    console.log("deprecatedParams ok");
-  }
+  
   const constructorNode = findConstructor(nodes);
   if (!constructorNode) {
     return false;
   }
 
-  if (doLogging){
-    console.log("found constructor");
-  }
+  
 
   if (
     !checkConstructorParameters(
@@ -399,9 +390,7 @@ export function isCandidateForConstructorDeprecation(
     return false;
   }
 
-  if (doLogging){
-    console.log("checkConstructorParameters ok");
-  }  
+  
 
   if (!checkSuper(constructorNode, constructorDeprecation.deprecatedParams)) {
     return false;

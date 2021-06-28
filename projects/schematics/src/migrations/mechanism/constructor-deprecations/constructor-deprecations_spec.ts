@@ -452,7 +452,7 @@ const UPDATE_MESSAGE_VALID_TEST_CLASS = `
       constructor(
         protected configCommonsService: ConfiguratorCommonsService,
         protected configRouterExtractorService: ConfiguratorRouterExtractorService,
-        protected messageConfig: MessageConfig,
+        protected messageConfig: MessageConfig
       ) {
         super(
           configCommonsService, 
@@ -465,7 +465,8 @@ const UPDATE_MESSAGE_VALID_TEST_CLASS = `
 const UPDATE_MESSAGE_EXPECTED_TEST_CLASS = `
     import {
       ConfiguratorUpdateMessageComponent,
-      ConfiguratorStorefrontUtilsService, ConfiguratorMessageConfig
+      ConfiguratorStorefrontUtilsService,
+       ConfiguratorMessageConfig
     } from '@spartacus/product-configurator/rulebased';
     import { 
       ConfiguratorCommonsService,
@@ -474,13 +475,13 @@ const UPDATE_MESSAGE_EXPECTED_TEST_CLASS = `
     export class InheritedService extends ConfiguratorUpdateMessageComponent {
       constructor(
         protected configCommonsService: ConfiguratorCommonsService,
-        protected configRouterExtractorService: ConfiguratorRouterExtractorService,
-        protected messageConfig: ConfiguratorMessageConfig
+        protected configRouterExtractorService: ConfiguratorRouterExtractorService
+        , configuratorMessageConfig: ConfiguratorMessageConfig
       ) {
         super(
           configCommonsService, 
-          configRouterExtractorService,
-          messageConfig );
+          configRouterExtractorService
+          , configuratorMessageConfig );
       }
     }
 `;
