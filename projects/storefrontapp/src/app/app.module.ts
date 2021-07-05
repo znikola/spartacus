@@ -14,6 +14,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { translationChunksConfig, translations } from '@spartacus/assets';
 import {
   ConfigModule,
+  CxEvent,
+  EventService,
   FeatureModuleConfig,
   FeaturesConfig,
   I18nConfig,
@@ -32,6 +34,8 @@ import {
   TextfieldConfiguratorRootModule,
 } from '@spartacus/product-configurator/textfield/root';
 import { StorefrontComponent } from '@spartacus/storefront';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { TestOutletModule } from '../test-outlets/test-outlet.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -72,6 +76,8 @@ const ruleBasedFeatureConfiguration = environment.cpq
   ? ruleBasedCpqFeatureConfiguration
   : ruleBasedVcFeatureConfiguration;
 // PRODUCT CONFIGURATOR END
+
+class ReloadingEvent extends CxEvent {}
 
 @NgModule({
   imports: [
@@ -141,7 +147,26 @@ const ruleBasedFeatureConfiguration = environment.cpq
         level: '3.4',
       },
     }),
+
+    provideConfig(<OccConfig>{
+      backend: {
+        loadingScopes: {
+          product: {
+            list: {
+              reloadOn: [ReloadingEvent, of('reloadon').pipe(delay(10000))],
+            },
+          },
+        },
+      },
+    }),
   ],
   bootstrap: [StorefrontComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(eventService: EventService) {
+    setTimeout(() => {
+      console.log('reloading...');
+      eventService.dispatch(new ReloadingEvent());
+    }, 15000);
+  }
+}
