@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import {
-  AnonymousConsentsModule,
   AuthModule,
   CartModule,
   CartOccModule,
@@ -14,8 +13,6 @@ import {
 } from '@spartacus/core';
 import {
   AddressBookModule,
-  AnonymousConsentManagementBannerModule,
-  AnonymousConsentsDialogModule,
   BannerCarouselModule,
   BannerModule,
   BreadcrumbModule,
@@ -136,12 +133,6 @@ if (environment.cpq) {
     StockNotificationModule,
     ConsentManagementModule,
     MyCouponsModule,
-
-    // Anonymous Consents Core
-    AnonymousConsentsModule.forRoot(),
-    // Anonymous Consents UI
-    AnonymousConsentsDialogModule,
-    AnonymousConsentManagementBannerModule,
 
     // Product Core
     ProductModule.forRoot(),
